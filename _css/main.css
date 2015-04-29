@@ -1,0 +1,281 @@
+/* Did this push? 6:06PM */
+
+body {
+	margin: 0;
+	padding: 0;
+	text-transform: uppercase;
+	background-color: #eee;
+}
+
+a {
+	text-decoration: none;
+}
+
+label {
+	display: block;
+	margin-top: 10px;
+}
+
+input, select {
+
+}
+
+footer {
+	background-color: #34b67d;
+}
+
+h1, h2, h3, h4, p {
+	margin: 0;
+	padding: 0;
+}
+
+/* Global Styles */ 
+
+.page_header {
+	display: block;
+	background-color: #84445e;
+	text-align: center;
+	color: #fff;
+	padding: 20px 0 20px 0;
+	margin: 0;
+	overflow: auto;
+}
+
+.main_container {
+	max-width: 1224px;
+	margin: 0 auto;
+	border: 1px solid #ccc;
+}
+
+.fake_hr {
+	height: 2px;
+	background-color: #84445e;
+	clear: both;
+	margin: 20px 0;
+}
+
+.message {
+	background-color: #ef284f;
+	text-align: center;
+	padding: 20px 0;
+}
+
+
+/* Login Page */
+
+
+.login_page .main_container {
+	background-color: #0e6552;
+}
+
+
+/* Clients Page */
+
+
+.clients_page .main_container { 
+	background-color: #016752;
+}
+
+.clients_page .client_list {
+	background-color: #fff;
+}
+
+.clients_page .client_result {
+	width: 300px;
+	border: 1px solid #ccc;
+}
+
+.clients_page .edit_button {
+	background-color: #ccc;
+	display: block;
+}
+
+.clients_page .add_client_button_container {
+	height: 80px;
+	background-color: #84445e;
+	padding-top: 40px;
+}
+
+.clients_page .add_client_button {
+	display: block;
+	width: 200px;
+	text-align: center;
+	text-transform: uppercase;
+	background-color: #ff7a17;
+	margin: 0 auto;
+}
+
+
+/* Create Client Page */ 
+
+
+.create_client_page .main_container {
+	background-color: #0e6552;
+}
+
+.create_client_page h2 {
+	
+}
+
+.create_client_page .client_form {
+	background-color: #fff;
+}
+
+
+/* Create Menu Page */ 
+
+
+.no-styles-here-yet {}
+
+
+/* Daily Menu Page */
+
+
+.daily_menu_page .server_information {
+	background-color: green;
+	width: 300px;
+	float: left;
+}
+
+.daily_menu_page .item_summary_container {
+	border: 1px solid #ccc;
+	padding: 20px 0;
+	width: 300px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.daily_menu_page .order_summary {
+	/*color: #fff;*/
+	text-align: center;
+	background-color: #84445e;
+	padding: 40px 0;
+}
+
+
+/* Daily Menu - Print Placards */
+
+
+.daily_menu_print_placards_page .placard_container {
+	width: 300px;
+	height: 100px;
+	float: left;
+	text-transform: capitalize;
+	border: 1px solid #ccc;
+}
+
+
+/* Daily Menu - Print Placards */
+
+
+.daily_menu_print_menu_page {
+	text-transform: capitalize;
+}
+
+
+/* Daily Menu - Print Placards */
+
+
+.edit_client_page .main_container {
+	background-color: #0e6552;
+}
+
+.edit_client_page .client_form {
+	background-color: #fff;
+}
+
+
+/* Edit Menu Page */ 
+
+.edit_menu_page .main_container {
+	background-color: #0e6552;
+}
+
+.edit_menu_page .menu_form {
+	background-color: #fff;	
+}
+
+
+/* weekly_menu_page */ 
+
+
+.weekly_menu_page .main_container {
+	background-color: #0e6552;
+}
+
+.weekly_menu_page .weekly_menu {
+	background-color: #fff;
+}
+
+.weekly_menu_page .page_header ul {
+	text-indent: 0;
+	padding: 0;
+	display: block;
+	margin: 0 auto;
+	width: 400px;
+}
+
+.weekly_menu_page .page_header li {
+	margin-left: 10px;
+	background-color: #fff;
+	list-style-type: none;
+	display: block;
+	float: left;
+	padding: 10px;
+}
+
+.weekly_menu_page .meal_container {
+	border: 3px solid #ccc;
+	background-color: orange;
+	margin-top: 20px;
+	overflow: auto; /* Scales the container to fit the floats. */
+}
+
+.weekly_menu_page .meal_details {
+	float: left;
+	width: 400px;
+}
+
+.weekly_menu_page .meal_image {
+	float: left;
+}
+
+.weekly_menu_page .create_or_send_container {
+	padding: 20px 0;
+	background-color: #84445e;
+	text-align: center;
+}
+
+.weekly_menu_page .create_or_send_buttons {
+	background-color: red;
+	margin: 0 auto;
+	width: 500px;
+	overflow: auto;
+}
+
+.weekly_menu_page .create_or_send_buttons a {
+	color: #fff;
+	display: block;
+	float: left;
+	background-color: #ff7a17;
+	width: 200px;
+	margin: 0 25px;
+	padding: 20px 0;
+}
+
+
+
+/* Daily Menu Page */
+
+
+
+.daily_menu_page .quantity_button {
+	margin-right: 10px;
+}
+
+.daily_menu_page .special_requests {
+	display: block;
+	width: 350px;
+	height: 50px;
+	margin: 20px auto;
+}
