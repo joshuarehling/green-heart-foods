@@ -1,4 +1,4 @@
-/* Updated Thu 30 Apr 2015 */
+/* Updated Thu 1 May 2015 */
 
 body {
 	margin: 0;
@@ -20,16 +20,14 @@ input, select {
 
 }
 
-footer {
-	background-color: #34b67d;
-}
-
 h1, h2, h3, h4, p {
 	margin: 0;
 	padding: 0;
 }
 
-/* Global Styles */ 
+
+/* Header */
+
 
 .page_header {
 	display: block;
@@ -40,6 +38,28 @@ h1, h2, h3, h4, p {
 	margin: 0;
 	overflow: auto;
 }
+
+
+/* Messages */
+
+
+.message {
+	background-color: green;
+	text-align: center;
+}
+
+
+/* Footer */
+
+
+footer {
+	background-color: #34b67d;
+	text-align: center;
+}
+
+
+/* Global Styles */ 
+
 
 .main_container {
 	max-width: 1224px;
@@ -66,7 +86,14 @@ h1, h2, h3, h4, p {
 
 .login_page .main_container {
 	background-color: #0e6552;
+	background-color: pink;
 }
+.login_page .main_container {
+	background-color: pink;
+	width: 960px;
+	margin: 0 auto 0 auto;
+}
+
 
 
 /* Clients Page */
@@ -264,9 +291,7 @@ h1, h2, h3, h4, p {
 }
 
 
-
 /* Daily Menu Page */
-
 
 
 .daily_menu_page .quantity_button {
