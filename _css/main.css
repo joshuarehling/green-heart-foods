@@ -1,14 +1,27 @@
 /* Updated Thu 1 May 2015 */
 
+
+/* Global */
+
 body {
 	margin: 0;
 	padding: 0;
+	border: none;
 	text-transform: uppercase;
-	background-color: #eee;
+	font-size: 18px;
+	font-family: 'Oswald', sans-serif;
+	font-family: 'Roboto Condensed', sans-serif;
+	font-weight: 400;
+	background-color: #34b67d;
 }
 
 a {
 	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+	opacity: .8;
 }
 
 label {
@@ -17,7 +30,6 @@ label {
 }
 
 input, select {
-
 }
 
 h1, h2, h3, h4, p {
@@ -25,27 +37,50 @@ h1, h2, h3, h4, p {
 	padding: 0;
 }
 
-
 /* Header */
 
+
+header {
+	margin: 0 30px;
+	padding: 30px 0 80px 0;
+	position: relative;
+	font-size: 1.3em;
+	color: #abd14f;
+	text-align: left;
+}
+header a {
+	color: #FFFFFF;
+}
+
+header ul {
+	margin: -70px 0 0 0;
+	text-align: right;
+}
+
+header li {
+	display: inline-block;
+	margin: 0 0 0 20px;
+}
 
 .page_header {
 	display: block;
 	background-color: #84445e;
 	text-align: center;
 	color: #fff;
-	padding: 20px 0 20px 0;
+	padding: 30px 0 30px 0;
 	margin: 0;
 	overflow: auto;
+	font-size: 1.5em;
 }
+
 
 
 /* Messages */
 
 
 .message {
-	background-color: green;
 	text-align: center;
+	color: #FFFFFF;
 }
 
 
@@ -55,6 +90,41 @@ h1, h2, h3, h4, p {
 footer {
 	background-color: #34b67d;
 	text-align: center;
+	padding: 90px 0 90px 0;
+	font-size: 2.2em;
+	color: #FFFFFF;
+}
+
+footer ul {
+	display: inline-block;
+	margin: 0 20px 0 20px;
+}
+
+footer li {
+	display: inline-block;
+	margin: 0 20px 0 20px;
+}
+
+footer .hours {
+	margin: 40px 0 40px 0;
+}
+
+footer .location {
+	margin: 40px 0 40px 0;
+	color: #016753;
+}
+
+footer .location a {
+	color: #016753;
+}
+
+footer .contact {
+	margin: 40px 0 40px 0;
+	color: #abd14f;
+}
+
+footer .contact a {
+	color: #abd14f;
 }
 
 
@@ -62,9 +132,7 @@ footer {
 
 
 .main_container {
-	max-width: 1224px;
-	margin: 0 auto;
-	border: 1px solid #ccc;
+	width: 100%;
 }
 
 .fake_hr {
@@ -80,18 +148,74 @@ footer {
 	padding: 20px 0;
 }
 
+/* Forms */
+*::-webkit-input-placeholder {
+    color: #34b67d;
+}
+*:-moz-placeholder {
+    /* FF 4-18 */
+    color: #34b67d;
+}
+*::-moz-placeholder {
+    /* FF 19+ */
+    color: #34b67d;
+}
+*:-ms-input-placeholder {
+    /* IE 10+ */
+    color: #34b67d;
+}
+
 
 /* Login Page */
 
 
 .login_page .main_container {
 	background-color: #0e6552;
-	background-color: pink;
+	color: #FFFFFF;
+	text-align: center;
 }
-.login_page .main_container {
-	background-color: pink;
-	width: 960px;
-	margin: 0 auto 0 auto;
+
+.login_page h1 {
+	font-size: 3em;
+	margin-bottom: 60px;
+}
+
+.login_page a {
+	color: #FFFFFF;
+}
+
+.login_page .login_input {
+	border: none;
+	background-color: #FFFFFF;
+	color: #34b67d;
+	text-transform: uppercase;
+	font-size: 2em;
+	margin: 25px auto;
+	padding: 20px 0;
+	display: block;
+	text-align: center;
+	width: 450px;
+}
+
+.login_page .login_button {
+	border: none;
+	background-color: #34b67d;
+	color: #FFFFFF;
+	text-transform: uppercase;
+	font-size: 2em;
+	margin: 25px auto;
+	padding: 20px 0;
+	display: block;
+	text-align: center;
+	width: 450px;
+}
+
+.login_page .login_button:hover {
+	opacity: .8;
+}
+
+.login_page .login_note {
+	padding: 0 0 90px 0;
 }
 
 
@@ -138,6 +262,13 @@ footer {
 
 .create_client_page .main_container {
 	background-color: #0e6552;
+}
+
+.create_client_page h1 {
+	font-size: 10em;
+	text-align: center;
+	color: #FFFFFF;
+	margin-bottom: 160px;
 }
 
 .create_client_page h2 {
