@@ -100,20 +100,19 @@ class Client {
     }
 
     
-    /* Create Client */ 
-
-    
+    /* Create Client */
+	
     public function create_client() {
         foreach ($_POST as $key => $value) {
             if ($value === '') {
-                Messages::add("Please be sure all fields are complete and try again.");
+				Messages::add("Please be sure all fields are complete and try again.");
                 header('Location: '.WEB_ROOT.'/admin/create-client.php');
                 exit();
             }
         }
         $company_logo_large = $this->image->upload_image($_FILES, "company_logo_large");
-        $company_logo_small = $this->image->upload_image($_FILES, "company_logo_small");
-        if ($company_logo_small && $company_logo_large) {
+        $company_logo_small = $this->image->upload_image($_FILES, "company_logo_small"); 
+	    if ($company_logo_small && $company_logo_large) {
             if(!isset($_POST['has_breakfast'])) $_POST['has_breakfast'] = 0;
             if(!isset($_POST['has_lunch'])) $_POST['has_lunch'] = 0;
             if(!isset($_POST['has_dinner'])) $_POST['has_dinner'] = 0;

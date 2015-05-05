@@ -40,7 +40,7 @@
 
 </head>
 
-<body class="<?php echo $page_class; ?>" >
+<body class="<?php echo $page_class; ?>">
 <div class="main_container">
 	<header>
 		<div class="green_heart_foods_logo"><a href="http://www.greenheartfoods.com"><img src="../_images/ui/header_ghf_logo.jpg" /></a></div>
