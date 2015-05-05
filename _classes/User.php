@@ -218,14 +218,23 @@ class User {
         return <<<HTML
             <h1>Log in to View Menus</h1>
             <form method="post" action="../_actions/login.php">
-                <input id="login_input_username" class="login_input" type="text" name="user_name" value="ghf" placeholder="username" required />
-                <input id="login_input_password" class="login_input" type="password" name="password" autocomplete="off" value="ghf" placeholder="password" required />
+
+                <!--
+                <input id="login_input_username" class="login_input" type="text" name="user_name" value="ghf_admin" placeholder="username" required />
+                <input id="login_input_password" class="login_input" type="password" name="password" autocomplete="off" value="pw" placeholder="password" required />
+                -->
+
+                 
+                <input id="login_input_username" class="login_input" type="text" name="user_name" value="" placeholder="username" required />
+                <input id="login_input_password" class="login_input" type="password" name="password" autocomplete="off" value="" placeholder="password" required />
+                
+
                 <input type="hidden" name="context" value="$context" />
-                <input type="submit"  name="login" value="Log in" />
+                <input class="login_button" type="submit"  name="login" value="Log in" />
             </form>
-            <p>
+            <p class="login_note">
                 Having trouble? Please contact your GHF contact.<br />
-                415-800-8910 or <a href="mailto:lisa@greenheartfoods.com">lisa@greenheartfoods.com</a>
+                <a href="tel:+4158008910">415-800-8910</a> or <a href="mailto:lisa@greenheartfoods.com">lisa@greenheartfoods.com</a>
             </p>
 HTML;
     }

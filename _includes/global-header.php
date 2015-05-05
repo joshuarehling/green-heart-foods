@@ -25,13 +25,32 @@
 	<title>Green Heart Foods<?php echo $page_title_detail; ?></title>
 	<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>/_css/normalize.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>/_css/main.css">
+	
+	<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700,400,300' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Oswald:400,700|Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+	
 	<script type="text/javascript" src="../_javascript/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript" src="../_javascript/main.js"></script>
+
+	<script type="text/javascript" src="../_javascript/checkboxes.js"></script>
+	
+	<!-- include this to handle high res @2x photos -->
+	<script type="text/javascript" src="../_javascript/retina/retina.min.js"></script>
+	<script type="text/javascript" src="../_javascript/retina/retina.js"></script>
+
 </head>
 
 <body class="<?php echo $page_class; ?>" >
 <div class="main_container">
-	<div class="green_heart_foods_logo">Logo</div>
-	<div class="login_status_message">
+	<header>
+		<div class="green_heart_foods_logo"><a href="http://www.greenheartfoods.com"><img src="../_images/ui/header_ghf_logo.jpg" /></a></div>
+		<ul>
+			<li><a href="http://www.greenheartfoods.com">Home</a></li>
+			<li><a href="https://www.trycaviar.com/san-francisco">Delivery</a></li>
+			<li><a href="http://www.greenheartfoods.com/blog/">Blog</a></li>
+			<li><?php echo $login_message; ?></li>
+		</ul>
+	</header>
+	<!--<div class="login_status_message">
 		<p><?php echo $login_message; ?></p>
-	</div>
+	</div>-->
