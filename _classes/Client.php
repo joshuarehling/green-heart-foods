@@ -257,15 +257,15 @@ class Client {
         return <<<HTML
 
         <form method="post" action="$form_action" enctype="multipart/form-data">
-            <fieldset>
+            <fieldset class="header_logo">
                 $current_company_logo_large
-                <label>Company Logo Large (For Reference)</label>
+                <label></label>
                 <input name='company_logo_large' type='file' value='$company_logo_large' />
             </fieldset>
             
-            <fieldset>
+            <fieldset class="grid_logo">
                 $current_company_logo_small
-                <label>Company Logo Small (For Reference)</label>
+                <label></label>
                 <input name='company_logo_small' type='file' value='$company_logo_small' />
             </fieldset>
 
@@ -277,41 +277,43 @@ class Client {
             <fieldset>
                 <label>Admin Info</label>
                 
-                <label>Admin Name</label>
-                <input name='admin_name' type='text' value='$admin_name' placeholder="Enter Name"/>
+                <label class="secondary_label">Admin Name</label>
+                <input name='admin_name' type='text' value='$admin_name' placeholder=""/>
                 
-                <label>Admin Email</label>
-                <input name='admin_email' type='text' value='$admin_email' placeholder="Enter Email"/>
+                <label class="secondary_label">Admin Email</label>
+                <input name='admin_email' type='text' value='$admin_email' placeholder=""/>
                 
-                <label>Password</label>
-                <input name='admin_password' type='text' value='$admin_password' placeholder="Enter Password"/>
+                <label class="secondary_label">Password</label>
+                <input name='admin_password' type='text' value='$admin_password' placeholder=""/>
             </fieldset>
 
             <fieldset>
                 <label>General Info</label>
                 
-                <label>Log In Name</label>
-                <input name='general_username' type='text' value='$general_username' placeholder="Enter Email"/>
+                <label class="secondary_label">Login Name</label>
+                <input name='general_username' type='text' value='$general_username' placeholder=""/>
                 
-                <label>Log In Password</label>
-                <input name='general_password' type='text' value='$general_password' placeholder="Enter Password"/>
+                <label class="secondary_label">Log In Password</label>
+                <input name='general_password' type='text' value='$general_password' placeholder=""/>
             </fieldset>
 
             <fieldset>
                 <label>Number of Items Per Meal</label>
-                <input name='meals_per_day' type='text' value='$meals_per_day' placeholder="Items per Meal"/>
+                <input name='meals_per_day' type='text' value='$meals_per_day' placeholder="Enter Number"/>
             </fieldset>
 
             <fieldset class="checkbox_labels">
                 <label>Meals</label>
-                <input name='has_breakfast' type='checkbox' $has_breakfast_checked value="1" />
-                <label>Breakfast</label>
-                <input name='has_lunch' type='checkbox' $has_lunch_checked value="1" />
-                <label>Lunch</label>
-                <input name='has_dinner' type='checkbox' $has_dinner_checked value="1" />
-                <label>Dinner</label>
-                <input name='has_snack' type='checkbox' $has_snack_checked value="1" />
-                <label>Snacks</label>
+                <ul class="check_groups">
+					<li><input  class="styled" name='has_breakfast' type='checkbox' $has_breakfast_checked value="1" />
+					<label class="checkbox_label">Breakfast</label></li>
+					<li><input class="styled" name='has_lunch' type='checkbox' $has_lunch_checked value="1" />
+					<label class="checkbox_label">Lunch</label></li>
+					<li><input class="styled" name='has_dinner' type='checkbox' $has_dinner_checked value="1" />
+					<label class="checkbox_label">Dinner</label></li>
+					<li><input class="styled" name='has_snack' type='checkbox' $has_snack_checked value="1" />
+					<label class="checkbox_label">Snacks</label></li>
+				</ul>
             </fieldset>
 
             <fieldset class="checkbox_labels">

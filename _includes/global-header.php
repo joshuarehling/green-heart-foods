@@ -31,6 +31,8 @@
 	
 	<script type="text/javascript" src="../_javascript/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript" src="../_javascript/main.js"></script>
+
+	<script type="text/javascript" src="../_javascript/checkboxes.js"></script>
 	
 	<!-- include this to handle high res @2x photos -->
 	<script type="text/javascript" src="../_javascript/retina/retina.min.js"></script>

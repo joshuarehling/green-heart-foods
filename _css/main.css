@@ -26,7 +26,6 @@ a:hover {
 
 label {
 	display: block;
-	margin-top: 10px;
 }
 
 input, select {
@@ -36,6 +35,24 @@ h1, h2, h3, h4, p {
 	margin: 0;
 	padding: 0;
 }
+
+/* Forms */
+*::-webkit-input-placeholder {
+    color: #a7a9b5;
+}
+*:-moz-placeholder {
+    /* FF 4-18 */
+    color: #a7a9b5;
+}
+*::-moz-placeholder {
+    /* FF 19+ */
+    color: #a7a9b5;
+}
+*:-ms-input-placeholder {
+    /* IE 10+ */
+    color: #a7a9b5;
+}
+
 
 /* Header */
 
@@ -70,7 +87,7 @@ header li {
 	padding: 30px 0 30px 0;
 	margin: 0;
 	overflow: auto;
-	font-size: 1.5em;
+	font-size: 2em;
 }
 
 
@@ -128,7 +145,7 @@ footer .contact a {
 }
 
 
-/* Global Styles */ 
+/* Shared */ 
 
 
 .main_container {
@@ -146,23 +163,6 @@ footer .contact a {
 	background-color: #ef284f;
 	text-align: center;
 	padding: 20px 0;
-}
-
-/* Forms */
-*::-webkit-input-placeholder {
-    color: #34b67d;
-}
-*:-moz-placeholder {
-    /* FF 4-18 */
-    color: #34b67d;
-}
-*::-moz-placeholder {
-    /* FF 19+ */
-    color: #34b67d;
-}
-*:-ms-input-placeholder {
-    /* IE 10+ */
-    color: #34b67d;
 }
 
 
@@ -191,10 +191,11 @@ footer .contact a {
 	text-transform: uppercase;
 	font-size: 2em;
 	margin: 25px auto;
-	padding: 20px 0;
+	padding: 20px 30px 20px 30px;
 	display: block;
-	text-align: center;
-	width: 450px;
+	text-align: left;
+	width: 390px;
+	font-weight: 400;
 }
 
 .login_page .login_button {
@@ -264,6 +265,23 @@ footer .contact a {
 	background-color: #0e6552;
 }
 
+.create_client_page .page_header {
+	background-image: url(../_images/ui/page_header_arrow.jpg);
+	background-repeat: no-repeat;
+	background-position: center bottom;
+}
+
+.create_client_page .client_form {
+	margin: 0 auto;
+	background-color: #FFFFFF;
+}
+
+.create_client_page form {
+	width: 90%;
+	min-width: 960px;
+	margin: 0 auto;
+}
+
 .create_client_page h1 {
 	font-size: 10em;
 	text-align: center;
@@ -271,13 +289,125 @@ footer .contact a {
 	margin-bottom: 160px;
 }
 
-.create_client_page h2 {
-	
+.create_client_page fieldset {
+	border: none;
+	border-bottom: 5px solid #84445e;
+	margin: 0 0 0px 0;
+	padding: 60px 0;
 }
 
-.create_client_page .client_form {
-	background-color: #fff;
+.create_client_page input {
+	border: 2px solid #84445e;
+	text-transform: uppercase;
+	font-size: 2em;
+	margin: 25px auto;
+	padding: 20px 30px 20px 30px;
+	display: block;
+	text-align: left;
+	width: 900px;
+	color: #84445e;
 }
+
+.create_client_page label {
+	text-align: center;
+	color: #84445e;
+	padding: 30px 0 30px 0;
+	margin: 0;
+	overflow: auto;
+	font-size: 3em;
+}
+
+.create_client_page .secondary_label {
+	color: #a7a9b5;
+	text-align: left;
+	width: 900px;
+	padding: 0 0 0 30px;
+	margin: 60px auto 0 auto;
+	font-size: 2.2em;
+}
+
+.create_client_page .header_logo label {
+	background-color: #a35d79;
+	width: 960px;
+	height: 540px;
+	overflow: hidden;
+	border: 2px solid #84445e;
+	margin: 0px auto 0 auto;
+	padding: 0px;
+}
+
+.create_client_page .header_logo input {
+	border: none;
+	font-size: 1em;
+	line-height: .1em;
+	background-color: #84445e;
+	width: 900px;
+	color: #a35d79;
+	margin: -65px auto 0 auto;
+	border: 2px solid #84445e;
+}
+
+.create_client_page .grid_logo label {
+	background-color: #a35d79;
+	width: 300px;
+	height: 300px;
+	overflow: hidden;
+	border: 2px solid #84445e;
+	margin: 0px auto 0 auto;
+	padding: 0px;
+}
+
+.create_client_page .grid_logo input {
+	border: none;
+	font-size: 1em;
+	line-height: .1em;
+	background-color: #84445e;
+	width: 240px;
+	color: #a35d79;
+	margin: 0 auto;
+	border: 2px solid #84445e;
+}
+
+/* WORKING - check boxes */
+.create_client_page .checkbox_label {
+	color: #a7a9b5;
+	font-size: 2.2em;
+}
+.checkbox_labels ul {
+	list-style: none;
+	width: 960px;
+	background-color: pink;
+	margin: 0 auto;
+	text-align: center;
+}
+.checkbox_labels li {
+	display: inline-block;
+	background-color: yellow;
+	text-align: center;
+	width: 230px;
+}
+
+.checkbox, .radio {
+	width: 90px;
+	height: 90px;
+	padding: 0 0px 0 0;
+	background: url(../_images/ui/checkboxes.png) no-repeat;
+	display: block;
+}
+.radio {
+	background: url(radio.png) no-repeat;
+}
+.select {
+	position: absolute;
+	width: 158px; /* With the padding included, the width is 190 pixels: the actual width of the image. */
+	height: 21px;
+	padding: 0 24px 0 8px;
+	color: #fff;
+	font: 12px/21px arial,sans-serif;
+	background: url(select.png) no-repeat;
+	overflow: hidden;
+}
+/* WORKING - check boxes - END */
 
 
 /* Create Menu Page */ 
