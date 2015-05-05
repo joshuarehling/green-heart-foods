@@ -218,17 +218,8 @@ class User {
         return <<<HTML
             <h1>Log in to View Menus</h1>
             <form method="post" action="../_actions/login.php">
-
-                <!--
-                <input id="login_input_username" class="login_input" type="text" name="user_name" value="ghf_admin" placeholder="username" required />
-                <input id="login_input_password" class="login_input" type="password" name="password" autocomplete="off" value="pw" placeholder="password" required />
-                -->
-
-                 
                 <input id="login_input_username" class="login_input" type="text" name="user_name" value="" placeholder="username" required />
                 <input id="login_input_password" class="login_input" type="password" name="password" autocomplete="off" value="" placeholder="password" required />
-                
-
                 <input type="hidden" name="context" value="$context" />
                 <input class="login_button" type="submit"  name="login" value="Log in" />
             </form>
