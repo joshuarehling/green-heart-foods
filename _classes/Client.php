@@ -161,14 +161,17 @@ class Client {
                 if($admin_user_result && $general_user_result) {
                     Messages::add('The client, '.$_POST['company_name'].', has been added.');
                     header('Location: ../admin/clients.php');
+                    exit();
                 } else {
                     Messages::add('Error, there was a problem adding either the client admin or general user');
-                    header('Location: ../admin/clients.php');    
+                    header('Location: ../admin/clients.php');
+                    exit();
                 }
             }
         } else {
             Messages::add('Sorry, there was a problem uploading the images. The client has not been created');
             header('Location: ../admin/clients.php');
+            exit();
         }
     }
 

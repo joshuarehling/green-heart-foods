@@ -14,10 +14,10 @@ class User {
     public function login() {
         switch ($_POST['context']) {
             case 'green_heart_foods':
-                $redirect_path = WEB_ROOT.'/admin/login.php';
+                $redirect_path = WEB_ROOT.'/login/';
                 break;
             case 'client':
-                $redirect_path = WEB_ROOT.'/clients/login.php';
+                $redirect_path = WEB_ROOT.'/login/';
                 break;
         } 
         if (!empty($_POST['user_name']) && !empty($_POST['password'])) {

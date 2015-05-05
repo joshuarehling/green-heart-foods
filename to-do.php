@@ -131,59 +131,59 @@
 <ul>
 	<strike><li>Determine page context</li></strike>
 	<strike><li>Convert checkbox results to text (first letter uppercase and remove underscore);</li></strike>
-	<li>Hook up subtract and add buttons</li>
-	<li>Add static page content</li>
-	<li>Review error message placement</li>
-	<li>Add global structure </li>
-	<li>Add div hooks for css</li>
-	<li>Review, clean and comment code</li>
-	<li>Add print placards link</li>
-	<li>Add print menu link</li>
-	<li>Display special notes from client if available</li>
-	<li>Display picture of meal</li>
-	<li>Favorite heart div with ‘like’ count</li>
-	<li>Do math for “10 orders serves 150 $750” </li>
-	<li>Hide subtract and add buttons for GHF context</li>
+	<strike><li>Hook up subtract and add buttons</li></strike>
+	<strike><li>Add static page content</li></strike>
+	<strike><li>Review error message placement</li></strike>
+	<strike><li>Add global structure </li></strike>
+	<strike><li>Add div hooks for css</li></strike>
+	<strike><li>Review, clean and comment code</li></strike>
+	<strike><li>Add print placards link</li></strike>
+	<strike><li>Add print menu link</li></strike>
+	<strike><li>Display special notes from client if available</li></strike>
+	<strike><li>Display picture of meal</li></strike>
+	<strike><li>Favorite heart div with ‘like’ count</li></strike>
+	<strike><li>Do math for “10 orders serves 150 $750” </li></strike>
+	<strike><li>Hide subtract and add buttons for GHF context</li></strike>
 </ul>
 
 
 <h3>clients/daily-menu.php (General User)</h3>
 <ul>
-	<li>Determine page context</li>
-	<li>Hide # of orders</li>
-	<li>Hide serving size</li>
-	<li>Price per serving</li>
-	<li>Hide add/subtract</li>
-	<li>Hide special notes</li>
-	<li>Hide save/place/edit</li>
+	<strike><li>Determine page context</li></strike>
+	<strike><li>Hide # of orders</li></strike>
+	<strike><li>Hide serving size</li></strike>
+	<strike><li>Price per serving</li></strike>
+	<strike><li>Hide add/subtract</li></strike>
+	<strike><li>Hide special notes</li></strike>
+	<strike><li>Hide save/place/edit</li></strike>
 </ul>
 
 
 <h3>clients/weekly-menu.php</h3>
 <ul>
-	<li>Set dynamic context</li>
-	<li>Format dates week dates</li>
-	<li>Hide ‘create menu’ to bottom</li>
-	<li>Hide ‘send to client’ button to bottom</li>
-	<li>Add status message of approved</li>
-	<li>Add status message of not approved (eq to sent to client in GHF context.)</li>
-	<li>Add image to each meal group</li>
-	<li>Move view items to bottom of meal group data</li>
-	<li>Add static page content</li>
-	<li>Review error message placement</li>
-	<li>Add global structure </li>
-	<li>Add div hooks for css</li>
-	<li>Review, clean and comment code</li>
-	<li>Add ‘place order’ button.</li>
-	<li>Hook up place order to update database status</li>
-	<li>Possibly send email to GHF alerting that it’s been placed?</li>
+	<strike><li>Set dynamic context</li></strike>
+	<strike><li>Format dates week dates</li></strike>
+	<strike><li>Hide ‘create menu’ to bottom</li></strike>
+	<strike><li>Hide ‘send to client’ button to bottom</li></strike>
+	<strike><li>Add status message of approved</li></strike>
+	<strike><li>Add status message of not approved (eq to sent to client in GHF context.)</li></strike>
+	<strike><li>Add image to each meal group</li></strike>
+	<strike><li>Move view items to bottom of meal group data</li></strike>
+	<strike><li>Add static page content</li></strike>
+	<strike><li>Review error message placement</li></strike>
+	<strike><li>Add global structure </li></strike>
+	<strike><li>Add div hooks for css</li></strike>
+	<strike><li>Review, clean and comment code</li></strike>
+	<strike><li>Add ‘place order’ button.</li></strike>
+	<strike><li>Hook up place order to update database status</li></strike>
+	<strike><li>Possibly send email to GHF alerting that it’s been placed?</li></strike>
 </ul>
 
 
 <h3>login/index.php</h3>
 <ul>
 	<strike><li>Add static page content</li></strike>
-	<li>Review error message placement</li>
+	<strike><li>Review error message placement</li></strike>
 	<strike><li>Add global structure </li></strike>
 	<strike><li>Add div hooks for css</li></strike>
 	<li>Review, clean and comment code</li>
