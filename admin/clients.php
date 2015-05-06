@@ -28,8 +28,8 @@
 	?>
 </div>
 
-<div class="add_client_button_container">
-	<a class="add_client_button" href="create-client.php">Add</a>
+<div class="button_container">
+	<a class="page_button" href="create-client.php">Add</a>
 </div>
 
 <?php require_once(SERVER_ROOT . "/_includes/global-footer.php"); ?>

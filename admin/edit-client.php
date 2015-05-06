@@ -10,6 +10,12 @@
 	$client_form = $client->get_client_form($client_id);
 ?>
 
+<h1>Clients</h1>
+
+<div class='page_header'>
+	<h2>Create Client</h2>
+</div>
+
 <?php echo Messages::render(); ?>
 
 <div class="client_form">

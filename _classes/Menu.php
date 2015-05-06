@@ -445,7 +445,7 @@ class Menu {
         $client = new Client();
         $result = $client->get_client($client_id);
         if(count($result) == 1) {
-            $html .= "<img src='../_uploads/".$result[0]['company_logo_large']."' />";
+            $html .= "<div class='hero'></div><!--<img src='../_uploads/".$result[0]['company_logo_large']."' />-->";
         }
         $result = $this->get_weekly_menu($client_id, $start_date, $context);
         $result_count = count($result);
@@ -483,7 +483,9 @@ class Menu {
                     if($result[$i+1]['meal_id'] != $meal_id) {
                         $html .= "<a href='daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=".$result[$i]['meal_id']."'>View Items ></a><br />";
                         $html .= "</div>"; // Close meal_details
-                        $html .= "<img width='200' src='".WEB_ROOT."/_uploads/".$result[$i]['menu_image_path']."' />";
+       	                $html .= "<div class='meal_image'>";
+                        $html .= "<img src='".WEB_ROOT."/_uploads/".$result[$i]['menu_image_path']."' />";
+                        $html .= "</div>";
                         $html .= "</div>";
                     }    
                 } else {
@@ -491,7 +493,7 @@ class Menu {
                     $html .= "<a href='daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=".$result[$last_result]['meal_id']."'>View Items ></a><br />";
                     $html .= "</div>"; // Close meal_details
                     $html .= "<div class='meal_image'>";
-                    $html .=    "<img width='200' src='".WEB_ROOT."/_uploads/".$result[$last_result]['menu_image_path']."' />";
+                    $html .=    "<img src='".WEB_ROOT."/_uploads/".$result[$last_result]['menu_image_path']."' />";
                     $html .= "</div>";
                     $html .= "</div>";
                 }
@@ -499,15 +501,13 @@ class Menu {
             $html .= $menu_items;
         } else {
             $formatted_start_date = date('M d', strtotime($start_date))."-".date('d', strtotime($start_date.' + 6 days'));
-            $html .= "<p>No menus have been created for the week of $formatted_start_date</p>";
+            $html .= "<p class='no_menus'>No menus have been created for the week of <em>$formatted_start_date</em></p>";
         }
         if($context == 'green_heart_foods_admin') {
-            $html .= "<div class='create_or_send_container'>";
-            $html .=    "<div class='create_or_send_buttons'>";
-            $html .=        '<a href="'.WEB_ROOT.'/admin/create-menu.php?client-id='.$client_id.'">Create Menu </a>';
-            $html .=        "<a href='".WEB_ROOT."/_actions/email-client.php?client-id=$client_id&start-date=$start_date'> Email Client</a><br />";
+            $html .=    "<div class='button_container'>";
+            $html .=        '<a class="page_button" href="'.WEB_ROOT.'/admin/create-menu.php?client-id='.$client_id.'">Create Menu </a>';
+            $html .=        "<a class='page_button' href='".WEB_ROOT."/_actions/email-client.php?client-id=$client_id&start-date=$start_date'> Email Client</a><br />";
             $html .=    "</div>";
-            $html .= "</div>";
         }
         return $html;
     }
@@ -844,7 +844,7 @@ FORM;
         $html .=        "<span class='total_served_for_menu'>$total_served_for_menu</span> = ";
         $html .=        "<span class='total_cost_for_menu'>$$total_cost_for_menu</span>";
         $html .=    "</p>";
-        $html .=    "<button class='preview_menu_button'>Save and Preview</button>";
+        $html .=    "<button class='preview_menu_button'>Create</button>";
         $html .= "</div>";
         return $html;
     }

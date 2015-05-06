@@ -159,7 +159,7 @@ class Client {
                 $general_user_result = $query->execute($arguments);
 
                 if($admin_user_result && $general_user_result) {
-                    Messages::add('The client, '.$_POST['company_name'].', has been added.');
+                    Messages::add($_POST['company_name'].' has been added.');
                     header('Location: ../admin/clients.php');
                     exit();
                 } else {
@@ -260,14 +260,12 @@ class Client {
 
         <form method="post" action="$form_action" enctype="multipart/form-data">
             <fieldset class="header_logo">
-                $current_company_logo_large
-                <label></label>
+                <label>$current_company_logo_large</label>
                 <input name='company_logo_large' type='file' value='$company_logo_large' />
             </fieldset>
             
             <fieldset class="grid_logo">
-                $current_company_logo_small
-                <label></label>
+                <label>$current_company_logo_small</label>
                 <input name='company_logo_small' type='file' value='$company_logo_small' />
             </fieldset>
 
@@ -304,30 +302,34 @@ class Client {
                 <input name='meals_per_day' type='text' value='$meals_per_day' placeholder="Enter Number"/>
             </fieldset>
 
-            <fieldset class="checkbox_labels">
+            <fieldset class="checkbox_container">
                 <label>Meals</label>
-                <ul class="check_groups">
-					<li><input  class="styled" name='has_breakfast' type='checkbox' $has_breakfast_checked value="1" />
-					<label class="checkbox_label">Breakfast</label></li>
-					<li><input class="styled" name='has_lunch' type='checkbox' $has_lunch_checked value="1" />
-					<label class="checkbox_label">Lunch</label></li>
+                <ul>
+					<li><input  class="styled box" name='has_breakfast' type='checkbox' $has_breakfast_checked value="1" />
+					<label class="box_label">Breakfast</label></li>
+					<li><input class="styled box" name='has_lunch' type='checkbox' $has_lunch_checked value="1" />
+					<label class="box_label">Lunch</label></li>
 					<li><input class="styled" name='has_dinner' type='checkbox' $has_dinner_checked value="1" />
-					<label class="checkbox_label">Dinner</label></li>
+					<label class="box_label">Dinner</label></li>
 					<li><input class="styled" name='has_snack' type='checkbox' $has_snack_checked value="1" />
-					<label class="checkbox_label">Snacks</label></li>
+					<label class="box_label">Snacks</label></li>
 				</ul>
             </fieldset>
 
-            <fieldset class="checkbox_labels">
-                <input name='is_active' type='checkbox' $is_active_checked value="1" />
-                <label>Active Client</label>
+            <fieldset class="checkbox_container no_rule">
+                <ul>
+				<li><input name='is_active' type='checkbox' $is_active_checked value="1" />
+                <label class="box_label">Active Client</label></li>
+				</ul>
             </fieldset>
 
+			<div class="button_container">
             <input type="hidden" name="company_logo_large_original" value="$company_logo_large" />
             <input type="hidden" name="company_logo_small_original" value="$company_logo_small" />
             <input type="hidden" name="client_id" value="$client_id" />
-            <a href="$web_root/admin/clients.php">Cancel</a>
-            <input type='submit' value='Submit'>
+            <a href="$web_root/admin/clients.php" class="page_button">Cancel</a>
+            <input  class="page_button" type='submit' value='Submit'>
+			</div>
 
         </form>
 HTML;
