@@ -1,5 +1,6 @@
 <?php 
 	require_once('../_config/config.php');
+	require_once(SERVER_ROOT . '/_classes/Client.php');
 	require_once(SERVER_ROOT . '/_classes/User.php');
 	if(isset($_SESSION['user_display_name'])) {
 		$login_message = "".$_SESSION['user_display_name'].", <a href='".WEB_ROOT."/_actions/logout.php'>Sign Out</a>";
@@ -13,6 +14,21 @@
 		$page_title_detail = "";
 	} else {
 		$page_title_detail = " - ".$page_title_detail;
+	}
+
+	if(isset($_GET['client-id'])) {
+		$client_id = $_GET['client-id'];
+		$client = new Client();
+		$client_result = $client->get_client($client_id);	
+	}
+
+	switch ($page_class) {
+		case 'weekly_menu_page':
+			$image_path = WEB_ROOT."/_uploads/".$client_result[0]['company_logo_large'];
+			$header_style = "style='background-image:url($image_path)'";
+			break;
+		default:
+			$header_style = "";
 	}
 ?>
 
@@ -42,10 +58,28 @@
 
 <body class="<?php echo $page_class; ?>">
 <div class="main_container">
-	<header>
+	<header <?php echo $header_style; ?>>
 		<div class="green_heart_foods_logo"><a href="http://www.greenheartfoods.com"><img src="../_images/ui/header_ghf_logo.png" /></a></div>
 		<ul>
-			<li><a href="<?php echo WEB_ROOT; ?>/clients/">Clients</a></li>
+			<li>
+				<?php 
+					if(isset($_SESSION['user_type_id'])) {
+						switch ($_SESSION['user_type_id']) {
+							case 1:
+								echo "<a href='".WEB_ROOT."/admin/clients.php'>Clients</a>";
+								break;
+							case 2:
+								echo "<a href='".WEB_ROOT."/clients/weekly-menu.php?client-id=$client_id'>Menu</a>";
+								break;
+							case 3:
+								echo "<a href='".WEB_ROOT."/clients/weekly-menu.php?client-id=$client_id'>Menu</a>";
+								break;
+							default:
+								break;
+						}
+					}
+				?>
+			</li>
 			<li><?php echo $login_message; ?></li>
 		</ul>
 	</header>

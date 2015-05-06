@@ -15,7 +15,6 @@ $(document).ready(function() {
 	});
 
 	$('.create_and_edit_menu .price_per_order_input').keyup(function(event){
-		console.log("PPO");
 		var current_class = get_current_menu_item_class($(this));
 		update_item_summary(current_class);
 	});
@@ -102,7 +101,8 @@ function get_current_menu_item_class(element) {
 
 function update_item_summary(current_class) {
 	var order_count_for_item = Number($(current_class+' .total_orders_for_item').html());
-	var price_per_order = Number($(current_class+' .price_per_order_input').val());
+	var price_per_order_input = $(current_class+' .price_per_order_input').val();
+	var price_per_order = Number(price_per_order_input.replace("$", ""));
 	var servings_per_order = Number($(current_class+' .servings_per_order_input').val());
 	var total_orders_for_menu = 0;
 	var total_served_for_menu = 0;

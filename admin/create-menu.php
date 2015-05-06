@@ -6,10 +6,20 @@
     require_once(SERVER_ROOT . "/_includes/global-header.php");
     require_once(SERVER_ROOT . "/_classes/Menu.php");
 	require_once(SERVER_ROOT . "/_classes/Servers.php");
+	require_once(SERVER_ROOT . "/_classes/Client.php");
+	$client = new Client();
 	$client_id = $_GET['client-id'];
 	$menu = new Menu();
 	$menu_form = $menu->get_menu_form($client_id);
+	$client_result = $client->get_client($client_id);
 ?>
+
+<div class="client_image">
+	<?php
+		$image_path = $client_result[0]['company_logo_large'];
+		echo "<img src='".WEB_ROOT."/_uploads/".$image_path."' />";
+	?>
+</div>
 
 <div class='page_header'>
 	<h2>Menu</h2>

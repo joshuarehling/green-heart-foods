@@ -78,6 +78,24 @@ class Menu {
         $meal_id = $_POST['meal_id'];
         $menu_image_path = $this->image->upload_image($_FILES, "menu_image");
 
+        /* Check for duplicate meal/day combination */
+
+        $arguments = [
+            $client_id,
+            $service_date,
+            $meal_id,
+        ];
+        $query = $this->database_connection->prepare("SELECT * FROM menu_items WHERE client_id = ? AND service_date = ? AND meal_id = ?");
+        $query->execute($arguments);
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        if(count($result) > 0) {
+            Messages::add('Sorry, it looks like there is already a meal created for this day.');
+            header("Location: ../admin/create-menu.php?client-id=$client_id");
+            exit();
+        }
+
+        /* End check for duplicate meal/day combination */
+
         for ($i=0; $i <= $_POST['meals_per_day']; $i++) { 
             if(!isset($_POST['is_vegetarian'][$i])) $_POST['is_vegetarian'][$i] = 0;
             if(!isset($_POST['is_vegan'][$i])) $_POST['is_vegan'][$i] = 0;
@@ -444,16 +462,33 @@ class Menu {
         $html = "";
         $client = new Client();
         $result = $client->get_client($client_id);
+        $web_root = WEB_ROOT;
         if(count($result) == 1) {
-            $html .= "<div class='hero'></div><!--<img src='../_uploads/".$result[0]['company_logo_large']."' />-->";
+            // $html .= "<div class='hero'></div><!--<img src='../_uploads/".$result[0]['company_logo_large']."' />-->";
+            $image_path = $web_root."/_uploads/".$result[0]['company_logo_large'];
+            $html .= "<div class='hero' style='background-image: url($image_path)'></div>";
+        }
+        $last_week_selected = '';
+        $this_week_selected = '';
+        $next_week_selected = '';
+        switch ($start_date) {
+            case $last_week:
+                $last_week_selected = 'selected';
+                break;
+            case $this_week:
+                $this_week_selected = 'selected';
+                break;
+            case $next_week:
+                $next_week_selected = 'selected';
+                break;
         }
         $result = $this->get_weekly_menu($client_id, $start_date, $context);
         $result_count = count($result);
         $html .= "<div class='page_header'>";
         $html .=    "<ul>";
-        $html .=        "<li><a href='weekly-menu.php?client-id=$client_id&start-date=$last_week'>$last_week_formatted</a></li>";
-        $html .=        "<li><a href='weekly-menu.php?client-id=$client_id&start-date=$this_week'>$this_week_formatted</a></li>";
-        $html .=        "<li><a href='weekly-menu.php?client-id=$client_id&start-date=$next_week'>$next_week_formatted</a></li>";
+        $html .=        "<li><a class='$last_week_selected' href='weekly-menu.php?client-id=$client_id&start-date=$last_week'>$last_week_formatted</a></li>";
+        $html .=        "<li><a class='$this_week_selected' href='weekly-menu.php?client-id=$client_id&start-date=$this_week'>$this_week_formatted</a></li>";
+        $html .=        "<li><a class='$next_week_selected' href='weekly-menu.php?client-id=$client_id&start-date=$next_week'>$next_week_formatted</a></li>";
         $html .=    "</ul>";
         $html .= "</div>";
         if($result_count > 0) {
@@ -499,14 +534,18 @@ class Menu {
                 }
             }
             $html .= $menu_items;
+            $menus = 1;
         } else {
             $formatted_start_date = date('M d', strtotime($start_date))."-".date('d', strtotime($start_date.' + 6 days'));
             $html .= "<p class='no_menus'>No menus have been created for the week of <em>$formatted_start_date</em></p>";
+            $menus = 0;
         }
         if($context == 'green_heart_foods_admin') {
             $html .=    "<div class='button_container'>";
             $html .=        '<a class="page_button" href="'.WEB_ROOT.'/admin/create-menu.php?client-id='.$client_id.'">Create Menu </a>';
-            $html .=        "<a class='page_button' href='".WEB_ROOT."/_actions/email-client.php?client-id=$client_id&start-date=$start_date'> Email Client</a><br />";
+            if($menus) {
+                $html .=     "<a class='page_button' href='".WEB_ROOT."/_actions/email-client.php?client-id=$client_id&start-date=$start_date'> Email Client</a><br />";    
+            }
             $html .=    "</div>";
         }
         return $html;
@@ -623,6 +662,7 @@ class Menu {
         $total_orders_for_menu = 0;
         $total_served_for_menu = 0;
         $total_cost_for_menu = 0;
+        $cancel_url = WEB_ROOT."/admin/clients.php";
         if(isset($service_date) && isset($meal_id)) {
             $mode = 'edit';
             $form_action = '../_actions/update-menu.php';
@@ -633,7 +673,7 @@ class Menu {
             ];
             $query = $this->database_connection->prepare("SELECT * FROM menu_items WHERE client_id = ? AND service_date = ? AND meal_id = ?");
             $query->execute($arguments);
-            $query->execute($arguments);
+            // $query->execute($arguments);
             $menu_items = $query->fetchAll(PDO::FETCH_ASSOC);
             $number_of_meals = count($menu_items);
             $menu_image_path = $menu_items[0]['menu_image_path'];
@@ -756,11 +796,9 @@ class Menu {
                 $total_orders_for_item = $menu_items[$i]['total_orders_for_item'];
                 $total_served_for_item =$total_orders_for_item*$servings_per_order;
                 $total_cost_for_item = $total_orders_for_item*$price_per_order;
-
                 $total_orders_for_menu += $total_orders_for_item;
                 $total_served_for_menu += $total_served_for_item;
                 $total_cost_for_menu += $total_cost_for_item;
-
                 $menu_item_id = $menu_items[$i]['menu_item_id'];
                 $menu_item_hidden_ids .= "<input type='hidden' name='menu_item_id_array[]' value='$menu_item_id' />";
             } else {
@@ -844,6 +882,7 @@ FORM;
         $html .=        "<span class='total_served_for_menu'>$total_served_for_menu</span> = ";
         $html .=        "<span class='total_cost_for_menu'>$$total_cost_for_menu</span>";
         $html .=    "</p>";
+        $html .=    "<a href='$cancel_url' class='cancel_button'>Cancel</a>";
         $html .=    "<button class='preview_menu_button'>Create</button>";
         $html .= "</div>";
         return $html;
