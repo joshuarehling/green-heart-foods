@@ -765,18 +765,23 @@ class Menu {
         $html .=        "<input name='meal_description' type='text' placeholder='Add Description Here' value='$meal_description' />";
         $html .=    "</fieldset>";
         $html .=    "<fieldset>";
-        $html .=        "<div>";
-        $html .=            "<div>";
-        $html .=                "<img width='100' class='server-image' src='$server_image_path' />";
+        $html .=        "<div class='server_and_meal'>";
+		
+        $html .=            "<div class='server_image'>";
+        $html .=                "<img class='server-image' src='$server_image_path' />";
         $html .=                "<select class='server' name='server_id'>";
         $html .=                    "<option value='none'>Select Server</option>";
         $html .=                        $server_list_options;
         $html .=                "</select>";
         $html .=            "</div>";
-        $html .=            "<div class='menu-image'>";
-        $html .=                $menu_image_path;
-        $html .=                "<input name='menu_image' type='file' />";
+		
+        $html .=            "<div class='meal_image'>";
+        $html .=                "<div class='menu-image'>";
+        $html .=                    $menu_image_path;
+        $html .=                    "<input name='menu_image' type='file' />";
+        $html .=                "</div>";
         $html .=            "</div>";
+		
         $html .=        "</div>";
         $html .=    "</fieldset>";
         for ($i=0; $i < $number_of_meals; $i++) {
@@ -841,23 +846,25 @@ class Menu {
             $form .= <<<FORM
             <fieldset>
                 <div data-increment-id="$i" class="menu-item menu-item-$i">
-                    <input type="text" name="menu_item_name[$i]" value="$item_name" placeholder="Add Menu Item Name" />
+                    <input type="text" name="menu_item_name[$i]" value="$item_name" placeholder="Add Dish Name" />
                     <input type="text" name="ingredients[$i]" value="$ingredients" placeholder="Add Ingredients" />
                     <input type="text" name="special_notes[$i]" value="$special_notes" placeholder="Special Notes" />
-                    <input type="checkbox" value="1" $is_vegetarian_checked name="is_vegetarian[$i]"><label>Vegetarian</label>
-                    <input type="checkbox" value="1" $is_vegan_checked name="is_vegan[$i]"><label>Vegan</label>
-                    <input type="checkbox" value="1" $is_gluten_free_checked name="is_gluten_free[$i]"><label>Gluten Free</label>
-                    <input type="checkbox" value="1" $is_whole_grain_checked name="is_whole_grain[$i]"><label>Whole Grain</label>
-                    <input type="checkbox" value="1" $contains_nuts_checked name="contains_nuts[$i]"><label>Contains Nuts</label>
-                    <input type="checkbox" value="1" $contains_soy_checked name="contains_soy[$i]"><label>Contains Soy</label>
-                    <input type="checkbox" value="1" $contains_shellfish_checked name="contains_shellfish[$i]"><label>Contains Shellfish</label>
+                    <div class="check_list">
+						<div class="check_group"><input type="checkbox" value="1" $is_vegetarian_checked name="is_vegetarian[$i]"><label>Vegetarian</label></div>
+                    	<div class="check_group"><input type="checkbox" value="1" $is_vegan_checked name="is_vegan[$i]"><label>Vegan</label></div>
+                    	<div class="check_group"><input type="checkbox" value="1" $is_gluten_free_checked name="is_gluten_free[$i]"><label>Gluten Free</label></div>
+                   	 	<div class="check_group"><input type="checkbox" value="1" $is_whole_grain_checked name="is_whole_grain[$i]"><label>Whole Grain</label></div>
+                    	<div class="check_group"><input type="checkbox" value="1" $contains_nuts_checked name="contains_nuts[$i]"><label>Contains Nuts</label></div>
+                    	<div class="check_group"><input type="checkbox" value="1" $contains_soy_checked name="contains_soy[$i]"><label>Contains Soy</label></div>
+                    	<div class="check_group"><input type="checkbox" value="1" $contains_shellfish_checked name="contains_shellfish[$i]"><label>Contains Shellfish</label></div>
+					</div>
                     <h3>Set Price per Order</h3>
                     <input class="price_per_order_input" name="price_per_order[$i]" type="text" value="$price_per_order" placeholder="$0.00" />
-                    <input class="servings_per_order_input" name="servings_per_order[$i]" type="text" value="$servings_per_order" placeholder="Serves 0" />
+                    <input class="servings_per_order_input" name="servings_per_order[$i]" type="hidden" value="15" placeholder="Serves 0" />
                     
-                    <p class="order-summary">
-                        <span class="total_orders_for_item">$total_orders_for_item</span> Orders Serves
-                        <span class="total_served_for_item">$total_served_for_item</span> 
+                    <p class="order_summary">
+                        <span class="total_orders_for_item">$total_orders_for_item</span> Orders
+                        <span class="total_served_for_item_serves">Serves </span><span class="total_served_for_item">$total_served_for_item</span><span class="total_served_for_item_serves"> =</span>
                         $<span class="total_cost_for_item">$total_cost_for_item</span>
                     </p>
                     
@@ -866,8 +873,8 @@ class Menu {
                     <input type="hidden" name="client_id" value="$client_id" />
                     <input type="hidden" name="item_status_id" value="1" />
                     <input type="hidden" name="menu_image_path_orginal" value="$menu_image_path" />
-                    <a class="quantity_button subtract">Subtract</a>
-                    <a class="quantity_button add">Add</a>
+                    <a class="page_button quantity_button subtract">Subtract</a>
+                    <a class="page_button quantity_button add">Add</a>
                 </div>
             </fieldset>
 FORM;
@@ -876,14 +883,14 @@ FORM;
         $html .= "<input type='hidden' class='current_day_edit_mode' name='current_day' value='$current_day' />";
         $html .= $menu_item_hidden_ids;
         $html .= "</form>";
-        $html .= "<div class='order-summary'>";
+        $html .= "<div class='button_container'>";
         $html .=    "<p>";
-        $html .=        "<span class='total_orders_for_menu'>$total_orders_for_menu</span> Orders Serves ";
-        $html .=        "<span class='total_served_for_menu'>$total_served_for_menu</span> = ";
+        $html .=        "<span class='total_orders_for_menu'>$total_orders_for_menu</span> Orders ";
+        $html .=        "<span class='total_served_for_menu_serves'>Serves </span><span class='total_served_for_menu'>$total_served_for_menu</span></span><span class='total_served_for_menu_serves'> =</span> ";
         $html .=        "<span class='total_cost_for_menu'>$$total_cost_for_menu</span>";
         $html .=    "</p>";
-        $html .=    "<a href='$cancel_url' class='cancel_button'>Cancel</a>";
-        $html .=    "<button class='preview_menu_button'>Create</button>";
+        $html .=    "<a href='$cancel_url' class='cancel_button page_button'>Cancel</a>";
+        $html .=    "<button class='preview_menu_button page_button'>Save</button>";
         $html .= "</div>";
         return $html;
     }

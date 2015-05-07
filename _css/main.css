@@ -1,4 +1,4 @@
-/* Updated Thu 5 May 2015 */
+/* Updated Thu 6 May 2015 */
 
 
 /* -------------------- Redefine */
@@ -276,7 +276,7 @@ h1 {
 }
 
 
-/* -------------------- All Clients Page - close */
+/* -------------------- All Clients Page - optional edit buttons hide on hover remains */
 
 .clients_page .client_list {
 	width: 990px;
@@ -304,7 +304,7 @@ h1 {
 }
 
 
-/* -------------------- Create & Edit Client Page - close */ 
+/* -------------------- Create & Edit Client Page - checkboxes remain */ 
 
 .create_client_page .page_header,
 .edit_client_page .page_header {
@@ -413,7 +413,7 @@ h1 {
 	border: 2px solid #84445e;
 }
 
-/* WORKING - check boxes */
+/* WORKING on this still - check boxes */
 .create_client_page .box_label,
 .edit_client_page .box_label {
 	color: #a7a9b5;
@@ -473,145 +473,7 @@ h1 {
 /* WORKING - check boxes - END */
 
 
-/* -------------------- Edit Client Page - no longer used */ 
-/*
-.edit_client_page label {
-	text-align: center;
-	color: #84445e;
-	padding: 30px 0 30px 0;
-	margin: 0;
-	overflow: auto;
-	font-size: 3em;
-}
-
-.edit_client_page .secondary_label {
-	color: #a7a9b5;
-	text-align: left;
-	width: 930px;
-	padding: 0 0 0 30px;
-	margin: 60px auto 0 auto;
-	font-size: 2.2em;
-}
-
-.edit_client_page .header_logo label {
-	background-color: #a35d79;
-	width: 960px;
-	height: 540px;
-	overflow: hidden;
-	border: 2px solid #84445e;
-	margin: 0px auto 0 auto;
-	padding: 0px;
-}
-
-.edit_client_page .header_logo input {
-	border: none;
-	font-size: 1em;
-	line-height: .1em;
-	background-color: #84445e;
-	width: 900px;
-	color: #a35d79;
-	margin: 0px auto 0 auto;
-	border: 2px solid #84445e;
-}
-
-.edit_client_page .grid_logo label {
-	background-color: #a35d79;
-	width: 300px;
-	height: 300px;
-	overflow: hidden;
-	border: 2px solid #84445e;
-	margin: 0px auto 0 auto;
-	padding: 0px;
-}
-
-.edit_client_page .grid_logo input {
-	border: none;
-	font-size: 1em;
-	line-height: .1em;
-	background-color: #84445e;
-	width: 240px;
-	color: #a35d79;
-	margin: 0 auto;
-	border: 2px solid #84445e;
-}
-*/
-
-
-/* -------------------- Create Menu Page */ 
-
-.no-styles-here-yet {}
-
-
-/* -------------------- Daily Menu Page */
-
-.daily_menu_page .server_information {
-	background-color: green;
-	width: 300px;
-	float: left;
-}
-
-.daily_menu_page .item_summary_container {
-	border: 1px solid #ccc;
-	padding: 20px 0;
-	width: 300px;
-	margin: 0 auto;
-	text-align: center;
-}
-
-.daily_menu_page .order_summary {
-	/*color: #fff;*/
-	text-align: center;
-	background-color: #84445e;
-	padding: 40px 0;
-}
-
-.daily_menu_page .quantity_button {
-	margin-right: 10px;
-}
-
-.daily_menu_page .special_requests {
-	display: block;
-	width: 350px;
-	height: 50px;
-	margin: 20px auto;
-}
-
-
-/* -------------------- Daily Menu - Print Placards */
-
-.daily_menu_print_placards_page .placard_container {
-	width: 300px;
-	height: 100px;
-	float: left;
-	text-transform: capitalize;
-	border: 1px solid #ccc;
-}
-
-.daily_menu_print_menu_page {
-	text-transform: capitalize;
-}
-
-.edit_client_page .main_container {
-	background-color: #0e6552;
-}
-
-.edit_client_page .client_form {
-	background-color: #fff;
-}
-
-
-/* -------------------- Edit Menu Page */ 
-
-.edit_menu_page .main_container {
-	background-color: #0e6552;
-}
-
-.edit_menu_page .menu_form {
-	background-color: #fff;	
-}
-
-
-/* -------------------- Weekly Menu Page */ 
+/* -------------------- Weekly Menu Page */
 
 .weekly_menu_page .weekly_menu {
 	background-color: #fff;
@@ -670,5 +532,235 @@ h1 {
 	overflow: hidden;
 }
 
+
+/* -------------------- Create Menu Page - header, checkboxes. dropdowns remain */ 
+
+.create_menu_page .page_header {
+	background-image: url(../_images/ui/page_header_arrow.jpg);
+	background-repeat: no-repeat;
+	background-position: center bottom;
+}
+
+.create_menu_page .client_form {
+	margin: 0 auto;
+	background-color: #FFFFFF;
+}
+
+.create_menu_page .server_and_meal {
+	width: 960px;
+	margin: 0 auto;
+}
+
+.create_menu_page .meal_image {
+	text-align: right;
+}
+
+.create_menu_page .meal_image img {
+	background-color: #a35d79;
+	width: 630px;
+	height: 630px;
+	overflow: hidden;
+	border: 2px solid #84445e;
+	margin: 0px auto 0 auto;
+	padding: 0px;
+}
+
+.create_menu_page .meal_image input {
+	border: none;
+	font-size: 1em;
+	line-height: .1em;
+	background-color: #84445e;
+	width: 570px;
+	color: #a35d79;
+	margin: -5px auto 0 auto;
+	padding: 30px;
+	border: 2px solid #84445e;
+}
+
+.create_menu_page .server_image {
+	float: left;
+}
+
+.create_menu_page .server_image img {
+	background-color: #a35d79;
+	width: 296px;
+	height: 296px;
+	overflow: hidden;
+	border: 2px solid #84445e;
+	margin: 0px auto 0 auto;
+	padding: 0px;
+	background-image: url(../_images/ui/default_server.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.create_menu_page .server_image select {
+	width: 300px;
+	display: block;
+}
+
+.create_menu_page fieldset {
+	border: none;
+	border-bottom: 5px solid #84445e;
+	padding: 60px 0 90px 0;
+	width: 90%;
+	min-width: 960px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.create_menu_page fieldset h3 {
+	text-align: center;
+	color: #84445e;
+	padding: 30px 0 30px 0;
+	margin: 0;
+	overflow: auto;
+	font-size: 3em;
+	font-weight: 700;
+}
+
+.create_menu_page fieldset input[type=text] {
+	border: 2px solid #84445e;
+	text-transform: uppercase;
+	font-size: 2em;
+	margin: 25px auto;
+	padding: 20px 30px 20px 30px;
+	display: block;
+	text-align: left;
+	width: 900px;
+	color: #84445e;
+}
+
+/* ////////////////// */
+
+.create_menu_page .check_list {
+	width: 960px;
+	margin: 0 auto;
+}
+
+.create_menu_page .check_group {
+	text-align: left;
+	width: 300px;
+	display: inline-block;
+}
+
+.create_menu_page .check_group label {
+	color: #a7a9b5;
+	padding: 30px 0;
+	margin: 0 0 0 15px;
+	font-size: 1.5em;
+	display: inline-block;
+}
+
+/* ////////////////// */
+
+.create_menu_page fieldset.no_rule {
+	border-bottom: none;
+}
+
+.create_menu_page .order_summary {
+	border: 2px solid #84445e;
+	text-transform: uppercase;
+	font-size: 2em;
+	margin: 25px auto;
+	padding: 20px 30px 20px 30px;
+	display: block;
+	text-align: center;
+	width: 572px;
+	color: #84445e;
+	color: #FFFFFF;
+	background-color: #a35d79;
+}
+
+.create_menu_page .order_summary .total_served_for_item_serves,
+.create_menu_page .order_summary .total_served_for_item {
+	color: #a7a9b5;
+	color: #84445e;
+}
+
+.create_menu_page .button_container p {
+	font-size: 2em;
+	padding: 0px 0px 15px 0px;
+	color: #FFFFFF;
+	background-color: #84445e;
+}
+
+.create_menu_page .button_container .total_served_for_menu_serves,
+.create_menu_page .button_container .total_served_for_menu {
+	color: #a35d79;
+}
+
+.create_menu_page .button_container {
+	margin-top: -5px;
+}
+
+.create_menu_page .quantity_button:hover {
+	cursor: pointer;
+}
+
+.create_menu_page input[type=text].price_per_order_input {
+	width: 240px;
+	margin-top: 0px;
+}
+
+
+/* -------------------- Edit Menu Page - nothing done */ 
+
+.edit_menu_page .main_container {
+	background-color: #0e6552;
+}
+
+.edit_menu_page .menu_form {
+	background-color: #fff;	
+}
+
+
+/* -------------------- Daily Menu Page */
+
+.daily_menu_page .server_information {
+	background-color: green;
+	width: 300px;
+	float: left;
+}
+
+.daily_menu_page .item_summary_container {
+	border: 1px solid #ccc;
+	padding: 20px 0;
+	width: 300px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+
+
+.daily_menu_page .special_requests {
+	display: block;
+	width: 350px;
+	height: 50px;
+	margin: 20px auto;
+}
+
+
+/* -------------------- Daily Menu - Print Placards */
+
+.daily_menu_print_placards_page .placard_container {
+	width: 300px;
+	height: 100px;
+	float: left;
+	text-transform: capitalize;
+	border: 1px solid #ccc;
+}
+
+.daily_menu_print_menu_page {
+	text-transform: capitalize;
+}
+
+.edit_client_page .main_container {
+	background-color: #0e6552;
+}
+
+.edit_client_page .client_form {
+	background-color: #fff;
+}
 
 
