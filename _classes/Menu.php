@@ -657,7 +657,7 @@ class Menu {
         $end_year = date('Y', strtotime('+1 year'));
         $month_options_array = [[$start_month_number, $start_month], [$end_month_number, $end_month]];
         $year_options_array = [$start_year, $end_year];
-        $server_image_path = '../_images/server-placeholder.jpg';
+        $server_image_path = '';
         $menu_item_hidden_ids = "";
         $total_orders_for_menu = 0;
         $total_served_for_menu = 0;
@@ -689,7 +689,7 @@ class Menu {
             $mode = 'create';
             $form_action = '../_actions/create-menu.php';
             $current_day = 0;
-            $meal_description = "Meal Description";
+            $meal_description = "";
             $number_of_meals = $meals_per_day;
             $menu_image_path_orginal = "";
             $menu_image_path = "<img width='100' src='../_images/menu-image-placeholder.jpg' />";

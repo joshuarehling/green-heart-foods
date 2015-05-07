@@ -25,9 +25,7 @@
 	<h2>Menu</h2>
 </div>
 
-<div class="message">
-	<?php Messages::render(); ?>
-</div>
+<?php Messages::render(); ?>
 
 <div class="client_form">
 	<?php echo $menu_form; ?>

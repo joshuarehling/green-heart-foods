@@ -41,8 +41,11 @@ $(document).ready(function() {
 
 	$('.create_and_edit_menu select.server').change(function(event) {
 		var image_path = $('option:selected', this).attr('data-server-image-path');
-		console.log(image_path);
-		$('.server-image').attr('src', '../'+image_path);
+		if(image_path == undefined) {
+			$('.server-image').attr('src', '');
+		} else {
+			$('.server-image').attr('src', '../'+image_path);	
+		}
 	});
 
 	/* 
