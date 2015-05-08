@@ -23,9 +23,9 @@ Visit http://ryanfait.com/ for more information.
 
 */
 
-var checkboxHeight = "90";
-var radioHeight = "90";
-var selectWidth = "190";
+var checkboxHeight = "60";
+var radioHeight = "60";
+var selectWidth = "300";
 
 
 /* No need to change anything after this */

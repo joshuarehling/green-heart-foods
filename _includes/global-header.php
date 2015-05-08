@@ -3,7 +3,8 @@
 	require_once(SERVER_ROOT . '/_classes/Client.php');
 	require_once(SERVER_ROOT . '/_classes/User.php');
 	if(isset($_SESSION['user_display_name'])) {
-		$login_message = "".$_SESSION['user_display_name'].", <a href='".WEB_ROOT."/_actions/logout.php'>Sign Out</a>";
+		//$login_message = "Hello ".$_SESSION['user_display_name'].", <a href='".WEB_ROOT."/_actions/logout.php'>Sign Out</a>";
+		$login_message = "Hello Food Lover, <a href='".WEB_ROOT."/_actions/logout.php'>Sign Out</a>";
 	} else {
 		$login_message = "<a href='".WEB_ROOT."/login/'>Login</a>";
 	}
@@ -41,16 +42,18 @@
 	<title>Green Heart Foods<?php echo $page_title_detail; ?></title>
 	<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>/_css/normalize.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>/_css/main.css">
-	
+	<!-- custom select menus -->
+	<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>/_css/dropdowns/cs-select.css" /><!-- don't change these -->
+	<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>/_css/dropdowns/cs-skin-border.css" /><!-- sets visual style -->
+	<!-- google fonts -->
 	<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700,400,300' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Oswald:400,700|Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
-	
+	<!-- various stuff -->	
 	<script type="text/javascript" src="<?php echo WEB_ROOT; ?>/_javascript/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript" src="<?php echo WEB_ROOT; ?>/_javascript/main.js"></script>
-
-	<script type="text/javascript" src="<?php echo WEB_ROOT; ?>/_javascript/checkboxes.js"></script>
-	
-	<!-- include this to handle high res @2x photos -->
+	<!-- custom checkboxes -->
+	<script type="text/javascript" src="<?php echo WEB_ROOT; ?>/_javascript/checkboxes/checkboxes.js"></script>
+	<!-- retina images -->
 	<script type="text/javascript" src="<?php echo WEB_ROOT; ?>/_javascript/retina/retina.min.js"></script>
 	<script type="text/javascript" src="<?php echo WEB_ROOT; ?>/_javascript/retina/retina.js"></script>
 
@@ -69,10 +72,10 @@
 								echo "<a href='".WEB_ROOT."/admin/clients.php'>Clients</a>";
 								break;
 							case 2:
-								echo "<a href='".WEB_ROOT."/clients/weekly-menu.php?client-id=$client_id'>Menu</a>";
+								echo "<a href='".WEB_ROOT."/clients/weekly-menu.php?client-id=$client_id'>Weekly Menu</a>";
 								break;
 							case 3:
-								echo "<a href='".WEB_ROOT."/clients/weekly-menu.php?client-id=$client_id'>Menu</a>";
+								echo "<a href='".WEB_ROOT."/clients/weekly-menu.php?client-id=$client_id'>Weekly Menu</a>";
 								break;
 							default:
 								break;
@@ -83,6 +86,3 @@
 			<li><?php echo $login_message; ?></li>
 		</ul>
 	</header>
-	<!--<div class="login_status_message">
-		<p><?php echo $login_message; ?></p>
-	</div>-->

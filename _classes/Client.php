@@ -303,23 +303,18 @@ class Client {
             </fieldset>
 
             <fieldset class="checkbox_container">
-                <label>Meals</label>
-                <ul>
-					<li><input  class="styled box" name='has_breakfast' type='checkbox' $has_breakfast_checked value="1" />
-					<label class="box_label">Breakfast</label></li>
-					<li><input class="styled box" name='has_lunch' type='checkbox' $has_lunch_checked value="1" />
-					<label class="box_label">Lunch</label></li>
-					<li><input class="styled" name='has_dinner' type='checkbox' $has_dinner_checked value="1" />
-					<label class="box_label">Dinner</label></li>
-					<li><input class="styled" name='has_snack' type='checkbox' $has_snack_checked value="1" />
-					<label class="box_label">Snacks</label></li>
+				<label>Meals</label>
+				<ul>
+					<li><span class="move_box"><input class="styled" name='has_breakfast' type='checkbox' $has_breakfast_checked value="1" /></span><label class="box_label">Breakfast</label></li>
+					<li><span class="move_box"><input class="styled" name='has_lunch' type='checkbox' $has_lunch_checked value="1" /></span><label class="box_label">Lunch</label></li>
+					<li><span class="move_box"><input class="styled" name='has_dinner' type='checkbox' $has_dinner_checked value="1" /></span><label class="box_label">Dinner</label></li>
+					<li><span class="move_box"><input class="styled" name='has_snack' type='checkbox' $has_snack_checked value="1" /></span><label class="box_label">Snacks</label></li>
 				</ul>
-            </fieldset>
+			</fieldset>
 
             <fieldset class="checkbox_container no_rule">
                 <ul>
-				<li><input name='is_active' type='checkbox' $is_active_checked value="1" />
-                <label class="box_label">Active Client</label></li>
+					<li><span class="move_box"><input class="styled" name='is_active' type='checkbox' $is_active_checked value="1" /></span><label class="box_label">Active Client</label></li>
 				</ul>
             </fieldset>
 

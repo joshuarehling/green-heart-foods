@@ -1,7 +1,7 @@
-/* Updated Thu 6 May 2015 */
+/* Updated Thu 7 May 2015 */
 
 
-/* -------------------- Redefine */
+/* -------------------- Redefine Global */
 
 body {
 	margin: 0;
@@ -31,7 +31,13 @@ label {
 h1 {
 	margin: 0;
 	padding: 0;
+	font-size: 13em;
+	text-align: center;
+	color: #FFFFFF;
+	padding-bottom: 160px;
+	background-color: #0e6552;
 }
+
 h2, h3, h4, p {
 	margin: 0;
 	padding: 0;
@@ -46,8 +52,22 @@ h2, h3, h4, p {
 *:-ms-input-placeholder { /* IE 10+ */ color: #a7a9b5; }
 
 
-/* -------------------- Header */
+/* -------------------- Shared Page Elements */ 
 
+.fake_hr {
+	height: 2px;
+	background-color: #84445e;
+	clear: both;
+	margin: 20px 0;
+}
+
+/* Page Structure */
+.main_container {
+	width: 100%;
+	background-color: #FFFFFF;
+}
+
+/* Header */
 header {
 	margin: 0 0px;
 	padding: 30px 0 80px 0;
@@ -76,9 +96,22 @@ header .green_heart_foods_logo {
 	margin-left: 30px;
 }
 
+.page_header {
+	display: block;
+	background-color: #84445e;
+	text-align: center;
+	color: #fff;
+	padding: 30px 0;
+	margin: 0;
+	overflow: auto;
+	font-size: 3em;
+}
 
-/* -------------------- Footer */
+.page_header h2 {
+	font-weight: 700;
+}
 
+/* Footer */
 footer {
 	background-color: #34b67d;
 	text-align: center;
@@ -117,46 +150,6 @@ footer .contact {
 
 footer .contact a {
 	color: #abd14f;
-}
-
-
-/* -------------------- Shared Page Elements */ 
-
-/* Page Structure */
-.main_container {
-	width: 100%;
-	background-color: #FFFFFF;
-}
-
-.fake_hr {
-	height: 2px;
-	background-color: #84445e;
-	clear: both;
-	margin: 20px 0;
-}
-
-/* Page Header */
-.page_header {
-	display: block;
-	background-color: #84445e;
-	text-align: center;
-	color: #fff;
-	padding: 30px 0;
-	margin: 0;
-	overflow: auto;
-	font-size: 3em;
-}
-
-.page_header h2 {
-	font-weight: 700;
-}
-
-h1 {
-	font-size: 13em;
-	text-align: center;
-	color: #FFFFFF;
-	padding-bottom: 160px;
-	background-color: #0e6552;
 }
 
 /* Errors & Messages */
@@ -221,8 +214,22 @@ h1 {
 	color: #84445e;
 }
 
+/* Checkboxes & Radio */
+.checkbox, .radio {
+	width: 60px;
+	height: 60px;
+	padding: 0 0 0 0;
+	margin: 0;
+	background: url(../_images/ui/checkboxes.png) no-repeat;
+	display: block;
+}
 
-/* -------------------- Login Page */
+.radio {
+	background: url(../_images/ui/radio.png) no-repeat;
+}
+
+
+/* -------------------- Login Page - DONE */
 
 .login_page .main_container {
 	background-color: #0e6552;
@@ -304,7 +311,7 @@ h1 {
 }
 
 
-/* -------------------- Create & Edit Client Page - checkboxes remain */ 
+/* -------------------- Create & Edit Client Pages - DONE */ 
 
 .create_client_page .page_header,
 .edit_client_page .page_header {
@@ -355,6 +362,7 @@ h1 {
 	margin: 0;
 	overflow: auto;
 	font-size: 3em;
+	font-weight: 700;
 }
 
 .create_client_page .secondary_label,
@@ -365,6 +373,7 @@ h1 {
 	padding: 0 0 0 30px;
 	margin: 60px auto 0 auto;
 	font-size: 2.2em;
+	font-weight: 400;
 }
 
 .create_client_page .header_logo label,
@@ -387,7 +396,13 @@ h1 {
 	width: 900px;
 	color: #a35d79;
 	margin: 0 auto;
+	padding: 30px;
 	border: 2px solid #84445e;
+}
+
+.create_client_page .header_logo input:hover,
+.edit_client_page .header_logo input:hover {
+	cursor: pointer;
 }
 
 .create_client_page .grid_logo label,
@@ -410,67 +425,50 @@ h1 {
 	width: 240px;
 	color: #a35d79;
 	margin: 0 auto;
+	padding: 30px;
 	border: 2px solid #84445e;
 }
 
-/* WORKING on this still - check boxes */
+.create_client_page .grid_logo input:hover,
+.edit_client_page .grid_logo input:hover {
+	cursor: pointer;
+}
+
 .create_client_page .box_label,
 .edit_client_page .box_label {
 	color: #a7a9b5;
 	text-align: center;
-	padding: 0 0 0 0px;
-	margin: 0px auto 0 auto;
-	font-size: 2.2em;
-}
-
-.create_client_page .box,
-.edit_client_page .box {
-	color: #a7a9b5;
-	text-align: center;
-	padding: 0 0 0 0px;
-	margin: 0px auto 0 auto;
-	font-size: 2.2em;
-	margin-left: 50px;
-}
-
-.checkbox_container ul {
-	list-style: none;
-	width: 960px;
-	background-color: pink;
+	padding: 20px 0 0 0;
 	margin: 0 auto;
-	text-align: center;
+	font-size: 2.2em;
+	font-weight: 400;
 }
 
-.checkbox_container li {
-	display: inline-block;
-	background-color: yellow;
-	text-align: center;
-	width: 250px;
-}
-
-.checkbox, .radio {
-	width: 90px;
-	height: 90px;
-	padding: 0 0px 0 0;
-	background: url(../_images/ui/checkboxes.png) no-repeat;
+.create_client_page .move_box,
+.edit_client_page .move_box {
 	display: block;
+	width: 60px;
+	text-align: center;
+	margin: 0 auto;
 }
 
-.radio {
-	background: url(radio.png) no-repeat;
+.create_client_page .checkbox_container ul,
+.edit_client_page .checkbox_container ul {
+	list-style: none;
+	width: 980px;
+	margin: 0 auto;
+	padding: 0;
+	text-align: center;
 }
 
-.select {
-	position: absolute;
-	width: 158px; /* With the padding included, the width is 190 pixels: the actual width of the image. */
-	height: 21px;
-	padding: 0 24px 0 8px;
-	color: #fff;
-	font: 12px/21px arial,sans-serif;
-	background: url(select.png) no-repeat;
-	overflow: hidden;
+.create_client_page .checkbox_container li,
+.edit_client_page .checkbox_container li {
+	display: inline-block;
+	text-align: center;
+	width: 240px;
+	padding: 0;
+	margin: 0;
 }
-/* WORKING - check boxes - END */
 
 
 /* -------------------- Weekly Menu Page */
@@ -480,13 +478,11 @@ h1 {
 }
 
 .weekly_menu_page header {
-	background-image: url(../_uploads/554948a88bbde.jpg);
 	background-repeat: repeat-x;
 	background-position: center top;
 }
 
 .weekly_menu_page .hero {
-	background-image: url(../_uploads/554948a88bbde.jpg);
 	background-repeat: repeat-x;
 	background-position: center bottom;
 	height: 360px;
@@ -506,6 +502,10 @@ h1 {
 }
 
 .weekly_menu_page .page_header a {
+	color: #a35d79;
+}
+
+.weekly_menu_page .page_header a.selected {
 	color: #FFFFFF;
 }
 
@@ -533,28 +533,49 @@ h1 {
 }
 
 
-/* -------------------- Create Menu Page - header, checkboxes. dropdowns remain */ 
+/* -------------------- Create & Edit Menu Pages - header & dropdowns remain and various otherthings on Edit Page */ 
 
+/* ///////////// */
+.edit_menu_page header,
+.create_menu_page header {
+	background-repeat: repeat-x;
+	background-position: center top;
+}
+
+.edit_menu_page .hero,
+.create_menu_page .hero {
+	background-repeat: repeat-x;
+	background-position: center bottom;
+	height: 360px;
+	width: 100%;
+}
+/* ///////////// */
+
+.edit_menu_page .page_header,
 .create_menu_page .page_header {
 	background-image: url(../_images/ui/page_header_arrow.jpg);
 	background-repeat: no-repeat;
 	background-position: center bottom;
 }
 
+.edit_menu_page .client_form,
 .create_menu_page .client_form {
 	margin: 0 auto;
 	background-color: #FFFFFF;
 }
 
+.edit_menu_page .server_and_meal,
 .create_menu_page .server_and_meal {
 	width: 960px;
 	margin: 0 auto;
 }
 
+.edit_menu_page .meal_image,
 .create_menu_page .meal_image {
 	text-align: right;
 }
 
+.edit_menu_page .meal_image img,
 .create_menu_page .meal_image img {
 	background-color: #a35d79;
 	width: 630px;
@@ -563,8 +584,12 @@ h1 {
 	border: 2px solid #84445e;
 	margin: 0px auto 0 auto;
 	padding: 0px;
+	background-image: url(../_images/ui/default_meal.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
 }
 
+.edit_menu_page .meal_image input,
 .create_menu_page .meal_image input {
 	border: none;
 	font-size: 1em;
@@ -577,10 +602,17 @@ h1 {
 	border: 2px solid #84445e;
 }
 
+.edit_menu_page .meal_image input:hover,
+.create_menu_page .meal_image input:hover {
+	cursor: pointer;
+}
+
+.edit_menu_page .server_image,
 .create_menu_page .server_image {
 	float: left;
 }
 
+.edit_menu_page .server_image img,
 .create_menu_page .server_image img {
 	background-color: #a35d79;
 	width: 296px;
@@ -594,11 +626,13 @@ h1 {
 	background-position: center center;
 }
 
+.edit_menu_page .server_image select,
 .create_menu_page .server_image select {
 	width: 300px;
 	display: block;
 }
 
+.edit_menu_page fieldset,
 .create_menu_page fieldset {
 	border: none;
 	border-bottom: 5px solid #84445e;
@@ -609,6 +643,7 @@ h1 {
 	text-align: center;
 }
 
+.edit_menu_page fieldset h3,
 .create_menu_page fieldset h3 {
 	text-align: center;
 	color: #84445e;
@@ -619,6 +654,7 @@ h1 {
 	font-weight: 700;
 }
 
+.edit_menu_page fieldset input[type=text],
 .create_menu_page fieldset input[type=text] {
 	border: 2px solid #84445e;
 	text-transform: uppercase;
@@ -631,33 +667,53 @@ h1 {
 	color: #84445e;
 }
 
-/* ////////////////// */
-
-.create_menu_page .check_list {
+.edit_menu_page .checkbox_container ul,
+.create_menu_page .checkbox_container ul {
+	list-style: none;
 	width: 960px;
 	margin: 0 auto;
+	padding: 0;
+	text-align: left;
 }
 
-.create_menu_page .check_group {
+.edit_menu_page .checkbox_container li,
+.create_menu_page .checkbox_container li {
+	display: inline-block;
 	text-align: left;
 	width: 300px;
-	display: inline-block;
+	height: 60x;
+	padding: 0;
+	margin: 25px 0;
 }
 
-.create_menu_page .check_group label {
+.edit_menu_page .box_label,
+.create_menu_page .box_label {
 	color: #a7a9b5;
-	padding: 30px 0;
-	margin: 0 0 0 15px;
-	font-size: 1.5em;
+	text-align: left;
+	padding: 0px 0 0 0;
+	margin: 0 0 0 75px;
+	font-size: 2.2em;
+	font-size: 1.2em;
+	line-height: 60px;
+	font-weight: 400;
 	display: inline-block;
+	float: left;
 }
 
-/* ////////////////// */
+.edit_menu_page .move_box,
+.create_menu_page .move_box {
+	display: inline;
+	width: 60px;
+	text-align: center;
+	margin: 0;
+}
 
+.edit_menu_page fieldset.no_rule,
 .create_menu_page fieldset.no_rule {
 	border-bottom: none;
 }
 
+.edit_menu_page .order_summary,
 .create_menu_page .order_summary {
 	border: 2px solid #84445e;
 	text-transform: uppercase;
@@ -672,12 +728,15 @@ h1 {
 	background-color: #a35d79;
 }
 
+.edit_menu_page .order_summary .total_served_for_item_serves,
+.edit_menu_page .order_summary .total_served_for_item,
 .create_menu_page .order_summary .total_served_for_item_serves,
 .create_menu_page .order_summary .total_served_for_item {
 	color: #a7a9b5;
 	color: #84445e;
 }
 
+.edit_menu_page .button_container p,
 .create_menu_page .button_container p {
 	font-size: 2em;
 	padding: 0px 0px 15px 0px;
@@ -685,15 +744,29 @@ h1 {
 	background-color: #84445e;
 }
 
+.edit_menu_page .button_container .total_served_for_menu_serves,
+.edit_menu_page .button_container .total_served_for_menu,
 .create_menu_page .button_container .total_served_for_menu_serves,
 .create_menu_page .button_container .total_served_for_menu {
 	color: #a35d79;
 }
 
+.edit_menu_page .button_container,
 .create_menu_page .button_container {
 	margin-top: -5px;
+	width: 100%;
+	position: fixed;
+	bottom: 0px;
+	z-index: 4000;
 }
 
+.edit_menu_page footer,
+.create_menu_page footer {
+	/* so it's not covered by the sticky bar */
+	margin-bottom: 200px;
+}
+
+.edit_menu_page .quantity_button,
 .create_menu_page .quantity_button {
 	-webkit-user-select: none;  	/* Chrome all / Safari all */
   	-moz-user-select: none;     	/* Firefox all */
@@ -703,24 +776,24 @@ h1 {
   	user-select: none;    
 }
 
+.edit_menu_page .quantity_button:hover,
 .create_menu_page .quantity_button:hover {
 	cursor: pointer;
 }
 
+.edit_menu_page input[type=text].price_per_order_input,
 .create_menu_page input[type=text].price_per_order_input {
 	width: 240px;
 	margin-top: 0px;
 }
 
-
-/* -------------------- Edit Menu Page - nothing done */ 
-
-.edit_menu_page .main_container {
-	background-color: #0e6552;
-}
-
-.edit_menu_page .menu_form {
-	background-color: #fff;	
+.edit_menu_page .day,
+.edit_menu_page .month,
+.edit_menu_page .year,
+.create_menu_page .day,
+.create_menu_page .month,
+.create_menu_page .year {
+	margin: 0 15px;
 }
 
 

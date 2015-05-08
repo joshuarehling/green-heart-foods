@@ -20,5 +20,18 @@
 		</ul>
 	</footer>
 	</div> <!-- Close main-container -->
+	
+	<!-- Custom Dropdowns -->	
+		<script src="<?php echo WEB_ROOT; ?>/_javascript/dropdowns/classie.js"></script>
+		<script src="<?php echo WEB_ROOT; ?>/_javascript/dropdowns/selectFx.js"></script>
+		<script>
+			(function() {
+				[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {	
+					new SelectFx(el);
+				} );
+			})();
+		</script>
+		<!-- Custom Dropdowns End -->
+	
 </body> <!-- Close body -->
 </html> <!-- Close html -->

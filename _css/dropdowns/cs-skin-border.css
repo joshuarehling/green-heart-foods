@@ -1,0 +1,43 @@
+
+div.cs-skin-border {
+	font-size: 2em;
+	max-width: 300px;
+	color: #a35d79;
+}
+
+.cs-skin-border > span {
+	background-color: #84445e;
+	padding: 20px 90px 20px 30px;
+
+}
+
+.cs-skin-border > span::after,
+.cs-skin-border .cs-selected span::after {
+	content: url(../../_images/ui/select_arrow.png);
+	line-height: 20px;
+	right: 25px;
+}
+
+.cs-skin-border .cs-selected span::after {
+	content: ''; /* needed */
+}
+
+.cs-skin-border.cs-active > span {
+}
+
+.cs-skin-border .cs-options {
+	font-size: 1em;
+	color: #FFFFFF;
+	background-color: #a35d79;
+}
+
+.cs-skin-border ul span {
+	padding: 20px 30px 20px 30px;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+.cs-skin-border .cs-options li span:hover,
+.cs-skin-border li.cs-focus span {
+	background-color: #ff7a18;
+}
