@@ -610,9 +610,16 @@ footer .contact a {
 .edit_menu_page .server_image,
 .create_menu_page .server_image {
 	float: left;
+	width: 296px;
+	height: 296px;
+	background-image: url(../_images/ui/default_server.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-color: #a35d79;
+
 }
 
-.edit_menu_page .server_image img,
+/*.edit_menu_page .server_image img,
 .create_menu_page .server_image img {
 	background-color: #a35d79;
 	width: 296px;
@@ -624,7 +631,7 @@ footer .contact a {
 	background-image: url(../_images/ui/default_server.jpg);
 	background-repeat: no-repeat;
 	background-position: center center;
-}
+}*/
 
 .edit_menu_page .server_image select,
 .create_menu_page .server_image select {

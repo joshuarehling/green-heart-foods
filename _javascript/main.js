@@ -42,9 +42,9 @@ $(document).ready(function() {
 	$('.create_and_edit_menu select.server').change(function(event) {
 		var image_path = $('option:selected', this).attr('data-server-image-path');
 		if(image_path == undefined) {
-			$('.server-image').attr('src', '');
+			$('.server_image').css('background-image', 'url(../_images/ui/default_server.jpg)');
 		} else {
-			$('.server-image').attr('src', '../'+image_path);	
+			$('.server_image').css('background-image', 'url(../'+image_path+')');
 		}
 	});
 
@@ -59,14 +59,22 @@ $(document).ready(function() {
 		handle_quantity_button_click(target);
 	});
 
-	$('.like-heart').click(function(event) {
-		//TODO Fix this bug.
+	$('.client .like-heart').click(function(event) {
+		if($(this).hasClass('disabled')) {
+			return;
+		};
 		var this_item = $(this);
 		var menu_item_id = this_item.attr('data-menu-item-id');
+		var increment_id = this_item.parent().attr('data-increment-id');
 		$.post('../_actions/like-menu-item.php', { 
 			menu_item_id: menu_item_id
 		}).done(function(data){
+			console.log(data);
 			if(data == 1) {
+				var current_count_span = $('.menu-item-'+increment_id+' .like_count');
+				var current_count = Number(current_count_span.html());
+				current_count++;
+				current_count_span.html(current_count);
 				this_item.addClass('liked disabled');
 			}
 		});

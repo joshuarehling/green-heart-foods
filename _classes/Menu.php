@@ -391,7 +391,7 @@ class Menu {
                 }
                 $html .= "<div data-increment-id='$i' class='menu-item menu-item-$i'>";
                 $html .= "<div data-menu-item-id='$menu_item_id' class='like-heart $like_heart_class'>Like Heart</div>";
-                $html .= "<p>".$like_count." Likes</p>";
+                $html .= "<p><span class='like_count'>".$like_count."</span> Likes</p>";
                 $html .= "<p>".$result[$i]['menu_item_name'].'</p>';
                 $html .= "<p>".$result[$i]['ingredients'].'</p>';
                 $html .= "<p>".$result[$i]['special_notes'].'</p>';
@@ -767,7 +767,7 @@ class Menu {
         $html .=    "<fieldset>";
         $html .=        "<div class='server_and_meal'>";
         $html .=            "<div class='server_image'>";
-        $html .=                "<img class='server-image' src='$server_image_path' />";
+        //$html .=                "<img class='server-image' src='$server_image_path' />";
         $html .=                "<select class='server cs-select cs-skin-border' name='server_id'>";
         $html .=                    "<option value='none'>Select Server</option>";
         $html .=                        $server_list_options;

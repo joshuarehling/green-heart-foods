@@ -11,7 +11,7 @@
 ?>
 
 <?php
-	$page_class = 'daily_menu_page';
+	$page_class = 'daily_menu_page client';
 	$page_title_detail = 'Daily Menu';
 	require_once("../_config/config.php");
     require_once(SERVER_ROOT . "/_includes/restrict-access-client.php");

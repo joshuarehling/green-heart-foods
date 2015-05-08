@@ -14,6 +14,10 @@
 	$menu_form = $menu->get_menu_form($client_id, $service_date, $meal_id);
 ?>
 
+<div class='page_header'>
+	<h2>Edit Menu</h2>
+</div>
+
 <?php echo Messages::render(); ?>
 
 <div class="menu_form">
