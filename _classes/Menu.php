@@ -746,11 +746,11 @@ class Menu {
         $html .= "<form class='create_menu_form' action='$form_action' method='post' enctype='multipart/form-data'>";
         $html .=    "<fieldset>";
         $html .=        "<h3>Date</h3>";
-        $html .=        "<select name='service_month' class='month cs-select cs-skin-border'>";
+        $html .=        "<select name='service_month' class='month'>";
         $html .=                $month_options;
         $html .=        "</select>";
-        $html .=        "<select name='service_day' class='day cs-select cs-skin-border'></select>";
-        $html .=        "<select name='service_year' class='year cs-select cs-skin-border'>";
+        $html .=        "<select name='service_day' class='day'></select>";
+        $html .=        "<select name='service_year' class='year'>";
         $html .=            $year_options;
         $html .=        "</select>";
         $html .=    "</fieldset>";
@@ -767,8 +767,7 @@ class Menu {
         $html .=    "<fieldset>";
         $html .=        "<div class='server_and_meal'>";
         $html .=            "<div class='server_image'>";
-        //$html .=                "<img class='server-image' src='$server_image_path' />";
-        $html .=                "<select class='server cs-select cs-skin-border' name='server_id'>";
+        $html .=                "<select class='server cs-select cs-skin-border' name='server_id' id='server_test'>";
         $html .=                    "<option value='none'>Select Server</option>";
         $html .=                        $server_list_options;
         $html .=                "</select>";
