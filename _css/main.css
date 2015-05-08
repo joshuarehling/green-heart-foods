@@ -764,6 +764,7 @@ footer .contact a {
 .create_menu_page footer {
 	/* so it's not covered by the sticky bar */
 	margin-bottom: 200px;
+	margin-top: -5px;
 }
 
 .edit_menu_page .quantity_button,
@@ -794,6 +795,10 @@ footer .contact a {
 .create_menu_page .month,
 .create_menu_page .year {
 	margin: 0 15px;
+}
+
+#server_test {
+	display: none;
 }
 
 
