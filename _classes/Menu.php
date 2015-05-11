@@ -465,8 +465,8 @@ class Menu {
         $web_root = WEB_ROOT;
         if(count($result) == 1) {
             // $html .= "<div class='hero'></div><!--<img src='../_uploads/".$result[0]['company_logo_large']."' />-->";
-            $image_path = $web_root."/_uploads/".$result[0]['company_logo_large'];
-            $html .= "<div class='hero' style='background-image: url($image_path)'></div>";
+            // $image_path = $web_root."/_uploads/".$result[0]['company_logo_large'];
+            // $html .= "<div class='hero' style='background-image: url($image_path)'></div>";
         }
         $last_week_selected = '';
         $this_week_selected = '';

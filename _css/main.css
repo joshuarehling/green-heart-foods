@@ -96,6 +96,11 @@ header .green_heart_foods_logo {
 	margin-left: 30px;
 }
 
+header.background_logo {
+	height: 430px;
+	background-position: center bottom;
+}
+
 .page_header {
 	display: block;
 	background-color: #84445e;

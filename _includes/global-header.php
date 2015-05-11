@@ -16,20 +16,20 @@
 	} else {
 		$page_title_detail = " - ".$page_title_detail;
 	}
-
 	if(isset($_GET['client-id'])) {
 		$client_id = $_GET['client-id'];
 		$client = new Client();
 		$client_result = $client->get_client($client_id);	
 	}
-
-	switch ($page_class) {
-		case 'weekly_menu_page':
-			$image_path = WEB_ROOT."/_uploads/".$client_result[0]['company_logo_large'];
-			$header_style = "style='background-image:url($image_path)'";
-			break;
-		default:
-			$header_style = "";
+	$client_header_array = array('daily_menu_page', 'weekly_menu_page', 'create_and_edit_menu create_menu_page', 'create_and_edit_menu edit_menu_page', 'daily_menu_page client');
+	$use_client_header = array_search($page_class, $client_header_array);
+	if($use_client_header > -1) {
+		$image_path = WEB_ROOT."/_uploads/".$client_result[0]['company_logo_large'];
+		$header_style = "background-image:url($image_path)";
+		$header_class = "background_logo";
+	} else {
+		$header_style = "";
+		$header_class = "";
 	}
 ?>
 
@@ -61,7 +61,7 @@
 
 <body class="<?php echo $page_class; ?>">
 <div class="main_container">
-	<header <?php echo $header_style; ?>>
+	<header <?php echo "style='$header_style' class='$header_class'"; ?>>
 		<div class="green_heart_foods_logo"><a href="http://www.greenheartfoods.com"><img src="../_images/ui/header_ghf_logo.png" /></a></div>
 		<ul>
 			<li>
