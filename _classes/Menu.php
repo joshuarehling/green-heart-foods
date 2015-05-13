@@ -130,7 +130,7 @@ class Menu {
             $result = $query->execute($arguments);
         }
         if($query->rowCount() === 1){
-            Messages::add('The menu has been created.');
+            Messages::add('The menu has been created');
             header("Location: ../admin/daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id");
         }
     }
@@ -316,14 +316,15 @@ class Menu {
 
         $html .= "<div class='page_header'>";
         if($context == 'green_heart_foods_admin') {
-            $html .= "<a href='$web_root/admin/daily-menu-print-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Menu</a>";
+            $html .= "<a class='menu' href='$web_root/admin/daily-menu-print-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Menu</a>";
+        }
+        if($context == 'green_heart_foods_admin') {
+            $html .= "<a class='placard' href='$web_root/admin/daily-menu-print-placards.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Placards</a>";
         }
         $html .= "<h2>$weekday</h2>";
-        if($context == 'green_heart_foods_admin') {
-            $html .= "<a href='$web_root/admin/daily-menu-print-placards.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Placards</a>";
-        }
         $html .= "</div>";
-        $html .= date('M d', strtotime($service_date))."<br />";
+        $html .= "<div class='date_and_meal'>";
+        $html .= "<h3>".date('M d', strtotime($service_date))."</h3><br />";
         $html .= "<select data-client-id='$client_id' data-service-date='$service_date' class='meal-types'>";
         for($i=0; $i<count($result); $i++) {
             $meal_id_option = $result[$i]['meal_id'];
@@ -358,17 +359,18 @@ class Menu {
             $total_price = 0;
 
             $html .= "<p class='meal_description'>".$result[0]['meal_description']."</p>";
-            $html .= "<div class='fake_hr'></div>";
-            $html .= "<div class='server_information'>";
+            $html .= '</div>';
+            $html .= '<div class="server_and_meal_container"><div class="server_and_meal">';
+            $html .= "<div class='server_information server_image'>";
             $html .=    "<img src='$server_image_path' />";
-            $html .=    $result[0]['server_first_name']."<br />";
-            $html .=    $result[0]['server_phone_number']."<br />";
-            $html .=    "<p>Will be servings lunch today.</p>";
+            $html .=    "<div class='name'>".$result[0]['server_first_name']."</div>";
+            $html .=    "<div class='number'><a href='tel:+".$result[0]['server_phone_number']."' />".$result[0]['server_phone_number']."</a></div>";
+            $html .=    "<p>Will be serving<br />lunch today</p>";
             $html .= "</div>";
-            $html .= "<div class='menu_image_container'>";
+            $html .= "<div class='menu_image_container meal_image'>";
             $html .=    "<img src='$menu_image_path' />";
             $html .= "</div>";
-            $html .= "<div class='fake_hr'></div>";
+            $html .= "</div></div>";
             $html .= "<form action='".WEB_ROOT."/_actions/approve-menu-from-client.php' method='post' enctype='application/x-www-form-urlencoded'>";
             
             for($i=0; $i<$result_count; $i++) {
@@ -390,11 +392,11 @@ class Menu {
                     $like_heart_class = '';
                 }
                 $html .= "<div data-increment-id='$i' class='menu-item menu-item-$i'>";
-                $html .= "<div data-menu-item-id='$menu_item_id' class='like-heart $like_heart_class'>Like Heart</div>";
-                $html .= "<p><span class='like_count'>".$like_count."</span> Likes</p>";
-                $html .= "<p>".$result[$i]['menu_item_name'].'</p>';
+                $html .= "<div data-menu-item-id='$menu_item_id' class='like-heart $like_heart_class'><img src='$web_root/_images/ui/favorite_off.png' /></div>";
+                $html .= "<p class='number_of_likes'><span class='like_count'>".$like_count."</span> Likes</p>";
+                $html .= "<p class='dish_name'>".$result[$i]['menu_item_name'].'</p>';
                 $html .= "<p>".$result[$i]['ingredients'].'</p>';
-                $html .= "<p>".$result[$i]['special_notes'].'</p>';
+                $html .= "<p class='note'>".$result[$i]['special_notes'].'</p>';
                 for($j=0; $j<count($item_attributes_array); $j++) {
                     if($result[$i][$item_attributes_array[$j]] == 1) {
                         $checkboxes .= $item_attributes_array[$j]. ", ";
@@ -404,12 +406,12 @@ class Menu {
                 $checkboxes = str_replace('is_', '', $checkboxes);
                 $checkboxes = str_replace('_', ' ', $checkboxes);
                 $checkboxes = substr($checkboxes, 0, -2);
-                $html .= $checkboxes;
+                $html .= "<p>".$checkboxes."</p>";
                 $html .= "<p>".$result[$i]['special_notes']."</p>";
                 $html .= "<p>".$result[$i]['special_requests']."</p>";
-                $html .= "<p style='color:red'>1 Order Serves $servings_per_order People / $$price_per_order Per Order</p>";
-                $html .= "<div class='item_summary_container'>";
-                $html .=    "<span class='total_orders_for_item'>$order_quantity</span> Orders Serves <span class='total_served_for_item'>$calculated_number_of_item_servings</span> $<span class='total_cost_for_item'>$total_item_price</span>";
+                $html .= "<p class='single_order_size'>1 Order Serves $servings_per_order People / $$price_per_order Per Order</p>";
+                $html .= "<div class='order_summary'>";
+                $html .=    "<span class='total_orders_for_item'>$order_quantity</span> Orders <span class='total_served_for_item_serves'>Serves</span> <span class='total_served_for_item'>$calculated_number_of_item_servings</span> <span class='total_served_for_item_serves'>=</span> $<span class='total_cost_for_item'>$total_item_price</span>";
                 $html .= "</div>";
                 if($context == 'client_admin') {
                     $html .= "<a class='quantity_button subtract'>Subtract</a>";
@@ -424,22 +426,22 @@ class Menu {
                     $html .= "<input type='hidden' name='client_id' value='$client_id' />";
                     $html .= "<input type='hidden' name='meal_id' value='$meal_id' />";
                 }
-                if($i < $result_count-1) {
+                /*if($i < $result_count-1) {
                     $html .= "<div class='fake_hr'></div>";    
-                }
+                }*/
                 $html .= "</div>"; // Ends menu-item
             }
-            $html .= "<div class='order_summary'>";
-            $html .=    "<p><span class='total_orders_for_menu'>$total_orders</span> Orders Serves <span class='total_served_for_menu'>$total_servings</span> = <span class='total_cost_for_menu'>$$total_price</span></p>";
+            $html .= "<div class='button_container'>";
+            $html .=    "<p><span class='total_orders_for_menu'>$total_orders</span> Orders <span class='total_served_for_item_serves'>Serves</span> <span class='total_served_for_menu'>$total_servings</span> <span class='total_served_for_item_serves'>=</span> <span class='total_cost_for_menu'>$$total_price</span></p>";
             if($context == 'client_admin') {
                 $html .= "<input type='submit' class='place_order_button' value='Place Order'>";
             }
-            $html .= "</div>";
             if($context == 'green_heart_foods_admin') {
-                $html .= "<p><a href='".WEB_ROOT."/admin/edit-daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Edit Daily Menu</a></p>";
+                $html .= "<a class='page_button' href='".WEB_ROOT."/admin/edit-daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Edit Daily Menu</a>";
             }
+            $html .= "</div>";
         } else {
-            $html .= '<p>No results found.</p>';
+            $html .= '<p class="no_meal">No results found.</p>';
         }
         $html .= '</form>';
         return $html;
@@ -501,7 +503,7 @@ class Menu {
                 }
                 $service_date = $result[$i]['service_date'];
                 if($result[$i]['meal_id'] != $meal_id) {
-                    $html .= "<div class='meal_container'>";
+                    $html .= "<div class='outside_container'><div class='meal_container'>";
                     $html .=    "<div class='meal_details'>";
                     $html .=        "<p class='item_status'>".$result[$i]['item_status'].'</p>';
                     $html .=        "<p class='day_of_the_week'>".date('l', strtotime($result[$i]['service_date'])).'</p>';
@@ -516,21 +518,21 @@ class Menu {
 
                 if(isset($result[$i+1]['meal_id'])) {
                     if($result[$i+1]['meal_id'] != $meal_id) {
-                        $html .= "<a href='daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=".$result[$i]['meal_id']."'>View Items ></a><br />";
+                        $html .= "<a class='page_button' href='daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=".$result[$i]['meal_id']."'>View Items</a>";
                         $html .= "</div>"; // Close meal_details
        	                $html .= "<div class='meal_image'>";
                         $html .= "<img src='".WEB_ROOT."/_uploads/".$result[$i]['menu_image_path']."' />";
                         $html .= "</div>";
-                        $html .= "</div>";
+                        $html .= "</div></div>";
                     }    
                 } else {
                     $last_result = count($result)-1;
-                    $html .= "<a href='daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=".$result[$last_result]['meal_id']."'>View Items ></a><br />";
+                    $html .= "<a class='page_button' href='daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=".$result[$last_result]['meal_id']."'>View Items</a>";
                     $html .= "</div>"; // Close meal_details
                     $html .= "<div class='meal_image'>";
                     $html .=    "<img src='".WEB_ROOT."/_uploads/".$result[$last_result]['menu_image_path']."' />";
                     $html .= "</div>";
-                    $html .= "</div>";
+                    $html .= "</div></div>";
                 }
             }
             $html .= $menu_items;

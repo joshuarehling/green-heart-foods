@@ -17,7 +17,7 @@
 
 <div class="menu">
 	<div class="green-heart-foods-logo"></div>
-	<h1>Today's Menu</h1>
+	<h1>Menu</h1>
 	<?php 
 		$html = "";
 		$item_attributes_array = [
@@ -32,6 +32,8 @@
 		$html .= "<h2>".date('F d, Y', strtotime($menu_items[0]['service_date']))."</h2>";
 		for ($i=0; $i < count($menu_items); $i++) { 
 			$checkboxes = "";
+			$html .= "<div class='item_container'>";
+            $html .= "<div class='like-heart'><img src='../_images/ui/favorite_off.png' /></div>";
 			$html .= "<h3>".$menu_items[$i]['menu_item_name']."</h3>";
 			for($j=0; $j<count($item_attributes_array); $j++) {
                 if($menu_items[$i][$item_attributes_array[$j]] == 1) {
@@ -41,7 +43,8 @@
             $checkboxes = str_replace('is_', '', $checkboxes);
             $checkboxes = str_replace('_', ' ', $checkboxes);
             $checkboxes = substr($checkboxes, 0, -2);
-            $html .= ucwords($checkboxes);
+            $html .= "<p>".ucwords($checkboxes)."</p>";
+			$html .= "</div>";
 		}
 		echo $html;
 	?>

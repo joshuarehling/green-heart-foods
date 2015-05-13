@@ -1,4 +1,4 @@
-/* Updated Thu 7 May 2015 */
+/* Updated Thu 12 May 2015 */
 
 
 /* -------------------- Redefine Global */
@@ -163,8 +163,8 @@ footer .contact a {
 	text-align: center;
 	padding: 20px 0;
 	color: #FFFFFF;
-	font-size: 2em;
-	padding: 30px 0 30px 0;
+	font-size: 1.6em;
+	padding: 45px 0 45px 0;
 }
 
 /* Button Bar */
@@ -476,11 +476,7 @@ footer .contact a {
 }
 
 
-/* -------------------- Weekly Menu Page */
-
-.weekly_menu_page .weekly_menu {
-	background-color: #fff;
-}
+/* -------------------- Weekly Menu Page - dropdown remains */
 
 .weekly_menu_page header {
 	background-repeat: repeat-x;
@@ -497,12 +493,13 @@ footer .contact a {
 .weekly_menu_page .page_header ul {
 	list-style: none;
 	margin: 0px;
+	margin-left: -35px;
 }
 
 .weekly_menu_page .page_header li {
 	list-style-type: none;
 	display: inline;
-	margin: 0 90px;
+	margin: 0 70px;
 	line-height: .1em;
 }
 
@@ -512,22 +509,78 @@ footer .contact a {
 
 .weekly_menu_page .page_header a.selected {
 	color: #FFFFFF;
+	font-weight: 700;
+}
+
+.weekly_menu_page .outside_container {
+	overflow: auto; /* Scales the container to fit the floats. */
+	border: none;
+	border-bottom: 5px solid #84445e;
+	padding: 90px 0;
+	width: 90%;
+	min-width: 960px;
+	margin: 0 auto;
 }
 
 .weekly_menu_page .meal_container {
-	background-color: yellow;
-	overflow: auto; /* Scales the container to fit the floats. */
 	width: 960px;
-	margin: 90px auto;
-	padding: 90px 0;
-	border-bottom: 5px solid #84445e;
+	margin: 0px auto;
 }
 
 .weekly_menu_page .meal_details {
 	float: left;
 	width: 300px;
+	height: 630px;
 	margin: 0 30px 0 0;
-	background-color: red;
+	font-size: 1.2em;
+	line-height: 1.5em;
+	position: relative;
+	color: #a7a9b5;
+}
+
+.weekly_menu_page .meal_details .item_status {
+	color: #ee284e;
+	font-size: 2em;
+	margin: -7px 0 0 -3px;
+	line-height: 1.1em;
+}
+
+.weekly_menu_page .meal_details .day_of_the_week {
+	color: #84445e;
+	font-size: 2em;
+	margin-left: -3px;
+	line-height: 1.1em;
+}
+
+.weekly_menu_page .meal_details .month_and_date {
+	color: #7d7d7d;
+	font-size: 2em;
+	margin-left: -3px;
+	line-height: 1.1em;
+}
+
+.weekly_menu_page .meal_details .meal_name {
+	font-size: 2em;
+	margin-left: -3px;
+	line-height: 1.1em;
+	padding-bottom: 25px;
+}
+
+.weekly_menu_page .meal_details .menu_item_name {
+	width: 300px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+    -moz-binding: url('assets/xml/ellipsis.xml#ellipsis');
+}
+
+.weekly_menu_page .meal_details .page_button {
+	font-size: 1.5em;
+	padding: 25px 0;
+	margin: 0px;
+	position: absolute;
+	bottom: 0px;
 }
 
 .weekly_menu_page .meal_image {
@@ -535,12 +588,23 @@ footer .contact a {
 	width: 630px;
 	height: 630px;
 	overflow: hidden;
+	background-color: #a35d79;
+	background-image: url(../_images/ui/default_meal.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.weekly_menu_page .button_container {
+	margin-top: -5px;
+}
+
+.weekly_menu_page footer {
+	margin-top: -5px;
 }
 
 
 /* -------------------- Create & Edit Menu Pages - header & dropdowns remain and various otherthings on Edit Page */ 
 
-/* ///////////// */
 .edit_menu_page header,
 .create_menu_page header {
 	background-repeat: repeat-x;
@@ -554,7 +618,6 @@ footer .contact a {
 	height: 360px;
 	width: 100%;
 }
-/* ///////////// */
 
 .edit_menu_page .page_header,
 .create_menu_page .page_header {
@@ -573,6 +636,7 @@ footer .contact a {
 .create_menu_page .server_and_meal {
 	width: 960px;
 	margin: 0 auto;
+	padding-top: 30px;
 }
 
 .edit_menu_page .meal_image,
@@ -814,52 +878,315 @@ footer .contact a {
 }
 
 
-/* -------------------- Daily Menu Page */
+/* -------------------- Daily Menu Page - dropdown remains*/
 
-.daily_menu_page .server_information {
-	background-color: green;
-	width: 300px;
-	float: left;
-}
-
-.daily_menu_page .item_summary_container {
-	border: 1px solid #ccc;
-	padding: 20px 0;
-	width: 300px;
-	margin: 0 auto;
+.daily_menu_page {
 	text-align: center;
 }
 
+.daily_menu_page .page_header a {
+	list-style-type: none;
+	display: inline;
+	margin: 0 90px;
+	line-height: .1em;
+	color: #a35d79;
+	font-size: .6em;
+}
 
+.daily_menu_page .page_header a.menu,
+.daily_menu_page .page_header a.placard {
+	float: left;
+	line-height: 2em;
+	width: 270px;
+	text-align: left;
+}
 
-.daily_menu_page .special_requests {
+.daily_menu_page .page_header a.placard {
+	float: right;
+	text-align: right;
+}
+
+.daily_menu_page h3 {
+	text-align: center;
+	color: #84445e;
+	padding: 30px 0 0px 0;
+	margin: 0;
+	overflow: auto;
+	font-size: 3em;
+	font-weight: 700;
+}
+
+.daily_menu_page .no_meal,
+.daily_menu_page .meal_description {
+	color: #a7a9b5;
+	text-align: center;
+	padding: 60px 0 0 0;
+	margin: 0 auto;
+	font-size: 1.6em;
+	font-weight: 400;
+}
+
+.daily_menu_page .date_and_meal,
+.daily_menu_page .server_and_meal_container,
+.daily_menu_page .menu-item {
+	border: none;
+	border-bottom: 5px solid #84445e;
+	padding: 90px 0;
+	width: 90%;
+	min-width: 960px;
+	margin: 0 auto;
+}
+
+.daily_menu_page .date_and_meal p {
+	width: 800px;
+	margin: 0 auto;
+}
+
+.daily_menu_page .server_and_meal {
+	width: 960px;
+	margin: 0 auto;
+}
+
+.daily_menu_page .meal_image {
+	text-align: right;
+}
+
+.daily_menu_page .meal_image img {
+	background-color: #a35d79;
+	width: 630px;
+	height: 630px;
+	overflow: hidden;
+	border: 2px solid #84445e;
+	border: none;
+	margin: 0px auto 0 auto;
+	padding: 0px;
+	background-image: url(../_images/ui/default_meal.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.daily_menu_page .meal_image input {
+	border: none;
+	font-size: 1em;
+	line-height: .1em;
+	background-color: #84445e;
+	width: 570px;
+	color: #a35d79;
+	margin: -5px auto 0 auto;
+	padding: 30px;
+	border: 2px solid #84445e;
+}
+
+.daily_menu_page .meal_image input:hover {
+	cursor: pointer;
+}
+
+.daily_menu_page .server_image {
+	float: left;
+	width: 296px;
+	height: 296px;
+	background-image: url(../_images/ui/default_server.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-color: #a35d79;
+}
+
+.daily_menu_page .server_information {
+	font-size: 1.5em;
+	text-align: left;
+	color: #7d7d7d;
+}
+
+.daily_menu_page .server_information .name {
+	color: #84445e;
+	font-size: 1.5em;
+	padding-top: 15px;
 	display: block;
-	width: 350px;
-	height: 50px;
-	margin: 20px auto;
+}
+
+.daily_menu_page .server_information .number a {
+	color: #a7a9b5;
+	font-size: 1.5em;
+	padding-bottom: 15px;
+	display: block;
+}
+
+.daily_menu_page .menu-item {
+	padding: 30px 0 90px 0;
+}
+
+.daily_menu_page .menu-item p {
+	color: #a7a9b5;
+	font-size: 1.5em;
+	width: 800px;
+	margin: 30px auto;
+}
+
+.daily_menu_page .like-heart {
+	margin-top: 15px;
+}
+
+.daily_menu_page p.number_of_likes {
+	color: #abd14f;
+	margin: -10px auto 0 auto;
+}
+
+.daily_menu_page p.dish_name {
+	color: #7d7d7d;
+	font-size: 3em;
+	font-weight: 700;
+	line-height: 1em;
+}
+
+.daily_menu_page p.note {
+}
+
+.daily_menu_page .single_order_size {
+	display: none;
+}
+
+.daily_menu_page .order_summary {
+	border: 2px solid #84445e;
+	text-transform: uppercase;
+	font-size: 2em;
+	margin: 25px auto;
+	padding: 20px 30px 20px 30px;
+	display: block;
+	text-align: center;
+	width: 572px;
+	color: #84445e;
+	color: #FFFFFF;
+	background-color: #a35d79;
+}
+
+.daily_menu_page .order_summary .total_served_for_item_serves,
+.daily_menu_page .order_summary .total_served_for_item {
+	color: #a7a9b5;
+	color: #84445e;
+}
+
+.daily_menu_page .button_container {
+	margin-top: -10px;
+}
+
+.daily_menu_page .button_container p {
+	font-size: 2em;
+	padding: 0px 0px 15px 0px;
+	color: #FFFFFF;
+	background-color: #84445e;
+}
+
+.daily_menu_page .button_container .total_served_for_item_serves,
+.daily_menu_page .button_container .total_served_for_menu {
+	color: #a35d79;
+}
+
+.daily_menu_page footer {
+	margin-top: -5px;
 }
 
 
-/* -------------------- Daily Menu - Print Placards */
+/* -------------------- Print Menu & Placards - page break on forth placard */
 
-.daily_menu_print_placards_page .placard_container {
-	width: 300px;
-	height: 100px;
-	float: left;
-	text-transform: capitalize;
-	border: 1px solid #ccc;
+/* Placards */
+
+html > .daily_menu_print_placards_page,
+html > .daily_menu_print_menu_page {
+	background-color: #FFFFFF;
+	text-transform: uppercase;
 }
 
 .daily_menu_print_menu_page {
-	text-transform: capitalize;
+	text-align: center;
+	font-size: .5em;
 }
 
-.edit_client_page .main_container {
-	background-color: #0e6552;
+.daily_menu_print_menu_page h1 {
+	font-size: 7em;
+	background-color: #FFFFFF;
+	color: #a7a9b5;
+	color: #29b77a;
+	margin: 0;
+	padding: 60px 0 0px 0;
+	line-height: 1em;
 }
 
-.edit_client_page .client_form {
-	background-color: #fff;
+.daily_menu_print_menu_page h2 {
+	padding: 0 0 15px 0;
+	width: 100%;
+	font-size: 1.5em;
+	color: #29b77a;
+	background-color: #FFFFFF;
 }
 
+.daily_menu_print_menu_page .item_container {
+	border-bottom: 1px solid #ebebeb;
+	border: none;
+	padding: 30px 0;
+	width: 90%;
+	margin: 0 auto;
+}
 
+.daily_menu_print_menu_page h3 {
+	color: #7d7d7d;
+	font-size: 2em;
+	font-weight: 700;
+	line-height: 1em;
+}
+
+.daily_menu_print_menu_page p {
+	color: #a7a9b5;
+	font-size: 1.5em;
+	padding-top: 5px;
+	display: block;
+}
+
+.daily_menu_print_menu_page .like-heart img {
+	width: 4em;
+	height: auto;
+	margin-bottom: 10px;
+}
+
+/* Placards */
+
+.daily_menu_print_placards_page {
+	text-align: center;
+	font-size: .7em;
+	padding: 30px 0 0 0;
+}
+
+.daily_menu_print_placards_page .placard_container {
+	width: 400px;
+	height: 225px;
+	text-align: center;
+	border: 1px solid #ebebeb;
+	border-top: none;
+	margin: 0px auto;
+	float: left;
+}
+
+.daily_menu_print_placards_page .like-heart img {
+	width: 4em;
+	height: auto;
+	margin: 40px 0 10px 0;
+}
+
+.daily_menu_print_placards_page h3 {
+	color: #29b77a;
+	color: #7d7d7d;
+	font-size: 2em;
+	font-weight: 700;
+	line-height: 1.2em;
+	margin: 0 40px;
+}
+.daily_menu_print_placards_page p {
+	margin: 0 40px;
+	color: #a7a9b5;
+	font-size: 1.2em;
+	padding-top: 10px;
+	display: block;
+}
+
+.daily_menu_print_placards_page .forth {
+	page-break-after: always;
+}

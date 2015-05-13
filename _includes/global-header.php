@@ -69,7 +69,7 @@
 					if(isset($_SESSION['user_type_id'])) {
 						switch ($_SESSION['user_type_id']) {
 							case 1:
-								echo "<a href='".WEB_ROOT."/admin/clients.php'>Clients</a>";
+								echo "<a href='".WEB_ROOT."/admin/clients.php'>Clients</a>";								
 								break;
 							case 2:
 								echo "<a href='".WEB_ROOT."/clients/weekly-menu.php?client-id=$client_id'>Weekly Menu</a>";
