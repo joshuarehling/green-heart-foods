@@ -314,7 +314,7 @@ class Client {
 
             <fieldset class="checkbox_container no_rule">
                 <ul>
-					<li><span class="move_box"><input class="styled" name='is_active' type='checkbox' $is_active_checked value="1" /></span><label class="box_label">Active Client</label></li>
+					<li class='active_client'><span class="move_box"><input class="styled" name='is_active' type='checkbox' $is_active_checked value="1" /></span><label class="box_label">Active Client</label></li>
 				</ul>
             </fieldset>
 

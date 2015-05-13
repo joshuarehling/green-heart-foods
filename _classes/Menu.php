@@ -315,12 +315,15 @@ class Menu {
         // the one stored in session_id so clients can't view eachothers menus
 
         $html .= "<div class='page_header'>";
-        if($context == 'green_heart_foods_admin') {
-            $html .= "<a class='menu' href='$web_root/admin/daily-menu-print-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Menu</a>";
-        }
+        // if($context == 'green_heart_foods_admin') {
+        //   $html .= "<a class='menu' href='$web_root/admin/daily-menu-print-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Menu</a>";
+        // }
+        $html .= "<a class='menu' href='$web_root/admin/daily-menu-print-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Menu</a>";
         if($context == 'green_heart_foods_admin') {
             $html .= "<a class='placard' href='$web_root/admin/daily-menu-print-placards.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Placards</a>";
-        }
+        } else {
+            $html .= "<a class='placard'>&nbsp;</a>";			
+		}
         $html .= "<h2>$weekday</h2>";
         $html .= "</div>";
         $html .= "<div class='date_and_meal'>";
@@ -414,8 +417,8 @@ class Menu {
                 $html .=    "<span class='total_orders_for_item'>$order_quantity</span> Orders <span class='total_served_for_item_serves'>Serves</span> <span class='total_served_for_item'>$calculated_number_of_item_servings</span> <span class='total_served_for_item_serves'>=</span> $<span class='total_cost_for_item'>$total_item_price</span>";
                 $html .= "</div>";
                 if($context == 'client_admin') {
-                    $html .= "<a class='quantity_button subtract'>Subtract</a>";
-                    $html .= "<a class='quantity_button add'>Add</a>";
+                    $html .= "<a class='page_button quantity_button subtract'>Subtract</a>";
+                    $html .= "<a class='page_button quantity_button add'>Add</a>";
                     $html .= "<input class='price_per_order_input' type='hidden' value='$price_per_order'>";
                     $html .= "<input class='servings_per_order_input' type='hidden' value='$servings_per_order'>";
                     $html .= "<input class='total_orders_for_item_hidden' type='hidden' name='total_orders_for_item[$i]' value='$order_quantity'>";
@@ -434,7 +437,7 @@ class Menu {
             $html .= "<div class='button_container'>";
             $html .=    "<p><span class='total_orders_for_menu'>$total_orders</span> Orders <span class='total_served_for_item_serves'>Serves</span> <span class='total_served_for_menu'>$total_servings</span> <span class='total_served_for_item_serves'>=</span> <span class='total_cost_for_menu'>$$total_price</span></p>";
             if($context == 'client_admin') {
-                $html .= "<input type='submit' class='place_order_button' value='Place Order'>";
+                $html .= "<input type='submit' class='place_order_button page_button' value='Place Order'>";
             }
             if($context == 'green_heart_foods_admin') {
                 $html .= "<a class='page_button' href='".WEB_ROOT."/admin/edit-daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Edit Daily Menu</a>";
@@ -488,10 +491,10 @@ class Menu {
         $result_count = count($result);
         $html .= "<div class='page_header'>";
         $html .=    "<ul>";
-        $html .=        "<li><a class='$last_week_selected' href='weekly-menu.php?client-id=$client_id&start-date=$last_week'>$last_week_formatted</a></li>";
+        $html .=        "<li class='left'><a class='$last_week_selected' href='weekly-menu.php?client-id=$client_id&start-date=$last_week'>$last_week_formatted</a></li>";
         $html .=        "<li><a class='$this_week_selected' href='weekly-menu.php?client-id=$client_id&start-date=$this_week'>$this_week_formatted</a></li>";
-        $html .=        "<li><a class='$next_week_selected' href='weekly-menu.php?client-id=$client_id&start-date=$next_week'>$next_week_formatted</a></li>";
-        $html .=    "</ul>";
+        $html .=        "<li class='right'><a class='$next_week_selected' href='weekly-menu.php?client-id=$client_id&start-date=$next_week'>$next_week_formatted</a></li>";
+        $html .=    "&nbsp;&nbsp;&nbsp;</ul>"; // three spaces centers the list because of the line break spaces created in the html formatting
         $html .= "</div>";
         if($result_count > 0) {
             $service_date = null;
@@ -539,7 +542,8 @@ class Menu {
             $menus = 1;
         } else {
             $formatted_start_date = date('M d', strtotime($start_date))."-".date('d', strtotime($start_date.' + 6 days'));
-            $html .= "<p class='no_menus'>No menus have been created for the week of <em>$formatted_start_date</em></p>";
+            $html .= "<p class='no_menus'>No menus</p>";
+//            $html .= "<p class='no_menus'>There are no menus for the week of <em>$formatted_start_date</em></p>";
             $menus = 0;
         }
         if($context == 'green_heart_foods_admin') {
