@@ -28,8 +28,13 @@
             'contains_shellfish'
         ];
 		for ($i=0; $i < count($menu_items); $i++) { 
+            if($i%4 == 3) {
+                $class = 'fourth';
+            } else {
+                $class = '';
+            }
 			$checkboxes = "";
-			$html .= "<div class='placard_container'>";
+			$html .= "<div class='placard_container $class'>";
             $html .= "<div class='like-heart'><img src='../_images/ui/favorite_off.png' /></div>";
 			$html .= "<h3>".$menu_items[$i]['menu_item_name']."</h3>";
 			for($j=0; $j<count($item_attributes_array); $j++) {

@@ -175,4 +175,18 @@ function set_days_in_month() {
 		html += "<option "+selected+" value='"+leadingZeroDay+"'>"+i+"</option>";
 	};
 	$('select.day').html(html);
+
+	/* There must be a better way of doing this. */
+
+	// [].slice.call( document.querySelectorAll( 'select.day' ) ).forEach( function(el) {	
+	// 	new SelectFx(el);
+	// });
+
+	// [].slice.call( document.querySelectorAll( 'select.year' ) ).forEach( function(el) {	
+	// 	new SelectFx(el);
+	// });
+
+	// [].slice.call( document.querySelectorAll( 'select.meal_type' ) ).forEach( function(el) {	
+	// 	new SelectFx(el);
+	// });
 }

@@ -90,9 +90,9 @@ class Client {
             $_POST['is_active'],
             $client_id
         ];
-        $query = $this->database_connection->prepare("UPDATE clients SET company_name = ?, admin_name = ?, meals_per_day = ?, has_breakfast = ?, has_lunch = ?, has_dinner = ?, has_snack = ?, company_logo_large = ?, company_logo_small = ?, is_active = ? WHERE client_id = ?");
-        $result = $query->execute($arguments);
-        if($query->rowCount() === 1){
+        $final_query = $this->database_connection->prepare("UPDATE clients SET company_name = ?, admin_name = ?, meals_per_day = ?, has_breakfast = ?, has_lunch = ?, has_dinner = ?, has_snack = ?, company_logo_large = ?, company_logo_small = ?, is_active = ? WHERE client_id = ?");
+        $result = $final_query->execute($arguments);
+        if($result) {
             Messages::add($_POST['company_name'].' has been updated.');
             header('Location: ../admin/clients.php');
             exit();

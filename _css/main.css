@@ -150,6 +150,10 @@ footer .contact a {
 	color: #abd14f;
 }
 
+.hidden {
+	display: none;
+}
+
 /* Errors & Messages */
 .message {
 	background-color: #ef284f;
