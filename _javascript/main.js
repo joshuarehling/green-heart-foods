@@ -39,7 +39,7 @@ $(document).ready(function() {
 		$('.create_menu_form').submit();
 	});
 
-	$('.create_and_edit_menu select.server').change(function(event) {
+	$('.create_and_edit_menu .server').click(function(event) {
 		var image_path = $('option:selected', this).attr('data-server-image-path');
 		if(image_path == undefined) {
 			$('.server_image').css('background-image', 'url(../_images/ui/default_server.jpg)');
@@ -174,23 +174,24 @@ function set_days_in_month() {
 		
 		html += "<option "+selected+" value='"+leadingZeroDay+"'>"+i+"</option>";
 	};
-	$('select.day').html(html);
+	//$('.day').html(html);
+	// $('.day').fadeOut();
 
 	/* There must be a better way of doing this. */
 
-	 [].slice.call( document.querySelectorAll( 'select.day' ) ).forEach( function(el) {	
-	 	new SelectFx(el);
-	 });
+	 // [].slice.call( document.querySelectorAll( 'select.day' ) ).forEach( function(el) {	
+	 // 	new SelectFx(el);
+	 // });
 
-	 [].slice.call( document.querySelectorAll( 'select.year' ) ).forEach( function(el) {	
-	 	new SelectFx(el);
-	 });
+	 // [].slice.call( document.querySelectorAll( 'select.year' ) ).forEach( function(el) {	
+	 // 	new SelectFx(el);
+	 // });
 
-	 [].slice.call( document.querySelectorAll( 'select.meal_type' ) ).forEach( function(el) {	
-	 	new SelectFx(el);
-	 });
+	 // [].slice.call( document.querySelectorAll( 'select.meal_type' ) ).forEach( function(el) {	
+	 // 	new SelectFx(el);
+	 // });
 	 
-	 [].slice.call( document.querySelectorAll( 'select.server' ) ).forEach( function(el) {	
-	 	new SelectFx(el);
-	 });
+	 // [].slice.call( document.querySelectorAll( 'select.server' ) ).forEach( function(el) {	
+	 // 	new SelectFx(el);
+	 // });
 }

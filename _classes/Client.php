@@ -112,6 +112,21 @@ class Client {
         }
         $company_logo_large = $this->image->upload_image($_FILES, "company_logo_large");
         $company_logo_small = $this->image->upload_image($_FILES, "company_logo_small"); 
+        
+        /* Check if general user already exists */
+
+        $arguments = array(
+            $_POST['general_username']
+        );
+        $query = $this->database_connection->prepare("SELECT * FROM users WHERE user_name = ?");
+        $query->execute($arguments);
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        if(count($result) > 0) {
+            Messages::add("Sorry, the general user name is already in use. Please choose a new name.");
+            header('Location: '.WEB_ROOT.'/admin/create-client.php');
+            exit();
+        }
+
 	    if ($company_logo_small && $company_logo_large) {
             if(!isset($_POST['has_breakfast'])) $_POST['has_breakfast'] = 0;
             if(!isset($_POST['has_lunch'])) $_POST['has_lunch'] = 0;

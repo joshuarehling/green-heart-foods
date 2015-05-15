@@ -272,6 +272,8 @@ class Menu {
         $service_date = $_GET['service-date'];
         $weekday = date('l', strtotime($service_date));
         $web_root = WEB_ROOT;
+        $server_image_style = "";
+        $menu_image_style = "";
 
         // $html .= "Context is: ".$context;
         // TODO - If daily menu is in client context, need to check that client_id is the same as 
@@ -320,23 +322,27 @@ class Menu {
 
             $server_image_path = WEB_ROOT.'/'.$result[0]['server_image_path'];
             $menu_image_path = WEB_ROOT.'/_uploads/'.$result[0]['menu_image_path'];
+            if($result[0]['server_image_path'] != "") $server_image_style = "style='background-image:url(".$server_image_path.")'";
+            if($result[0]['menu_image_path'] != "") $menu_image_style = "style='background-image:url(".$menu_image_path.")'";
             $total_orders = 0;
             $total_servings = 0;
             $total_price = 0;
 
             $html .= "<p class='meal_description'>".$result[0]['meal_description']."</p>";
             $html .= '</div>';
-            $html .= '<div class="server_and_meal_container"><div class="server_and_meal">';
-            $html .= "<div class='server_information server_image'>";
-            $html .=    "<img src='$server_image_path' />";
-            $html .=    "<div class='name'>".$result[0]['server_first_name']."</div>";
-            $html .=    "<div class='number'><a href='tel:+".$result[0]['server_phone_number']."' />".$result[0]['server_phone_number']."</a></div>";
-            $html .=    "<p>Will be serving<br />lunch today</p>";
+            $html .= '<div class="server_and_meal_container">';
+            $html .=    '<div class="server_and_meal">';
+            $html .=        "<div class='server_information server_image' $server_image_style>";
+            // $html .=    "<img src='$server_image_path' />";
+            $html .=            "<div class='name'>".$result[0]['server_first_name']."</div>";
+            $html .=            "<div class='number'><a href='tel:+".$result[0]['server_phone_number']."' />".$result[0]['server_phone_number']."</a></div>";
+            $html .=            "<p>Will be serving<br />lunch today</p>";
+            $html .=        "</div>";
+            $html .=        "<div class='menu_image_container meal_image' $menu_image_style>";
+            // $html .=    "<img src='$menu_image_path' />";
+            $html .=        "</div>";
+            $html .=    "</div>";
             $html .= "</div>";
-            $html .= "<div class='menu_image_container meal_image'>";
-            $html .=    "<img src='$menu_image_path' />";
-            $html .= "</div>";
-            $html .= "</div></div>";
             $html .= "<form action='".WEB_ROOT."/_actions/approve-menu-from-client.php' method='post' enctype='application/x-www-form-urlencoded'>";
             
             for($i=0; $i<$result_count; $i++) {
@@ -634,6 +640,7 @@ class Menu {
         $server_list_options = "";
         $year_options = "";
         $month_options = "";
+        $day_options = "";
         $start_month = date('F');
         $start_month_number = date('m');
         $end_month = date('F', strtotime('+1 month'));
@@ -647,8 +654,9 @@ class Menu {
         $total_orders_for_menu = 0;
         $total_served_for_menu = 0;
         $total_cost_for_menu = 0;
-        // $cancel_url = WEB_ROOT."/admin/clients.php";
-        
+        $menu_image_style = "";
+        $server_image_style = "";
+
         if(isset($service_date) && isset($meal_id)) {
             $mode = 'edit';
             $cancel_url = WEB_ROOT."/admin/daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id";
@@ -658,13 +666,19 @@ class Menu {
                 $service_date,
                 $meal_id,
             ];
-            $query = $this->database_connection->prepare("SELECT * FROM menu_items WHERE client_id = ? AND service_date = ? AND meal_id = ?");
+            $query = $this->database_connection->prepare("SELECT * FROM menu_items LEFT JOIN servers ON menu_items.server_id = servers.server_id WHERE client_id = ? AND service_date = ? AND meal_id = ?");
             $query->execute($arguments);
             // $query->execute($arguments);
             $menu_items = $query->fetchAll(PDO::FETCH_ASSOC);
             $number_of_meals = count($menu_items);
             $menu_image_path_orginal = $menu_items[0]['menu_image_path'];
-            $menu_image_html = "<img src='".WEB_ROOT."/_uploads/".$menu_image_path_orginal."' />";
+            if($menu_image_path_orginal != ""){
+                $menu_image_style = "style='background-image: url(".WEB_ROOT."/_uploads/".$menu_image_path_orginal.")'";
+            }
+            if($menu_items[0]['server_image_path'] != ""){
+                $server_image_style = "style='background-image: url(".WEB_ROOT."/".$menu_items[0]['server_image_path'].")'";
+            }
+            // $menu_image_html = "";//"<img src='".WEB_ROOT."/_uploads/".$menu_image_path_orginal."' />";
             for ($i=0; $i < count($menu_items); $i++) { 
                 $current_month = date('m', strtotime($service_date));
                 $current_year = date('Y', strtotime($service_date));
@@ -677,12 +691,12 @@ class Menu {
             $mode = 'create';
             $cancel_url = WEB_ROOT."/admin/weekly-menu.php?client-id=$client_id";
             $form_action = '../_actions/create-menu.php';
-            $current_day = 0;
+            $current_day = date('d', strtotime('+1 day'));
             $meal_description = "";
             $number_of_meals = $meals_per_day;
             $menu_image_path_orginal = "";
             // $menu_image_path = "<img width='100' src='../_images/menu-image-placeholder.jpg' />";
-            $menu_image_html = "<img width='100' style='display:hidden' />";
+            //$menu_image_html = "<img class='hidden' width='100' />"; //style='display:hidden'
         }
 
         // The following for loops were just complex enough to not cosolidate into a function. 
@@ -710,6 +724,22 @@ class Menu {
             $month_options .= "<option $selected value=".$month_options_array[$i][0].">".$month_options_array[$i][1]."</option>";
         }
 
+        // Day Options
+
+        for ($i=1; $i <= 31; $i++) { 
+            if(isset($current_day) && ($i == $current_day)) {
+                $selected = 'selected';
+            } else {
+                $selected = '';
+            }
+            if($i < 10) {
+                $leading_zero_formatted = '0'.$i;
+            } else {
+                $leading_zero_formatted = $i;
+            }
+            $day_options .= "<option $selected value=".$leading_zero_formatted .">".$leading_zero_formatted ."</option>";
+        }        
+
         // Meal Types
         
         for ($i=0; $i < count($meal_types); $i++) { 
@@ -736,21 +766,19 @@ class Menu {
         $html .= "<form class='create_menu_form' action='$form_action' method='post' enctype='multipart/form-data'>";
         $html .=    "<fieldset>";
         $html .=        "<h3>Date</h3>";
-         $html .=        "<select name='service_month' class='month cs-select cs-skin-border'>";
-        // $html .=        "<select name='service_month' class='month'>";
-        $html .=                $month_options;
+        $html .=       "<select name='service_month' class='month cs-select cs-skin-border'>";
+        $html .=            $month_options;
         $html .=        "</select>";
-        $html .=        "<select name='service_day' class='day cs-select cs-skin-border'></select>";
-        // $html .=        "<select name='service_day' class='day'></select>";
+        $html .=        "<select name='service_day' class='day cs-select cs-skin-border'>";
+        $html .=            $day_options;
+        $html .=        "</select>";
         $html .=        "<select name='service_year' class='year cs-select cs-skin-border'>";
-        // $html .=        "<select name='service_year' class='year'>";
         $html .=            $year_options;
         $html .=        "</select>";
         $html .=    "</fieldset>";
         $html .=    "<fieldset>";
         $html .=        "<h3>Meal Type</h3>";
         $html .=        "<select class='meal_type cs-select cs-skin-border' name='meal_id'>";
-        // $html .=        "<select class='meal_type' name='meal_id'>";
         $html .=            $meal_type_options;
         $html .=        "</select>";
         $html .=    "</fieldset>";
@@ -760,18 +788,15 @@ class Menu {
         $html .=    "</fieldset>";
         $html .=    "<fieldset>";
         $html .=        "<div class='server_and_meal'>";
-        $html .=            "<div class='server_image'>";
-        $html .=                "<select class='server cs-select cs-skin-border' name='server_id'>";
-        // $html .=                "<select class='server cs-select cs-skin-border' name='server_id' id='server_test'>";
-        $html .=                    "<option value='none'>Select Server</option>";
-        $html .=                        $server_list_options;
-        $html .=                "</select>";
+        $html .=            "<div class='server_image' $server_image_style></div>";;
+        $html .=            "<select class='server cs-select cs-skin-border' name='server_id'>";
+        $html .=                "<option value='none'>Select Server</option>";
+        $html .=                     $server_list_options;
+        $html .=            "</select>";
+        $html .=            "<div class='menu-image meal_image' $menu_image_style>";
+        // $html .=                $menu_image_html;
+        $html .=                "<input name='menu_image' type='file' />";
         $html .=            "</div>";
-        $html .=                "<div class='menu-image meal_image'>";
-        $html .=                 $menu_image_html;
-        // $html .=                    "<img src='$menu_image_path' />";
-        $html .=                    "<input name='menu_image' type='file' />";
-        $html .=                "</div>";
         $html .=        "</div>";
         $html .=    "</fieldset>";
 		
@@ -846,7 +871,7 @@ class Menu {
                     <input type="hidden" name="meals_per_day" value="$i" />
                     <input type="hidden" name="client_id" value="$client_id" />
                     <input type="hidden" name="item_status_id" value="1" />
-                    <input type="hidden" name="menu_image_path_orginal" value="$$menu_image_path_orginal" />
+                    <input type="hidden" name="menu_image_path_orginal" value="$menu_image_path_orginal" />
                     <a class="page_button quantity_button subtract">Subtract</a>
                     <a class="page_button quantity_button add">Add</a>
                 </div>

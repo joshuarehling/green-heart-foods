@@ -595,6 +595,19 @@ footer .contact a {
 	bottom: 0px;
 }
 
+/* Incomplete CSS from JK */
+
+.daily_menu_page .meal_image {
+	width: 630px;
+	height: 630px;
+	background-image: url(../_images/ui/default_meal.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-color: #a35d79;
+}
+
+/* End Incomplete CSS from JK */
+
 .weekly_menu_page .meal_image {
 	float: right;
 	width: 630px;
