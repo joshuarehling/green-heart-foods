@@ -654,10 +654,6 @@ footer .contact a {
 .edit_menu_page .meal_image,
 .create_menu_page .meal_image {
 	text-align: right;
-}
-
-.edit_menu_page .meal_image img,
-.create_menu_page .meal_image img {
 	background-color: #a35d79;
 	width: 630px;
 	height: 630px;
@@ -668,6 +664,11 @@ footer .contact a {
 	background-image: url(../_images/ui/default_meal.jpg);
 	background-repeat: no-repeat;
 	background-position: center center;
+}
+
+.edit_menu_page .meal_image img,
+.create_menu_page .meal_image img {
+	
 }
 
 .edit_menu_page .meal_image input,

@@ -664,7 +664,7 @@ class Menu {
             $menu_items = $query->fetchAll(PDO::FETCH_ASSOC);
             $number_of_meals = count($menu_items);
             $menu_image_path_orginal = $menu_items[0]['menu_image_path'];
-            $menu_image_html = "<img width='100' src='".WEB_ROOT."/_uploads/".$menu_image_path_orginal."' />";
+            $menu_image_html = "<img src='".WEB_ROOT."/_uploads/".$menu_image_path_orginal."' />";
             for ($i=0; $i < count($menu_items); $i++) { 
                 $current_month = date('m', strtotime($service_date));
                 $current_year = date('Y', strtotime($service_date));
@@ -767,13 +767,11 @@ class Menu {
         $html .=                        $server_list_options;
         $html .=                "</select>";
         $html .=            "</div>";
-        $html .=            "<div class='meal_image'>";
-        $html .=                "<div class='menu-image'>";
+        $html .=                "<div class='menu-image meal_image'>";
         $html .=                 $menu_image_html;
         // $html .=                    "<img src='$menu_image_path' />";
         $html .=                    "<input name='menu_image' type='file' />";
         $html .=                "</div>";
-        $html .=            "</div>";
         $html .=        "</div>";
         $html .=    "</fieldset>";
 		
