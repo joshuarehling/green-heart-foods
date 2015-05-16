@@ -41,6 +41,22 @@ class Client {
 
     public function update_client() {
         $client_id = $_POST['client_id'];
+
+        /* Check if general user already exists */
+
+        $arguments = array(
+            $_POST['general_username'],
+            $client_id
+        );
+        $query = $this->database_connection->prepare("SELECT * FROM users WHERE user_name = ? AND client_id != ?");
+        $query->execute($arguments);
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        if(count($result) > 0) {
+            Messages::add("Sorry, the general user name is already in use. Please choose a new name.");
+            header('Location: '.WEB_ROOT.'/admin/create-client.php');
+            exit();
+        }
+
         $arguments = [
             $_POST['admin_email'],
             $_POST['admin_password'],

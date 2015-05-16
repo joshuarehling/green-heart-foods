@@ -80,11 +80,13 @@ $(document).ready(function() {
 		});
 	});
 
-	$('select.meal-types').change(function(event){
+	$('.meal-types').change(function(event){
+		console.log("changed");
 		var client_id = $(this).attr('data-client-id');
 		var service_date = $(this).attr('data-service-date');
+		var admin_or_client = $(this).attr('data-admin-or-client');
 		var meal_id = $(this).val();
-		document.location = '../admin/daily-menu.php?client-id='+client_id+'&service-date='+service_date+'&meal-id='+meal_id;
+		document.location = '../'+admin_or_client+'/daily-menu.php?client-id='+client_id+'&service-date='+service_date+'&meal-id='+meal_id;
 	});
 });
 
@@ -121,7 +123,7 @@ function update_item_summary(current_class) {
 	if(isNaN(order_count_for_item) || isNaN(price_per_order)) {
 		return;
 	} else {
-		var total_cost_for_item = order_count_for_item*price_per_order;
+		var total_cost_for_item = (order_count_for_item*price_per_order).toFixed(2);
 		var servings_count_for_item = order_count_for_item*servings_per_order;
 		$(current_class+' .total_cost_for_item').html(total_cost_for_item);
 		$(current_class+' .total_served_for_item').html(servings_count_for_item);
@@ -137,7 +139,7 @@ function update_item_summary(current_class) {
 	});
 	$('.total_orders_for_menu').html(total_orders_for_menu);
 	$('.total_served_for_menu').html(total_served_for_menu);
-	$('.total_cost_for_menu').html("$"+total_cost_for_menu);
+	$('.total_cost_for_menu').html("$"+total_cost_for_menu.toFixed(2));
 
 }
 
@@ -174,24 +176,4 @@ function set_days_in_month() {
 		
 		html += "<option "+selected+" value='"+leadingZeroDay+"'>"+i+"</option>";
 	};
-	//$('.day').html(html);
-	// $('.day').fadeOut();
-
-	/* There must be a better way of doing this. */
-
-	 // [].slice.call( document.querySelectorAll( 'select.day' ) ).forEach( function(el) {	
-	 // 	new SelectFx(el);
-	 // });
-
-	 // [].slice.call( document.querySelectorAll( 'select.year' ) ).forEach( function(el) {	
-	 // 	new SelectFx(el);
-	 // });
-
-	 // [].slice.call( document.querySelectorAll( 'select.meal_type' ) ).forEach( function(el) {	
-	 // 	new SelectFx(el);
-	 // });
-	 
-	 // [].slice.call( document.querySelectorAll( 'select.server' ) ).forEach( function(el) {	
-	 // 	new SelectFx(el);
-	 // });
 }

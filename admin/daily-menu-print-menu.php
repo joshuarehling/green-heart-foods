@@ -17,8 +17,12 @@
 
 <div class="menu">
 	<div class="green-heart-foods-logo"></div>
-	<h1>Menu</h1>
+
+
+
 	<?php 
+
+		echo "<h1>".$menu_items[0]['company_name']." Menu</h1>";
 		$html = "";
 		$item_attributes_array = [
             'is_vegetarian', 

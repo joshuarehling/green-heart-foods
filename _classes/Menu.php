@@ -64,7 +64,7 @@ class Menu {
             $service_date,
             $meal_id
         ];
-        $query = $this->database_connection->prepare("SELECT * FROM menu_items LEFT JOIN servers ON menu_items.server_id = servers.server_id WHERE menu_items.client_id = ? AND menu_items.service_date = ? AND menu_items.meal_id = ?");
+        $query = $this->database_connection->prepare("SELECT * FROM menu_items LEFT JOIN servers ON menu_items.server_id = servers.server_id  LEFT JOIN clients ON menu_items.client_id = clients.client_id WHERE menu_items.client_id = ? AND menu_items.service_date = ? AND menu_items.meal_id = ?");
         $query->execute($arguments);
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         if(count($result) > 0) {
@@ -274,6 +274,11 @@ class Menu {
         $web_root = WEB_ROOT;
         $server_image_style = "";
         $menu_image_style = "";
+        if($context == 'green_heart_foods_admin') {
+            $admin_or_client = 'admin';
+        } else {
+            $admin_or_client = 'clients';
+        }
 
         // $html .= "Context is: ".$context;
         // TODO - If daily menu is in client context, need to check that client_id is the same as 
@@ -293,7 +298,9 @@ class Menu {
         $html .= "</div>";
         $html .= "<div class='date_and_meal'>";
         $html .= "<h3>".date('M d', strtotime($service_date))."</h3><br />";
-        $html .= "<select data-client-id='$client_id' data-service-date='$service_date' class='meal-types cs-select cs-skin-border'>";
+        
+        // $html .= "<select data-client-id='$client_id' data-service-date='$service_date' data-admin-or-client='$admin_or_client' class='meal-types cs-select cs-skin-border'>";
+        $html .= "<select data-client-id='$client_id' data-service-date='$service_date' data-admin-or-client='$admin_or_client' class='meal-types'>";
         for($i=0; $i<count($result); $i++) {
             $meal_id_option = $result[$i]['meal_id'];
             if($meal_id === $meal_id_option) {
