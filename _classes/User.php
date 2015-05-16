@@ -224,8 +224,7 @@ class User {
                 <input class="login_button" type="submit"  name="login" value="Log in" />
             </form>
             <p class="login_note">
-                Having trouble? Please contact your GHF contact.<br />
-                <a href="tel:+4158008910">415-800-8910</a> or <a href="mailto:lisa@greenheartfoods.com">lisa@greenheartfoods.com</a>
+                Having trouble? <br />Please contact your us at <a href="tel:+4158008910">415-800-8910</a><br />or <a href="mailto:lisa@greenheartfoods.com">lisa@greenheartfoods.com</a>
             </p>
 HTML;
     }

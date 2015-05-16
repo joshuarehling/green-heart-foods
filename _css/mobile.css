@@ -3,6 +3,54 @@
 
 /* -------------------- Redefine Global */
 
+body {
+	margin: 0;
+	padding: 0;
+	border: none;
+	text-transform: uppercase;
+	font-size: 18px;
+	font-family: 'Oswald', sans-serif;
+	font-family: 'Roboto Condensed', sans-serif;
+	font-weight: 400;
+	background-color: #34b67d;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+	opacity: .8;
+}
+
+label {
+	display: block;
+}
+
+h1 {
+	margin: 0;
+	padding: 0;
+	font-size: 13em;
+	font-size: 10em;
+	text-align: center;
+	color: #FFFFFF;
+	padding-bottom: 160px;
+	background-color: #0e6552;
+}
+
+h2, h3, h4, p {
+	margin: 0;
+	padding: 0;
+	font-size: 1em;
+	font-weight: normal;
+}
+
+/* Forms */
+*::-webkit-input-placeholder { color: #a7a9b5; }
+*:-moz-placeholder { /* FF 4-18 */ color: #a7a9b5; }
+*::-moz-placeholder { /* FF 19+ */ color: #a7a9b5; }
+*:-ms-input-placeholder { /* IE 10+ */ color: #a7a9b5; }
 
 
 /* -------------------- Shared Page Elements */ 
@@ -16,7 +64,7 @@ header {
 	padding: 30px 0 80px 0;
 	position: relative;
 	font-size: 1.3em;
-	font-size: 1.7em;
+	font-size: 1.6em;
 	color: #abd14f;
 	color: #FFFFFF;
 	text-align: left;
@@ -140,11 +188,11 @@ footer .contact a {
 	color: #FFFFFF;
 	text-transform: uppercase;
 	font-size: 2em;
-	margin: 0 15px;
-	padding: 40px 0;
+	margin: 0 30px;
+	padding: 60px 0px;
 	display: block;
 	text-align: center;
-	width: 384px;
+	width: 360px;
 	display: inline-block;
 }
 
@@ -155,13 +203,14 @@ footer .contact a {
 .create_client_page input.page_button,
 .edit_client_page input.page_button {
 	text-transform: uppercase;
-	margin: 25px auto;
-	padding: 40px 30px 40px 30px;
+	margin: 0px 30px;
+	padding: 60px 0;
 	display: inline;
 	text-align: center;
-	width: 384px;
+	width: 360px;
 	color: #FFFFFF;
-	margin: 0px;
+	font-size: 2em;
+	border: none;
 }
 
 /* Menu Pages */
@@ -170,17 +219,353 @@ footer .contact a {
 /* Checkboxes & Radio */
 
 
+/* Dropdowns */
+div.cs-skin-border {
+	font-size: 3em;
+	max-width: 690px;
+	max-width: 780px;
+	color: #a35d79;
+}
+
+.cs-skin-border > span {
+	background-color: #84445e;
+	padding: 20px 90px 20px 30px;
+
+}
+
+.cs-skin-border > span::after,
+.cs-skin-border .cs-selected span::after {
+	content: url(../_images/ui/select_arrow.png);
+	line-height: 0px;
+	right: 25px;
+}
+
+.cs-skin-border .cs-selected span::after {
+	content: ''; /* needed */
+}
+
+.cs-skin-border.cs-active > span {
+}
+
+.cs-skin-border .cs-options {
+	font-size: 1em;
+	color: #FFFFFF;
+	background-color: #a35d79;
+}
+
+.cs-skin-border ul span {
+	padding: 20px 60px 20px 60px;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+}
+
+.cs-skin-border .cs-options li span:hover,
+.cs-skin-border li.cs-focus span {
+	background-color: #ff7a18;
+}
+
 
 /* -------------------- Login Page */
 
+.login_page .main_container {
+	background-color: #0e6552;
+	color: #FFFFFF;
+	text-align: center;
+}
+
+.login_page h1 {
+	font-size: 3em;
+	margin: 160px 0 90px 0;
+	padding-bottom: 0px;
+}
+
+.login_page a {
+	color: #FFFFFF;
+}
+
+.login_page .login_input {
+	border: none;
+	background-color: #FFFFFF;
+	color: #34b67d;
+	text-transform: uppercase;
+	font-size: 2em;
+	font-size: 3em;
+	margin: 30px auto;
+	padding: 30px 60px;
+	display: block;
+	text-align: left;
+	width: 390px;
+	width: 660px;
+	font-weight: 400;
+}
+
+.login_page .login_button {
+	border: none;
+	background-color: #34b67d;
+	background-color: #ff7a18;
+	background-color: #abd14f;
+	color: #FFFFFF;
+	text-transform: uppercase;
+	font-size: 2em;
+	font-size: 3em;
+	margin: 25px auto;
+	padding: 40px 0;
+	display: block;
+	text-align: center;
+	width: 450px;
+	width: 780px;
+}
+
+.login_page .login_button:hover {
+	opacity: .8;
+}
+
+.login_page .login_note {
+	padding: 0 0 90px 0;
+	font-size: 3em;
+	width: 700px;
+	margin: 160px auto 90px auto;
+	line-height: 1.5em;
+}
 
 
-/* -------------------- All Clients Page - NEEDED optional edit buttons hide on hover remains */
+/* -------------------- All Clients Page */
 
+.clients_page .client_list {
+	width: 990px;
+	width: 840px;
+	margin: 0 auto;
+	padding: 30px 0;
+}
+
+.clients_page .client_result {
+	width: 300px;
+	width: 360px;
+	margin: 45px 30px;
+	display: inline-block;
+}
+
+.clients_page h1 {
+	padding: 90px 0 160px 0;
+	margin-top: -5px;
+}
+
+.clients_page .client_result img {
+	width: 360px;
+	height: auto;
+}
+
+.clients_page .edit_button {
+	border: none;
+	background-color: #ff7a18;
+	color: #FFFFFF;
+	text-transform: uppercase;
+	font-size: 2em;
+	margin: 0px auto;
+	padding: 60px 0;
+	display: block;
+	text-align: center;
+	width: 360px;
+}
 
 
 /* -------------------- Create & Edit Client Pages */ 
 
+.create_client_page .page_header,
+.edit_client_page .page_header {
+	/*background-image: url(../_images/ui/page_header_arrow.jpg);
+	background-repeat: no-repeat;
+	background-position: center bottom;*/
+}
+
+.create_client_page h1,
+.edit_client_page h1 {
+	padding: 90px 0 160px 0;
+	margin-top: -5px;
+}
+
+.create_client_page .client_form,
+.edit_client_page .client_form {
+	margin: 0 auto;
+	background-color: #FFFFFF;
+}
+
+.create_client_page fieldset,
+.edit_client_page fieldset {
+	border: none;
+	border-bottom: 5px solid #84445e;
+	padding: 60px 0;
+	width: 90%;
+	min-width: 960px;
+	min-width: 780px;
+	margin: 0 auto;
+}
+
+.create_client_page fieldset.no_rule,
+.edit_client_page fieldset.no_rule {
+	border-bottom: none;
+}
+
+.create_client_page input,
+.edit_client_page input {
+	border: 2px solid #84445e;
+	text-transform: uppercase;
+	font-size: 2em;
+	font-size: 3em;
+	margin: 30px auto;
+	padding: 20px 30px 20px 30px;
+	padding: 40px 60px;
+	display: block;
+	text-align: left;
+	width: 900px;
+	width: 660px;
+	color: #84445e;
+}
+
+.create_client_page label,
+.edit_client_page label {
+	text-align: center;
+	color: #84445e;
+	padding: 30px 0 30px 0;
+	margin: 0;
+	overflow: auto;
+	font-size: 3em;
+	font-size: 4em;
+	font-weight: 700;
+}
+
+.create_client_page .secondary_label,
+.edit_client_page .secondary_label {
+	color: #a7a9b5;
+	text-align: left;
+	width: 930px;
+	width: 660px;
+	padding: 0 60px;
+	margin: 60px auto 0 auto;
+	font-size: 2.2em;
+	font-weight: 400;
+}
+
+.create_client_page .header_logo label,
+.edit_client_page .header_logo label {
+	background-color: #a35d79;
+	width: 960px;
+	height: 540px;
+	width: 780px;
+	height: auto;
+	overflow: hidden;
+	border: 2px solid #84445e;
+	margin: 40px auto 0 auto;
+	padding: 0px;
+}
+
+.create_client_page .header_logo img,
+.edit_client_page .header_logo img {
+	width: 780px;
+	height: auto;
+}
+
+.create_client_page .header_logo input,
+.edit_client_page .header_logo input {
+	border: none;
+	font-size: 1em;
+	line-height: .1em;
+	background-color: #84445e;
+	width: 900px;
+	width: 720px;
+	color: #a35d79;
+	margin: 0 auto;
+	margin: -20px auto 50px auto;
+	padding: 30px;
+	border: 2px solid #84445e;
+}
+
+.create_client_page .header_logo input:hover,
+.edit_client_page .header_logo input:hover {
+	cursor: pointer;
+}
+
+.create_client_page .grid_logo label,
+.edit_client_page .grid_logo label {
+	background-color: #a35d79;
+	width: 300px;
+	height: 300px;
+	width: 780px;
+	height: auto;
+	overflow: hidden;
+	border: 2px solid #84445e;
+	margin: 40px auto 0 auto;
+	padding: 0px;
+}
+
+.create_client_page .grid_logo img,
+.edit_client_page .grid_logo img {
+	width: 780px;
+	height: auto;
+}
+
+.create_client_page .grid_logo input,
+.edit_client_page .grid_logo input {
+	border: none;
+	font-size: 1em;
+	line-height: .1em;
+	background-color: #84445e;
+	width: 240px;
+	width: 720px;
+	color: #a35d79;
+	margin: 0 auto;
+	margin: -20px auto 50px auto;
+	padding: 30px;
+	border: 2px solid #84445e;
+}
+
+.create_client_page .grid_logo input:hover,
+.edit_client_page .grid_logo input:hover {
+	cursor: pointer;
+}
+
+.create_client_page .box_label,
+.edit_client_page .box_label {
+	color: #a7a9b5;
+	text-align: center;
+	padding: 20px 0 0 0;
+	margin: 0 auto;
+	font-size: 2.2em;
+	font-weight: 400;
+}
+
+.create_client_page .move_box,
+.edit_client_page .move_box {
+	display: block;
+	width: 60px;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.create_client_page .checkbox_container ul,
+.edit_client_page .checkbox_container ul {
+	list-style: none;
+	width: 980px;
+	width: 780px;
+	margin: 0 auto;
+	padding: 0;
+	text-align: center;
+}
+
+.create_client_page .checkbox_container li,
+.edit_client_page .checkbox_container li {
+	display: inline-block;
+	text-align: center;
+	width: 240px;
+	width: 330px;
+	padding: 30px 0 30px 0;
+	margin: 0;
+}
+
+.create_client_page li.active_client,
+.edit_client_page li.active_client {
+	width: 300px;
+}
 
 
 /* -------------------- Weekly Menu Page */
@@ -197,7 +582,7 @@ footer .contact a {
 	padding: 90px 0;
 	width: 90%;
 	min-width: 960px;
-	min-width: 90%;
+	min-width: 800px
 	margin: 0 auto;
 }
 
@@ -250,6 +635,294 @@ footer .contact a {
 
 /* -------------------- Create & Edit Menu Pages */ 
 
+.edit_menu_page header,
+.create_menu_page header {
+	background-repeat: repeat-x;
+	background-position: center top;
+}
+
+.edit_menu_page .hero,
+.create_menu_page .hero {
+	background-repeat: repeat-x;
+	background-position: center bottom;
+	height: 360px;
+	width: 100%;
+}
+
+.edit_menu_page .page_header,
+.create_menu_page .page_header {
+	/*background-image: url(../_images/ui/page_header_arrow.jpg);
+	background-repeat: no-repeat;
+	background-position: center bottom;*/
+}
+
+.edit_menu_page .client_form,
+.create_menu_page .client_form {
+	margin: 0 auto;
+	background-color: #FFFFFF;
+}
+
+.edit_menu_page .server_and_meal,
+.create_menu_page .server_and_meal {
+	width: 960px;
+	width: 780px;
+	margin: 0 auto;
+	padding-top: 30px;
+	text-align: right;
+}
+
+.edit_menu_page .meal_container,
+.create_menu_page .meal_container {
+	background-color: #a35d79;
+	width: 630px;
+	width: 780px;
+	margin: 90px auto 0 auto;
+	padding: 0px;
+	background-image: url(../_images/ui/default_meal.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	float: right;
+}
+
+.edit_menu_page .meal_image,
+.create_menu_page .meal_image {
+	text-align: right;
+	background-color: #a35d79;
+	width: 630px;
+	height: 630px;
+	width: 780px;
+	height: 780px;
+	overflow: hidden;
+	/*border: 2px solid #84445e;*/
+	margin: 0px auto 0 auto;
+	padding: 0px;
+	background-image: url(../_images/ui/default_meal.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.edit_menu_page .meal_container input,
+.create_menu_page .meal_container input {
+	border: none;
+	font-size: 1em;
+	line-height: .1em;
+	background-color: #84445e;
+	width: 570px;
+	width: 720px;
+	color: #a35d79;
+	margin: -5px auto 0 auto;
+	padding: 30px;
+	border: none;
+}
+
+.edit_menu_page .meal_image input:hover,
+.create_menu_page .meal_image input:hover {
+	cursor: pointer;
+}
+
+.edit_menu_page .server_container,
+.create_menu_page .server_container {
+	float: left;
+	background-image: url(../_images/ui/default_server.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-color: #a35d79;
+}
+
+.edit_menu_page .server_image,
+.create_menu_page .server_image {
+	width: 300px;
+	height: 300px;
+	width: 780px;
+	height: 780px;
+	background-image: url(../_images/ui/default_server.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: 780px;
+	background-color: #a35d79;
+}
+
+.edit_menu_page .server_image select,
+.create_menu_page .server_image select {
+	width: 300px;
+	width: 780px;
+	display: block;
+}
+
+.edit_menu_page fieldset,
+.create_menu_page fieldset {
+	border: none;
+	border-bottom: 5px solid #84445e;
+	padding: 60px 0 90px 0;
+	width: 90%;
+	min-width: 960px;
+	min-width: 800px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.edit_menu_page fieldset h3,
+.create_menu_page fieldset h3 {
+	text-align: center;
+	color: #84445e;
+	padding: 30px 0 30px 0;
+	margin: 0;
+	overflow: auto;
+	font-size: 3em;
+	font-size: 4em;
+	font-weight: 700;
+}
+
+.edit_menu_page fieldset input[type=text],
+.create_menu_page fieldset input[type=text] {
+	border: 2px solid #84445e;
+	text-transform: uppercase;
+	font-size: 2em;
+	font-size: 3em;
+	margin: 25px auto;
+	padding: 40px 30px 40px 30px;
+	display: block;
+	text-align: left;
+	width: 900px;
+	width: 720px;
+	color: #84445e;
+}
+
+.edit_menu_page .checkbox_container ul,
+.create_menu_page .checkbox_container ul {
+	list-style: none;
+	width: 960px;
+	width: 780px;
+	margin: 0 auto;
+	padding: 0;
+	text-align: left;
+}
+
+.edit_menu_page .checkbox_container li,
+.create_menu_page .checkbox_container li {
+	display: inline-block;
+	text-align: left;
+	width: 300px;
+	width: 370px;
+	height: 60x;
+	padding: 0;
+	margin: 25px 0;
+}
+
+.edit_menu_page .box_label,
+.create_menu_page .box_label {
+	color: #a7a9b5;
+	text-align: left;
+	padding: 0px 0 0 0;
+	margin: 0 0 0 75px;
+	font-size: 2.2em;
+	font-size: 1.2em;
+	line-height: 60px;
+	font-weight: 400;
+	display: inline-block;
+	float: left;
+}
+
+.edit_menu_page .move_box,
+.create_menu_page .move_box {
+	display: inline;
+	width: 60px;
+	text-align: center;
+	margin: 0;
+}
+
+.edit_menu_page fieldset.no_rule,
+.create_menu_page fieldset.no_rule {
+	border-bottom: none;
+}
+
+.edit_menu_page .order_summary,
+.create_menu_page .order_summary {
+	border: 2px solid #84445e;
+	text-transform: uppercase;
+	font-size: 2em;
+	font-size: 3em;
+	font-size: 2.6em;
+	margin: 60px auto;
+	padding: 60px 60px;
+	display: block;
+	text-align: center;
+	width: 572px;
+	width: 660px;
+	color: #84445e;
+	color: #FFFFFF;
+	background-color: #a35d79;
+}
+
+.edit_menu_page .order_summary .total_served_for_item_serves,
+.edit_menu_page .order_summary .total_served_for_item,
+.create_menu_page .order_summary .total_served_for_item_serves,
+.create_menu_page .order_summary .total_served_for_item {
+	color: #a7a9b5;
+	color: #84445e;
+}
+
+.edit_menu_page .button_container p,
+.create_menu_page .button_container p {
+	font-size: 2em;
+	font-size: 3.5em;
+	padding: 0px 0px 30px 0px;
+	color: #FFFFFF;
+	background-color: #84445e;
+}
+
+.edit_menu_page .button_container .total_served_for_menu_serves,
+.edit_menu_page .button_container .total_served_for_menu,
+.create_menu_page .button_container .total_served_for_menu_serves,
+.create_menu_page .button_container .total_served_for_menu {
+	color: #a35d79;
+}
+
+.edit_menu_page .button_container,
+.create_menu_page .button_container {
+	margin-top: -5px;
+	width: 100%;
+	position: fixed;
+	bottom: 0px;
+	z-index: 4000;
+}
+
+.edit_menu_page footer,
+.create_menu_page footer {
+	/* so it's not covered by the sticky bar */
+	margin-bottom: 380px;
+	margin-top: -5px;
+}
+
+.edit_menu_page .quantity_button,
+.create_menu_page .quantity_button {
+	-webkit-user-select: none;  	/* Chrome all / Safari all */
+  	-moz-user-select: none;     	/* Firefox all */
+  	-ms-user-select: none;      	/* IE 10+ */
+ 	/*No support for these yet, use at own risk */
+  	-o-user-select: none;
+  	user-select: none;    
+}
+
+.edit_menu_page .quantity_button:hover,
+.create_menu_page .quantity_button:hover {
+	cursor: pointer;
+}
+
+.edit_menu_page input[type=text].price_per_order_input,
+.create_menu_page input[type=text].price_per_order_input {
+	width: 240px;
+	margin-top: 0px;
+}
+
+.edit_menu_page .day,
+.edit_menu_page .month,
+.edit_menu_page .year,
+.create_menu_page .day,
+.create_menu_page .month,
+.create_menu_page .year {
+	margin: 0 15px;
+}
 
 
 /* -------------------- Daily Menu Page - NEEDED dropdown*/
@@ -294,6 +967,8 @@ footer .contact a {
 	margin-right: 90px;
 }
 
+/* //////////////////////////////////////////////// */
+
 .daily_menu_page h3 {
 	text-align: center;
 	color: #84445e;
@@ -301,7 +976,7 @@ footer .contact a {
 	margin: 0;
 	overflow: auto;
 	font-size: 3em;
-	font-size: 7em;
+	font-size: 4em;
 	font-weight: 700;
 }
 
@@ -312,6 +987,7 @@ footer .contact a {
 	padding: 60px 0 0 0;
 	margin: 0 auto;
 	font-size: 1.6em;
+	font-size: 3em;
 	font-weight: 400;
 }
 
@@ -323,6 +999,7 @@ footer .contact a {
 	padding: 90px 0;
 	width: 90%;
 	min-width: 960px;
+	min-width: 800px;
 	margin: 0 auto;
 }
 
@@ -339,10 +1016,12 @@ footer .contact a {
 }
 
 .daily_menu_page .date_and_meal p {
-	width: 800px;
+	width: 780px;
 	margin: 0 auto;
 	background-color: blue;
 }
+
+/* //////////////////////////////////////////////// */
 
 .daily_menu_page .server_and_meal {
 	width: 780px;
@@ -378,7 +1057,7 @@ footer .contact a {
 	background-size: cover;
 	background-color: #a35d79;
 	position: absolute;
-	top: 870px;
+	top: 880px;
 }
 
 .daily_menu_page .server_information {
@@ -411,7 +1090,7 @@ footer .contact a {
 	color: #a7a9b5;
 	font-size: 1.5em;
 	font-size: 1em;
-	width: 800px;
+	width: 780px;
 	margin: 60px auto;
 }
 
@@ -442,11 +1121,13 @@ footer .contact a {
 	border: 2px solid #84445e;
 	text-transform: uppercase;
 	font-size: 2em;
-	margin: 25px auto;
-	padding: 20px 30px 20px 30px;
+	font-size: 3em;
+	margin: 60px auto;
+	padding: 40px 60px;
 	display: block;
 	text-align: left;
 	width: 900px;
+	width: 660px;
 	color: #84445e;
 }
 
@@ -458,13 +1139,14 @@ footer .contact a {
 	border: 2px solid #84445e;
 	text-transform: uppercase;
 	font-size: 2em;
-	font-size: 2.5em;
-	margin: 60px auto 25px auto;
-	padding: 20px 30px 20px 30px;
+	font-size: 2em;
+	margin: 60px auto 60px auto;
+	padding: 60px 30px;
 	display: block;
 	text-align: center;
 	width: 572px;
 	width: 780px;
+	width: 716px;
 	color: #84445e;
 	color: #FFFFFF;
 	background-color: #a35d79;
@@ -500,7 +1182,7 @@ footer .contact a {
 
 .daily_menu_page footer {
 	/* so it's not covered by the sticky bar */
-	margin-bottom: 300px;
+	margin-bottom: 380px;
 	margin-top: -5px;
 }
 

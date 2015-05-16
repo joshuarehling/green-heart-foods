@@ -266,6 +266,8 @@ footer .contact a {
 .login_page .login_button {
 	border: none;
 	background-color: #34b67d;
+	background-color: #ff7a18;
+	background-color: #abd14f;
 	color: #FFFFFF;
 	text-transform: uppercase;
 	font-size: 2em;
@@ -282,10 +284,13 @@ footer .contact a {
 
 .login_page .login_note {
 	padding: 0 0 90px 0;
+	line-height: 1.5em;
+	width: 450px;
+	margin: 0 auto;
 }
 
 
-/* -------------------- All Clients Page - NEEDED optional edit buttons hide on hover remains */
+/* -------------------- All Clients Page */
 
 .clients_page .client_list {
 	width: 990px;
@@ -913,6 +918,8 @@ footer .contact a {
 	text-align: right;
 }
 
+/* //////////////////////////////////////////////// */
+
 .daily_menu_page h3 {
 	text-align: center;
 	color: #84445e;
@@ -962,6 +969,8 @@ footer .contact a {
 	background-color: blue;
 }
 
+/* //////////////////////////////////////////////// */
+
 .daily_menu_page .server_and_meal {
 	width: 960px;
 	margin: 0 auto;
@@ -981,27 +990,6 @@ footer .contact a {
 	background-repeat: no-repeat;
 	background-position: center center;
 }
-
-/*
-.daily_menu_page .meal_image img {
-	
-}
-.daily_menu_page .meal_image input {
-	border: none;
-	font-size: 1em;
-	line-height: .1em;
-	background-color: #84445e;
-	width: 570px;
-	color: #a35d79;
-	margin: -5px auto 0 auto;
-	padding: 30px;
-	border: 2px solid #84445e;
-}
-
-.daily_menu_page .meal_image input:hover {
-	cursor: pointer;
-}
-*/
 
 .daily_menu_page .server_image {
 	float: left;
