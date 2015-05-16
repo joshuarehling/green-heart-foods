@@ -293,7 +293,7 @@ class Menu {
         $html .= "</div>";
         $html .= "<div class='date_and_meal'>";
         $html .= "<h3>".date('M d', strtotime($service_date))."</h3><br />";
-        $html .= "<select data-client-id='$client_id' data-service-date='$service_date' class='meal-types'>";
+        $html .= "<select data-client-id='$client_id' data-service-date='$service_date' class='meal-types cs-select cs-skin-border'>";
         for($i=0; $i<count($result); $i++) {
             $meal_id_option = $result[$i]['meal_id'];
             if($meal_id === $meal_id_option) {
@@ -467,7 +467,7 @@ class Menu {
         $html .=        "<li class='left'><a class='$last_week_selected' href='weekly-menu.php?client-id=$client_id&start-date=$last_week'>$last_week_formatted</a></li>";
         $html .=        "<li><a class='$this_week_selected' href='weekly-menu.php?client-id=$client_id&start-date=$this_week'>$this_week_formatted</a></li>";
         $html .=        "<li class='right'><a class='$next_week_selected' href='weekly-menu.php?client-id=$client_id&start-date=$next_week'>$next_week_formatted</a></li>";
-        $html .=    "&nbsp;&nbsp;&nbsp;</ul>"; // three spaces centers the list because of the line break spaces created in the html formatting
+        $html .=    "</ul>"; // three spaces centers the list because of the line break spaces created in the html formatting
         $html .= "</div>";
         if($result_count > 0) {
             $service_date = null;
@@ -787,17 +787,19 @@ class Menu {
         $html .=        "<input name='meal_description' type='text' placeholder='Add Description Here' value='$meal_description' />";
         $html .=    "</fieldset>";
         $html .=    "<fieldset>";
-        $html .=        "<div class='server_and_meal'>";
+        $html .=    "<div class='server_and_meal'>";
+        $html .=        "<div class='server_container'>";		
         $html .=            "<div class='server_image' $server_image_style></div>";;
         $html .=            "<select class='server cs-select cs-skin-border' name='server_id'>";
         $html .=                "<option value='none'>Select Server</option>";
         $html .=                     $server_list_options;
         $html .=            "</select>";
-        $html .=            "<div class='menu-image meal_image' $menu_image_style>";
-        // $html .=                $menu_image_html;
-        $html .=                "<input name='menu_image' type='file' />";
-        $html .=            "</div>";
         $html .=        "</div>";
+        $html .=        "<div class='meal_container'>";
+        $html .=            "<div class='menu-image meal_image' $menu_image_style></div>";
+        $html .=            "<input name='menu_image' type='file' />";
+        $html .=        "</div>";
+        $html .=    "</div>";
         $html .=    "</fieldset>";
 		
 		

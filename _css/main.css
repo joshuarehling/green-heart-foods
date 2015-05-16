@@ -1,4 +1,4 @@
-/* Updated Thu 13 May 2015 */
+/* Updated Thu 15 May 2015 */
 
 
 /* -------------------- Redefine Global */
@@ -478,7 +478,7 @@ footer .contact a {
 }
 
 
-/* -------------------- Weekly Menu Page - NEEDED dropdown */
+/* -------------------- Weekly Menu Page */
 
 .weekly_menu_page header {
 	background-repeat: repeat-x;
@@ -495,6 +495,7 @@ footer .contact a {
 .weekly_menu_page .page_header ul {
 	list-style: none;
 	margin: 0px;
+	padding-left: 0;
 }
 
 .weekly_menu_page .page_header li {
@@ -537,6 +538,7 @@ footer .contact a {
 .weekly_menu_page .meal_container {
 	width: 960px;
 	margin: 0px auto;
+	overflow: auto;
 }
 
 .weekly_menu_page .meal_details {
@@ -595,19 +597,6 @@ footer .contact a {
 	bottom: 0px;
 }
 
-/* Incomplete CSS from JK */
-
-.daily_menu_page .meal_image {
-	width: 630px;
-	height: 630px;
-	background-image: url(../_images/ui/default_meal.jpg);
-	background-repeat: no-repeat;
-	background-position: center center;
-	background-color: #a35d79;
-}
-
-/* End Incomplete CSS from JK */
-
 .weekly_menu_page .meal_image {
 	float: right;
 	width: 630px;
@@ -623,12 +612,8 @@ footer .contact a {
 	margin-top: -5px;
 }
 
-.weekly_menu_page footer {
-	margin-top: -5px;
-}
 
-
-/* -------------------- Create & Edit Menu Pages - NEEDED dropdown */ 
+/* -------------------- Create & Edit Menu Pages */ 
 
 .edit_menu_page header,
 .create_menu_page header {
@@ -646,9 +631,9 @@ footer .contact a {
 
 .edit_menu_page .page_header,
 .create_menu_page .page_header {
-	background-image: url(../_images/ui/page_header_arrow.jpg);
+	/*background-image: url(../_images/ui/page_header_arrow.jpg);
 	background-repeat: no-repeat;
-	background-position: center bottom;
+	background-position: center bottom;*/
 }
 
 .edit_menu_page .client_form,
@@ -662,6 +647,19 @@ footer .contact a {
 	width: 960px;
 	margin: 0 auto;
 	padding-top: 30px;
+	text-align: right;
+}
+
+.edit_menu_page .meal_container,
+.create_menu_page .meal_container {
+	background-color: #a35d79;
+	width: 630px;
+	margin: 0px auto 0 auto;
+	padding: 0px;
+	background-image: url(../_images/ui/default_meal.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	float: right;
 }
 
 .edit_menu_page .meal_image,
@@ -671,7 +669,7 @@ footer .contact a {
 	width: 630px;
 	height: 630px;
 	overflow: hidden;
-	border: 2px solid #84445e;
+	/*border: 2px solid #84445e;*/
 	margin: 0px auto 0 auto;
 	padding: 0px;
 	background-image: url(../_images/ui/default_meal.jpg);
@@ -679,13 +677,8 @@ footer .contact a {
 	background-position: center center;
 }
 
-.edit_menu_page .meal_image img,
-.create_menu_page .meal_image img {
-	
-}
-
-.edit_menu_page .meal_image input,
-.create_menu_page .meal_image input {
+.edit_menu_page .meal_container input,
+.create_menu_page .meal_container input {
 	border: none;
 	font-size: 1em;
 	line-height: .1em;
@@ -694,7 +687,7 @@ footer .contact a {
 	color: #a35d79;
 	margin: -5px auto 0 auto;
 	padding: 30px;
-	border: 2px solid #84445e;
+	border: none;
 }
 
 .edit_menu_page .meal_image input:hover,
@@ -702,31 +695,24 @@ footer .contact a {
 	cursor: pointer;
 }
 
-.edit_menu_page .server_image,
-.create_menu_page .server_image {
+.edit_menu_page .server_container,
+.create_menu_page .server_container {
 	float: left;
-	width: 296px;
-	height: 296px;
 	background-image: url(../_images/ui/default_server.jpg);
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-color: #a35d79;
-
 }
 
-/*.edit_menu_page .server_image img,
-.create_menu_page .server_image img {
-	background-color: #a35d79;
-	width: 296px;
-	height: 296px;
-	overflow: hidden;
-	border: 2px solid #84445e;
-	margin: 0px auto 0 auto;
-	padding: 0px;
+.edit_menu_page .server_image,
+.create_menu_page .server_image {
+	width: 300px;
+	height: 300px;
 	background-image: url(../_images/ui/default_server.jpg);
 	background-repeat: no-repeat;
 	background-position: center center;
-}*/
+	background-color: #a35d79;
+}
 
 .edit_menu_page .server_image select,
 .create_menu_page .server_image select {
@@ -899,10 +885,6 @@ footer .contact a {
 	margin: 0 15px;
 }
 
-#server_test {
-	/*display: none;*/
-}
-
 
 /* -------------------- Daily Menu Page - NEEDED dropdown*/
 
@@ -962,9 +944,22 @@ footer .contact a {
 	margin: 0 auto;
 }
 
+.daily_menu_page .server_and_meal_container {
+	overflow: auto;
+}
+
+.daily_menu_page .date_and_meal {
+	background-color: yellow;
+}
+
+.daily_menu_page .date_and_meal h3 {
+	background-color: green;
+}
+
 .daily_menu_page .date_and_meal p {
 	width: 800px;
 	margin: 0 auto;
+	background-color: blue;
 }
 
 .daily_menu_page .server_and_meal {
@@ -973,10 +968,7 @@ footer .contact a {
 }
 
 .daily_menu_page .meal_image {
-	text-align: right;
-}
-
-.daily_menu_page .meal_image img {
+	float: right;
 	background-color: #a35d79;
 	width: 630px;
 	height: 630px;
@@ -990,6 +982,10 @@ footer .contact a {
 	background-position: center center;
 }
 
+/*
+.daily_menu_page .meal_image img {
+	
+}
 .daily_menu_page .meal_image input {
 	border: none;
 	font-size: 1em;
@@ -1005,11 +1001,12 @@ footer .contact a {
 .daily_menu_page .meal_image input:hover {
 	cursor: pointer;
 }
+*/
 
 .daily_menu_page .server_image {
 	float: left;
-	width: 296px;
-	height: 296px;
+	width: 300px;
+	height: 300px;
 	background-image: url(../_images/ui/default_server.jpg);
 	background-repeat: no-repeat;
 	background-position: center center;
@@ -1027,6 +1024,7 @@ footer .contact a {
 	font-size: 1.5em;
 	padding-top: 15px;
 	display: block;
+	margin-top: 300px;
 }
 
 .daily_menu_page .server_information .number a {
@@ -1127,9 +1125,9 @@ footer .contact a {
 }
 
 
-/* -------------------- Print Menu & Placards - NEEDED page break on forth placard */
+/* -------------------- Print Menu & Placards */
 
-/* Placards */
+/* Menu */
 
 html > .daily_menu_print_placards_page,
 html > .daily_menu_print_menu_page {
@@ -1194,6 +1192,15 @@ html > .daily_menu_print_menu_page {
 	text-align: center;
 	font-size: .7em;
 	padding: 30px 0 0 0;
+	float: none;
+}
+
+.daily_menu_print_placards_page .main_container {
+	float: none;
+}
+
+.daily_menu_print_placards_page .menu {
+	float: none;
 }
 
 .daily_menu_print_placards_page .placard_container {
@@ -1203,7 +1210,7 @@ html > .daily_menu_print_menu_page {
 	border: 1px solid #ebebeb;
 	border-top: none;
 	margin: 0px auto;
-	float: left;
+	/*float: left;*/
 }
 
 .daily_menu_print_placards_page .like-heart img {
@@ -1220,6 +1227,7 @@ html > .daily_menu_print_menu_page {
 	line-height: 1.2em;
 	margin: 0 40px;
 }
+
 .daily_menu_print_placards_page p {
 	margin: 0 40px;
 	color: #a7a9b5;
@@ -1228,6 +1236,6 @@ html > .daily_menu_print_menu_page {
 	display: block;
 }
 
-.daily_menu_print_placards_page .forth {
-	page-break-after: always;
+.daily_menu_print_placards_page .fourth {
+	page-break-before: always;
 }
