@@ -5,9 +5,23 @@ class Database {
 	public function __construct() {}
 
     public function connect(){
-    	$host = "localhost";
-		$user = "root";
-		$password = "";
+
+    	echo "HOST: ".$_SERVER['HTTP_HOST'];
+    	switch ($_SERVER['HTTP_HOST']) {
+    		case 'localhost':
+    			$host = "localhost";
+				$user = "root";
+				$password = "";
+    			break;
+    		case 'greenheartfoods.com':
+    			$host = "ghfAdmin.db.3683991.hostedresource.com";
+				$user = "ghfAdmin";
+				$password = "Green1980!";
+    			break;
+    		default:
+    			die("Error connecting to database.");
+    			break;
+    	}
     	try {
 			$database_connection = new PDO("mysql:host=$host;dbname=green_heart_foods", $user, $password);
 		    $database_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
