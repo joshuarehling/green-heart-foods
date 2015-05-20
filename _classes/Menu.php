@@ -574,13 +574,16 @@ class Menu {
             $link = WEB_ROOT . "/clients/weekly-menu.php?client-id=$client_id&start-date=$start_date";
             $to_email  = $client_admin_email; 
             $subject = 'Your Weekly Menu is Ready';
-            $message = '
+            $message = "
                 <html>
                     <body>
-                        <p>Hello! Your weekly menu is ready to review. Please click the link below to review, edit and confirm.</p>
-                        <a href=$link>$link</a>
+						<h1><img src='_images/ui/email_logo.jpg>' /></h1>
+                        <p>Hello, Food Lover!</p>
+						<p>Your weekly menus are ready to review. Please click the link below to review, edit and confirm.</p>
+                        <p><a class='page_button' href=$link>$link</a></p>
+						<p>Gree Heart Foods</p>
                     </body>
-                </html>';
+                </html>";
             $headers  = 'MIME-Version: 1.0' . "\r\n";
             $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
             $headers .= 'From: Green Heart Foods <'.GREEN_HEART_FOODS_ADMIN_EMAIL.'>' . "\r\n";

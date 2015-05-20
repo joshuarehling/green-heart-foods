@@ -1,4 +1,4 @@
-/* Updated Thu 15 May 2015 */
+/* Updated Thu 19 May 2015 */
 
 
 /* -------------------- Redefine Global */
@@ -968,6 +968,7 @@ div.cs-skin-border {
 }
 
 /* //////////////////////////////////////////////// */
+/* why is the dropdown code not working? */
 
 .daily_menu_page h3 {
 	text-align: center;
@@ -1008,17 +1009,14 @@ div.cs-skin-border {
 }
 
 .daily_menu_page .date_and_meal {
-	background-color: yellow;
 }
 
 .daily_menu_page .date_and_meal h3 {
-	background-color: green;
 }
 
 .daily_menu_page .date_and_meal p {
 	width: 780px;
 	margin: 0 auto;
-	background-color: blue;
 }
 
 /* //////////////////////////////////////////////// */

@@ -1,4 +1,4 @@
-/* Updated Thu 15 May 2015 */
+/* Updated Thu 19 May 2015 */
 
 
 /* -------------------- Redefine Global */
@@ -891,7 +891,7 @@ footer .contact a {
 }
 
 
-/* -------------------- Daily Menu Page - NEEDED dropdown*/
+/* -------------------- Daily Menu Page - NEEDED fix dropdown*/
 
 .daily_menu_page {
 	text-align: center;
@@ -919,6 +919,7 @@ footer .contact a {
 }
 
 /* //////////////////////////////////////////////// */
+/* why is the dropdown code not working? */
 
 .daily_menu_page h3 {
 	text-align: center;
@@ -956,17 +957,14 @@ footer .contact a {
 }
 
 .daily_menu_page .date_and_meal {
-	background-color: yellow;
 }
 
 .daily_menu_page .date_and_meal h3 {
-	background-color: green;
 }
 
 .daily_menu_page .date_and_meal p {
 	width: 800px;
 	margin: 0 auto;
-	background-color: blue;
 }
 
 /* //////////////////////////////////////////////// */
