@@ -15,7 +15,7 @@ class Client {
 	}
 
     public function get_client($client_id) {
-        $arguments = [$client_id];
+        $arguments = array($client_id);
         $query = $this->database_connection->prepare("SELECT * FROM clients LEFT JOIN users ON clients.admin_user_id = users.user_id WHERE clients.client_id = ?");
         $query->execute($arguments);
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -57,21 +57,21 @@ class Client {
             exit();
         }
 
-        $arguments = [
+        $arguments = array(
             $_POST['admin_email'],
             $_POST['admin_password'],
             $client_id,
             2
-        ];
+        );
         $query = $this->database_connection->prepare("UPDATE users SET user_name = ?, password = ? WHERE client_id = ? AND user_type_id = ?");
         $result = $query->execute($arguments);
 
-        $arguments = [
+        $arguments = array(
             $_POST['general_username'],
             $_POST['general_password'],
             $client_id,
             3
-        ];
+        );
         $query = $this->database_connection->prepare("UPDATE users SET user_name = ?, password = ? WHERE client_id = ? AND user_type_id = ?");
         $result = $query->execute($arguments);
 
@@ -93,7 +93,7 @@ class Client {
             $company_logo_small = $_POST['company_logo_small_original'];
         }
 
-        $arguments = [
+        $arguments = array(
             $_POST['company_name'],
             $_POST['admin_name'],
             $_POST['meals_per_day'],
@@ -105,7 +105,7 @@ class Client {
             $company_logo_small,
             $_POST['is_active'],
             $client_id
-        ];
+        );
         $final_query = $this->database_connection->prepare("UPDATE clients SET company_name = ?, admin_name = ?, meals_per_day = ?, has_breakfast = ?, has_lunch = ?, has_dinner = ?, has_snack = ?, company_logo_large = ?, company_logo_small = ?, is_active = ? WHERE client_id = ?");
         $result = $final_query->execute($arguments);
         if($result) {
@@ -169,23 +169,23 @@ class Client {
 
                 // Admin user arguments and query
 
-                $arguments = [
+                $arguments = array(
                     $client_id,
                     2,
                     $_POST['admin_email'],
                     $_POST['admin_password'],
-                ];
+                );
                 $query = $this->database_connection->prepare("INSERT INTO users (client_id, user_type_id, user_name, password) VALUES (?, ?, ?, ?)");
                 $admin_user_result = $query->execute($arguments);
 
                 // General user arguments and query
 
-                $arguments = [
+                $arguments = array(
                     $client_id,
                     3,
                     $_POST['general_username'],
                     $_POST['general_password'],
-                ];
+                );
                 $query = $this->database_connection->prepare("INSERT INTO users (client_id, user_type_id, user_name, password) VALUES (?, ?, ?, ?)");
                 $general_user_result = $query->execute($arguments);
 

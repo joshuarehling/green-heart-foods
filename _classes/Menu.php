@@ -15,9 +15,9 @@ class Menu {
     }
 
     public function like_menu_item($menu_item_id) {
-        $arguments = [
+        $arguments = array(
             $menu_item_id
-        ];
+        );
         $query = $this->database_connection->prepare("UPDATE menu_items SET like_count = like_count+1 WHERE menu_item_id = ?");
         $query->execute($arguments);
         echo $query->rowCount();
@@ -41,11 +41,11 @@ class Menu {
 
     public function get_weekly_menu($client_id, $start_date, $context) {
         $end_date = date('Y-m-d', strtotime($start_date.' +6 days'));
-        $arguments = [
+        $arguments = array(
             $client_id,
             $start_date,
             $end_date
-        ];
+        );
         if ($context == 'green_heart_foods_admin') {
             $query = $this->database_connection->prepare("SELECT * FROM menu_items LEFT JOIN meals ON menu_items.meal_id = meals.meal_id LEFT JOIN item_status ON menu_items.item_status_id = item_status.item_status_id WHERE client_id = ? AND (service_date BETWEEN ? AND ?) ORDER BY service_date ASC, meals.meal_id ASC, menu_item_id ASC");
         } else {
@@ -59,11 +59,11 @@ class Menu {
     }
 
     public function get_daily_menu($client_id, $service_date, $meal_id) {
-        $arguments = [
+        $arguments = array(
             $client_id,
             $service_date,
             $meal_id
-        ];
+        );
         $query = $this->database_connection->prepare("SELECT * FROM menu_items LEFT JOIN servers ON menu_items.server_id = servers.server_id  LEFT JOIN clients ON menu_items.client_id = clients.client_id WHERE menu_items.client_id = ? AND menu_items.service_date = ? AND menu_items.meal_id = ?");
         $query->execute($arguments);
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -80,11 +80,11 @@ class Menu {
 
         /* Check for duplicate meal/day combination */
 
-        $arguments = [
+        $arguments = array(
             $client_id,
             $service_date,
             $meal_id,
-        ];
+        );
         $query = $this->database_connection->prepare("SELECT * FROM menu_items WHERE client_id = ? AND service_date = ? AND meal_id = ?");
         $query->execute($arguments);
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -104,7 +104,7 @@ class Menu {
             if(!isset($_POST['contains_nuts'][$i])) $_POST['contains_nuts'][$i]= 0;
             if(!isset($_POST['contains_soy'][$i])) $_POST['contains_soy'][$i] = 0;
             if(!isset($_POST['contains_shellfish'][$i])) $_POST['contains_shellfish'][$i] = 0;
-            $arguments = [
+            $arguments = array(
                 $service_date,
                 $_POST['meal_id'],
                 $_POST['client_id'],
@@ -125,61 +125,13 @@ class Menu {
                 $_POST['price_per_order'][$i],
                 $_POST['servings_per_order'][$i],
                 $_POST['total_orders_for_item'][$i],
-            ];    
+            );
             $query = $this->database_connection->prepare("INSERT INTO menu_items (service_date, meal_id, client_id, server_id, item_status_id, menu_image_path, meal_description, menu_item_name, ingredients, special_notes, is_vegetarian, is_vegan, is_gluten_free, is_whole_grain, contains_nuts, contains_soy, contains_shellfish, price_per_order, servings_per_order, total_orders_for_item) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $result = $query->execute($arguments);
         }
         if($query->rowCount() === 1){
             Messages::add('The menu has been created');
             header("Location: ../admin/daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id");
-        }
-    }
-
-
-    public function approve_menu_from_client() {
-        $service_date = $_POST['service_date'];
-        $client_id = $_POST['client_id'];
-        $meal_id = $_POST['meal_id'];
-        $menu_item_id_array = $_POST['menu_item_id_array'];
-        $number_of_menu_items = count($menu_item_id_array);
-        for ($i=0; $i < $number_of_menu_items; $i++) { 
-            $menu_item_id = $menu_item_id_array[$i];
-            $arguments = [
-                3,
-                $_POST['special_requests'][$i],
-                $_POST['total_orders_for_item'][$i],
-                $menu_item_id
-            ];
-            $query = $this->database_connection->prepare("UPDATE menu_items SET 
-                item_status_id = ?,
-                special_requests = ?, 
-                total_orders_for_item = ?
-                WHERE 
-                menu_item_id = ?");
-            $result = $query->execute($arguments);
-            if($i == $number_of_menu_items-1) {
-                $link = WEB_ROOT . "/admin/weekly-menu.php?client-id=$client_id&start-date=$start_date";
-                $to_email  = GREEN_HEART_FOODS_ADMIN_EMAIL;
-                $subject = "A Menu Has Been Approved by $client_name";
-                $message = "
-                    <html>
-                        <body>
-                            <p>$client_name has approved a menu - please click below to review.</p>
-                            <a href=$link>$link</a>
-                        </body>
-                    </html>";
-                $headers  = 'MIME-Version: 1.0' . "\r\n";
-                $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-                $headers .= 'From: Green Heart Foods <'.GREEN_HEART_FOODS_ADMIN_EMAIL.'>' . "\r\n";
-                $sent = mail($to_email, $subject, $message, $headers);
-                if($sent) {
-                    Messages::add('[Email Sent] Thanks! The order has been updated.');
-                } else {
-                    Messages::add('[Email Not Sent] Thanks! The order has been updated.');
-                }
-                header("Location: ../clients/weekly-menu.php?client-id=$client_id");
-                exit();
-            }
         }
     }
 
@@ -204,7 +156,7 @@ class Menu {
             } else {
                 $menu_image_path = $_POST['menu_image_path_orginal'];
             }
-            $arguments = [
+            $arguments = array(
                 $_POST['meal_id'],
                 $_POST['client_id'],
                 $_POST['server_id'],
@@ -226,7 +178,7 @@ class Menu {
                 $_POST['servings_per_order'][$i],
                 $_POST['total_orders_for_item'][$i],
                 $menu_item_id
-            ];  
+            );
             $query = $this->database_connection->prepare("UPDATE menu_items SET 
                 meal_id = ?, 
                 client_id = ?, 
@@ -316,7 +268,7 @@ class Menu {
 
         $result = $this->get_daily_menu($client_id, $service_date, $meal_id);
         $result_count = count($result);
-        $item_attributes_array = [
+        $item_attributes_array = array(
             'is_vegetarian', 
             'is_vegan', 
             'is_gluten_free', 
@@ -324,7 +276,7 @@ class Menu {
             'contains_nuts', 
             'contains_soy', 
             'contains_shellfish'
-        ];
+        );
         if($result_count > 0) {
 
             $server_image_path = WEB_ROOT.'/'.$result[0]['server_image_path'];
@@ -549,10 +501,6 @@ class Menu {
         return $html;
     }
 
-
-
-
-
     public function send_menu_for_client_review ($client_id, $start_date) {
         $user = new User();
         $result = $user->get_client_users($client_id);
@@ -562,26 +510,27 @@ class Menu {
             }
         }
         $end_date = date('Y-m-d', strtotime($start_date.' +6 days'));
-        $arguments = [
+        $arguments = array(
             2,
             $client_id,
             $start_date,
             $end_date
-        ];
+        );
         $query = $this->database_connection->prepare("UPDATE menu_items SET item_status_id = ? WHERE client_id = ? AND (service_date BETWEEN ? AND ?)");
-        $query->execute($arguments);
-        if ($query->rowCount() > 0 ){
-            $link = WEB_ROOT . "/clients/weekly-menu.php?client-id=$client_id&start-date=$start_date";
+        $result = $query->execute($arguments);
+        if ($result){
+            $link = "http://www.greenheartfoods.com/" . WEB_ROOT . "/clients/weekly-menu.php?client-id=$client_id&start-date=$start_date";
             $to_email  = $client_admin_email; 
             $subject = 'Your Weekly Menu is Ready';
+            $image_path = "http://www.greenheartfoods.com/" . WEB_ROOT . "/_images/ui/email_logo.jpg";
             $message = "
                 <html>
                     <body>
-						<h1><img src='_images/ui/email_logo.jpg>' /></h1>
+						<h1><img src='$image_path' /></h1>
                         <p>Hello, Food Lover!</p>
 						<p>Your weekly menus are ready to review. Please click the link below to review, edit and confirm.</p>
                         <p><a class='page_button' href=$link>$link</a></p>
-						<p>Gree Heart Foods</p>
+						<p>Green Heart Foods</p>
                     </body>
                 </html>";
             $headers  = 'MIME-Version: 1.0' . "\r\n";
@@ -593,48 +542,64 @@ class Menu {
             } else {
                 echo "Email has not been sent";
             }
+        } else {
+            echo "There was a problem updating menu status.";
         }
     }
 
-    public function send_menu_approval ($client_id, $start_date){
-        // $client = new Client();
-        // $result = $client->get_client($client_id);
-        // $client_name = $result[0]['cliet_name'];
-        // $end_date = date('Y-m-d', strtotime($start_date.' +6 days'));
-        // $arguments = [
-        //     3,
-        //     $client_id,
-        //     $start_date,
-        //     $end_date
-        // ];
-        // $query = $this->database_connection->prepare("UPDATE menu_items SET item_status_id = ? WHERE client_id = ? AND (service_date BETWEEN ? AND ?)");
-        // $query->execute($arguments);
-        // if ($query->rowCount() > 0 ){
-        //     $link = WEB_ROOT . "/admin/weekly-menu.php?client-id=$client_id&start-date=$start_date";
-        //     $to_email  = GREEN_HEART_FOODS_ADMIN_EMAIL;
-        //     $subject = "A Menu Has Been Approved by $client_name";
-        //     $message = "
-        //         <html>
-        //             <body>
-        //                 <p>$client_name has approved a menu - please click below to review.</p>
-        //                 <a href=$link>$link</a>
-        //             </body>
-        //         </html>";
-        //     $headers  = 'MIME-Version: 1.0' . "\r\n";
-        //     $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-        //     $headers .= 'From: Green Heart Foods <'.GREEN_HEART_FOODS_ADMIN_EMAIL.'>' . "\r\n";
-        //     $sent = mail($to_email, $subject, $message, $headers);
-        //     if($sent) {
-        //         echo "Email has been sent";
-        //     } else {
-        //         echo "Email has not been sent";
-        //     }
-        // }
+    public function approve_menu_from_client() {
+        $service_date = $_POST['service_date'];
+        $client_id = $_POST['client_id'];
+        $meal_id = $_POST['meal_id'];
+        $menu_item_id_array = $_POST['menu_item_id_array'];
+        $number_of_menu_items = count($menu_item_id_array);
+        $client = new Client();
+        $result = $client->get_client($client_id);
+        if($result) {
+            $client_name = $result[0]['company_name'];
+        } else {
+            $client_name = "Client";
+        }
+        for ($i=0; $i < $number_of_menu_items; $i++) { 
+            $menu_item_id = $menu_item_id_array[$i];
+            $arguments = array(
+                3,
+                $_POST['special_requests'][$i],
+                $_POST['total_orders_for_item'][$i],
+                $menu_item_id
+            );
+            $query = $this->database_connection->prepare("UPDATE menu_items SET 
+                item_status_id = ?,
+                special_requests = ?, 
+                total_orders_for_item = ?
+                WHERE 
+                menu_item_id = ?");
+            $result = $query->execute($arguments);
+            if($i == $number_of_menu_items-1) {
+                $link = "http://www.greenheartfoods.com/". WEB_ROOT . "/admin/weekly-menu.php?client-id=$client_id&start-date=$service_date";
+                $to_email  = GREEN_HEART_FOODS_ADMIN_EMAIL;
+                $subject = "A Menu Has Been Approved by $client_name";
+                $message = "
+                    <html>
+                        <body>
+                            <p>$client_name has approved a menu - please click below to review.</p>
+                            <a href=$link>$link</a>
+                        </body>
+                    </html>";
+                $headers  = 'MIME-Version: 1.0' . "\r\n";
+                $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+                $headers .= 'From: Green Heart Foods <'.GREEN_HEART_FOODS_ADMIN_EMAIL.'>' . "\r\n";
+                $sent = mail($to_email, $subject, $message, $headers);
+                if($sent) {
+                    Messages::add('[Email Sent] Thanks! The order has been updated.');
+                } else {
+                    Messages::add('[Email Not Sent] Thanks! The order has been updated.');
+                }
+                header("Location: ../clients/weekly-menu.php?client-id=$client_id");
+                exit();
+            }
+        }
     }
-
-
-
-
 
     public function get_menu_form($client_id, $service_date = null, $meal_id = null) {
         $menu = new Menu();
@@ -657,8 +622,11 @@ class Menu {
         $end_month_number = date('m', strtotime('+1 month'));
         $start_year = date('Y');
         $end_year = date('Y', strtotime('+1 year'));
-        $month_options_array = [[$start_month_number, $start_month], [$end_month_number, $end_month]];
-        $year_options_array = [$start_year, $end_year];
+        $month_options_array = array(
+            array($start_month_number, $start_month), 
+            array($end_month_number, $end_month)
+        );
+        $year_options_array = array($start_year, $end_year);
         $server_image_path = '';
         $menu_item_hidden_ids = "";
         $total_orders_for_menu = 0;
@@ -671,11 +639,11 @@ class Menu {
             $mode = 'edit';
             $cancel_url = WEB_ROOT."/admin/daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id";
             $form_action = '../_actions/update-menu.php';
-            $arguments = [
+            $arguments = array(
                 $client_id,
                 $service_date,
                 $meal_id,
-            ];
+            );
             $query = $this->database_connection->prepare("SELECT * FROM menu_items LEFT JOIN servers ON menu_items.server_id = servers.server_id WHERE client_id = ? AND service_date = ? AND meal_id = ?");
             $query->execute($arguments);
             // $query->execute($arguments);

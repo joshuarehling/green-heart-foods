@@ -24,7 +24,7 @@
 
 		echo "<h1>".$menu_items[0]['company_name']." Menu</h1>";
 		$html = "";
-		$item_attributes_array = [
+		$item_attributes_array = array(
             'is_vegetarian', 
             'is_vegan', 
             'is_gluten_free', 
@@ -32,7 +32,7 @@
             'contains_nuts', 
             'contains_soy', 
             'contains_shellfish'
-        ];
+        );
 		$html .= "<h2>".date('F d, Y', strtotime($menu_items[0]['service_date']))."</h2>";
 		for ($i=0; $i < count($menu_items); $i++) { 
 			$checkboxes = "";

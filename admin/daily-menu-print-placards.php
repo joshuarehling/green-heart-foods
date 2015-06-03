@@ -18,7 +18,7 @@
 <div class="menu">
 	<?php 
 		$html = "";
-		$item_attributes_array = [
+		$item_attributes_array = array(
             'is_vegetarian', 
             'is_vegan', 
             'is_gluten_free', 
@@ -26,7 +26,7 @@
             'contains_nuts', 
             'contains_soy', 
             'contains_shellfish'
-        ];
+        );
 		for ($i=0; $i < count($menu_items); $i++) { 
             if($i%4 == 3) {
                 $class = 'fourth';
