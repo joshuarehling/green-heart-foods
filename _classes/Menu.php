@@ -240,10 +240,12 @@ class Menu {
         // if($context == 'green_heart_foods_admin') {
         //   $html .= "<a class='menu' href='$web_root/admin/daily-menu-print-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Menu</a>";
         // }
-        $html .= "<a class='menu' href='$web_root/admin/daily-menu-print-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Menu</a>";
+        
         if($context == 'green_heart_foods_admin') {
+            $html .= "<a class='menu' href='$web_root/admin/daily-menu-print-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Menu</a>";
             $html .= "<a class='placard' href='$web_root/admin/daily-menu-print-placards.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Placards</a>";
         } else {
+            $html .= "<a class='menu' href='$web_root/clients/daily-menu-print-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Menu</a>";
             $html .= "<a class='placard'>&nbsp;</a>";			
 		}
         $html .= "<h2>$weekday</h2>";
@@ -538,9 +540,13 @@ class Menu {
             $headers .= 'From: Green Heart Foods <'.GREEN_HEART_FOODS_ADMIN_EMAIL.'>' . "\r\n";
             $sent = mail($to_email, $subject, $message, $headers);
             if($sent) {
-                echo "Email has been sent";
+                Messages::add('Your email has been sent.');
+                header("Location: ". WEB_ROOT . "/admin/weekly-menu.php?client-id=$client_id");
+                exit();
             } else {
-                echo "Email has not been sent";
+                Messages::add('Sorry, the was an error. Your email has not been sent.');
+                header("Location: ". WEB_ROOT . "/admin/weekly-menu.php?client-id=$client_id");
+                exit();
             }
         } else {
             echo "There was a problem updating menu status.";
@@ -591,12 +597,14 @@ class Menu {
                 $headers .= 'From: Green Heart Foods <'.GREEN_HEART_FOODS_ADMIN_EMAIL.'>' . "\r\n";
                 $sent = mail($to_email, $subject, $message, $headers);
                 if($sent) {
-                    Messages::add('[Email Sent] Thanks! The order has been updated.');
+                    Messages::add('Thanks! Your order has been updated.');
+                    header("Location: ". WEB_ROOT . "/admin/weekly-menu.php?client-id=$client_id");
+                    exit();
                 } else {
-                    Messages::add('[Email Not Sent] Thanks! The order has been updated.');
+                    Messages::add('Sorry, there was an error. Your order has not been updated.');
+                    header("Location: ". WEB_ROOT . "/admin/weekly-menu.php?client-id=$client_id");
+                    exit();
                 }
-                header("Location: ../clients/weekly-menu.php?client-id=$client_id");
-                exit();
             }
         }
     }
