@@ -436,43 +436,58 @@ class Menu {
         $additional_menu_items = array();
         $group_id = 0;
 
-        for ($i=0; $i < count($result); $i++) { 
-            $meal_id = $result[$i]['meal_id'];
-            if(isset($additional_menu_items[$meal_id])) {
-                $additional_menu_items[$meal_id] .= '<p class="menu_item_name">'.$result[$i]['menu_item_name'].'</p>';
-            } else {
-                $additional_menu_items[$meal_id] = '<p class="menu_item_name">'.$result[$i]['menu_item_name'].'</p>';
-            }
-        }
-        $service_date = null;
-        $meal_id = null;
-        $image_class = ""; //TODO Delete?
-        for ($i=0; $i < count($result); $i++) { 
-            if($service_date != $result[$i]['service_date'] && $meal_id != $result[$i]['meal_id']) {
-                if($context != 'client_general') {
-                    $item_status = "<p class='item_status'>".$result[$i]['item_status']."</p>";
+        if($result_count > 0) {
+            for ($i=0; $i < count($result); $i++) { 
+                $meal_id = $result[$i]['meal_id'];
+                if(isset($additional_menu_items[$meal_id])) {
+                    $additional_menu_items[$meal_id] .= '<p class="menu_item_name">'.$result[$i]['menu_item_name'].'</p>';
                 } else {
-                    $item_status = "";
+                    $additional_menu_items[$meal_id] = '<p class="menu_item_name">'.$result[$i]['menu_item_name'].'</p>';
                 }
-                $html .= "<div class='outside_container'>";
-                $html .=    "<div class='meal_container'>";
-                $html .=        "<div class='meal_details'>";
-                $html .=            $result[$i]['service_date'];
-                $html .=                $item_status;
-                $html .=            "<p class='day_of_the_week'>".date('l', strtotime($result[$i]['service_date'])).'</p>';
-                $html .=            "<p class='month_and_date'>".date('M d', strtotime($result[$i]['service_date'])).'</p>';
-                $html .=            "<p class='meal_name'>".$result[$i]['meal_name'].'</p>';
-                $html .=            $additional_menu_items[$result[$i]['meal_id']];
-                $html .=            "<a class='page_button' href='daily-menu.php?client-id=$client_id&service-date=".$result[$i]['service_date']."&meal-id=".$result[$i]['meal_id']."'>View Items</a>";
-                $html .=        "</div>";
-                $html .=        "<div class='meal_image'>";
-                $html .=            "<img class='$image_class' src='".WEB_ROOT."/_uploads/".$result[$i]['menu_image_path']."' />";
-                $html .=        "</div>";
-                $html .=    "</div>";
-                $html .= "</div>";
             }
-            $service_date = $result[$i]['service_date'];
-            $meal_id = $result[$i]['meal_id'];
+            $service_date = null;
+            $meal_id = null;
+            $image_class = ""; //TODO Delete?
+            for ($i=0; $i < count($result); $i++) { 
+                if($service_date != $result[$i]['service_date'] && $meal_id != $result[$i]['meal_id']) {
+                    if($context != 'client_general') {
+                        $item_status = "<p class='item_status'>".$result[$i]['item_status']."</p>";
+                    } else {
+                        $item_status = "";
+                    }
+                    $html .= "<div class='outside_container'>";
+                    $html .=    "<div class='meal_container'>";
+                    $html .=        "<div class='meal_details'>";
+                    //$html .=              $result[$i]['service_date'];
+                    $html .=                $item_status;
+                    $html .=            "<p class='day_of_the_week'>".date('l', strtotime($result[$i]['service_date'])).'</p>';
+                    $html .=            "<p class='month_and_date'>".date('M d', strtotime($result[$i]['service_date'])).'</p>';
+                    $html .=            "<p class='meal_name'>".$result[$i]['meal_name'].'</p>';
+                    $html .=            $additional_menu_items[$result[$i]['meal_id']];
+                    $html .=            "<a class='page_button' href='daily-menu.php?client-id=$client_id&service-date=".$result[$i]['service_date']."&meal-id=".$result[$i]['meal_id']."'>View Items</a>";
+                    $html .=        "</div>";
+                    $html .=        "<div class='meal_image'>";
+                    $html .=            "<img class='$image_class' src='".WEB_ROOT."/_uploads/".$result[$i]['menu_image_path']."' />";
+                    $html .=        "</div>";
+                    $html .=    "</div>";
+                    $html .= "</div>";
+                }
+                $service_date = $result[$i]['service_date'];
+                $meal_id = $result[$i]['meal_id'];
+            }
+            $menus = 1;
+        } else {
+            $formatted_start_date = date('M d', strtotime($start_date))."-".date('d', strtotime($start_date.' + 6 days'));
+            $html .= "<p class='no_menus'>No menus</p>";
+            $menus = 0;
+        }
+        if($context == 'green_heart_foods_admin') {
+            $html .=    "<div class='button_container'>";
+            $html .=        '<a class="page_button" href="'.WEB_ROOT.'/admin/create-menu.php?client-id='.$client_id.'">Create Menu </a>';
+            if($menus) {
+                $html .=     "<a class='page_button' href='".WEB_ROOT."/_actions/email-client.php?client-id=$client_id&start-date=$start_date'> Email Client</a><br />";    
+            }
+            $html .=    "</div>";
         }
         return $html;
     }
