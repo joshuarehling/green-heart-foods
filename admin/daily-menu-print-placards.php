@@ -45,7 +45,7 @@
             $checkboxes = str_replace('is_', '', $checkboxes);
             $checkboxes = str_replace('_', ' ', $checkboxes);
             $checkboxes = substr($checkboxes, 0, -2);
-            $html .= "<p>".ucwords($checkboxes)."</p>";
+            $html .= "<p class='labels'>".ucwords($checkboxes)."</p>";
             $html .= "</div>";
 		}
 		echo $html;

@@ -22,7 +22,7 @@
 
 	<?php 
 
-		echo "<h1>".$menu_items[0]['company_name']." Menu</h1>";
+		echo "<h1>".$menu_items[0]['company_name']."</h1>";
 		$html = "";
 		$item_attributes_array = array(
             'is_vegetarian', 
@@ -33,7 +33,7 @@
             'contains_soy', 
             'contains_shellfish'
         );
-		$html .= "<h2>".date('F d, Y', strtotime($menu_items[0]['service_date']))."</h2>";
+		$html .= "<h2>Menu for ".date('F d, Y', strtotime($menu_items[0]['service_date']))."</h2>";
 		for ($i=0; $i < count($menu_items); $i++) { 
 			$checkboxes = "";
 			if($menu_items[$i]['menu_item_name'] == "") {
@@ -53,7 +53,7 @@
             $checkboxes = str_replace('is_', '', $checkboxes);
             $checkboxes = str_replace('_', ' ', $checkboxes);
             $checkboxes = substr($checkboxes, 0, -2);
-            $html .= "<p>".ucwords($checkboxes)."</p>";
+            $html .= "<p class='labels'>".ucwords($checkboxes)."</p>";
 			$html .= "</div>";
 		}
 		echo $html;
