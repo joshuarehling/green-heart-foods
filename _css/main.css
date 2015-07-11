@@ -216,6 +216,10 @@ footer .contact a {
 	color: #84445e;
 }
 
+.allergy-alert {
+	color: #ed274e;
+}
+
 /* Checkboxes & Radio */
 .checkbox, .radio {
 	width: 60px;
@@ -1234,6 +1238,6 @@ html > .daily_menu_print_menu_page {
 	color: #aad04e;
 }
 
-.daily_menu_print_placards_page .fourth {
+.daily_menu_print_placards_page .ninth {
 	page-break-before: always;
 }

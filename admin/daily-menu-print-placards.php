@@ -18,18 +18,21 @@
 <div class="menu">
 	<?php 
 		$html = "";
-		$item_attributes_array = array(
+        $item_attributes_array = array(
             'is_vegetarian', 
             'is_vegan', 
             'is_gluten_free', 
             'is_whole_grain', 
             'contains_nuts', 
             'contains_soy', 
-            'contains_shellfish'
+            'contains_shellfish',
+            'contains_nightshades',
+            'contains_alcohol',
+            'contains_eggs'
         );
 		for ($i=0; $i < count($menu_items); $i++) { 
-            if($i%4 == 3) {
-                $class = 'fourth';
+            if($i%9 == 8) {
+                $class = 'ninth';
             } else {
                 $class = '';
             }
@@ -39,7 +42,11 @@
 			$html .= "<h3>".$menu_items[$i]['menu_item_name']."</h3>";
 			for($j=0; $j<count($item_attributes_array); $j++) {
                 if($menu_items[$i][$item_attributes_array[$j]] == 1) {
-                    $checkboxes .= $item_attributes_array[$j]. ", ";
+                    if(strrpos(ALLERGY_ALERT_ARRAY, $item_attributes_array[$j]) > -1) {
+                        $checkboxes .= "<span class='allergy-alert'>".$item_attributes_array[$j]. "</span>, ";
+                    } else {
+                        $checkboxes .= $item_attributes_array[$j]. ", ";
+                    }
                 }
             }
             $checkboxes = str_replace('is_', '', $checkboxes);

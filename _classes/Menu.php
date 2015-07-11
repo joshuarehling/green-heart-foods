@@ -104,6 +104,9 @@ class Menu {
             if(!isset($_POST['contains_nuts'][$i])) $_POST['contains_nuts'][$i]= 0;
             if(!isset($_POST['contains_soy'][$i])) $_POST['contains_soy'][$i] = 0;
             if(!isset($_POST['contains_shellfish'][$i])) $_POST['contains_shellfish'][$i] = 0;
+            if(!isset($_POST['contains_nightshades'][$i])) $_POST['contains_nightshades'][$i] = 0;
+            if(!isset($_POST['contains_alcohol'][$i])) $_POST['contains_alcohol'][$i] = 0;
+            if(!isset($_POST['contains_eggs'][$i])) $_POST['contains_eggs'][$i] = 0;
             $arguments = array(
                 $service_date,
                 $_POST['meal_id'],
@@ -122,11 +125,14 @@ class Menu {
                 $_POST['contains_nuts'][$i],
                 $_POST['contains_soy'][$i],
                 $_POST['contains_shellfish'][$i],
+                $_POST['contains_nightshades'][$i],
+                $_POST['contains_alcohol'][$i],
+                $_POST['contains_eggs'][$i],
                 $_POST['price_per_order'][$i],
                 $_POST['servings_per_order'][$i],
                 $_POST['total_orders_for_item'][$i],
             );
-            $query = $this->database_connection->prepare("INSERT INTO menu_items (service_date, meal_id, client_id, server_id, item_status_id, menu_image_path, meal_description, menu_item_name, ingredients, special_notes, is_vegetarian, is_vegan, is_gluten_free, is_whole_grain, contains_nuts, contains_soy, contains_shellfish, price_per_order, servings_per_order, total_orders_for_item) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $query = $this->database_connection->prepare("INSERT INTO menu_items (service_date, meal_id, client_id, server_id, item_status_id, menu_image_path, meal_description, menu_item_name, ingredients, special_notes, is_vegetarian, is_vegan, is_gluten_free, is_whole_grain, contains_nuts, contains_soy, contains_shellfish, contains_nightshades, contains_alcohol, contains_eggs, price_per_order, servings_per_order, total_orders_for_item) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $result = $query->execute($arguments);
         }
         if($query->rowCount() === 1){
@@ -151,6 +157,9 @@ class Menu {
             if(!isset($_POST['contains_nuts'][$i])) $_POST['contains_nuts'][$i]= 0;
             if(!isset($_POST['contains_soy'][$i])) $_POST['contains_soy'][$i] = 0;
             if(!isset($_POST['contains_shellfish'][$i])) $_POST['contains_shellfish'][$i] = 0;
+            if(!isset($_POST['contains_nightshades'][$i])) $_POST['contains_nightshades'][$i] = 0;
+            if(!isset($_POST['contains_alcohol'][$i])) $_POST['contains_alcohol'][$i] = 0;
+            if(!isset($_POST['contains_eggs'][$i])) $_POST['contains_eggs'][$i] = 0;
             if($_FILES['menu_image']['name'] != "") {
                 $menu_image_path = $this->image->upload_image($_FILES, 'menu_image');
             } else {
@@ -174,6 +183,9 @@ class Menu {
                 $_POST['contains_nuts'][$i],
                 $_POST['contains_soy'][$i],
                 $_POST['contains_shellfish'][$i],
+                $_POST['contains_nightshades'][$i],
+                $_POST['contains_alcohol'][$i],
+                $_POST['contains_eggs'][$i],
                 $_POST['price_per_order'][$i],
                 $_POST['servings_per_order'][$i],
                 $_POST['total_orders_for_item'][$i],
@@ -197,6 +209,9 @@ class Menu {
                 contains_nuts = ?, 
                 contains_soy = ?, 
                 contains_shellfish = ?, 
+                contains_nightshades = ?,
+                contains_alcohol = ?,
+                contains_eggs = ?,
                 price_per_order = ?, 
                 servings_per_order = ?, 
                 total_orders_for_item = ?
@@ -277,7 +292,10 @@ class Menu {
             'is_whole_grain', 
             'contains_nuts', 
             'contains_soy', 
-            'contains_shellfish'
+            'contains_shellfish',
+            'contains_nightshades',
+            'contains_alcohol',
+            'contains_eggs'
         );
         if($result_count > 0) {
 
@@ -332,10 +350,14 @@ class Menu {
                 // $html .= "<p class='note'>".$result[$i]['special_notes'].'</p>';
                 for($j=0; $j<count($item_attributes_array); $j++) {
                     if($result[$i][$item_attributes_array[$j]] == 1) {
-                        $checkboxes .= $item_attributes_array[$j]. ", ";
+                        if(strrpos(ALLERGY_ALERT_ARRAY, $item_attributes_array[$j]) > -1) {
+                            $checkboxes .= "<span class='allergy-alert'>".$item_attributes_array[$j]. "</span>, ";
+                        } else {
+                            $checkboxes .= $item_attributes_array[$j]. ", ";
+                        }
                     }
                 }
-
+                // echo $checkboxes."<br >";
                 $checkboxes = str_replace('is_', '', $checkboxes);
                 $checkboxes = str_replace('_', ' ', $checkboxes);
                 $checkboxes = substr($checkboxes, 0, -2);
@@ -790,6 +812,9 @@ class Menu {
                 $menu_items[$i]['contains_nuts'] == 1 ? $contains_nuts_checked = "checked" : $contains_nuts_checked = "";
                 $menu_items[$i]['contains_soy'] == 1 ? $contains_soy_checked = "checked" : $contains_soy_checked = "";
                 $menu_items[$i]['contains_shellfish'] == 1 ? $contains_shellfish_checked = "checked" : $contains_shellfish_checked = "";
+                $menu_items[$i]['contains_nightshades'] == 1 ? $contains_nightshades_checked = "checked" : $contains_nightshades_checked = "";
+                $menu_items[$i]['contains_alcohol'] == 1 ? $contains_alcohol_checked = "checked" : $contains_alcohol_checked = "";
+                $menu_items[$i]['contains_eggs'] == 1 ? $contains_eggs_checked = "checked" : $contains_eggs_checked = "";
                 $price_per_order = $menu_items[$i]['price_per_order'];
                 $servings_per_order = $menu_items[$i]['servings_per_order'];
                 $total_orders_for_item = $menu_items[$i]['total_orders_for_item'];
@@ -811,6 +836,9 @@ class Menu {
                 $contains_nuts_checked = "";
                 $contains_soy_checked = "";
                 $contains_shellfish_checked = "";
+                $contains_nightshades_checked = "";
+                $contains_alcohol_checked = "";
+                $contains_eggs_checked = "";
                 $price_per_order = "";
                 $servings_per_order = "";
                 $order_quantity = 0;
@@ -833,7 +861,10 @@ class Menu {
                    	 		<li><label class="box_label">Whole Grain</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $is_whole_grain_checked name="is_whole_grain[$i]"></span></li>
                     		<li><label class="box_label">Contains Nuts</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_nuts_checked name="contains_nuts[$i]"></span></li>
                     		<li><label class="box_label">Contains Soy</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_soy_checked name="contains_soy[$i]"></span></li>
-                    		<li><label class="box_label">Contains Shellfish</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_shellfish_checked name="contains_shellfish[$i]"></span></li>
+                            <li><label class="box_label">Contains Shellfish</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_shellfish_checked name="contains_shellfish[$i]"></span></li>
+                            <li><label class="box_label">Contains Nightshades</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_nightshades_checked name="contains_nightshades[$i]"></span></li>
+                            <li><label class="box_label">Contains Alcohol</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_alcohol_checked name="contains_alcohol[$i]"></span></li>
+                    		<li><label class="box_label">Contains Eggs</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_eggs_checked name="contains_eggs[$i]"></span></li>
 						</ul>
 					</div>
                     <h3>Set Price per Order</h3>

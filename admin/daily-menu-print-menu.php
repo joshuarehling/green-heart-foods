@@ -31,7 +31,10 @@
             'is_whole_grain', 
             'contains_nuts', 
             'contains_soy', 
-            'contains_shellfish'
+            'contains_shellfish',
+            'contains_nightshades',
+            'contains_alcohol',
+            'contains_eggs'
         );
 		$html .= "<h2>Menu for ".date('F d, Y', strtotime($menu_items[0]['service_date']))."</h2>";
 		for ($i=0; $i < count($menu_items); $i++) { 
@@ -42,12 +45,18 @@
 				$class = "";
 			}
 			$html .= "<div class='item_container $class'>";
-            $html .= "<div class='like-heart'><img src='../_images/ui/favorite_off.png' /></div>";
+			if(count($menu_items) < 7) {
+				$html .= "<div class='like-heart'><img src='../_images/ui/favorite_off.png' /></div>";	
+			}
 			$html .= "<h3>".$menu_items[$i]['menu_item_name']."</h3>";
 			$html .= "<p>".$menu_items[$i]['ingredients']."</p>";
 			for($j=0; $j<count($item_attributes_array); $j++) {
                 if($menu_items[$i][$item_attributes_array[$j]] == 1) {
-                    $checkboxes .= $item_attributes_array[$j]. ", ";
+                    if(strrpos(ALLERGY_ALERT_ARRAY, $item_attributes_array[$j]) > -1) {
+                        $checkboxes .= "<span class='allergy-alert'>".$item_attributes_array[$j]. "</span>, ";
+                    } else {
+                        $checkboxes .= $item_attributes_array[$j]. ", ";
+                    }
                 }
             }
             $checkboxes = str_replace('is_', '', $checkboxes);
