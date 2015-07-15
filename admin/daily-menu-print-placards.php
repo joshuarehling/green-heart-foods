@@ -28,7 +28,9 @@
             'contains_shellfish',
             'contains_nightshades',
             'contains_alcohol',
-            'contains_eggs'
+            'contains_eggs',
+            'contains_gluten',
+            'contains_dairy'
         );
 		for ($i=0; $i < count($menu_items); $i++) { 
             if($i%9 == 8) {

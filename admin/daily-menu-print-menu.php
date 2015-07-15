@@ -34,7 +34,9 @@
             'contains_shellfish',
             'contains_nightshades',
             'contains_alcohol',
-            'contains_eggs'
+            'contains_eggs',
+            'contains_gluten',
+            'contains_dairy'
         );
 		$html .= "<h2>Menu for ".date('F d, Y', strtotime($menu_items[0]['service_date']))."</h2>";
 		for ($i=0; $i < count($menu_items); $i++) { 
