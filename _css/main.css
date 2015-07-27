@@ -565,6 +565,7 @@ footer .contact a {
 	color: #ee284e;
 	font-size: 2em;
 	margin: -7px 0 0 -3px;
+	margin: -7px 0 0 0px;
 	line-height: 1.1em;
 }
 
@@ -572,6 +573,7 @@ footer .contact a {
 	color: #84445e;
 	font-size: 2em;
 	margin-left: -3px;
+	margin-left: 0px;
 	line-height: 1.1em;
 }
 
@@ -579,12 +581,14 @@ footer .contact a {
 	color: #7d7d7d;
 	font-size: 2em;
 	margin-left: -3px;
+	margin-left: 0px;
 	line-height: 1.1em;
 }
 
 .weekly_menu_page .meal_details .meal_name {
 	font-size: 2em;
 	margin-left: -3px;
+	margin-left: 0px;
 	line-height: 1.1em;
 	padding-bottom: 25px;
 }
@@ -1038,6 +1042,9 @@ footer .contact a {
 
 .daily_menu_page .like-heart {
 	margin-top: 15px;
+}
+.daily_menu_page .like-heart:hover {
+	cursor: pointer;
 }
 
 .daily_menu_page p.number_of_likes {
