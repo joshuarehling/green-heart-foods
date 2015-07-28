@@ -577,6 +577,7 @@ class Menu {
     }
 
     public function approve_menu_from_client() {
+
         $service_date = $_POST['service_date'];
         $client_id = $_POST['client_id'];
         $meal_id = $_POST['meal_id'];
@@ -621,11 +622,13 @@ class Menu {
                 $sent = mail($to_email, $subject, $message, $headers);
                 if($sent) {
                     Messages::add('Thanks! Your order has been updated.');
-                    header("Location: ". WEB_ROOT . "/admin/weekly-menu.php?client-id=$client_id");
+                    // header("Location: ". WEB_ROOT . "/admin/weekly-menu.php?client-id=$client_id");
+                    header("Location: ". WEB_ROOT . "/clients/weekly-menu.php?client-id=$client_id");
                     exit();
                 } else {
                     Messages::add('Sorry, there was an error. Your order has not been updated.');
-                    header("Location: ". WEB_ROOT . "/admin/weekly-menu.php?client-id=$client_id");
+                    // header("Location: ". WEB_ROOT . "/admin/weekly-menu.php?client-id=$client_id");
+                    header("Location: ". WEB_ROOT . "/clients/weekly-menu.php?client-id=$client_id");
                     exit();
                 }
             }
