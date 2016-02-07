@@ -42,6 +42,9 @@
 			$html .= "<div class='placard_container $class'>";
             $html .= "<div class='like-heart'><img src='../_images/ui/favorite_off.png' /></div>";
 			$html .= "<h3>".$menu_items[$i]['menu_item_name']."</h3>";
+			// Josh R. edit
+			$html .= "<p>".$menu_items[$i]['ingredients']."</p>";
+			// Josh R. edit end			
 			for($j=0; $j<count($item_attributes_array); $j++) {
                 if($menu_items[$i][$item_attributes_array[$j]] == 1) {
                     if(strrpos(ALLERGY_ALERT_ARRAY, $item_attributes_array[$j]) > -1) {

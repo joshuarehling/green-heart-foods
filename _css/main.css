@@ -1,4 +1,4 @@
-/* Updated Mon 20 Jul 2015 */
+/* Updated Mon 7 Aug 2015 by Josh Rehling*/
 
 
 /* -------------------- Redefine Global */
@@ -1150,6 +1150,7 @@ html > .daily_menu_print_menu_page {
 	background-position: 20px 20px;
 	background-repeat: no-repeat;
 	background-size: 1.6em;
+	background-size: 2.6em;
 }
 
 .daily_menu_print_menu_page h2 {
