@@ -12,14 +12,16 @@ class User {
     /* Login for Clients TODO - Combine the login functions */
 
     public function login() {
-        switch ($_POST['context']) {
-            case 'green_heart_foods':
-                $redirect_path = WEB_ROOT.'/login/';
-                break;
-            case 'client':
-                $redirect_path = WEB_ROOT.'/login/';
-                break;
-        } 
+
+        $redirect_path = WEB_ROOT.'/login/';
+        // switch ($_POST['context']) {
+        //     case 'green_heart_foods':
+        //         $redirect_path = WEB_ROOT.'/login/';
+        //         break;
+        //     case 'client':
+        //         $redirect_path = WEB_ROOT.'/login/';
+        //         break;
+        // } 
         if (!empty($_POST['user_name']) && !empty($_POST['password'])) {
             $database = new Database();
             $database_connection = $database->connect();
@@ -40,20 +42,21 @@ class User {
                     switch($result[0]['user_type_id']) {
                         case 1:
                             $_SESSION['green_heart_foods_logged_in'] = 1;
-                            header("Location: ../admin/clients.php");
-                            exit();
+                            $forward_url = "../admin/clients.php";
                             break;
                         case 2:
                             $_SESSION['client_admin_logged_in'] = 1;
-                            header("Location: ../clients/weekly-menu.php?client-id=$client_id");
-                            exit();
+                            $forward_url = "../clients/weekly-menu.php?client-id=$client_id";
                             break;
                         case 3:
                             $_SESSION['client_general_logged_in'] = 1;
-                            header("Location: ../clients/weekly-menu.php?client-id=$client_id");
-                            exit();
+                            $forward_url = "../clients/weekly-menu.php?client-id=$client_id";
                             break;
                     }
+                    if($_POST['forward_url'] !== "") {
+                        $forward_url = $_POST['forward_url'];
+                    }
+                    header("Location: $forward_url");
                     Messages::add('Logged In');
                 } else {
                     Messages::add('Sorry, there was an error with that user name/password combination.');
@@ -194,13 +197,18 @@ class User {
 
     /* Check for client logged in status */
     
-    public function get_client_access_level () {
+    public function get_client_access_level ($forward_url) {
         if (isset($_SESSION['client_admin_logged_in']) AND $_SESSION['client_admin_logged_in'] == 1) {
             return 'client_admin';
         } else if (isset($_SESSION['client_general_logged_in']) AND $_SESSION['client_general_logged_in'] == 1) {
             return 'client_general';
         } else {
-            header('Location: '.WEB_ROOT.'/login/');
+            if($forward_url !== "") {
+                header("Location: ".WEB_ROOT."/login/index.php?forward-url=$forward_url");
+            } else {
+                header("Location: ".WEB_ROOT."/login/");
+            }
+            
         }
     }
 
@@ -214,13 +222,14 @@ class User {
 
     /* Get Login Form */
 
-    public function get_login_form($context) {
+    public function get_login_form($context, $forward_url) {
         return <<<HTML
             <h1>Log in to View Menus</h1>
             <form method="post" action="../_actions/login.php">
                 <input id="login_input_username" class="login_input" type="text" name="user_name" value="" placeholder="username" required />
                 <input id="login_input_password" class="login_input" type="password" name="password" autocomplete="off" value="" placeholder="password" required />
                 <input type="hidden" name="context" value="$context" />
+                <input type="hidden" name="forward_url" value="$forward_url" />
                 <input class="login_button" type="submit"  name="login" value="Log in" />
             </form>
             <p class="login_note">

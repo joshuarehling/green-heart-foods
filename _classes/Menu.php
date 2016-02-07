@@ -544,7 +544,8 @@ class Menu {
         $query = $this->database_connection->prepare("UPDATE menu_items SET item_status_id = ? WHERE client_id = ? AND (service_date BETWEEN ? AND ?)");
         $result = $query->execute($arguments);
         if ($result){
-            $link = "http://www.greenheartfoods.com/" . WEB_ROOT . "/clients/weekly-menu.php?client-id=$client_id&start-date=$start_date";
+            $link = "http://www.greenheartfoods.com" . WEB_ROOT . "/clients/weekly-menu.php?client-id=$client_id&start-date=$start_date";
+            $link_with_forward = $link."&forward-url=$link";
             $to_email  = $client_admin_email; 
             $subject = 'Your Weekly Menu is Ready';
             $image_path = "http://www.greenheartfoods.com/" . WEB_ROOT . "/_images/ui/email_logo.jpg";
@@ -554,7 +555,7 @@ class Menu {
 						<h1><img src='$image_path' /></h1>
                         <p>Hello, Food Lover!</p>
 						<p>Your weekly menus are ready to review. Please click the link below to review, edit and confirm.</p>
-                        <p><a class='page_button' href=$link>$link</a></p>
+                        <p><a class='page_button' href=$link_with_forward>$link_with_forward</a></p>
 						<p>Green Heart Foods</p>
                     </body>
                 </html>";
@@ -796,7 +797,7 @@ class Menu {
         $html .=    "</fieldset>";
         $html .=    "<fieldset>";
         $html .=        "<h3>Meal Description</h3>";
-        $html .=        "<input name='meal_description' type='text' placeholder='Add Description Here' value='$meal_description' />";
+        $html .=        "<input name='meal_description' type='text' placeholder='Add Description Here' value='$meal_description' spellcheck='true' />";
         $html .=    "</fieldset>";
         $html .=    "<fieldset>";
         $html .=    "<div class='server_and_meal'>";
