@@ -326,7 +326,7 @@ class Menu {
             $html .=        "<div class='server_information server_image' $server_image_style>";
             // $html .=    "<img src='$server_image_path' />";
             $html .=            "<div class='name'>".$result[0]['server_first_name']."</div>";
-            $html .=            "<div class='number'><a href='tel:+".$result[0]['server_phone_number']."' />".$result[0]['server_phone_number']."</a></div>";
+            //$html .=            "<div class='number'><a href='tel:+".$result[0]['server_phone_number']."' />".$result[0]['server_phone_number']."</a></div>";
             $html .=            "<p>Will be serving<br />lunch today</p>";
             $html .=        "</div>";
             $html .=        "<div class='menu_image_container meal_image' $menu_image_style>";
