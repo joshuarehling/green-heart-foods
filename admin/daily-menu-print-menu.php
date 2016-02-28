@@ -52,10 +52,18 @@
 			}
 			$html .= "<h3>".$menu_items[$i]['menu_item_name']."</h3>";
 			$html .= "<p>".$menu_items[$i]['ingredients']."</p>";
+			$first_allergy_alert = true;
 			for($j=0; $j<count($item_attributes_array); $j++) {
                 if($menu_items[$i][$item_attributes_array[$j]] == 1) {
                     if(strrpos(ALLERGY_ALERT_ARRAY, $item_attributes_array[$j]) > -1) {
-                        $checkboxes .= "<span class='allergy-alert'>".$item_attributes_array[$j]. "</span>, ";
+                    	if($first_allergy_alert) {
+                    	    $prepend_allery_list = "Contains";
+                    	    $first_allergy_alert = false;
+                    	} else {
+                    	    $prepend_allery_list = "";
+                    	}
+                    	$checkboxes .= "<span class='allergy-alert'>".$prepend_allery_list.str_replace("contains", "", $item_attributes_array[$j]). ",</span> ";
+                        //$checkboxes .= "<span class='allergy-alert'>".$item_attributes_array[$j]. "</span>, ";
                     } else {
                         $checkboxes .= $item_attributes_array[$j]. ", ";
                     }

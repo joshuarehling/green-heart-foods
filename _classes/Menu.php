@@ -72,6 +72,30 @@ class Menu {
         }
     }
 
+    public function get_yearly_menus($client_id, $menu_year) {
+        $menu_date_minimum = $menu_year."-01-01";
+        $menu_date_maximum = $menu_year."-12-31";
+        $arguments = array(
+            $client_id,
+            $menu_date_minimum,
+            $menu_date_maximum
+        );
+        $query = $this->database_connection->prepare(
+            "SELECT * FROM menu_items 
+            LEFT JOIN meals ON menu_items.meal_id = meals.meal_id
+            LEFT JOIN servers ON menu_items.server_id = servers.server_id
+            WHERE menu_items.client_id = ?
+            AND menu_items.service_date >= ?
+            AND menu_items.service_date <= ?
+            ORDER BY menu_items.service_date DESC, menu_items.meal_id"
+        );
+        $query->execute($arguments);
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+        if(count($result) > 0) {
+            return $result;
+        }
+    }
+
     public function create_menu() {
         $service_date = $_POST['service_year'].'-'.$_POST['service_month'].'-'.$_POST['service_day'];
         $client_id = $_POST['client_id'];
@@ -360,10 +384,17 @@ class Menu {
                 $html .= "<p class='dish_name'>".$result[$i]['menu_item_name'].'</p>';
                 $html .= "<p>".$result[$i]['ingredients'].'</p>';
                 // $html .= "<p class='note'>".$result[$i]['special_notes'].'</p>';
+                $first_allergy_alert = true;
                 for($j=0; $j<count($item_attributes_array); $j++) {
                     if($result[$i][$item_attributes_array[$j]] == 1) {
                         if(strrpos(ALLERGY_ALERT_ARRAY, $item_attributes_array[$j]) > -1) {
-                            $checkboxes .= "<span class='allergy-alert'>".$item_attributes_array[$j]. "</span>, ";
+                            if($first_allergy_alert) {
+                                $prepend_allery_list = "Contains";
+                                $first_allergy_alert = false;
+                            } else {
+                                $prepend_allery_list = "";
+                            }
+                            $checkboxes .= "<span class='allergy-alert'>".$prepend_allery_list.str_replace("contains", "", $item_attributes_array[$j])."</span>, ";
                         } else {
                             $checkboxes .= $item_attributes_array[$j]. ", ";
                         }
@@ -417,7 +448,6 @@ class Menu {
         $html .= '</form>';
         return $html;
     }
-
 
     public function get_weekly_menu_page($context) {
         $last_week = date('Y-m-d', strtotime('Monday last week'));
@@ -523,6 +553,100 @@ class Menu {
             }
             $html .=    "</div>";
         }
+        return $html;
+    }
+
+    public function get_yearly_menu_page($context) {
+        $this_year = date('Y', strtotime('now'));
+        if(isset($_GET['menu-year'])) {
+            $menu_year = $_GET['menu-year'];
+        } else {
+            $menu_year = $this_year;
+        }
+        $previous_year = $menu_year-1;
+        $next_year = $menu_year+1;
+        $client_id = $_GET['client-id'];
+        $html = "";
+        $client = new Client();
+        $result = $client->get_client($client_id);
+        $web_root = WEB_ROOT;
+        $html .= "<div class='page_header'>";
+        $html .=    "<ul>";
+        $html .=        "<li>$menu_year</li>";
+        $html .=    "</ul>";
+        $html .= "</div>";
+        $result = $this->get_yearly_menus($client_id, $menu_year);
+        $previous_start_date = NULL;
+        $first_loop = true;
+        if ($result){
+            for($i=0; $i<count($result); $i++) {
+                $service_date = $result[$i]['service_date'];
+                if (date('l', strtotime($service_date)) === 'Monday') {
+                    $week_start_date = date('M-d', strtotime($service_date));
+                    $week_start_date_with_year = date('Y-m-d', strtotime($service_date));
+                } else {
+                    $week_start_date = date('M-d', strtotime('last monday', strtotime($service_date)));
+                    $week_start_date_with_year = date('Y-m-d', strtotime('last monday', strtotime($service_date)));
+                }
+                $week_end_date = date('M-d', strtotime("$week_start_date + 6 days"));
+                if($week_start_date !== $previous_start_date) {
+                    $thru_dates = "<br><div><b>-------**-------".$week_start_date." Thru ".$week_end_date."--------**-------</b></div><br>";
+                    $previous_service_date = NULL;
+                    $previous_meal_name = NULL;
+                    for($j=0; $j<count($result); $j++) {
+                        $current_service_date = $result[$j]['service_date'];
+                        $current_meal_name = $result[$j]['meal_name'];
+                        $today = date('Y-m-d', strtotime('now'));
+                        $last_monday = date('Y-m-d', strtotime('last monday'));
+                        $next_monday = date('Y-m-d', strtotime('next monday'));
+                        if($week_start_date_with_year >= $last_monday) {
+                            $view_type = 'list_view';
+                        } else {
+                            $view_type = 'grid_view';
+                        }
+                        if (strtotime($current_service_date) <= strtotime($week_end_date) && strtotime($current_service_date) >= strtotime($week_start_date)) {
+                            if($current_meal_name !== $previous_meal_name){
+                                if(!$first_loop) {
+                                    $html .= "</div>"; // Closes the previously opened right-column div.
+                                    $html .= "</div>"; // Closes the previously opened week_container div.
+                                }
+                                $html .= "<div class='week_container $view_type'>";
+                                $html .=    "<div class='left_column'>";
+                                $html .=        "<span class='thru_dates'>".$thru_dates."</span>";
+                                $html .=        "<span class='meal_name'>".$result[$j]['meal_name']."</span>";    
+                                $html .=        "<span class='hosted_by'>Hosted By: ".$result[$j]['server_first_name']."</span>";
+                                $html .=        "<a class='view_link'>View</a>";
+                                $html .=    "</div>";
+                                $html .= "<div class='right_column'>";
+                            } 
+                            if ($current_service_date !== $previous_service_date) {
+                                $html .= "<br><br>".$result[$j]['service_date']."<br><br>";
+                            }
+                            $html .= "----".$result[$j]['menu_item_name']."<br>";
+                        }
+                        $previous_service_date = $current_service_date;
+                        $previous_meal_name = $current_meal_name;
+                    }
+                }
+                $previous_start_date = $week_start_date;
+                $first_loop = false;
+                if($i == count($result)-1){
+                    $html .= "</div>"; // Closes the previously opened right-column div.
+                    $html .= "</div>"; // Closes the previously opened week_container div.
+                }
+            }
+        } else {
+            $html .= "<div class='no-results-found'>Sorry, there are no menu items for $menu_year";
+        }
+        $html .= "<div class='weekly_menu_footer_navigation'>";
+        $html .= "<ul>";
+        $html .=    "<li class='previous_year'><a href='yearly-menu.php?client-id=$client_id&menu-year=$previous_year'>Prev Year</a></li>";
+        if($context === 'ghf_admin') {
+            $html .=    "<li class='create_menu'><a href='#'>Create Menu</a></li>";
+        }
+        $html .=    "<li class='next_year'><a href='yearly-menu.php?client-id=$client_id&menu-year=$next_year'>Next Year</a></li>";
+        $html .= "</ul>";
+        $html .= "</div>";
         return $html;
     }
 

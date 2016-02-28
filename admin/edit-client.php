@@ -13,7 +13,7 @@
 <h1>Clients</h1>
 
 <div class='page_header'>
-	<h2>Create Client</h2>
+	<h2>Edit Client</h2>
 </div>
 
 <?php echo Messages::render(); ?>

@@ -1254,3 +1254,64 @@ html > .daily_menu_print_menu_page {
 .daily_menu_print_placards_page .ninth {
 	page-break-before: always;
 }
+
+
+
+/* -------------------- Yearly Menu Page */
+
+
+/* List View */
+
+.yearly_menu_page .week_container.list_view {
+	margin-bottom: 25px;
+	border: 15px solid #000;
+	overflow: hidden;
+}
+
+.yearly_menu_page .week_container.list_view .left_column {
+	width: 200px;
+	padding: 50px;
+	float: left;
+	background-color: orange;
+}
+
+.yearly_menu_page .week_container.list_view .right_column {
+	width: 200px;
+	padding: 50px;
+	float: left;
+	background-color: red;
+}
+
+
+/* Grid View */
+
+.yearly_menu_page .week_container.grid_view {
+	margin-bottom: 25px;
+	border: 15px solid green;
+	overflow: hidden;
+	width: 200px;
+	float: left;
+}
+
+
+.yearly_menu_page .week_container.grid_view .right_column,
+.yearly_menu_page .week_container.grid_view .hosted_by,
+.yearly_menu_page .week_container.grid_view .view_link {
+	display: none;
+}
+
+
+/* Footer Navigation */
+
+
+.yearly_menu_page .weekly_menu_footer_navigation {
+	display: block;
+	background-color: #84445e;
+	text-align: center;
+	color: #fff;
+	padding: 30px 0;
+	margin: 0;
+	overflow: auto;
+	font-size: 3em;
+	clear: both;
+}
