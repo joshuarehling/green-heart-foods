@@ -14,13 +14,6 @@
 	$client_result = $client->get_client($client_id);
 ?>
 
-<!-- <div class="client_image"> -->
-	<?php
-		// $image_path = $client_result[0]['company_logo_large'];
-		// echo "<img src='".WEB_ROOT."/_uploads/".$image_path."' />";
-	?>
-<!-- </div> -->
-
 <div class='page_header'>
 	<h2>Menu</h2>
 </div>

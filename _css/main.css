@@ -904,6 +904,18 @@ footer .contact a {
 }
 
 
+.create_menu_page .add_dish {
+	display: block;
+	width: 200px;
+	height: 100px;
+	margin: 0 auto;
+	background-color: pink;
+	padding-top: 51px;
+	text-align: center;
+	cursor: pointer;
+}
+
+
 /* -------------------- Daily Menu Page - NEEDED fix dropdown*/
 
 .daily_menu_page {
@@ -1260,7 +1272,18 @@ html > .daily_menu_print_menu_page {
 /* -------------------- Yearly Menu Page */
 
 
-/* List View */
+.yearly_menu_page .outside_container {
+	overflow: auto; /* Scales the container to fit the floats. */
+	border: none;
+	border-bottom: 5px solid #84445e;
+	padding: 90px 0;
+	width: 90%;
+	min-width: 960px;
+	margin: 0 auto;
+}
+
+
+/* Yearly Menu - List View */
 
 .yearly_menu_page .week_container.list_view {
 	margin-bottom: 25px;
@@ -1283,7 +1306,7 @@ html > .daily_menu_print_menu_page {
 }
 
 
-/* Grid View */
+/* Yearly Menu - Grid View */
 
 .yearly_menu_page .week_container.grid_view {
 	margin-bottom: 25px;
@@ -1301,7 +1324,7 @@ html > .daily_menu_print_menu_page {
 }
 
 
-/* Footer Navigation */
+/* Yearly Menu - Footer Navigation */
 
 
 .yearly_menu_page .weekly_menu_footer_navigation {

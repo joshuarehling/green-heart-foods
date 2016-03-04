@@ -37,6 +37,7 @@ $(document).ready(function() {
 
 	$('.create_and_edit_menu .preview_menu_button').click(function(event){
 		$('.create_menu_form').submit();
+		$('.meals_per_day').val(0);
 	});
 
 	$('.create_and_edit_menu .server').click(function(event) {
@@ -46,6 +47,22 @@ $(document).ready(function() {
 		} else {
 			$('.server_image').css('background-image', 'url(../'+image_path+')');
 		}
+	});
+
+	var fieldset_id = 0;
+	var active_fieldset;
+	$('.create_and_edit_menu .add_dish').click(function(event) {
+		fieldset_id++;
+		active_fieldset = $('.create_menu_form').find("[data-fieldset-id='"+fieldset_id+"']");
+		if(fieldset_id <= $('.meals_per_day').length) {
+			active_fieldset.removeClass('hidden');	
+		}
+		if (fieldset_id == $('.meals_per_day').length-1) {
+			$('.create_and_edit_menu .add_dish').fadeOut();
+		}
+		$('html, body').animate({
+			scrollTop: active_fieldset.offset().top
+		}, 1000);
 	});
 
 	/* 
@@ -88,6 +105,18 @@ $(document).ready(function() {
 		var meal_id = $(this).val();
 		document.location = '../'+admin_or_client+'/daily-menu.php?client-id='+client_id+'&service-date='+service_date+'&meal-id='+meal_id;
 	});
+
+
+	/* 
+
+	Yearly Menu Page 
+
+	*/
+
+	$('.yearly_menu_page .week_container.grid_view').click(function(event){
+		document.location = $(this).attr('data_view_link');
+	});
+
 });
 
 
