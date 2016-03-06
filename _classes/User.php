@@ -46,11 +46,11 @@ class User {
                             break;
                         case 2:
                             $_SESSION['client_admin_logged_in'] = 1;
-                            $forward_url = "../clients/weekly-menu.php?client-id=$client_id";
+                            $forward_url = "../clients/yearly-menu.php?client-id=$client_id";
                             break;
                         case 3:
                             $_SESSION['client_general_logged_in'] = 1;
-                            $forward_url = "../clients/weekly-menu.php?client-id=$client_id";
+                            $forward_url = "../clients/yearly-menu.php?client-id=$client_id";
                             break;
                     }
                     if($_POST['forward_url'] !== "") {

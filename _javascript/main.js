@@ -97,8 +97,7 @@ $(document).ready(function() {
 		});
 	});
 
-	$('.meal-types').change(function(event){
-		console.log("changed");
+	$('.daily_menu_page .meal-types').change(function(event){
 		var client_id = $(this).attr('data-client-id');
 		var service_date = $(this).attr('data-service-date');
 		var admin_or_client = $(this).attr('data-admin-or-client');
@@ -106,6 +105,15 @@ $(document).ready(function() {
 		document.location = '../'+admin_or_client+'/daily-menu.php?client-id='+client_id+'&service-date='+service_date+'&meal-id='+meal_id;
 	});
 
+	/* Weekly Menu Page */ 
+
+	$('.weekly_menu_page .meal_type').change(function(event){
+		var client_id = $(this).attr('data-client-id');
+		var start_date = $(this).attr('data-start-date');
+		var admin_or_client = $(this).attr('data-admin-or-client');
+		var meal_id = $(this).val();
+		document.location = '../'+admin_or_client+'/weekly-menu.php?client-id='+client_id+'&start-date='+start_date+'&meal-id='+meal_id;
+	});
 
 	/* 
 
@@ -118,6 +126,9 @@ $(document).ready(function() {
 	});
 
 });
+
+
+/* Shared Functions */
 
 
 function handle_quantity_button_click(target) {

@@ -54,6 +54,26 @@ class Menu {
 		}
 	}
 
+	public function get_weekly_menu_by_meal($client_id, $start_date, $context, $meal_id) {
+		$end_date = date('Y-m-d', strtotime($start_date.' +6 days'));
+		$arguments = array(
+			$client_id,
+			$start_date,
+			$end_date, 
+			$meal_id
+		);
+		if ($context == 'green_heart_foods_admin') {
+			$query = $this->database_connection->prepare("SELECT * FROM menu_items LEFT JOIN meals ON menu_items.meal_id = meals.meal_id LEFT JOIN item_status ON menu_items.item_status_id = item_status.item_status_id WHERE client_id = ? AND (service_date BETWEEN ? AND ?) AND meals.meal_id = ? ORDER BY service_date ASC, meals.meal_id ASC, menu_item_id ASC");
+		} else {
+			$query = $this->database_connection->prepare("SELECT * FROM menu_items LEFT JOIN meals ON menu_items.meal_id = meals.meal_id LEFT JOIN item_status ON menu_items.item_status_id = item_status.item_status_id WHERE client_id = ? AND (service_date BETWEEN ? AND ?) AND (item_status.item_status_id = 2 OR item_status.item_status_id = 3) AND meals.meal_id = ? ORDER BY service_date ASC, meals.meal_id ASC, menu_item_id ASC");
+		}
+		$query->execute($arguments);
+		$result = $query->fetchAll(PDO::FETCH_ASSOC);
+		if(count($result) > 0) {
+			return $result;
+		}
+	}
+
 	public function get_daily_menu($client_id, $service_date, $meal_id) {
 		$arguments = array(
 			$client_id,
@@ -83,7 +103,7 @@ class Menu {
 			WHERE menu_items.client_id = ?
 			AND menu_items.service_date >= ?
 			AND menu_items.service_date <= ?
-			ORDER BY menu_items.service_date DESC, menu_items.meal_id"
+			ORDER BY menu_items.service_date DESC, menu_items.meal_id ASC"
 		);
 		$query->execute($arguments);
 		$result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -446,6 +466,7 @@ class Menu {
 	}
 
 	public function get_weekly_menu_page($context) {
+
 		$last_week = date('Y-m-d', strtotime('Monday last week'));
 		$this_week = date('Y-m-d', strtotime('Monday this week'));
 		$next_week = date('Y-m-d', strtotime('Monday next week'));
@@ -456,6 +477,11 @@ class Menu {
 			$start_date = $_GET['start-date'];
 		} else {
 			$start_date = $this_week;
+		}
+		if(isset($_GET['meal-id'])) {
+			$url_meal_id = $_GET['meal-id'];
+		} else {
+			$url_meal_id = 1;
 		}
 		$client_id = $_GET['client-id'];
 		$html = "";
@@ -481,54 +507,93 @@ class Menu {
 				$next_week_selected = 'selected';
 				break;
 		}
-		$result = $this->get_weekly_menu($client_id, $start_date, $context);
+		$result = $this->get_weekly_menu_by_meal($client_id, $start_date, $context, $url_meal_id);
 		$result_count = count($result);
 		$html .= "<div class='page_header'>";
 		$html .=    "<ul>";
-		$html .=        "<li class='left'><a class='$last_week_selected' href='weekly-menu.php?client-id=$client_id&start-date=$last_week'>$last_week_formatted</a></li>";
+		$html .=        "<li class='left'><a class='print_link' href='weekly-menu-print-menu.php?client-id=$client_id&start-date=$this_week'>Print Menus</a></li>";
 		$html .=        "<li><a class='$this_week_selected' href='weekly-menu.php?client-id=$client_id&start-date=$this_week'>$this_week_formatted</a></li>";
-		$html .=        "<li class='right'><a class='$next_week_selected' href='weekly-menu.php?client-id=$client_id&start-date=$next_week'>$next_week_formatted</a></li>";
+		$html .=        "<li class='right'><a class='print_link' href='weekly-menu-print-placards.php?client-id=$client_id&start-date=$next_week'>Print Placards</a></li>";
 		$html .=    "</ul>"; // three spaces centers the list because of the line break spaces created in the html formatting
 		$html .= "</div>";
-
 		$service_date = null;
 		$meal_id = null;
 		$additional_menu_items = array();
 		$group_id = 0;
-
-		if($result_count > 0) {
-			for ($i=0; $i < count($result); $i++) { 
-				$meal_id = $result[$i]['meal_id'];
-				if(isset($additional_menu_items[$meal_id])) {
-					$additional_menu_items[$meal_id] .= '<p class="menu_item_name">'.$result[$i]['menu_item_name'].'</p>';
-				} else {
-					$additional_menu_items[$meal_id] = '<p class="menu_item_name">'.$result[$i]['menu_item_name'].'</p>';
-				}
+		$meal_type_select_html = "";
+		$meal_types = $this->get_meal_types();
+		if($meal_types) {
+			if($context == 'green_heart_foods_admin') {
+				$admin_or_client = 'admin';
+			} else {
+				$admin_or_client = 'clients';
 			}
+			$meal_type_select_html .= "<select data-client-id='$client_id' data-start-date='$start_date' data-admin-or-client='$admin_or_client' class='meal_type'>";
+			for ($i=0; $i < count($meal_types); $i++) {
+				$meal_option_id = $meal_types[$i]['meal_id'];
+				$meal_name = $meal_types[$i]['meal_name'];
+				if($meal_option_id == $url_meal_id) {
+					$selected = 'selected';
+				} else {
+					$selected = '';
+				}
+				$meal_type_select_html .= "<option value='$meal_option_id' $selected>$meal_name</option>";
+			}
+			$meal_type_select_html .= "<select>";
+		}
+		if($result_count > 0) {
+			$html .= $meal_type_select_html;
+			$additional_menu_items[$meal_id] = "";
 			$service_date = null;
 			$meal_id = null;
 			$image_class = ""; //TODO Delete?
 			for ($i=0; $i < count($result); $i++) { 
-				if($service_date != $result[$i]['service_date'] && $meal_id != $result[$i]['meal_id']) {
+				if($service_date != $result[$i]['service_date']) {
 					if($context != 'client_general') {
 						$item_status = "<p class='item_status'>".$result[$i]['item_status']."</p>";
 					} else {
 						$item_status = "";
 					}
+					$meal_name = strtolower($result[$i]['meal_name']) ;
 					$html .= "<div class='outside_container'>";
-					$html .=    "<div class='meal_container'>";
+					$html .=    "<div class='meal_container $meal_name'>";
 					$html .=        "<div class='meal_details'>";
-					//$html .=              $result[$i]['service_date'];
 					$html .=                $item_status;
 					$html .=            "<p class='day_of_the_week'>".date('l', strtotime($result[$i]['service_date'])).'</p>';
 					$html .=            "<p class='month_and_date'>".date('M d', strtotime($result[$i]['service_date'])).'</p>';
-					$html .=            "<p class='meal_name'>".$result[$i]['meal_name'].'</p>';
-					$html .=            $additional_menu_items[$result[$i]['meal_id']];
+					$html .=            "<p class='meal_name'>".$meal_name.'</p>';
+					$html .=            "<p class='meal_description'>".$result[$i]['meal_description'].'</p>';
 					$html .=            "<a class='page_button' href='daily-menu.php?client-id=$client_id&service-date=".$result[$i]['service_date']."&meal-id=".$result[$i]['meal_id']."'>View Items</a>";
 					$html .=        "</div>";
-					$html .=        "<div class='meal_image'>";
-					$html .=            "<img class='$image_class' src='".WEB_ROOT."/_uploads/".$result[$i]['menu_image_path']."' />";
-					$html .=        "</div>";
+					$html .= 		"<div class='menu_items_container'>";
+					for ($j=0; $j < count($result); $j++) {
+						if($result[$i]['service_date'] == $result[$j]['service_date']) {
+							$html .= 	'<p class="menu_item_name">'.$result[$j]['menu_item_name']."</p>";
+							$is_list = "";
+							$contains_list_prepend = "<span class='allergy-alert'>Contains ";
+							$contains_list = $contains_list_prepend;
+							$result[$j]['is_vegetarian'] == 1 ? 		$is_list .= "Vegetarian, " : 			$is_list .= "";
+							$result[$j]['is_vegan'] == 1 ? 				$is_list .= "Vegan, " : 				$is_list .= "";
+							$result[$j]['is_gluten_free'] == 1 ? 		$is_list .= "Gluten-Free, " : 			$is_list .= "";
+							$result[$j]['is_whole_grain'] == 1 ? 		$is_list .= "Whole Grain, " : 			$is_list .= "";
+							$result[$j]['contains_nuts'] == 1 ? 		$contains_list .= "Nuts, " : 			$contains_list .= "";
+							$result[$j]['contains_soy'] == 1 ? 			$contains_list .= "Soy, " : 			$contains_list .= "";
+							$result[$j]['contains_shellfish'] == 1 ? 	$contains_list .= "Shellfish, " : 		$contains_list .= "";
+							$result[$j]['contains_nightshades'] == 1 ? 	$contains_list .= "Nightshades, " : 	$contains_list .= "";
+							$result[$j]['contains_alcohol'] == 1 ? 		$contains_list .= "Alcohol, " : 		$contains_list .= "";
+							$result[$j]['contains_eggs'] == 1 ? 		$contains_list .= "Eggs, " : 			$contains_list .= "";
+							$result[$j]['contains_gluten'] == 1 ? 		$contains_list .= "Gluten, "  :	 		$contains_list .= "";
+							$result[$j]['contains_dairy'] == 1 ? 		$contains_list .= "Dairy, " : 			$contains_list .= "";
+							if($contains_list === $contains_list_prepend) {
+								$is_list = trim($is_list, ", ");
+								$contains_list = "";
+							}
+							$contains_list = trim($contains_list, " ,")."</span>";
+							$html .= "<p class='is_and_contains_list'>".$is_list." ".$contains_list."</p>";
+							// $html .= "</p>";
+						}
+					}
+					$html .=    	"</div>";
 					$html .=    "</div>";
 					$html .= "</div>";
 				}
@@ -553,7 +618,6 @@ class Menu {
 	}
 
 	public function get_yearly_menu_page($context) {
-		// echo "<h1>$context</h1>";
 		$this_year = date('Y', strtotime('now'));
 		if(isset($_GET['menu-year'])) {
 			$menu_year = $_GET['menu-year'];
@@ -574,7 +638,6 @@ class Menu {
 		$html .= "</div>";
 		$result = $this->get_yearly_menus($client_id, $menu_year);
 		$previous_start_date = NULL;
-		$first_loop = true;
 		$html .= "<div class='outside_container'>";
 		if ($result){
 			for($i=0; $i<count($result); $i++) {
@@ -587,10 +650,12 @@ class Menu {
 					$week_start_date_with_year = date('Y-m-d', strtotime('last monday', strtotime($service_date)));
 				}
 				$week_end_date = date('M-d', strtotime("$week_start_date + 6 days"));
+				$week_end_date_with_year = date('Y-m-d', strtotime("$week_start_date + 6 days"));
 				if($week_start_date !== $previous_start_date) {
 					$thru_dates = $week_start_date." Thru ".$week_end_date;
 					$previous_service_date = NULL;
 					$previous_meal_name = NULL;
+					$previous_meal_id = NULL;
 					for($j=0; $j<count($result); $j++) {
 						$current_service_date = $result[$j]['service_date'];
 						$current_meal_name = $result[$j]['meal_name'];
@@ -611,40 +676,40 @@ class Menu {
 						} else {
 							$view_type = 'grid_view';
 						}
-						if (strtotime($current_service_date) <= strtotime($week_end_date) && strtotime($current_service_date) >= strtotime($week_start_date)) {
-							if($current_meal_name !== $previous_meal_name){
-								if(!$first_loop) {
-									$html .= "</div>"; // Closes the previously opened right-column div.
-									$html .= "</div>"; // Closes the previously opened week_container div.
+						$current_meal_id = $result[$j]['meal_id'];
+						if ($result[$j]['service_date'] <= $week_end_date_with_year && $result[$j]['service_date'] >= $week_start_date_with_year && $current_meal_id != $previous_meal_id) {
+							$meal_name_class = strtolower($current_meal_name);
+							$html .= "<div data_view_link='$view_link' class='week_meal_container $view_type $meal_name_class'>";
+							$html .=    "<div class='left_column'>";
+							$html .=        "<h2 class='thru_dates'>".$thru_dates."</h2>";
+							$html .=        "<h3 class='meal_name'>".$result[$j]['meal_name']."</h3>";    
+							$html .=        "<h4 class='hosted_by'>Hosted By: ".$result[$j]['server_first_name']."</h4>";
+							$html .=        "<a href='$view_link' class='view_link'>View</a>";
+							$html .=    "</div>";
+							$html .=    "<div class='right_column'>";
+							$previous_meal_service_date = NULL;
+							for ($k=0; $k<count($result); $k++) { 
+								$current_meal_service_date = $result[$k]['service_date'];
+								if ($result[$k]['meal_id'] == $result[$j]['meal_id'] && $result[$k]['service_date'] <= $week_end_date_with_year && $result[$k]['service_date'] >= $week_start_date_with_year) {
+									if($current_meal_service_date != $previous_meal_service_date) {
+										$html .= "<p>".$result[$k]['service_date']."</p>";
+									}
+									$html .= "<p>".$result[$k]['meal_id'].": ".$result[$k]['menu_item_name']."</p>";	
+									$previous_meal_service_date = $current_meal_service_date;
 								}
-								$meal_name_class = strtolower($current_meal_name);
-								$html .= "<div data_view_link='$view_link' class='week_container $view_type $meal_name_class'>";
-								$html .=    "<div class='left_column'>";
-								$html .=        "<h2 class='thru_dates'>".$thru_dates."</h2>";
-								$html .=        "<h3 class='meal_name'>".$result[$j]['meal_name']."</h3>";    
-								$html .=        "<h4 class='hosted_by'>Hosted By: ".$result[$j]['server_first_name']."</h4>";
-								$html .=        "<a href='$view_link' class='view_link'>View</a>";
-								$html .=    "</div>";
-								$html .= "<div class='right_column'>";
-							} 
-							if ($current_service_date !== $previous_service_date) {
-								$html .= "<h5 class='service_date'>".$result[$j]['service_date']."</h5>";
 							}
-							$html .= "<p class='menu_item_name'>".$result[$j]['menu_item_name']."</p>";
+							$html .=    "</div>";
+							$html .= "</div>";
 						}
 						$previous_service_date = $current_service_date;
 						$previous_meal_name = $current_meal_name;
+						$previous_meal_id = $current_meal_id;
 					}
 				}
 				$previous_start_date = $week_start_date;
-				$first_loop = false;
-				if($i == count($result)-1){
-					$html .= "</div>"; // Closes the previously opened right-column div.
-					$html .= "</div>"; // Closes the previously opened week_container div.
-				}
 			}
 		} else {
-			$html .= "<div class='no-results-found'>Sorry, there are no menu items for $menu_year";
+			$html .= "<div class='no-results-found'>Sorry, there are no menu items for $menu_year </div>";
 		}
 		$html .= "</div>"; // End outside_container
 		$html .= "<div class='weekly_menu_footer_navigation'>";
@@ -1071,6 +1136,14 @@ FORM;
 		$html .=    "<button class='preview_menu_button page_button'>Save</button>";
 		$html .= "</div>";
 		return $html;
+	}
+
+	public function get_weekly_menu_print_menu(){
+		echo "This will be the print version of the weekly menu.";
+	}
+
+	public function get_weekly_menu_print_placrds(){
+		echo "This will be the print placrds version of the weekly menu.";
 	}
 
 }
