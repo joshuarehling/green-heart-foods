@@ -21,7 +21,7 @@
 			$company_name = $all_clients[$i]['company_name'];
 			$company_logo = WEB_ROOT . "/_uploads/".$all_clients[$i]['company_logo_small'];
 			echo "<div class='client_result'>";
-			echo 	"<a class='company_logo' href='weekly-menu.php?client-id=$client_id'><img src='$company_logo' /></a>";
+			echo 	"<a class='company_logo' href='yearly-menu.php?client-id=$client_id'><img src='$company_logo' /></a>";
 			echo 	"<a class='edit_button' href='edit-client.php?client-id=$client_id'>Edit</a>";
 			echo "</div>";
 		}

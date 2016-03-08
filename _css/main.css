@@ -1028,27 +1028,27 @@ footer .contact a {
 }
 
 .daily_menu_page .server_image {
-	float: left;
+	/*float: left;
 	width: 300px;
 	height: 300px;
 	background-image: url(../_images/ui/default_server.jpg);
 	background-repeat: no-repeat;
 	background-position: center center;
-	background-color: #a35d79;
+	background-color: #a35d79;*/
 }
 
 .daily_menu_page .server_information {
 	font-size: 1.5em;
-	text-align: left;
+	/*text-align: left;*/
 	color: #7d7d7d;
 }
 
 .daily_menu_page .server_information .name {
-	color: #84445e;
+	/*color: #84445e;
 	font-size: 1.5em;
 	padding-top: 15px;
 	display: block;
-	margin-top: 300px;
+	margin-top: 300px;*/
 }
 
 .daily_menu_page .server_information .number a {
@@ -1056,6 +1056,10 @@ footer .contact a {
 	font-size: 1.5em;
 	padding-bottom: 15px;
 	display: block;
+}
+
+.daily_menu_page .menu_item_container {
+	overflow: hidden;
 }
 
 .daily_menu_page .menu-item {
@@ -1071,7 +1075,20 @@ footer .contact a {
 
 .daily_menu_page .like-heart {
 	margin-top: 15px;
+	float: left;
+	width: 200px;
+	height: 200px;
+	background-color: aquamarine;
+	background-repeat: no-repeat;
+	background-image: url(../_images/ui/favorite_off.png);
+
 }
+
+.daily_menu_page .like-heart.liked {
+	background-image: url(../_images/ui/favorite_on.png);
+}
+
+
 .daily_menu_page .like-heart:hover {
 	cursor: pointer;
 }
@@ -1079,6 +1096,12 @@ footer .contact a {
 .daily_menu_page p.number_of_likes {
 	color: #abd14f;
 	margin: -10px auto 0 auto;
+}
+
+.daily_menu_page .right_column {
+	float: left;
+	border-left: 1px solid #ccc;
+	overflow: hidden;
 }
 
 .daily_menu_page p.dish_name {
@@ -1089,7 +1112,7 @@ footer .contact a {
 }
 
 .daily_menu_page .special_requests {
-	border: 2px solid #84445e;
+	/*border: 2px solid #84445e;*/
 	text-transform: uppercase;
 	font-size: 2em;
 	margin: 25px auto;
@@ -1285,6 +1308,7 @@ html > .daily_menu_print_menu_page {
 /* -------------------- Yearly Menu Page */
 
 
+
 .yearly_menu_page .outside_container {
 	overflow: auto; /* Scales the container to fit the floats. */
 	border: none;
@@ -1295,74 +1319,26 @@ html > .daily_menu_print_menu_page {
 	margin: 0 auto;
 }
 
-
-/* Yearly Menu - List View */
-
-.yearly_menu_page .week_container.list_view {
-	margin-bottom: 25px;
-	border: 15px solid #000;
-	overflow: hidden;
-}
-
-.yearly_menu_page .week_container.list_view .left_column {
-	width: 200px;
-	padding: 50px;
-	float: left;
-	background-color: orange;
-}
-
-.yearly_menu_page .week_container.list_view .right_column {
-	width: 200px;
-	padding: 50px;
-	float: left;
-	background-color: red;
-}
-
-
-/* TESTING */
-
-.yearly_menu_page .week_container {
-	/*clear: both;
-	border: 4px solid #507DA5;
-	overflow: auto;
-	margin-top: 10px;*/
-}
-
 .yearly_menu_page .week_meal_container {
-	clear: both;
+	/*clear: both;*/
 	border: 4px solid #507DA5;
 	overflow: auto;
 	margin-top: 10px;
 }
 
-.yearly_menu_page .week_meal_container .left_column {
+.yearly_menu_page .week_meal_container.list_view  .left_column {
 	width: 200px;
 	padding: 50px;
 	float: left;
 	background-color: orange;
 }
 
-.yearly_menu_page .week_meal_container .right_column {
+.yearly_menu_page .week_meal_container.list_view .right_column {
 	width: 200px;
 	padding: 50px;
 	float: left;
 	background-color: red;
 }
-
-
-/*.new-meal-name {
-	display: block;
-    height: 30px;
-    background-color: #abd14f;
-    margin-left: 10px;
-    border: 1px solid #000;
-    width: 1010px;
-    clear: both;
-}*/
-
-/*.outside_container {
-	background-color: #eee;
-}*/
 
 .new-week {
 	background-color: #ff0;
@@ -1370,19 +1346,11 @@ html > .daily_menu_print_menu_page {
 }
 
 
-
-
-/* END TESTING */
-
-
-
-
-
-
 /* Yearly Menu - Grid View */
 
-.yearly_menu_page .week_container.grid_view {
-	margin-bottom: 25px;
+
+.yearly_menu_page .week_meal_container.grid_view {
+	margin:25px 0 0 25px;
 	border: 15px solid green;
 	overflow: hidden;
 	width: 200px;
@@ -1390,13 +1358,11 @@ html > .daily_menu_print_menu_page {
 }
 
 
-.yearly_menu_page .week_container.grid_view .right_column,
-.yearly_menu_page .week_container.grid_view .hosted_by,
-.yearly_menu_page .week_container.grid_view .view_link {
-	/*display: none;*/
+.yearly_menu_page .week_meal_container.grid_view .right_column,
+.yearly_menu_page .week_meal_container.grid_view .hosted_by,
+.yearly_menu_page .week_meal_container.grid_view .view_link {
+	display: none;
 }
-
-
 
 
 /* Yearly Menu - Footer Navigation */

@@ -12,16 +12,7 @@ class User {
     /* Login for Clients TODO - Combine the login functions */
 
     public function login() {
-
         $redirect_path = WEB_ROOT.'/login/';
-        // switch ($_POST['context']) {
-        //     case 'green_heart_foods':
-        //         $redirect_path = WEB_ROOT.'/login/';
-        //         break;
-        //     case 'client':
-        //         $redirect_path = WEB_ROOT.'/login/';
-        //         break;
-        // } 
         if (!empty($_POST['user_name']) && !empty($_POST['password'])) {
             $database = new Database();
             $database_connection = $database->connect();
@@ -46,10 +37,12 @@ class User {
                             break;
                         case 2:
                             $_SESSION['client_admin_logged_in'] = 1;
+                            $_SESSION['client_id'] = $client_id;
                             $forward_url = "../clients/yearly-menu.php?client-id=$client_id";
                             break;
                         case 3:
                             $_SESSION['client_general_logged_in'] = 1;
+                            $_SESSION['client_id'] = $client_id;
                             $forward_url = "../clients/yearly-menu.php?client-id=$client_id";
                             break;
                     }
@@ -101,79 +94,6 @@ class User {
         }
     }
 
-    // public function login_client() {
-    //     if (!empty($_POST['user_name']) && !empty($_POST['password'])) {
-    //         $database = new Database();
-    //         $database_connection = $database->connect();
-    //         if ($database_connection) {
-    //             $arguments = array(
-    //                 $_POST['user_name'],
-    //                 $_POST['password'],
-    //                 2,
-    //                 3
-    //             );
-    //             $query = $database_connection->prepare("SELECT * FROM users WHERE user_name = ? AND password = ? AND (user_type_id = ? OR user_type_id = ?)");
-    //             $query->execute($arguments);
-    //             $result = $query->fetchAll(PDO::FETCH_ASSOC);
-    //             if(count($result) === 1) {
-    //                 $_SESSION['user_id'] = $result[0]['user_id'];
-    //                 $_SESSION['user_name'] = $result[0]['user_name'];
-    //                 $_SESSION['client_logged_in'] = 1;
-    //                 Messages::add('Logged In');
-    //                 header('Location: ../admin/clients.php');
-    //             } else {
-    //                 Messages::add('Sorry, there was an error with that user name/password combination.');
-    //                 header('Location: ../clients/login.php');
-    //             }
-    //         } else {
-    //             Messages::add('Sorry, the was an error connecting to the database.'); 
-    //             header('Location: ../admin/login.php');
-    //         }
-    //     } else {
-    //         Messages::add('Either the user name or password is missing, please try again.'); 
-    //         header('Location: ../admin/login.php');
-    //     }
-    // }
-
-    
-    /* Login Green Heart Food Users */
-
-    
-    // public function login_green_heart_foods() {
-    //     if (!empty($_POST['user_name']) && !empty($_POST['password'])) {
-    //         $database = new Database();
-    //         $database_connection = $database->connect();
-    //         if ($database_connection) {
-    //             $user_name = $_POST['user_name'];
-    //             $password = $_POST['password'];
-    //             $arguments = array(
-    //                 $user_name,
-    //                 $password,
-    //                 1
-    //             );
-    //             $query = $database_connection->prepare("SELECT * FROM users WHERE user_name = ? AND password = ? AND user_type_id = ?");
-    //             $query->execute($arguments);
-    //             $result = $query->fetchAll(PDO::FETCH_ASSOC);
-    //             if(count($result) === 1) {
-    //                 $_SESSION['user_id'] = $result[0]['user_id'];
-    //                 $_SESSION['user_name'] = $result[0]['user_name'];
-    //                 $_SESSION['green_heart_foods_logged_in'] = 1;
-    //                 Messages::add('Logged In');
-    //                 header('Location: ../admin/clients.php');
-    //             } else {
-    //                 Messages::add('Sorry, there was an error with that user name/password combination.');
-    //                 header('Location: ../admin/login.php');
-    //             }
-    //         } else {
-    //             Messages::add('Sorry, the was an error connecting to the database.'); 
-    //             header('Location: ../admin/login.php');
-    //         }
-    //     } else {
-    //         Messages::add('Either the user name or password is missing, please try again.'); 
-    //         header('Location: ../admin/login.php');
-    //     }
-    // }
-    
     
     /* Log out */
 
@@ -197,7 +117,12 @@ class User {
 
     /* Check for client logged in status */
     
-    public function get_client_access_level ($forward_url) {
+    public function get_client_access_level ($forward_url, $client_id_from_url = null) {
+        if($client_id_from_url !== null && isset($_SESSION['client_id'])) {
+            if($client_id_from_url !== $_SESSION['client_id']) {
+                header("Location: ".WEB_ROOT."/login/");
+            }
+        }
         if (isset($_SESSION['client_admin_logged_in']) AND $_SESSION['client_admin_logged_in'] == 1) {
             return 'client_admin';
         } else if (isset($_SESSION['client_general_logged_in']) AND $_SESSION['client_general_logged_in'] == 1) {

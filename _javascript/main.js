@@ -77,7 +77,7 @@ $(document).ready(function() {
 	});
 
 	$('.client .like-heart').click(function(event) {
-		if($(this).hasClass('disabled')) {
+		if($(this).hasClass('like_disabled')) {
 			return;
 		};
 		var this_item = $(this);
@@ -92,7 +92,8 @@ $(document).ready(function() {
 				var current_count = Number(current_count_span.html());
 				current_count++;
 				current_count_span.html(current_count);
-				this_item.addClass('liked disabled');
+				this_item.addClass('liked like_disabled');
+				// $(this_item+' img').src
 			}
 		});
 	});
@@ -121,7 +122,7 @@ $(document).ready(function() {
 
 	*/
 
-	$('.yearly_menu_page .week_container.grid_view').click(function(event){
+	$('.yearly_menu_page .week_meal_container.grid_view').click(function(event){
 		document.location = $(this).attr('data_view_link');
 	});
 
