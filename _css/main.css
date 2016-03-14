@@ -643,6 +643,60 @@ footer .contact a {
 }
 
 
+
+/* -------------------- Weekly Menu Print Placards */ 
+
+
+
+.weekly_menu_print_placards h1 {
+	margin: 0;
+	padding: 0;
+	font-size: 1.2em;
+	text-align: left;
+	color: #000;
+	padding-bottom: 0;
+	background-color: #fff;
+	margin-top: 10px;
+	font-weight:bold;
+}
+
+.weekly_menu_print_placards .outside_container {
+	overflow: auto;
+}
+
+.weekly_menu_print_placards .meal_container {
+	border:10px solid #ccc;
+	float: left;
+	width: 600px;
+	height: 550px;
+	margin: 10px;
+}
+
+.weekly_menu_print_placards .meal_container.blank {
+	border:10px solid #ccc;
+	float: left;
+	width: 600px;
+	height: 550px;
+	margin: 10px;
+}
+
+.weekly_menu_print_placards .address_bar {
+	clear: 
+}
+
+
+.weekly_menu_print_placards .plus_minus_container a {
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	padding: 25px 0 0 40px;
+	cursor: pointer;
+	background-color: orange;
+	margin-left: 5px;
+}
+
+
+
 /* -------------------- Create & Edit Menu Pages */ 
 
 .edit_menu_page header,
@@ -775,7 +829,7 @@ footer .contact a {
 .edit_menu_page fieldset input[type=text],
 .create_menu_page fieldset input[type=text] {
 	border: 2px solid #84445e;
-	text-transform: uppercase;
+	/*text-transform: uppercase;*/
 	font-size: 2em;
 	margin: 25px auto;
 	padding: 20px 30px 20px 30px;

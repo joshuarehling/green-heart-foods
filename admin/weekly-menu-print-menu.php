@@ -3,7 +3,7 @@
 	$page_title_detail = 'Weekly Menu - Print';
 	require_once("../_config/config.php");
     require_once(SERVER_ROOT . "/_includes/restrict-access-green-heart-foods.php");
-    require_once(SERVER_ROOT . "/_includes/global-header.php");
+    require_once(SERVER_ROOT . "/_includes/print-header.php");
     require_once(SERVER_ROOT . "/_classes/Menu.php");
     require_once(SERVER_ROOT . "/_classes/Messages.php");
 	$menu = new Menu();
@@ -17,4 +17,4 @@
 	<?php echo $weekly_menu_print_menu; ?>
 </div>
 
-<?php require_once(SERVER_ROOT . "/_includes/global-footer.php"); ?>
+<?php require_once(SERVER_ROOT . "/_includes/print-footer.php"); ?>

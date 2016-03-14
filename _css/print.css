@@ -1,0 +1,7 @@
+/* Weekly Menu - Print Placards */
+
+@media print {
+   .weekly_menu_print_placards  .plus_minus_container {
+   		display: none
+   	}
+}

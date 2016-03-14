@@ -1,8 +1,10 @@
 $(document).ready(function() {
 
+	$Spelling.SpellCheckAsYouType('all');
+
 	/* 
 
-	Create Menu Page 
+
 
 	*/
 
@@ -114,6 +116,21 @@ $(document).ready(function() {
 		var admin_or_client = $(this).attr('data-admin-or-client');
 		var meal_id = $(this).val();
 		document.location = '../'+admin_or_client+'/weekly-menu.php?client-id='+client_id+'&start-date='+start_date+'&meal-id='+meal_id;
+	});
+
+	/* Weekly Menu - Print Placards Page */ 
+
+	$('.weekly_menu_print_placards_page').on('click','.plus_minus_container a', {} ,function(e){
+		if($(event.target).hasClass('plus')) {
+			var meal_container_clone = $(this).closest('.meal_container').clone();
+			$(this).closest('.meal_container').after(meal_container_clone);
+		} else {
+			$(this).closest('.meal_container').remove();
+		}
+	});
+
+	$('.weekly_menu_print_placards_page').on('click','.meal_container .editable', {} ,function(e){
+		$('.weekly_menu_print_placards_page .meal_container.blank').removeClass('unedited');
 	});
 
 	/* 

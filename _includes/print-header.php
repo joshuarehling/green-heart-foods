@@ -19,6 +19,7 @@
 	<title>Green Heart Foods<?php echo $page_title_detail; ?></title>
 	<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>/_css/normalize.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>/_css/main.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>/_css/print.css">
 	<script type="text/javascript" src="../_javascript/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript" src="../_javascript/main.js"></script>
 </head>

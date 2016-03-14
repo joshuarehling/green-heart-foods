@@ -35,6 +35,21 @@ class Menu {
 		}
 	}
 
+	public function get_meal_types_by_id($meal_id) {
+		$arguments = array(
+			$meal_id
+		);
+		$query = $this->database_connection->prepare("SELECT meal_name FROM meals WHERE meal_id = ?");
+		$query->execute($arguments);
+		$result = $query->fetchAll(PDO::FETCH_ASSOC);
+		if(count($result) > 0) {
+			return $result;
+		} else {
+			echo "Sorry, there was an error. Could not find any meal tyoes."; // TODO - Send as error.
+			exit();
+		}
+	}
+
 	public function get_weekly_menu($client_id, $start_date, $context) {
 		$end_date = date('Y-m-d', strtotime($start_date.' +6 days'));
 		$arguments = array(
@@ -518,9 +533,9 @@ class Menu {
 		$result_count = count($result);
 		$html .= "<div class='page_header'>";
 		$html .=    "<ul>";
-		$html .=        "<li class='left'><a class='print_link' href='weekly-menu-print-menu.php?client-id=$client_id&start-date=$this_week'>Print Menus</a></li>";
+		$html .=        "<li class='left'><a class='print_link' href='weekly-menu-print-menu.php?client-id=$client_id&start-date=$this_week&meal-id=$url_meal_id'>Print Menus</a></li>";
 		$html .=        "<li><a class='$this_week_selected' href='weekly-menu.php?client-id=$client_id&start-date=$this_week'>$this_week_formatted</a></li>";
-		$html .=        "<li class='right'><a class='print_link' href='weekly-menu-print-placards.php?client-id=$client_id&start-date=$next_week'>Print Placards</a></li>";
+		$html .=        "<li class='right'><a class='print_link' href='weekly-menu-print-placards.php?client-id=$client_id&start-date=$this_week&meal-id=$url_meal_id'>Print Placards</a></li>";
 		$html .=    "</ul>"; // three spaces centers the list because of the line break spaces created in the html formatting
 		$html .= "</div>";
 		$service_date = null;
@@ -1015,7 +1030,7 @@ class Menu {
 		$html .=    "</fieldset>";
 		$html .=    "<fieldset>";
 		$html .=        "<h3>Meal Description</h3>";
-		$html .=        "<input name='meal_description' type='text' placeholder='Add Description Here' value='$meal_description' spellcheck='true' />";
+		$html .=        "<input spellcheck='true' name='meal_description' type='text' placeholder='Add Description Here' value='$meal_description' spellcheck='true' />";
 		$html .=    "</fieldset>";
 		$html .=    "<fieldset>";
 		$html .=    "<div class='server_and_meal'>";
@@ -1095,9 +1110,9 @@ class Menu {
 			$form .= <<<FORM
 			<fieldset class="$mode $visibility" data-fieldset-id="$i">
 				<div data-increment-id="$i" class="menu-item menu-item-$i">
-					<input type="text" name="menu_item_name[$i]" value="$item_name" placeholder="Add Dish Name" />
-					<input type="text" name="ingredients[$i]" value="$ingredients" placeholder="Add Ingredients" />
-					<input type="text" name="special_notes[$i]" value="$special_notes" placeholder="Special Notes" />
+					<input type="text" spellcheck='true' name="menu_item_name[$i]" value="$item_name" placeholder="Add Dish Name" />
+					<input type="text" spellcheck='true' name="ingredients[$i]" value="$ingredients" placeholder="Add Ingredients" />
+					<input type="text" spellcheck='true' name="special_notes[$i]" value="$special_notes" placeholder="Special Notes" />
 					<div class="checkbox_container">
 						<ul>
 							<li><label class="box_label">Vegetarian</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $is_vegetarian_checked name="is_vegetarian[$i]"></span></li>
@@ -1158,12 +1173,145 @@ FORM;
 		return $html;
 	}
 
-	public function get_weekly_menu_print_menu(){
-		echo "This will be the print version of the weekly menu.";
+	public function get_weekly_menu_print_menu($context){
+		$html = "";
+		$url_meal_id = $_GET['meal-id'];
+		$start_date = $_GET['start-date'];
+		$client_id = $_GET['client-id'];
+		$client = new Client();
+		$result = $client->get_client($client_id);
+		$client_name = $result[0]['company_name'];
+		$web_root = WEB_ROOT;
+		$meal_type_query = $this->get_meal_types_by_id($url_meal_id);
+		$meal_name = $meal_type_query[0]['meal_name'];
+		$start_date_formatted = date('M d', strtotime($start_date));
+		$end_date_formatted = date('M d', strtotime($start_date . '+ 6 days'));
+		$html .= "<div class='print_header'>";
+		$html .= 	"<h1>".$client_name."</h1>";
+		$html .= 	"<h1>".$meal_name."</h1>";
+		$html .= 	"<h1>".$start_date_formatted." - ".$end_date_formatted."</h1>";
+		$html .= 	"<div class='green_heart_foods_logo'></div>";
+		$html .= "</div>";
+		$result = $this->get_weekly_menu_by_meal($client_id, $start_date, $context, $url_meal_id);
+		$result_count = count($result);
+		$service_date = null;
+		$meal_id = null;
+		$additional_menu_items = array();
+		$html .= "<div class='outside_container'>";
+		if($result_count > 0) {
+			for ($i=0; $i < count($result); $i++) { 
+				if($service_date != $result[$i]['service_date']) {
+					$meal_name = strtolower($result[$i]['meal_name']) ;
+					$html .=    "<div class='meal_container $meal_name'>";
+					$html .=    	"<p class='day_of_the_week'>".date('l', strtotime($result[$i]['service_date'])).'</p>';
+					$html .= 			"<div class='menu_items_container'>";
+					for ($j=0; $j < count($result); $j++) {
+						if($result[$i]['service_date'] == $result[$j]['service_date']) {
+							$html .= 		"<p>";
+							$html .= 		"<span class='menu_item_name'>".$result[$j]['menu_item_name']." </span>";
+							$is_list = "";
+							$contains_list_prepend = "<span class='allergy-alert'>Contains ";
+							$contains_list = $contains_list_prepend;
+							$result[$j]['is_vegetarian'] == 1 ? 		$is_list .= "Vegetarian, " : 			$is_list .= "";
+							$result[$j]['is_vegan'] == 1 ? 				$is_list .= "Vegan, " : 				$is_list .= "";
+							$result[$j]['is_gluten_free'] == 1 ? 		$is_list .= "Gluten-Free, " : 			$is_list .= "";
+							$result[$j]['is_whole_grain'] == 1 ? 		$is_list .= "Whole Grain, " : 			$is_list .= "";
+							$result[$j]['contains_nuts'] == 1 ? 		$contains_list .= "Nuts, " : 			$contains_list .= "";
+							$result[$j]['contains_soy'] == 1 ? 			$contains_list .= "Soy, " : 			$contains_list .= "";
+							$result[$j]['contains_shellfish'] == 1 ? 	$contains_list .= "Shellfish, " : 		$contains_list .= "";
+							$result[$j]['contains_nightshades'] == 1 ? 	$contains_list .= "Nightshades, " : 	$contains_list .= "";
+							$result[$j]['contains_alcohol'] == 1 ? 		$contains_list .= "Alcohol, " : 		$contains_list .= "";
+							$result[$j]['contains_eggs'] == 1 ? 		$contains_list .= "Eggs, " : 			$contains_list .= "";
+							$result[$j]['contains_gluten'] == 1 ? 		$contains_list .= "Gluten, "  :	 		$contains_list .= "";
+							$result[$j]['contains_dairy'] == 1 ? 		$contains_list .= "Dairy, " : 			$contains_list .= "";
+							if($contains_list === $contains_list_prepend) {
+								$is_list = trim($is_list, ", ");
+								$contains_list = "";
+							}
+							$contains_list = trim($contains_list, " ,")."</span>";
+							$html .= "<span class='is_and_contains_list'>".$is_list." ".$contains_list."</span>";
+							$html .= "</p>";
+						}
+					}
+					$html .=    	"</div>"; 	// End menu items
+					$html .=    "</div>";		// End meal container
+					
+				}
+				$service_date = $result[$i]['service_date'];
+				$meal_id = $result[$i]['meal_id'];
+			}
+		} else {
+			$html .= "<p class='no_menus'>Sorry, there are no menus for the selected week.</p>";
+		}
+		$html .= 	"<div class'address_bar'><span class='green_heart_foods_logo'></span><span class='green_heart_foods_url'>greenhreatfoods.com</span> 415-272-7307 info@greenheartfoods.com 3321 20th St, San Francisco, CA 94110</div>";
+		$html .= "</div>";			// End outside container
+		return $html;
 	}
 
-	public function get_weekly_menu_print_placrds(){
-		echo "This will be the print placrds version of the weekly menu.";
+	public function get_weekly_menu_print_placrds($context){
+		$html = "";
+		$start_date = $_GET['start-date'];
+		$client_id = $_GET['client-id'];
+		$client = new Client();
+		$result = $client->get_client($client_id);
+		$client_name = $result[0]['company_name'];
+		$web_root = WEB_ROOT;
+		$start_date_formatted = date('M d', strtotime($start_date));
+		$end_date_formatted = date('M d', strtotime($start_date . '+ 6 days'));
+		$result = $this->get_weekly_menu($client_id, $start_date, $context);
+		$result_count = count($result);
+		$service_date = null;
+		$meal_id = null;
+		$additional_menu_items = array();
+		$html .= "<div class='outside_container'>";
+		if($result_count > 0) {
+			for ($i=0; $i < count($result); $i++) { 
+				$meal_name = strtolower($result[$i]['meal_name']);
+				$html .= "<div class='meal_container $meal_name'>";
+				$html .= 	"<div class='green_heart_foods_logo'>GHF LOGO</div>";
+				$html .= 	"<h1 class='menu_item_name'>".$result[$i]['menu_item_name']." </h1>";
+				$html .= 	"<h2 class='menu_item_ingredients'>".$result[$i]['ingredients']." </h2>";
+				$is_list = "";
+				$contains_list_prepend = "<span class='allergy-alert'>Contains ";
+				$contains_list = $contains_list_prepend;
+				$result[$i]['is_vegetarian'] == 1 ? 		$is_list .= "Vegetarian, " : 			$is_list .= "";
+				$result[$i]['is_vegan'] == 1 ? 				$is_list .= "Vegan, " : 				$is_list .= "";
+				$result[$i]['is_gluten_free'] == 1 ? 		$is_list .= "Gluten-Free, " : 			$is_list .= "";
+				$result[$i]['is_whole_grain'] == 1 ? 		$is_list .= "Whole Grain, " : 			$is_list .= "";
+				$result[$i]['contains_nuts'] == 1 ? 		$contains_list .= "Nuts, " : 			$contains_list .= "";
+				$result[$i]['contains_soy'] == 1 ? 			$contains_list .= "Soy, " : 			$contains_list .= "";
+				$result[$i]['contains_shellfish'] == 1 ? 	$contains_list .= "Shellfish, " : 		$contains_list .= "";
+				$result[$i]['contains_nightshades'] == 1 ? 	$contains_list .= "Nightshades, " : 	$contains_list .= "";
+				$result[$i]['contains_alcohol'] == 1 ? 		$contains_list .= "Alcohol, " : 		$contains_list .= "";
+				$result[$i]['contains_eggs'] == 1 ? 		$contains_list .= "Eggs, " : 			$contains_list .= "";
+				$result[$i]['contains_gluten'] == 1 ? 		$contains_list .= "Gluten, "  :	 		$contains_list .= "";
+				$result[$i]['contains_dairy'] == 1 ? 		$contains_list .= "Dairy, " : 			$contains_list .= "";
+				if($contains_list === $contains_list_prepend) {
+					$is_list = trim($is_list, ", ");
+					$contains_list = "";
+				}
+				$contains_list = trim($contains_list, " ,")."</span>";
+				$html .= "<p class='is_and_contains_list'>".$is_list." ".$contains_list."</p>";
+				$html .= "<div class='plus_minus_container'>";
+				$html .= 	"<a class='plus'>+</a><a class='minus'>-</a>";
+				$html .= "</div>";
+				$html .= "</div>"; // End meal container
+			}
+		} else {
+			$html .= "<p class='no_menus'>Sorry, there are no menus for the selected week.</p>";
+		}
+		$html .= 	"<div class='meal_container blank unedited'>";
+		$html .= 		"<div class='green_heart_foods_logo'>GHF LOGO</div>";
+		$html .= 		"<h1 contenteditable='true' class='menu_item_name editable'>[Custom Menu Item]</h1>";
+		$html .= 		"<h2 contenteditable='true' class='menu_item_ingredients editable'>[Custom Ingredients]</h2>";
+		$html .= 		"<p contenteditable='true' class='is_and_contains_list editable'>[Custom Contains List] <span class='allergy-alert editable'>[Custom Allergens List]</span></p>";
+		$html .= 		"<div class='plus_minus_container'>";
+		$html .= 			"<a class='plus'>+</a>";
+		$html .= 			"<a class='minus'>-</a>";
+		$html .= 		"</div>";
+		$html .= 	"</div>";
+		$html .= "</div>"; // End outside container
+		return $html;
 	}
 
 }

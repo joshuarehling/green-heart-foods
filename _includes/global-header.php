@@ -51,6 +51,7 @@
 	<!-- Mobile CSS -->
 	<link media="only screen and (max-device-width: 480px)" href="<?php echo WEB_ROOT; ?>/_css/mobile.css" type="text/css" rel="stylesheet" />
 	<!-- various stuff -->	
+	<script type="text/javascript" src="<?php echo WEB_ROOT; ?>/_javascript/spellcheck/include.js"></script>
 	<script type="text/javascript" src="<?php echo WEB_ROOT; ?>/_javascript/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript" src="<?php echo WEB_ROOT; ?>/_javascript/main.js"></script>
 	<!-- custom checkboxes -->
