@@ -26,9 +26,9 @@
 		<script src="<?php echo WEB_ROOT; ?>/_javascript/dropdowns/selectFx.js"></script>
 		<script>
 			(function() {
-				[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {	
+				[].slice.call(document.querySelectorAll('select.cs-select')).forEach(function(el) {	
 					new SelectFx(el);
-				} );
+				});
 			})();
 		</script>
 		<!-- Custom Dropdowns End -->

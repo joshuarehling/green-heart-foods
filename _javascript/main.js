@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-	$Spelling.SpellCheckAsYouType('all');
+	// $Spelling.SpellCheckAsYouType('all');
 
 	/* 
 
@@ -48,6 +48,19 @@ $(document).ready(function() {
 			$('.server_image').css('background-image', 'url(../_images/ui/default_server.jpg)');
 		} else {
 			$('.server_image').css('background-image', 'url(../'+image_path+')');
+		}
+	});
+
+	$('.create_and_edit_menu .meal_type').click(function(event) {
+		var currentSelection = $('option:selected', this)[0].text;
+		if (currentSelection == 'Bites') {
+			$('.bites_form').addClass('bites_mode');
+			$('.non_bites_form').addClass('bites_mode');
+			$('.add_dish').hide();
+		} else {
+			$('.bites_form').removeClass('bites_mode');
+			$('.non_bites_form').removeClass('bites_mode');
+			$('.add_dish').show();
 		}
 	});
 

@@ -69,6 +69,15 @@ class Menu {
 		}
 	}
 
+	public function get_all_bites() {
+		$query = $this->database_connection->prepare("SELECT * FROM bites LEFT JOIN bite_groups ON bites.bite_group_id = bite_groups.bite_group_id");
+		$query->execute();
+		$result = $query->fetchAll(PDO::FETCH_ASSOC);
+		if(count($result) > 0) {
+			return $result;
+		}
+	}
+
 	public function get_weekly_menu_by_meal($client_id, $start_date, $context, $meal_id) {
 		$end_date = date('Y-m-d', strtotime($start_date.' +6 days'));
 		$arguments = array(
@@ -95,7 +104,12 @@ class Menu {
 			$service_date,
 			$meal_id
 		);
-		$query = $this->database_connection->prepare("SELECT * FROM menu_items LEFT JOIN servers ON menu_items.server_id = servers.server_id  LEFT JOIN clients ON menu_items.client_id = clients.client_id WHERE menu_items.client_id = ? AND menu_items.service_date = ? AND menu_items.meal_id = ?");
+		if($meal_id == 5){
+			$query = $this->database_connection->prepare("SELECT * FROM menu_items LEFT JOIN servers ON menu_items.server_id = servers.server_id  LEFT JOIN clients ON menu_items.client_id = clients.client_id LEFT JOIN bites on menu_items.bite_id = bites.bite_id LEFT JOIN bite_groups on bites.bite_group_id = bite_groups.bite_group_id WHERE menu_items.client_id = ? AND menu_items.service_date = ? AND menu_items.meal_id = ? ORDER BY bites.bite_group_id");
+		} else {
+			$query = $this->database_connection->prepare("SELECT * FROM menu_items LEFT JOIN servers ON menu_items.server_id = servers.server_id  LEFT JOIN clients ON menu_items.client_id = clients.client_id WHERE menu_items.client_id = ? AND menu_items.service_date = ? AND menu_items.meal_id = ?");	
+		}
+		
 		$query->execute($arguments);
 		$result = $query->fetchAll(PDO::FETCH_ASSOC);
 		if(count($result) > 0) {
@@ -151,54 +165,74 @@ class Menu {
 
 		/* End check for duplicate meal/day combination */
 
-		for ($i=0; $i <= $_POST['meals_per_day']; $i++) {
-			if($_POST['menu_item_name'][$i] != "" ) {
-				if(!isset($_POST['is_vegetarian'][$i]))         $_POST['is_vegetarian'][$i] = 0;
-				if(!isset($_POST['is_vegan'][$i]))              $_POST['is_vegan'][$i] = 0;
-				if(!isset($_POST['is_gluten_free'][$i]))        $_POST['is_gluten_free'][$i] = 0;
-				if(!isset($_POST['is_whole_grain'][$i]))        $_POST['is_whole_grain'][$i] = 0;
-				if(!isset($_POST['contains_nuts'][$i]))         $_POST['contains_nuts'][$i]= 0;
-				if(!isset($_POST['contains_soy'][$i])) 			$_POST['contains_soy'][$i] = 0;
-				if(!isset($_POST['contains_shellfish'][$i])) 	$_POST['contains_shellfish'][$i] = 0;
-				if(!isset($_POST['contains_nightshades'][$i])) 	$_POST['contains_nightshades'][$i] = 0;
-				if(!isset($_POST['contains_alcohol'][$i])) 		$_POST['contains_alcohol'][$i] = 0;
-				if(!isset($_POST['contains_eggs'][$i])) 		$_POST['contains_eggs'][$i] = 0;
-				if(!isset($_POST['contains_gluten'][$i])) 		$_POST['contains_gluten'][$i] = 0;
-				if(!isset($_POST['contains_dairy'][$i])) 		$_POST['contains_dairy'][$i] = 0;
+		if($_POST['meal_id'] == 5) {
+			for ($i=0; $i < $_POST['number_of_bites']; $i++) {
 				$arguments = array(
 					$service_date,
 					$_POST['meal_id'],
 					$_POST['client_id'],
 					$_POST['server_id'],
-					$_POST['item_status_id'],
-					$menu_image_path,
-					$_POST['meal_description'],
-					$_POST['menu_item_name'][$i],
-					$_POST['ingredients'][$i],
-					$_POST['special_notes'][$i],
-					$_POST['is_vegetarian'][$i],
-					$_POST['is_vegan'][$i],
-					$_POST['is_gluten_free'][$i],
-					$_POST['is_whole_grain'][$i],
-					$_POST['contains_nuts'][$i],
-					$_POST['contains_soy'][$i],
-					$_POST['contains_shellfish'][$i],
-					$_POST['contains_nightshades'][$i],
-					$_POST['contains_alcohol'][$i],
-					$_POST['contains_eggs'][$i],
-					$_POST['contains_gluten'][$i],
-					$_POST['contains_dairy'][$i],
-					$_POST['price_per_order'][$i],
-					$_POST['servings_per_order'][$i],
-					$_POST['total_orders_for_item'][$i],
+					1,
+					$_POST['bite_id'][$i],
+					$_POST['bite_quantity'][$i]
 				);
-				$query = $this->database_connection->prepare("INSERT INTO menu_items (service_date, meal_id, client_id, server_id, item_status_id, menu_image_path, meal_description, menu_item_name, ingredients, special_notes, is_vegetarian, is_vegan, is_gluten_free, is_whole_grain, contains_nuts, contains_soy, contains_shellfish, contains_nightshades, contains_alcohol, contains_eggs, contains_gluten, contains_dairy, price_per_order, servings_per_order, total_orders_for_item) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+				$query = $this->database_connection->prepare("INSERT INTO menu_items (service_date, meal_id, client_id, server_id, item_status_id, bite_id, total_orders_for_item) VALUES (?, ?, ?, ?, ?, ?, ?)");
 				$result = $query->execute($arguments);
 			}
+		} else {
+			for ($i=0; $i <= $_POST['meals_per_day']; $i++) {
+				if($_POST['menu_item_name'][$i] != "" ) {
+					if(!isset($_POST['is_vegetarian'][$i]))         $_POST['is_vegetarian'][$i] = 0;
+					if(!isset($_POST['is_vegan'][$i]))              $_POST['is_vegan'][$i] = 0;
+					if(!isset($_POST['is_gluten_free'][$i]))        $_POST['is_gluten_free'][$i] = 0;
+					if(!isset($_POST['is_whole_grain'][$i]))        $_POST['is_whole_grain'][$i] = 0;
+					if(!isset($_POST['contains_nuts'][$i]))         $_POST['contains_nuts'][$i]= 0;
+					if(!isset($_POST['contains_soy'][$i])) 			$_POST['contains_soy'][$i] = 0;
+					if(!isset($_POST['contains_shellfish'][$i])) 	$_POST['contains_shellfish'][$i] = 0;
+					if(!isset($_POST['contains_nightshades'][$i])) 	$_POST['contains_nightshades'][$i] = 0;
+					if(!isset($_POST['contains_alcohol'][$i])) 		$_POST['contains_alcohol'][$i] = 0;
+					if(!isset($_POST['contains_eggs'][$i])) 		$_POST['contains_eggs'][$i] = 0;
+					if(!isset($_POST['contains_gluten'][$i])) 		$_POST['contains_gluten'][$i] = 0;
+					if(!isset($_POST['contains_dairy'][$i])) 		$_POST['contains_dairy'][$i] = 0;
+					$arguments = array(
+						$service_date,
+						$_POST['meal_id'],
+						$_POST['client_id'],
+						$_POST['server_id'],
+						$_POST['item_status_id'],
+						$menu_image_path,
+						$_POST['meal_description'],
+						$_POST['menu_item_name'][$i],
+						$_POST['ingredients'][$i],
+						$_POST['special_notes'][$i],
+						$_POST['is_vegetarian'][$i],
+						$_POST['is_vegan'][$i],
+						$_POST['is_gluten_free'][$i],
+						$_POST['is_whole_grain'][$i],
+						$_POST['contains_nuts'][$i],
+						$_POST['contains_soy'][$i],
+						$_POST['contains_shellfish'][$i],
+						$_POST['contains_nightshades'][$i],
+						$_POST['contains_alcohol'][$i],
+						$_POST['contains_eggs'][$i],
+						$_POST['contains_gluten'][$i],
+						$_POST['contains_dairy'][$i],
+						$_POST['price_per_order'][$i],
+						$_POST['servings_per_order'][$i],
+						$_POST['total_orders_for_item'][$i],
+					);
+					$query = $this->database_connection->prepare("INSERT INTO menu_items (service_date, meal_id, client_id, server_id, item_status_id, menu_image_path, meal_description, menu_item_name, ingredients, special_notes, is_vegetarian, is_vegan, is_gluten_free, is_whole_grain, contains_nuts, contains_soy, contains_shellfish, contains_nightshades, contains_alcohol, contains_eggs, contains_gluten, contains_dairy, price_per_order, servings_per_order, total_orders_for_item) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					$result = $query->execute($arguments);
+				}
+			}
 		}
+
+		
 		if($query->rowCount() === 1){
 			Messages::add('The menu has been created');
 			header("Location: ../admin/daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id");
+		} else {
+			echo "Sorry, there was a problem.";
 		}
 	}
 
@@ -313,16 +347,7 @@ class Menu {
 		} else {
 			$admin_or_client = 'clients';
 		}
-
-		// $html .= "Context is: ".$context;
-		// TODO - If daily menu is in client context, need to check that client_id is the same as 
-		// the one stored in session_id so clients can't view eachothers menus
-
 		$html .= "<div class='page_header'>";
-		// if($context == 'green_heart_foods_admin') {
-		//   $html .= "<a class='menu' href='$web_root/admin/daily-menu-print-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Menu</a>";
-		// }
-		
 		if($context == 'green_heart_foods_admin') {
 			$html .= "<a class='menu' href='$web_root/admin/daily-menu-print-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Menu</a>";
 			$html .= "<a class='placard' href='$web_root/admin/daily-menu-print-placards.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Placards</a>";
@@ -333,9 +358,6 @@ class Menu {
 		$html .= "<h2>".date('M d', strtotime($service_date))."</h2>";
 		$html .= "</div>";
 		$html .= "<div class='date_and_meal'>";
-		// $html .= "<h3>".date('M d', strtotime($service_date))."</h3><br />";
-		
-		// $html .= "<select data-client-id='$client_id' data-service-date='$service_date' data-admin-or-client='$admin_or_client' class='meal-types cs-select cs-skin-border'>";
 		$html .= "<select data-client-id='$client_id' data-service-date='$service_date' data-admin-or-client='$admin_or_client' class='meal-types'>";
 		for($i=0; $i<count($result); $i++) {
 			$meal_id_option = $result[$i]['meal_id'];
@@ -352,30 +374,26 @@ class Menu {
 
 		$result = $this->get_daily_menu($client_id, $service_date, $meal_id);
 		$result_count = count($result);
-		$item_attributes_array = array(
-			'is_vegetarian', 
-			'is_vegan', 
-			'is_gluten_free', 
-			'is_whole_grain', 
-			'contains_nuts', 
-			'contains_soy', 
-			'contains_shellfish',
-			'contains_nightshades',
-			'contains_alcohol',
-			'contains_eggs',
-			'contains_gluten',
-			'contains_dairy'
-		);
+		// $item_attributes_array = array(
+		// 	'is_vegetarian', 
+		// 	'is_vegan', 
+		// 	'is_gluten_free', 
+		// 	'is_whole_grain', 
+		// 	'contains_nuts', 
+		// 	'contains_soy', 
+		// 	'contains_shellfish',
+		// 	'contains_nightshades',
+		// 	'contains_alcohol',
+		// 	'contains_eggs',
+		// 	'contains_gluten',
+		// 	'contains_dairy'
+		// );
 		if($result_count > 0) {
-
 			$server_image_path = WEB_ROOT.'/'.$result[0]['server_image_path'];
 			$menu_image_path = WEB_ROOT.'/_uploads/'.$result[0]['menu_image_path'];
-			// if($result[0]['server_image_path'] != "") $server_image_style = "style='background-image:url(".$server_image_path.")'";
-			// if($result[0]['menu_image_path'] != "") $menu_image_style = "style='background-image:url(".$menu_image_path.")'";
 			$total_orders = 0;
 			$total_servings = 0;
 			$total_price = 0;
-
 			$html .= '</div>';
 			$html .= '<div class="server_and_meal_container">';
 			$html .= 	"<p class='meal_description'>".$result[0]['meal_description']."</p>";
@@ -387,87 +405,122 @@ class Menu {
 			$html .=    "</div>";
 			$html .= "</div>";
 			$html .= "<form action='".WEB_ROOT."/_actions/approve-menu-from-client.php' method='post' enctype='application/x-www-form-urlencoded'>";
-			
-			for($i=0; $i<$result_count; $i++) {
-				$checkboxes = "";
-				$menu_item_id = $result[$i]['menu_item_id'];
-				$like_count = $result[$i]['like_count'];
-				$order_quantity = $result[$i]['total_orders_for_item'];
-				$price_per_order = $result[$i]['price_per_order'];
-				$servings_per_order = $result[$i]['servings_per_order'];
-				$special_requests = htmlspecialchars($result[$i]['special_requests'], ENT_QUOTES);
-				$calculated_number_of_item_servings = $order_quantity*$servings_per_order;
-				$total_item_price = $order_quantity*$price_per_order;
-				$total_orders = $total_orders+$order_quantity;
-				$total_servings = $total_servings+$calculated_number_of_item_servings;
-				$total_price = $total_price+$total_item_price;
-				if($like_count > 0) {
-					$like_heart_class = 'liked';
-					$like_heart_image = "<img src='$web_root/_images/ui/favorite_on.png' />";
-				} else {
-					$like_heart_class = '';
-					$like_heart_image = "<img src='$web_root/_images/ui/favorite_off.png' />";
-				}
-				$html .= "<div data-increment-id='$i' class='menu_item_container menu-item menu-item-$i'>";
-				$html .= "<div data-menu-item-id='$menu_item_id' class='like-heart $like_heart_class'></div>";
-				// $html .= 	$like_heart_image;
-				// $html .= "</div>";
-				// $html .= "<p class='number_of_likes'><span class='like_count'>".$like_count."</span> Likes</p>";
-				$html .= "<div class='right_column'>";
-				$html .= "<p class='dish_name'>".$result[$i]['menu_item_name'].'</p>';
-				$html .= "<p>".$result[$i]['ingredients'].'</p>';
-				// $html .= "<p class='note'>".$result[$i]['special_notes'].'</p>';
-				$first_allergy_alert = true;
-				for($j=0; $j<count($item_attributes_array); $j++) {
-					if($result[$i][$item_attributes_array[$j]] == 1) {
-						if(strrpos(ALLERGY_ALERT_ARRAY, $item_attributes_array[$j]) > -1) {
-							if($first_allergy_alert) {
-								$prepend_allery_list = "Contains";
-								$first_allergy_alert = false;
-							} else {
-								$prepend_allery_list = "";
+
+			if($meal_id == 5) {
+				$previous_bite_group_id = NULL;
+				for($i=0; $i<$result_count; $i++) {
+					$current_bite_group_id = $result[$i]['bite_group_id'];
+					
+					if($current_bite_group_id != $previous_bite_group_id){
+						$html .= "<div class='bite_group_container'>";
+						$html .= "<h2 class='bite_group_name'>".$result[$i]['bite_group_name']."</h2>";
+						for($j=0; $j<$result_count; $j++) {
+							if($result[$j]['bite_group_id'] == $result[$i]['bite_group_id']) {
+								$bite_quantity = $result[$j]['total_orders_for_item'];
+								$html .= "<div class='bite_container'>";
+								$html .= "<img src='".WEB_ROOT."/_uploads/".$result[$i]['image_name']."'/>";
+								$html .= "<p>".$result[$j]['bite_name']."</p>";
+								$html .= $this->get_attributes_and_allergens($result[$i]);
+								// $html .= "<div class='plus_button'>+</div>";
+								// $html .= "<div class='minus_button'>-</div>";
+								// $html .= "<input type='text' class='bite_quantity' name='' value='$bite_quantity' />";
+								$html .= "</div>";
 							}
-							$checkboxes .= "<span class='allergy-alert'>".$prepend_allery_list.str_replace("contains", "", $item_attributes_array[$j])."</span>, ";
-						} else {
-							$attribute = $item_attributes_array[$j];
-							if($attribute === 'is_gluten_free') {
-								$attribute = 'is_gluten-free';
-							}
-							$checkboxes .= $attribute. ", ";
 						}
+						$previous_bite_group_id = $current_bite_group_id;
+						$html .= "</div>";
 					}
 				}
-				// echo $checkboxes."<br >";
-				$checkboxes = str_replace('is_', '', $checkboxes);
-				$checkboxes = str_replace('_', ' ', $checkboxes);
-				$checkboxes = substr($checkboxes, 0, -2);
-				$html .= "<p class='attributes_and_allergens'>".$checkboxes."</p>";
-				$html .= "<p class='special_notes'>".$result[$i]['special_notes']."</p>";
-				$html .= "<p class='special_requests'>".$result[$i]['special_requests']."</p>";
-				if($context != 'client_general') {
-					// $html .= "<p class='single_order_size'>1 Order Serves $servings_per_order People / $$price_per_order Per Order</p>";
-					// $html .= "<div class='order_summary'>";
-					// $html .=    "<span class='total_orders_for_item'>$order_quantity</span> Orders <span class='total_served_for_item_serves'>Serves</span> <span class='total_served_for_item'>$calculated_number_of_item_servings</span> <span class='total_served_for_item_serves'>=</span> $<span class='total_cost_for_item'>$total_item_price</span>";
-					// $html .= "</div>";
+				// echo "<pre>";
+				// print_r($result);
+				// echo "</pre>";
+				// $html .= "Bites";
+			} else {
+				// echo "<pre>";
+				// print_r($result);
+				// echo "</pre>";
+				for($i=0; $i<$result_count; $i++) {
+					// $checkboxes = "";
+					$menu_item_id = $result[$i]['menu_item_id'];
+					$like_count = $result[$i]['like_count'];
+					$order_quantity = $result[$i]['total_orders_for_item'];
+					$price_per_order = $result[$i]['price_per_order'];
+					$servings_per_order = $result[$i]['servings_per_order'];
+					$special_requests = htmlspecialchars($result[$i]['special_requests'], ENT_QUOTES);
+					$calculated_number_of_item_servings = $order_quantity*$servings_per_order;
+					$total_item_price = $order_quantity*$price_per_order;
+					$total_orders = $total_orders+$order_quantity;
+					$total_servings = $total_servings+$calculated_number_of_item_servings;
+					$total_price = $total_price+$total_item_price;
+					if($like_count > 0) {
+						$like_heart_class = 'liked';
+						$like_heart_image = "<img src='$web_root/_images/ui/favorite_on.png' />";
+					} else {
+						$like_heart_class = '';
+						$like_heart_image = "<img src='$web_root/_images/ui/favorite_off.png' />";
+					}
+					$html .= "<div data-increment-id='$i' class='menu_item_container menu-item menu-item-$i'>";
+					$html .= "<div data-menu-item-id='$menu_item_id' class='like-heart $like_heart_class'></div>";
+					$html .= "<div class='right_column'>";
+					$html .= "<p class='dish_name'>".$result[$i]['menu_item_name'].'</p>';	
+					$html .= "<p>".$result[$i]['ingredients'].'</p>';
+					// $first_allergy_alert = true;
+					// $this->attributes_and_allergens = "";
+					// $this->html_container = "";
+
+					$html .= $this->get_attributes_and_allergens($result[$i]);
+
+					// for($j=0; $j<count($item_attributes_array); $j++) {
+					// 	if($result[$i][$item_attributes_array[$j]] == 1) {
+					// 		if(strrpos(ALLERGY_ALERT_ARRAY, $item_attributes_array[$j]) > -1) {
+					// 			if($first_allergy_alert) {
+					// 				$prepend_allergy_list = "Contains";
+					// 				$first_allergy_alert = false;
+					// 			} else {
+					// 				$prepend_allergy_list = "";
+					// 			}
+					// 			$checkboxes .= "<span class='allergy-alert'>".$prepend_allergy_list.str_replace("contains", "", $item_attributes_array[$j])."</span>, ";
+					// 		} else {
+					// 			$attribute = $item_attributes_array[$j];
+					// 			if($attribute === 'is_gluten_free') {
+					// 				$attribute = 'is_gluten-free';
+					// 			}
+					// 			$checkboxes .= $attribute. ", ";
+					// 		}
+					// 	}
+					// }
+					// $checkboxes = str_replace('is_', '', $checkboxes);
+					// $checkboxes = str_replace('_', ' ', $checkboxes);
+					// $checkboxes = substr($checkboxes, 0, -2);
+					// $html .= "<p class='attributes_and_allergens'>".$checkboxes."</p>";
+					// $html .= "<p class='special_notes'>".$result[$i]['special_notes']."</p>";
+					// $html .= "<p class='special_requests'>".$result[$i]['special_requests']."</p>";
+
+					if($context != 'client_general') {
+						// $html .= "<p class='single_order_size'>1 Order Serves $servings_per_order People / $$price_per_order Per Order</p>";
+						// $html .= "<div class='order_summary'>";
+						// $html .=    "<span class='total_orders_for_item'>$order_quantity</span> Orders <span class='total_served_for_item_serves'>Serves</span> <span class='total_served_for_item'>$calculated_number_of_item_servings</span> <span class='total_served_for_item_serves'>=</span> $<span class='total_cost_for_item'>$total_item_price</span>";
+						// $html .= "</div>";
+					}
+					if($context == 'client_admin') {
+						// $html .= "<a class='page_button quantity_button subtract'>Subtract</a>";
+						// $html .= "<a class='page_button quantity_button add'>Add</a>";
+						// $html .= "<input class='price_per_order_input' type='hidden' value='$price_per_order'>";
+						// $html .= "<input class='servings_per_order_input' type='hidden' value='$servings_per_order'>";
+						// $html .= "<input class='total_orders_for_item_hidden' type='hidden' name='total_orders_for_item[$i]' value='$order_quantity'>";
+						// $html .= "<input class='special_requests' name='special_requests[$i]' type='text' placeholder='Add Special Instructions' value='$special_requests' />";
+						// $html .= "<input class='special_requests' name='special_requests[$i]' type='text' placeholder='Add Special Instructions' value='I\'m special' />";
+						// $html .= "<input type='hidden' name='menu_item_id_array[]' value='$menu_item_id' />";
+						// $html .= "<input type='hidden' name='service_date' value='$service_date' />";
+						// $html .= "<input type='hidden' name='client_id' value='$client_id' />";
+						// $html .= "<input type='hidden' name='meal_id' value='$meal_id' />";
+					}
+					/*if($i < $result_count-1) {
+						$html .= "<div class='fake_hr'></div>";    
+					}*/
+					$html .= "</div>"; // Ends right column
+					$html .= "</div>"; // Ends menu-item
 				}
-				if($context == 'client_admin') {
-					// $html .= "<a class='page_button quantity_button subtract'>Subtract</a>";
-					// $html .= "<a class='page_button quantity_button add'>Add</a>";
-					// $html .= "<input class='price_per_order_input' type='hidden' value='$price_per_order'>";
-					// $html .= "<input class='servings_per_order_input' type='hidden' value='$servings_per_order'>";
-					// $html .= "<input class='total_orders_for_item_hidden' type='hidden' name='total_orders_for_item[$i]' value='$order_quantity'>";
-					// $html .= "<input class='special_requests' name='special_requests[$i]' type='text' placeholder='Add Special Instructions' value='$special_requests' />";
-					// $html .= "<input class='special_requests' name='special_requests[$i]' type='text' placeholder='Add Special Instructions' value='I\'m special' />";
-					// $html .= "<input type='hidden' name='menu_item_id_array[]' value='$menu_item_id' />";
-					// $html .= "<input type='hidden' name='service_date' value='$service_date' />";
-					// $html .= "<input type='hidden' name='client_id' value='$client_id' />";
-					// $html .= "<input type='hidden' name='meal_id' value='$meal_id' />";
-				}
-				/*if($i < $result_count-1) {
-					$html .= "<div class='fake_hr'></div>";    
-				}*/
-				$html .= "</div>"; // Ends right column
-				$html .= "</div>"; // Ends menu-item
 			}
 			if($context != 'client_general') {
 				$html .= "<div class='button_container'>";
@@ -570,6 +623,7 @@ class Menu {
 			$meal_id = null;
 			$image_class = ""; //TODO Delete?
 			for ($i=0; $i < count($result); $i++) { 
+				$first_bite = true;
 				if($service_date != $result[$i]['service_date']) {
 					if($context != 'client_general') {
 						$item_status = "<p class='item_status'>".$result[$i]['item_status']."</p>";
@@ -588,34 +642,44 @@ class Menu {
 					$html .=            "<a class='page_button' href='daily-menu.php?client-id=$client_id&service-date=".$result[$i]['service_date']."&meal-id=".$result[$i]['meal_id']."'>View Items</a>";
 					$html .=        "</div>";
 					$html .= 		"<div class='menu_items_container'>";
+
 					for ($j=0; $j < count($result); $j++) {
 						if($result[$i]['service_date'] == $result[$j]['service_date']) {
-							$html .= 	'<p class="menu_item_name">'.$result[$j]['menu_item_name']."</p>";
-							$is_list = "";
-							$contains_list_prepend = "<span class='allergy-alert'>Contains ";
-							$contains_list = $contains_list_prepend;
-							$result[$j]['is_vegetarian'] == 1 ? 		$is_list .= "Vegetarian, " : 			$is_list .= "";
-							$result[$j]['is_vegan'] == 1 ? 				$is_list .= "Vegan, " : 				$is_list .= "";
-							$result[$j]['is_gluten_free'] == 1 ? 		$is_list .= "Gluten-Free, " : 			$is_list .= "";
-							$result[$j]['is_whole_grain'] == 1 ? 		$is_list .= "Whole Grain, " : 			$is_list .= "";
-							$result[$j]['contains_nuts'] == 1 ? 		$contains_list .= "Nuts, " : 			$contains_list .= "";
-							$result[$j]['contains_soy'] == 1 ? 			$contains_list .= "Soy, " : 			$contains_list .= "";
-							$result[$j]['contains_shellfish'] == 1 ? 	$contains_list .= "Shellfish, " : 		$contains_list .= "";
-							$result[$j]['contains_nightshades'] == 1 ? 	$contains_list .= "Nightshades, " : 	$contains_list .= "";
-							$result[$j]['contains_alcohol'] == 1 ? 		$contains_list .= "Alcohol, " : 		$contains_list .= "";
-							$result[$j]['contains_eggs'] == 1 ? 		$contains_list .= "Eggs, " : 			$contains_list .= "";
-							$result[$j]['contains_gluten'] == 1 ? 		$contains_list .= "Gluten, "  :	 		$contains_list .= "";
-							$result[$j]['contains_dairy'] == 1 ? 		$contains_list .= "Dairy, " : 			$contains_list .= "";
-							if($contains_list === $contains_list_prepend) {
-								$is_list = trim($is_list, ", ");
-								$contains_list = "";
+							if($result[$i]['meal_id'] == 5) {
+								if($first_bite) {
+									$html .= "<div class='bite_message_container>'";
+									$html .= "<div class='bite_message_icon'></div>";
+									$html .= "<p>Brite Bites delivery service includes Grab & Go, Sandwiches and Beverages.</p>";
+									$html .= "</div>";
+									$first_bite = false;
+								}
+							} else {
+								$html .= '<p class="menu_item_name">'.$result[$j]['menu_item_name']."</p>";
+								$is_list = "";
+								$contains_list_prepend = "<span class='allergy-alert'>Contains ";
+								$contains_list = $contains_list_prepend;
+								$result[$j]['is_vegetarian'] == 1 ? 		$is_list .= "Vegetarian, " : 			$is_list .= "";
+								$result[$j]['is_vegan'] == 1 ? 				$is_list .= "Vegan, " : 				$is_list .= "";
+								$result[$j]['is_gluten_free'] == 1 ? 		$is_list .= "Gluten-Free, " : 			$is_list .= "";
+								$result[$j]['is_whole_grain'] == 1 ? 		$is_list .= "Whole Grain, " : 			$is_list .= "";
+								$result[$j]['contains_nuts'] == 1 ? 		$contains_list .= "Nuts, " : 			$contains_list .= "";
+								$result[$j]['contains_soy'] == 1 ? 			$contains_list .= "Soy, " : 			$contains_list .= "";
+								$result[$j]['contains_shellfish'] == 1 ? 	$contains_list .= "Shellfish, " : 		$contains_list .= "";
+								$result[$j]['contains_nightshades'] == 1 ? 	$contains_list .= "Nightshades, " : 	$contains_list .= "";
+								$result[$j]['contains_alcohol'] == 1 ? 		$contains_list .= "Alcohol, " : 		$contains_list .= "";
+								$result[$j]['contains_eggs'] == 1 ? 		$contains_list .= "Eggs, " : 			$contains_list .= "";
+								$result[$j]['contains_gluten'] == 1 ? 		$contains_list .= "Gluten, "  :	 		$contains_list .= "";
+								$result[$j]['contains_dairy'] == 1 ? 		$contains_list .= "Dairy, " : 			$contains_list .= "";
+								if($contains_list === $contains_list_prepend) {
+									$is_list = trim($is_list, ", ");
+									$contains_list = "";
+								}
+								$contains_list = trim($contains_list, " ,")."</span>";
+								$html .= "<p class='is_and_contains_list'>".$is_list." ".$contains_list."</p>";
 							}
-							$contains_list = trim($contains_list, " ,")."</span>";
-							$html .= "<p class='is_and_contains_list'>".$is_list." ".$contains_list."</p>";
-							// $html .= "</p>";
-						}
+						}	
 					}
-					$html .=    	"</div>";
+					// $html .=    	"</div>";
 					$html .=    "</div>";
 					$html .= "</div>";
 				}
@@ -673,24 +737,26 @@ class Menu {
 				}
 				$week_end_date = date('M-d', strtotime("$week_start_date + 6 days"));
 				$week_end_date_with_year = date('Y-m-d', strtotime("$week_start_date + 6 days"));
-				if($week_start_date !== $previous_start_date) {
+				if($week_start_date != $previous_start_date) {
 					$thru_dates = $week_start_date." Thru ".$week_end_date;
 					$previous_service_date = NULL;
-					$previous_meal_name = NULL;
 					$previous_meal_id = NULL;
+					$previous_week_start_date = "Rubbish";
+					$meal_types_displayed = [];
 					for($j=0; $j<count($result); $j++) {
 						$current_service_date = $result[$j]['service_date'];
 						$current_meal_name = $result[$j]['meal_name'];
 						$today = date('Y-m-d', strtotime('now'));
 						$last_monday = date('Y-m-d', strtotime('last monday'));
 						$next_monday = date('Y-m-d', strtotime('next monday'));
+						$current_meal_id = $result[$j]['meal_id'];
 						switch ($context) {
 							case 'client_general':
 							case 'client_admin':
-								$view_link = $web_root."/clients/weekly-menu.php?client-id=$client_id&start-date=$week_start_date_with_year";
+								$view_link = $web_root."/clients/weekly-menu.php?client-id=$client_id&start-date=$week_start_date_with_year&meal-id=$current_meal_id";
 								break;
 							case 'green_heart_foods_admin':
-								$view_link = $web_root."/admin/weekly-menu.php?client-id=$client_id&start-date=$week_start_date_with_year";
+								$view_link = $web_root."/admin/weekly-menu.php?client-id=$client_id&start-date=$week_start_date_with_year&meal-id=$current_meal_id";
 								break;
 						}
 						if($week_start_date_with_year >= $last_monday) {
@@ -698,46 +764,44 @@ class Menu {
 						} else {
 							$view_type = 'grid_view';
 						}
-						$current_meal_id = $result[$j]['meal_id'];
 						if ($result[$j]['service_date'] <= $week_end_date_with_year && $result[$j]['service_date'] >= $week_start_date_with_year && $current_meal_id != $previous_meal_id) {
-							$meal_name_class = strtolower($current_meal_name);
-							$html .= "<div data_view_link='$view_link' class='week_meal_container $view_type $meal_name_class'>";
-							$html .=    "<div class='left_column'>";
-							$html .=        "<h2 class='thru_dates'>".$thru_dates."</h2>";
-							$html .=        "<h3 class='meal_name'>".$result[$j]['meal_name']."</h3>";    
-							$html .=        "<h4 class='hosted_by'>Hosted By ".$result[$j]['server_first_name']."</h4>";
-							$html .=        "<a href='$view_link' class='view_link'>View</a>";
-							$html .=    "</div>";
-							$html .=    "<div class='right_column'>";
-							$previous_meal_service_date = NULL;
-							$weekly_menu = $this->get_weekly_menu_by_meal($client_id, $week_start_date_with_year, $context, $result[$j]['meal_id']);
-							if($weekly_menu) {
-								$current_meal_service_date = null;
-								for ($k=0; $k<count($weekly_menu); $k++) { 
-									$current_meal_service_date = $weekly_menu[$k]['service_date'];
-									if($current_meal_service_date != $previous_meal_service_date) {
-										$html .= "<p>".date('l, M d', strtotime($weekly_menu[$k]['service_date']))."</p>";
-									}
-									$html .= "<p class='menu_item_name'>".$weekly_menu[$k]['menu_item_name']."</p>";
-									$previous_meal_service_date = $current_meal_service_date;	
-								}								
+							if (array_search($result[$j]['meal_id'], $meal_types_displayed) === false) {
+								$meal_name_class = strtolower($current_meal_name);
+								$html .= "<div data_view_link='$view_link' class='week_meal_container $view_type $meal_name_class'>";
+								$html .=    "<div class='left_column'>";
+								$html .=        "<h2 class='thru_dates'>".$thru_dates."</h2>";
+								$html .=        "<h3 class='meal_name'>".$result[$j]['meal_name']."</h3>";    
+								$html .=        "<h4 class='hosted_by'>Hosted By ".$result[$j]['server_first_name']."</h4>";
+								$html .=        "<a href='$view_link' class='view_link'>View</a>";
+								$html .=    "</div>";
+								$html .=    "<div class='right_column'>";
+								$previous_meal_service_date = NULL;
+								$weekly_menu = $this->get_weekly_menu_by_meal($client_id, $week_start_date_with_year, $context, $result[$j]['meal_id']);
+								if($weekly_menu) {
+									$current_meal_service_date = null;
+									for ($k=0; $k<count($weekly_menu); $k++) { 
+										$first_bite = true;
+										$current_meal_service_date = $weekly_menu[$k]['service_date'];
+										if($current_meal_service_date != $previous_meal_service_date) {
+											$html .= "<p>".date('l, M d', strtotime($weekly_menu[$k]['service_date']))."</p>";
+										}
+										if($weekly_menu[$k]['meal_id'] == 5) {
+											if($first_bite && $current_meal_service_date != $previous_meal_service_date) {
+												$html .= "<p class='menu_item_name'>Brite Bites delivery service includes Grab &amp; Go, Sandwiches and Beverages.</p>";
+												$first_bite = false;
+											}
+										} else {
+											$html .= "<p class='menu_item_name'>".$weekly_menu[$k]['menu_item_name']."</p>";
+										}
+										$previous_meal_service_date = $current_meal_service_date;	
+									}								
+								}
+								$html .=    "</div>";
+								$html .= "</div>";
+								array_push($meal_types_displayed, $result[$j]['meal_id']);
 							}
-							// $html .= "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>--------<br><br>";
-							// for ($k=0; $k<count($result); $k++) { 
-							// 	$current_meal_service_date = $result[$k]['service_date'];
-							// 	if ($result[$k]['meal_id'] == $result[$j]['meal_id'] && $result[$k]['service_date'] <= $week_end_date_with_year && $result[$k]['service_date'] >= $week_start_date_with_year) {
-							// 		if($current_meal_service_date != $previous_meal_service_date) {
-							// 			$html .= "<p>".date('l, M d', strtotime($result[$k]['service_date']))."</p>";
-							// 		}
-							// 		$html .= "<p class='menu_item_name'>".$result[$k]['menu_item_name']."</p>";	
-							// 		$previous_meal_service_date = $current_meal_service_date;
-							// 	}
-							// }
-							$html .=    "</div>";
-							$html .= "</div>";
 						}
 						$previous_service_date = $current_service_date;
-						$previous_meal_name = $current_meal_name;
 						$previous_meal_id = $current_meal_id;
 					}
 				}
@@ -902,6 +966,15 @@ class Menu {
 		$total_cost_for_menu = 0;
 		$menu_image_style = "";
 		$server_image_style = "";
+		$all_bites = $this->get_all_bites();
+		$bites_mode = '';
+		if($meal_id == 5) {
+			$bites_mode = 'bites_mode';
+		}
+
+		// echo "<pre>";
+		// print_r($all_bites);
+		// echo "</pre>";
 
 		if(isset($service_date) && isset($meal_id)) {
 			$mode = 'edit';
@@ -1028,6 +1101,7 @@ class Menu {
 		$html .=            $meal_type_options;
 		$html .=        "</select>";
 		$html .=    "</fieldset>";
+		$html .=    "<div class='non_bites_form $bites_mode'>";
 		$html .=    "<fieldset>";
 		$html .=        "<h3>Meal Description</h3>";
 		$html .=        "<input spellcheck='true' name='meal_description' type='text' placeholder='Add Description Here' value='$meal_description' spellcheck='true' />";
@@ -1147,13 +1221,44 @@ class Menu {
 				</div>
 			</fieldset>
 FORM;
-
-			// if($mode == 'create' && $i==0) {
-			// 	$html .= $form;		
-			// } elseif ($mode == 'edit') {
-			// 	$html .= $form;		
-			// }
 		}
+		$form .= "</div>"; // End non-bites form
+		$form .= "<div class='bites_form $bites_mode'>";
+		$form .= "<a href='".WEB_ROOT."/admin/edit-bites.php' class='edit_global_bites'>Edit Global</a>";
+		$form .= "<div class='fake_hr'></div>";
+		$number_of_bites = count($all_bites);
+		for ($i=0; $i < count($all_bites); $i++) { 
+			$bite_id = $all_bites[$i]['bite_id'];
+			$bite_name = $all_bites[$i]['bite_name'];
+			$bite_quantity = $all_bites[$i]['default_quantity'];
+			$contains = "";
+
+			if ($all_bites[$i]['is_vegetarian'] == 1) $contains .= "Vegetarian, ";
+			if ($all_bites[$i]['is_vegan'] == 1) $contains .= "Vegan, ";
+			if ($all_bites[$i]['is_gluten_free'] == 1) $contains .= "Gluten-Free, ";
+			if ($all_bites[$i]['is_whole_grain'] == 1) $contains .= "Whole Grain, ";
+			if ($all_bites[$i]['contains_nuts'] == 1) $contains .= "Nuts, ";
+			if ($all_bites[$i]['contains_soy'] == 1) $contains .= "Soy, ";
+			if ($all_bites[$i]['contains_shellfish'] == 1) $contains .= "Shellfish, ";
+			if ($all_bites[$i]['contains_nightshades'] == 1) $contains .= "Nightshades, ";
+			if ($all_bites[$i]['contains_alcohol'] == 1) $contains .= "Alcohol, ";
+			if ($all_bites[$i]['contains_eggs'] == 1) $contains .= "Eggs, ";
+			if ($all_bites[$i]['contains_gluten'] == 1) $contains .= "Gluten, ";
+			if ($all_bites[$i]['contains_dairy'] == 1) $contains .= "Dairy, ";
+
+			$form .= "<div class='bite_container'>";
+			$form .= "<p>$bite_name</p>";
+			$form .= "<p>$contains</p>";
+			$form .= "<div class='plus_button'>+</div>";
+			$form .= "<div class='minus_button'>-</div>";
+			$form .= "<input type='text' class='bite_quantity' name='bite_quantity[$i]' value='$bite_quantity' />";
+			$form .= "<input type='hidden' name='bite_id[$i]' value='$bite_id' />";
+			$form .= "</div>";
+			
+		}
+		$form .= "<input type='hidden' name='number_of_bites' value='$number_of_bites' />";
+		$form .= "</div>";
+
 		$html .= $form;
 		$html .= "<input type='hidden' class='current_day_edit_mode' name='current_day' value='$current_day' />";
 		$html .= $menu_item_hidden_ids;
@@ -1313,5 +1418,46 @@ FORM;
 		$html .= "</div>"; // End outside container
 		return $html;
 	}
+
+	public function get_attributes_and_allergens($current_result) {
+		$html_container = "";
+		$attributes_and_allergens = "";
+		$item_attributes_array = array(
+			'is_vegetarian', 
+			'is_vegan', 
+			'is_gluten_free', 
+			'is_whole_grain', 
+			'contains_nuts', 
+			'contains_soy', 
+			'contains_shellfish',
+			'contains_nightshades',
+			'contains_alcohol',
+			'contains_eggs',
+			'contains_gluten',
+			'contains_dairy'
+		);
+		for($j=0; $j<count($item_attributes_array); $j++) {
+			if($current_result[$item_attributes_array[$j]] == 1) {
+				if(strrpos(ALLERGY_ALERT_ARRAY, $item_attributes_array[$j]) > -1) {
+					$prepend_allergy_list = "";
+					$attributes_and_allergens .= "<span class='allergy-alert'>".$prepend_allergy_list.str_replace("contains", "", $item_attributes_array[$j])."</span>, ";
+				} else {
+					$attribute = $item_attributes_array[$j];
+					if($attribute === 'is_gluten_free') {
+						$attribute = 'is_gluten-free';
+					}
+					$attributes_and_allergens .= $attribute. ", ";
+				}
+			}
+		}
+		$attributes_and_allergens = str_replace('is_', '', $attributes_and_allergens);
+		$attributes_and_allergens = str_replace('_', ' ', $attributes_and_allergens);
+		$attributes_and_allergens = substr($attributes_and_allergens, 0, -2);
+		$html_container .= "<p class='attributes_and_allergens'>".$attributes_and_allergens."</p>";
+		$html_container .= "<p class='special_notes'>".$current_result['special_notes']."</p>";
+		$html_container .= "<p class='special_requests'>".$current_result['special_requests']."</p>";
+		return $html_container;
+	}
+
 
 }
