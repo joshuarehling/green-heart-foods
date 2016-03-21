@@ -647,7 +647,7 @@ class Menu {
 						if($result[$i]['service_date'] == $result[$j]['service_date']) {
 							if($result[$i]['meal_id'] == 5) {
 								if($first_bite) {
-									$html .= "<div class='bite_message_container>'";
+									$html .= "<div class='bite_message_container'>";
 									$html .= "<div class='bite_message_icon'></div>";
 									$html .= "<p>Brite Bites delivery service includes Grab & Go, Sandwiches and Beverages.</p>";
 									$html .= "</div>";
@@ -679,7 +679,7 @@ class Menu {
 							}
 						}	
 					}
-					// $html .=    	"</div>";
+					$html .=    	"</div>";
 					$html .=    "</div>";
 					$html .= "</div>";
 				}
