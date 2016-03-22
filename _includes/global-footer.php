@@ -1,9 +1,9 @@
 	<footer>
 		<div class="green_heart_foods_logo"><a href="http://www.greenheartfoods.com"><img src="../_images/ui/footer_ghf_logo.jpg" /></a></div>
-		<p class="hours">
+		<!--<p class="hours">
 			Monday-Friday<br />
 			8AM-3PM
-		</p>
+		</p>-->
 		<p class="location">
 			<a href="https://www.google.com/maps/place/3321+20th+St,+San+Francisco,+CA+94110/@37.759612,-122.4168417,17z/data=!4m2!3m1!1s0x808f7e3983f9e7bb:0x8fbd9d2d12018351" target="_blank">3321 20th Street<br />
 			San Francisco, CA 94110</a>
