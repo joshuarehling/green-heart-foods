@@ -78,6 +78,18 @@ class Menu {
 		}
 	}
 
+	public function get_bite_by_id($bite_id) {
+		$arguments = array(
+			$bite_id
+		);
+		$query = $this->database_connection->prepare("SELECT * FROM bites LEFT JOIN bite_groups ON bites.bite_group_id = bite_groups.bite_group_id WHERE bites.bite_id = ?");
+		$query->execute($arguments);
+		$result = $query->fetchAll(PDO::FETCH_ASSOC);
+		if(count($result) > 0) {
+			return $result;
+		}
+	}
+
 	public function get_weekly_menu_by_meal($client_id, $start_date, $context, $meal_id) {
 		$end_date = date('Y-m-d', strtotime($start_date.' +6 days'));
 		$arguments = array(
@@ -327,6 +339,72 @@ class Menu {
 				// echo "number_of_menu_items:<pre> ".$number_of_menu_items."<br /><br />";
 				// print_r($_POST);
 			}
+		}
+	}
+
+	public function update_bite() {
+		echo "<pre>";
+		print_r($_FILES);
+		echo "</pre>";
+		$bite_id = $_POST['bite_id'];
+		if(!isset($_POST['is_vegetarian'])) 		$_POST['is_vegetarian'] = 0;
+		if(!isset($_POST['is_vegan'])) 				$_POST['is_vegan'] = 0;
+		if(!isset($_POST['is_gluten_free'])) 		$_POST['is_gluten_free'] = 0;
+		if(!isset($_POST['is_whole_grain'])) 		$_POST['is_whole_grain'] = 0;
+		if(!isset($_POST['contains_nuts'])) 		$_POST['contains_nuts']= 0;
+		if(!isset($_POST['contains_soy'])) 			$_POST['contains_soy'] = 0;
+		if(!isset($_POST['contains_shellfish'])) 	$_POST['contains_shellfish'] = 0;
+		if(!isset($_POST['contains_nightshades'])) 	$_POST['contains_nightshades'] = 0;
+		if(!isset($_POST['contains_alcohol'])) 		$_POST['contains_alcohol'] = 0;
+		if(!isset($_POST['contains_eggs'])) 		$_POST['contains_eggs'] = 0;
+		if(!isset($_POST['contains_gluten'])) 		$_POST['contains_gluten'] = 0;
+		if(!isset($_POST['contains_dairy'])) 		$_POST['contains_dairy'] = 0;
+		if($_FILES['bite_image_name']['name'] != "") {
+			$bite_image_name = $this->image->upload_image($_FILES, 'bite_image_name');
+		} else {
+			$bite_image_name = $_POST['bite_image_name_original'];
+		}
+		$arguments = array(
+			$bite_image_name,
+			$_POST['bite_name'],
+			$_POST['is_vegetarian'],
+			$_POST['is_vegan'],
+			$_POST['is_gluten_free'],
+			$_POST['is_whole_grain'],
+			$_POST['contains_nuts'],
+			$_POST['contains_soy'],
+			$_POST['contains_shellfish'],
+			$_POST['contains_nightshades'],
+			$_POST['contains_alcohol'],
+			$_POST['contains_eggs'],
+			$_POST['contains_gluten'],
+			$_POST['contains_dairy'],
+			$_POST['default_quantity'],
+			$bite_id
+		);
+		$query = $this->database_connection->prepare("UPDATE bites SET 
+			image_name = ?, 
+			bite_name = ?, 
+			is_vegetarian = ?, 
+			is_vegan = ?, 
+			is_gluten_free = ?, 
+			is_whole_grain = ?, 
+			contains_nuts = ?, 
+			contains_soy = ?, 
+			contains_shellfish = ?, 
+			contains_nightshades = ?,
+			contains_alcohol = ?,
+			contains_eggs = ?,
+			contains_gluten = ?,
+			contains_dairy = ?,
+			default_quantity = ? 
+			WHERE 
+			bite_id = ?");
+		$result = $query->execute($arguments);
+		if($result) {
+			Messages::add('The bite has been updated');
+			header("Location: ../admin/daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id");
+			exit();
 		}
 	}
 
@@ -1226,36 +1304,38 @@ FORM;
 		$form .= "<div class='bites_form $bites_mode'>";
 		$form .= "<a href='".WEB_ROOT."/admin/edit-bites.php' class='edit_global_bites'>Edit Global</a>";
 		$form .= "<div class='fake_hr'></div>";
+		$form .= $this->build_bites_html($all_bites, 'create');
 		$number_of_bites = count($all_bites);
-		for ($i=0; $i < count($all_bites); $i++) { 
-			$bite_id = $all_bites[$i]['bite_id'];
-			$bite_name = $all_bites[$i]['bite_name'];
-			$bite_quantity = $all_bites[$i]['default_quantity'];
-			$contains = "";
+		// $number_of_bites = count($all_bites);
+		// for ($i=0; $i < count($all_bites); $i++) { 
+		// 	$bite_id = $all_bites[$i]['bite_id'];
+		// 	$bite_name = $all_bites[$i]['bite_name'];
+		// 	$bite_quantity = $all_bites[$i]['default_quantity'];
+		// 	$contains = "";
 
-			if ($all_bites[$i]['is_vegetarian'] == 1) $contains .= "Vegetarian, ";
-			if ($all_bites[$i]['is_vegan'] == 1) $contains .= "Vegan, ";
-			if ($all_bites[$i]['is_gluten_free'] == 1) $contains .= "Gluten-Free, ";
-			if ($all_bites[$i]['is_whole_grain'] == 1) $contains .= "Whole Grain, ";
-			if ($all_bites[$i]['contains_nuts'] == 1) $contains .= "Nuts, ";
-			if ($all_bites[$i]['contains_soy'] == 1) $contains .= "Soy, ";
-			if ($all_bites[$i]['contains_shellfish'] == 1) $contains .= "Shellfish, ";
-			if ($all_bites[$i]['contains_nightshades'] == 1) $contains .= "Nightshades, ";
-			if ($all_bites[$i]['contains_alcohol'] == 1) $contains .= "Alcohol, ";
-			if ($all_bites[$i]['contains_eggs'] == 1) $contains .= "Eggs, ";
-			if ($all_bites[$i]['contains_gluten'] == 1) $contains .= "Gluten, ";
-			if ($all_bites[$i]['contains_dairy'] == 1) $contains .= "Dairy, ";
+		// 	if ($all_bites[$i]['is_vegetarian'] == 1) $contains .= "Vegetarian, ";
+		// 	if ($all_bites[$i]['is_vegan'] == 1) $contains .= "Vegan, ";
+		// 	if ($all_bites[$i]['is_gluten_free'] == 1) $contains .= "Gluten-Free, ";
+		// 	if ($all_bites[$i]['is_whole_grain'] == 1) $contains .= "Whole Grain, ";
+		// 	if ($all_bites[$i]['contains_nuts'] == 1) $contains .= "Nuts, ";
+		// 	if ($all_bites[$i]['contains_soy'] == 1) $contains .= "Soy, ";
+		// 	if ($all_bites[$i]['contains_shellfish'] == 1) $contains .= "Shellfish, ";
+		// 	if ($all_bites[$i]['contains_nightshades'] == 1) $contains .= "Nightshades, ";
+		// 	if ($all_bites[$i]['contains_alcohol'] == 1) $contains .= "Alcohol, ";
+		// 	if ($all_bites[$i]['contains_eggs'] == 1) $contains .= "Eggs, ";
+		// 	if ($all_bites[$i]['contains_gluten'] == 1) $contains .= "Gluten, ";
+		// 	if ($all_bites[$i]['contains_dairy'] == 1) $contains .= "Dairy, ";
 
-			$form .= "<div class='bite_container'>";
-			$form .= "<p>$bite_name</p>";
-			$form .= "<p>$contains</p>";
-			$form .= "<div class='plus_button'>+</div>";
-			$form .= "<div class='minus_button'>-</div>";
-			$form .= "<input type='text' class='bite_quantity' name='bite_quantity[$i]' value='$bite_quantity' />";
-			$form .= "<input type='hidden' name='bite_id[$i]' value='$bite_id' />";
-			$form .= "</div>";
+		// 	$form .= "<div class='bite_container'>";
+		// 	$form .= "<p>$bite_name</p>";
+		// 	$form .= "<p>$contains</p>";
+		// 	$form .= "<div class='plus_button'>+</div>";
+		// 	$form .= "<div class='minus_button'>-</div>";
+		// 	$form .= "<input type='text' class='bite_quantity' name='bite_quantity[$i]' value='$bite_quantity' />";
+		// 	$form .= "<input type='hidden' name='bite_id[$i]' value='$bite_id' />";
+		// 	$form .= "</div>";
 			
-		}
+		// }
 		$form .= "<input type='hidden' name='number_of_bites' value='$number_of_bites' />";
 		$form .= "</div>";
 
@@ -1274,6 +1354,143 @@ FORM;
 		$html .=    "</p>";
 		$html .=    "<a href='$cancel_url' class='cancel_button page_button'>Cancel</a>";
 		$html .=    "<button class='preview_menu_button page_button'>Save</button>";
+		$html .= "</div>";
+		return $html;
+	}
+
+	public function get_edit_bites_page() {
+		$html = "";
+		$all_bites = $this->get_all_bites();
+		$html .= $this->build_bites_html($all_bites, 'edit');
+		return $html;
+	}
+
+	public function build_bites_html($all_bites, $mode){
+		$number_of_bites = count($all_bites);
+		$bites_html = "";
+		$previous_bite_group_id = null;
+		for ($i=0; $i < $number_of_bites; $i++) {
+			$current_bite_group_id = $all_bites[$i]['bite_group_id'];
+			if($current_bite_group_id != $previous_bite_group_id){
+				$bites_html .= "<div class='bite_group_container'>";
+				$bites_html .= "<h2 class='bite_group_name'>".$all_bites[$i]['bite_group_name']."</h2>"; 
+				for ($j=0; $j < $number_of_bites; $j++) {
+					if($all_bites[$j]['bite_group_id'] == $all_bites[$i]['bite_group_id']) {
+						$bite_id = $all_bites[$j]['bite_id'];
+						$bite_name = $all_bites[$j]['bite_name'];
+						$bite_quantity = $all_bites[$j]['default_quantity'];
+						$bite_image_name = $all_bites[$j]['image_name'];
+						$contains = "";
+						if ($all_bites[$j]['is_vegetarian'] == 1) $contains .= "Vegetarian, ";
+						if ($all_bites[$j]['is_vegan'] == 1) $contains .= "Vegan, ";
+						if ($all_bites[$j]['is_gluten_free'] == 1) $contains .= "Gluten-Free, ";
+						if ($all_bites[$j]['is_whole_grain'] == 1) $contains .= "Whole Grain, ";
+						if ($all_bites[$j]['contains_nuts'] == 1) $contains .= "Nuts, ";
+						if ($all_bites[$j]['contains_soy'] == 1) $contains .= "Soy, ";
+						if ($all_bites[$j]['contains_shellfish'] == 1) $contains .= "Shellfish, ";
+						if ($all_bites[$j]['contains_nightshades'] == 1) $contains .= "Nightshades, ";
+						if ($all_bites[$j]['contains_alcohol'] == 1) $contains .= "Alcohol, ";
+						if ($all_bites[$j]['contains_eggs'] == 1) $contains .= "Eggs, ";
+						if ($all_bites[$j]['contains_gluten'] == 1) $contains .= "Gluten, ";
+						if ($all_bites[$j]['contains_dairy'] == 1) $contains .= "Dairy, ";
+						$contains = trim($contains, ", ");
+						$bites_html .= "<div class='bite_container'>";
+						$bites_html .= "<img src='".WEB_ROOT."/_uploads/".$bite_image_name."' />";
+						$bites_html .= "<p>$bite_name</p>";
+						$bites_html .= "<p>$contains</p>";
+						switch($mode) {
+							case 'edit':
+								$bites_html .= "<a data-bite-id='$bite_id' class='edit_bite'>Edit</a>";
+								break;
+							case 'create':
+								$bites_html .= "<div class='plus_button'>+</div>";
+								$bites_html .= "<div class='minus_button'>-</div>";
+								$bites_html .= "<input type='text' class='bite_quantity' name='bite_quantity[$j]' value='$bite_quantity' />";
+								break;
+						}
+						$bites_html .= "<input type='hidden' name='bite_id[$j]' value='$bite_id' />";
+						$bites_html .= "</div>";
+					}
+				}
+				switch($mode) {
+					case 'edit':
+						$bites_html .= "<a data-bite-group-id='$current_bite_group_id' class='add_bite'>Add Bite</a>";
+						break;
+				}
+				$bites_html .= "</div>";
+			}
+			$previous_bite_group_id = $current_bite_group_id;
+		}
+		return $bites_html;
+	}
+
+	public function get_edit_bite_modal($bite_id, $context) {
+		$html = "";
+		$bite = $this->get_bite_by_id($bite_id);
+		$bite[0]['is_vegetarian'] == 1 ? $is_vegetarian_checked = "checked" : $is_vegetarian_checked = "";
+		$bite[0]['is_vegan'] == 1 ? $is_vegan_checked = "checked" : $is_vegan_checked = "";
+		$bite[0]['is_gluten_free'] == 1 ? $is_gluten_free_checked = "checked" : $is_gluten_free_checked = "";
+		$bite[0]['is_whole_grain'] == 1 ? $is_whole_grain_checked = "checked" : $is_whole_grain_checked = "";
+		$bite[0]['contains_nuts'] == 1 ? $contains_nuts_checked = "checked" : $contains_nuts_checked = "";
+		$bite[0]['contains_soy'] == 1 ? $contains_soy_checked = "checked" : $contains_soy_checked = "";
+		$bite[0]['contains_shellfish'] == 1 ? $contains_shellfish_checked = "checked" : $contains_shellfish_checked = "";
+		$bite[0]['contains_nightshades'] == 1 ? $contains_nightshades_checked = "checked" : $contains_nightshades_checked = "";
+		$bite[0]['contains_alcohol'] == 1 ? $contains_alcohol_checked = "checked" : $contains_alcohol_checked = "";
+		$bite[0]['contains_eggs'] == 1 ? $contains_eggs_checked = "checked" : $contains_eggs_checked = "";
+		$bite[0]['contains_gluten'] == 1 ? $contains_gluten_checked = "checked" : $contains_gluten_checked = "";
+		$bite[0]['contains_dairy'] == 1 ? $contains_dairy_checked = "checked" : $contains_dairy_checked = "";
+		$html .= "<div class='add_edit_bite_modal'>";
+		$html .= "<div class='add_edit_bite_modal_content'>";
+		$html .= "<a class='close_button'>Close</a>";
+		$html .= "<a class='delete_button'>Delete</a>";
+		$html .= "<div class='fake_hr'></div>";
+		$html .= "<form class='edit_bite_form' action='../_actions/update-bite.php' method='post' enctype='multipart/form-data'>";
+		$html .= "<img src='".WEB_ROOT."/_uploads/".$bite[0]['image_name']."' />";
+		$html .= "<input name='bite_image_name' type='file' />";
+		$html .= "<input name='bite_name' type='text' value='".$bite[0]['bite_name']."'/>";
+		$html .= "<input name='default_quantity' type='text' value='".$bite[0]['default_quantity']."'/>";
+		$html .= "<input type='hidden' name='bite_image_name_original' value='".$bite[0]['image_name']."'/>";
+// 		$html .= <<<CHECKBOXES
+// 		<div class="checkbox_container">
+// 			<ul>
+// 				<li><label class="box_label">Vegetarian</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $is_vegetarian_checked name="is_vegetarian[0]"></span></li>
+// 				<li><label class="box_label">Vegan</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $is_vegan_checked name="is_vegan[0]"></span></li>
+// 				<li><label class="box_label">Gluten-Free</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $is_gluten_free_checked name="is_gluten_free[0]"></span></li>
+// 				<li><label class="box_label">Whole Grain</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $is_whole_grain_checked name="is_whole_grain[0]"></span></li>
+// 				<li><label class="box_label">Contains Nuts</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_nuts_checked name="contains_nuts[0]"></span></li>
+// 				<li><label class="box_label">Contains Soy</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_soy_checked name="contains_soy[0]"></span></li>
+// 				<li><label class="box_label">Contains Shellfish</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_shellfish_checked name="contains_shellfish[0]"></span></li>
+// 				<li><label class="box_label">Contains Nightshades</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_nightshades_checked name="contains_nightshades[0]"></span></li>
+// 				<li><label class="box_label">Contains Alcohol</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_alcohol_checked name="contains_alcohol[0]"></span></li>
+// 				<li><label class="box_label">Contains Eggs</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_eggs_checked name="contains_eggs[0]"></span></li>
+// 				<li><label class="box_label">Contains Gluten</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_gluten_checked name="contains_gluten[0]"></span></li>
+// 				<li><label class="box_label">Contains Dairy</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_dairy_checked name="contains_dairy[0]"></span></li>
+// 			</ul>
+// 		</div>
+// CHECKBOXES;
+		$html .= <<<CHECKBOXES
+		<div class="checkbox_container">
+			<ul>
+				<li><label class="box_label">Vegetarian</label><input type="checkbox" value="1" $is_vegetarian_checked name="is_vegetarian"></li>
+				<li><label class="box_label">Vegan</label><input type="checkbox" value="1" $is_vegan_checked name="is_vegan"></li>
+				<li><label class="box_label">Gluten-Free</label><input type="checkbox" value="1" $is_gluten_free_checked name="is_gluten_free"></li>
+				<li><label class="box_label">Whole Grain</label><input type="checkbox" value="1" $is_whole_grain_checked name="is_whole_grain"></li>
+				<li><label class="box_label">Contains Nuts</label><input type="checkbox" value="1" $contains_nuts_checked name="contains_nuts"></li>
+				<li><label class="box_label">Contains Soy</label><input type="checkbox" value="1" $contains_soy_checked name="contains_soy"></li>
+				<li><label class="box_label">Contains Shellfish</label><input type="checkbox" value="1" $contains_shellfish_checked name="contains_shellfish"></li>
+				<li><label class="box_label">Contains Nightshades</label><input type="checkbox" value="1" $contains_nightshades_checked name="contains_nightshades"></li>
+				<li><label class="box_label">Contains Alcohol</label><input type="checkbox" value="1" $contains_alcohol_checked name="contains_alcohol"></li>
+				<li><label class="box_label">Contains Eggs</label><input type="checkbox" value="1" $contains_eggs_checked name="contains_eggs"></li>
+				<li><label class="box_label">Contains Gluten</label><input type="checkbox" value="1" $contains_gluten_checked name="contains_gluten"></li>
+				<li><label class="box_label">Contains Dairy</label><input type="checkbox" value="1" $contains_dairy_checked name="contains_dairy"></li>
+			</ul>
+		</div>
+CHECKBOXES;
+		$html .= "<a class='cancel_button'>Cancel</a>";
+		$html .= "<input type='hidden' name='bite_id' value='$bite_id'>";
+		$html .= "<input type='submit' class='save_button' value='Save'>";
+		$html .= "</form>";
+		$html .= "</div>";
 		$html .= "</div>";
 		return $html;
 	}

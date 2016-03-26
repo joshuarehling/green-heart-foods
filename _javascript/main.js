@@ -156,7 +156,59 @@ $(document).ready(function() {
 		document.location = $(this).attr('data_view_link');
 	});
 
+	
+	/* 
+
+	Add Bite 
+
+	*/
+
+	
+	$('.edit_bites_page .add_bite').click(function(event){
+		var bite_group_id = $(this).attr('data-bite-group-id');
+		$.ajax({
+			url: '../admin/add-bite-modal.php?bite-group-id='+bite_group_id,
+			method: 'GET'
+		}).done(function(html) {
+			load_modal(html);
+		});
+	});
+
+
+	/* 
+
+	Edit Bites Page 
+
+	*/
+
+
+	$('.edit_bites_page .edit_bite').click(function(event){
+		var bite_id = $(this).attr('data-bite-id');
+		$.ajax({
+			url: '../admin/edit-bite-modal.php?bite-id='+bite_id, 
+			method: 'GET'
+		}).done(function(html) {
+			load_modal(html);
+		});
+	});
+
+
+
 });
+
+
+function load_modal(html){
+	$('.edit_bites_page').append(html);
+	$('.edit_bites_page .add_edit_bite_modal_content .close_button, .edit_bites_page .add_edit_bite_modal_content .cancel_button').click(function(event){
+		$('.add_edit_bite_modal').remove();
+	});
+	// $('.edit_bite_form').submit(function(event){
+		// event.preventDefault();
+		// console.log("Form Submit");
+		// var bite_name = $('.bite_name').val();
+		// console.log(bite_name);
+	// });
+}
 
 
 /* Shared Functions */
