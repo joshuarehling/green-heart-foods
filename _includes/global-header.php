@@ -46,8 +46,9 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>/_css/dropdowns/cs-select.css" /><!-- don't change these -->
 	<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>/_css/dropdowns/cs-skin-border.css" /><!-- sets visual style -->
 	<!-- google fonts -->
-	<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700,400,300' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Oswald:400,700|Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+	<!--<link href='http://fonts.googleapis.com/css?family=Roboto+Condensed:700,400,300' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Oswald:400,700|Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>-->
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700,300italic' rel='stylesheet' type='text/css'>
 	<!-- Mobile CSS -->
 	<link media="only screen and (max-device-width: 480px)" href="<?php echo WEB_ROOT; ?>/_css/mobile.css" type="text/css" rel="stylesheet" />
 	<!-- various stuff -->	
@@ -76,10 +77,10 @@
 								echo "<a class='menus' href='".WEB_ROOT."/admin/weekly-menu.php'>Menus</a>";
 								break;
 							case 2:
-								echo "<a href='".WEB_ROOT."/clients/weekly-menu.php?client-id=$client_id'>Weekly Menu</a>";
+								echo "<a href='".WEB_ROOT."/clients/weekly-menu.php?client-id=$client_id'>Menus</a>";
 								break;
 							case 3:
-								echo "<a href='".WEB_ROOT."/clients/weekly-menu.php?client-id=$client_id'>Weekly Menu</a>";
+								echo "<a href='".WEB_ROOT."/clients/weekly-menu.php?client-id=$client_id'>Menus</a>";
 								break;
 							default:
 								break;

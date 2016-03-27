@@ -1,4 +1,4 @@
-/* Updated Mon 7 Aug 2015 by Josh Rehling*/
+/* Updated 23 Mar 2016 by Josh Rehling*/
 
 
 /* -------------------- Redefine Global */
@@ -7,11 +7,12 @@ body {
 	margin: 0;
 	padding: 0;
 	border: none;
-	text-transform: uppercase;
+	text-transform: none;
 	font-size: 18px;
-	font-family: 'Oswald', sans-serif;
-	font-family: 'Roboto Condensed', sans-serif;
-	font-weight: 400;
+	/*font-family: 'Oswald', sans-serif;
+	font-family: 'Roboto Condensed', sans-serif;*/
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-weight: 700;
 	background-color: #34b67d;
 }
 
@@ -36,6 +37,7 @@ h1 {
 	color: #FFFFFF;
 	padding-bottom: 160px;
 	background-color: #0e6552;
+	text-transform: uppercase;
 }
 
 h2, h3, h4, p {
@@ -70,6 +72,7 @@ header {
 	color: #FFFFFF;
 	text-align: left;
 	background-color: #0e6552;
+	text-transform: uppercase;
 }
 header a {
 	color: #FFFFFF;
@@ -107,6 +110,7 @@ header.background_logo {
 	margin: 0;
 	overflow: auto;
 	font-size: 3em;
+	text-transform: uppercase;
 }
 
 .page_header h2 {
@@ -120,6 +124,7 @@ footer {
 	padding: 90px 0 90px 0;
 	font-size: 2.2em;
 	color: #FFFFFF;
+	text-transform: uppercase;
 }
 
 footer ul {
@@ -134,6 +139,7 @@ footer li {
 
 footer .hours {
 	margin: 40px 0 40px 0;
+	font-weight: 700;
 }
 
 footer .location {
@@ -143,6 +149,7 @@ footer .location {
 
 footer .location a {
 	color: #016753;
+	font-weight: 700;
 }
 
 footer .contact {
@@ -152,6 +159,7 @@ footer .contact {
 
 footer .contact a {
 	color: #abd14f;
+	font-weight: 700;
 }
 
 .hidden {
@@ -166,6 +174,7 @@ footer .contact a {
 	color: #FFFFFF;
 	font-size: 1.6em;
 	padding: 45px 0 45px 0;
+	text-transform: uppercase;
 }
 
 /* Button Bar */
@@ -213,6 +222,8 @@ footer .contact a {
 	text-align: center;
 	color: #7d7d7d;
 	line-height: 1.2em;
+	font-weight: 700;
+	text-transform: uppercase;
 }
 
 .no_menus em {
@@ -493,6 +504,29 @@ footer .contact a {
 
 /* -------------------- Weekly Menu Page */
 
+.weekly_menu_page .page_header a {
+	display: inline;
+	margin: 0 30px;
+	color: #a35d79;
+	font-size: .6em;
+}
+
+.weekly_menu_page .page_header a.menu,
+.weekly_menu_page .page_header a.placard {
+	float: left;
+	line-height: 2em;
+	width: 240px;
+	text-align: left;
+	margin-left: 60px;
+}
+
+.weekly_menu_page .page_header a.placard {
+	float: right;
+	text-align: right;
+	margin-right: 60px;
+
+}
+
 .weekly_menu_page header {
 	background-repeat: repeat-x;
 	background-position: center top;
@@ -505,47 +539,27 @@ footer .contact a {
 	width: 100%;
 }
 
-.weekly_menu_page .page_header ul {
-	list-style: none;
-	margin: 0px;
-	padding-left: 0;
-}
-
-.weekly_menu_page .page_header li {
-	list-style-type: none;
-	display: inline-block;
-	margin: 0 15px;
-	line-height: 1em;
-	width: 300px;
-}
-
-.weekly_menu_page .page_header a {
-	color: #a35d79;
-	line-height: 1em;
-}
-
-.weekly_menu_page .page_header a.selected {
+.weekly_menu_page select.meal_type {
+	font-size: 2em;
+	min-width: 300px;
+	background-color: #81445E;
+	border: none;
 	color: #FFFFFF;
-	font-weight: 700;
-	line-height: 1em;
-}
-
-.weekly_menu_page .page_header li.left {
-	text-align: left;
-}
-
-.weekly_menu_page .page_header li.right {
-	text-align: right;
+	text-transform: uppercase;
+	display: block;
+	position: relative;
+	top: 60px;
+	margin: 0px auto 0 auto;
 }
 
 .weekly_menu_page .outside_container {
 	overflow: auto; /* Scales the container to fit the floats. */
 	border: none;
-	border-bottom: 5px solid #84445e;
+	border-top: 5px solid #84445e;
 	padding: 90px 0;
 	width: 90%;
 	min-width: 960px;
-	margin: 0 auto;
+	margin: 120px auto 0 auto;
 }
 
 .weekly_menu_page .meal_container {
@@ -563,40 +577,57 @@ footer .contact a {
 	line-height: 1.5em;
 	position: relative;
 	color: #a7a9b5;
+	text-transform: uppercase;
 }
 
 .weekly_menu_page .meal_details .item_status {
 	color: #ee284e;
-	font-size: 2em;
+	font-size: 2.6em;
 	margin: -7px 0 0 -3px;
 	margin: -7px 0 0 0px;
 	line-height: 1.1em;
+	font-weight: 700;
 }
 
 .weekly_menu_page .meal_details .day_of_the_week {
-	color: #84445e;
-	font-size: 2em;
+	color: #A7CD4D;
+	font-size: 2.6em;
 	margin-left: -3px;
 	margin-left: 0px;
 	line-height: 1.1em;
+	font-weight: 700;
 }
+
+.weekly_menu_page .meal_container.breakfast .day_of_the_week { color: #F39035; }
+.weekly_menu_page .meal_container.lunch .day_of_the_week { color: #A7CD4D; }
+.weekly_menu_page .meal_container.dinner .day_of_the_week { color: #9F5D79; }
+.weekly_menu_page .meal_container.snack .day_of_the_week { color: #85D1EB; }
+.weekly_menu_page .meal_container.bites .day_of_the_week { color: #4BB0EF; }
+.weekly_menu_page .meal_container.event .day_of_the_week { color: #009FA3; }
+
 
 .weekly_menu_page .meal_details .month_and_date {
 	color: #7d7d7d;
-	font-size: 2em;
+	font-size: 2.6em;
 	margin-left: -3px;
 	margin-left: 0px;
 	line-height: 1.1em;
+	font-weight: 700;
 }
 
 .weekly_menu_page .meal_details .meal_name {
-	font-size: 2em;
+	font-size: 2.6em;
 	margin-left: -3px;
 	margin-left: 0px;
 	line-height: 1.1em;
 	padding-bottom: 25px;
+	font-weight: 700;
 }
 
+.weekly_menu_page .meal_details .meal_description {
+	font-weight: 700;
+	color: #A7CD4D;
+}
 
 .weekly_menu_page .menu_items_container {
 	float: left;
@@ -637,16 +668,8 @@ footer .contact a {
 	margin-top: -5px;
 }
 
-.weekly_menu_page select.meal_type {
-	display: block;
-	margin: 20px auto 0;
-}
-
-
 
 /* -------------------- Weekly Menu Print Placards */ 
-
-
 
 .weekly_menu_print_placards h1 {
 	margin: 0;
@@ -684,7 +707,6 @@ footer .contact a {
 	clear: 
 }
 
-
 .weekly_menu_print_placards .plus_minus_container a {
 	display: inline-block;
 	width: 50px;
@@ -694,7 +716,6 @@ footer .contact a {
 	background-color: orange;
 	margin-left: 5px;
 }
-
 
 
 /* -------------------- Create & Edit Menu Pages */ 
@@ -729,6 +750,7 @@ footer .contact a {
 .edit_menu_page .server_and_meal,
 .create_menu_page .server_and_meal {
 	width: 960px;
+	width: 300px;
 	margin: 0 auto;
 	padding-top: 30px;
 	text-align: right;
@@ -744,6 +766,7 @@ footer .contact a {
 	background-repeat: no-repeat;
 	background-position: center center;
 	float: right;
+	display: none;
 }
 
 .edit_menu_page .meal_image,
@@ -824,6 +847,7 @@ footer .contact a {
 	overflow: auto;
 	font-size: 3em;
 	font-weight: 700;
+	text-transform: uppercase;
 }
 
 .edit_menu_page fieldset input[type=text],
@@ -871,6 +895,7 @@ footer .contact a {
 	font-weight: 400;
 	display: inline-block;
 	float: left;
+	font-weight: 700;
 }
 
 .edit_menu_page .move_box,
@@ -886,6 +911,10 @@ footer .contact a {
 	border-bottom: none;
 }
 
+.edit_menu_page .price,
+.create_menu_page .price {
+	display: none;
+}
 .edit_menu_page .order_summary,
 .create_menu_page .order_summary {
 	border: 2px solid #84445e;
@@ -915,6 +944,7 @@ footer .contact a {
 	padding: 0px 0px 15px 0px;
 	color: #FFFFFF;
 	background-color: #84445e;
+	display: none;
 }
 
 .edit_menu_page .button_container .total_served_for_menu_serves,
@@ -971,14 +1001,12 @@ footer .contact a {
 }
 
 
-.create_menu_page .add_dish {
-	display: block;
-	width: 200px;
-	height: 100px;
-	margin: 0 auto;
-	background-color: pink;
-	padding-top: 51px;
+.create_menu_page .add_dish_container {
 	text-align: center;
+}
+
+.create_menu_page .add_dish {
+	margin: 90px auto;
 	cursor: pointer;
 }
 
@@ -1014,7 +1042,7 @@ footer .contact a {
 }
 
 
-/* -------------------- Daily Menu Page - NEEDED fix dropdown*/
+/* -------------------- Daily Menu Page */
 
 .daily_menu_page {
 	text-align: center;
@@ -1041,9 +1069,6 @@ footer .contact a {
 	text-align: right;
 }
 
-/* //////////////////////////////////////////////// */
-/* why is the dropdown code not working? */
-
 .daily_menu_page h3 {
 	text-align: center;
 	color: #84445e;
@@ -1054,14 +1079,33 @@ footer .contact a {
 	font-weight: 700;
 }
 
+
+.daily_menu_page .date_and_meal select {
+	font-size: 2em;
+	min-width: 300px;
+	background-color: #81445E;
+	border: none;
+	color: #FFFFFF;
+	text-transform: uppercase;
+	display: block;
+	position: relative;
+	margin: 0px auto 0;
+}
+
 .daily_menu_page .no_meal,
 .daily_menu_page .meal_description {
-	color: #a7a9b5;
+	color: #7D7D7D;
 	text-align: center;
-	padding: 60px 0 0 0;
-	margin: 0 auto;
-	font-size: 1.6em;
-	font-weight: 400;
+	padding: 0px 0 0 0;
+	margin: 0 auto 60px auto;
+	font-size: 3em;
+	line-height: 1em;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.daily_menu_page p.no_meal {
+	padding: 60px 0 30px 0;
 }
 
 .daily_menu_page .date_and_meal,
@@ -1069,9 +1113,15 @@ footer .contact a {
 .daily_menu_page .menu-item {
 	border: none;
 	border-bottom: 5px solid #84445e;
-	padding: 90px 0;
+	padding: 60px 0;
 	width: 90%;
 	min-width: 960px;
+	margin: 0 auto;
+}
+
+.daily_menu_page .menu_item_container {
+	overflow: hidden;
+	/*width: 971px;*/
 	margin: 0 auto;
 }
 
@@ -1090,9 +1140,8 @@ footer .contact a {
 	margin: 0 auto;
 }
 
-/* //////////////////////////////////////////////// */
-
-.daily_menu_page .server_and_meal {
+.daily_menu_page .server_and_meal,
+.daily_menu_page .left_and_right_column {
 	width: 960px;
 	margin: 0 auto;
 }
@@ -1134,6 +1183,9 @@ footer .contact a {
 	padding-top: 15px;
 	display: block;
 	margin-top: 300px;*/
+	text-transform: uppercase;
+	margin: 20px 0 0 0;
+	font-size: 1.2em;
 }
 
 .daily_menu_page .server_information .number a {
@@ -1143,30 +1195,26 @@ footer .contact a {
 	display: block;
 }
 
-.daily_menu_page .menu_item_container {
-	overflow: hidden;
-}
-
 .daily_menu_page .menu-item {
-	padding: 30px 0 90px 0;
+	padding: 30px 0 60px 0;
 }
 
 .daily_menu_page .menu-item p {
 	color: #a7a9b5;
 	font-size: 1.5em;
-	width: 800px;
+	width: 580px;
 	margin: 30px auto;
 }
 
 .daily_menu_page .like-heart {
-	margin-top: 15px;
+	margin: 30px 30px 0 0;
 	float: left;
-	width: 200px;
-	height: 200px;
-	background-color: aquamarine;
-	background-repeat: no-repeat;
+	width: 300px;
+	height: 300px;
+	background-color: yellow;
 	background-image: url(../_images/ui/favorite_off.png);
-
+	background-repeat: no-repeat;
+	background-position: center center;
 }
 
 .daily_menu_page .like-heart.liked {
@@ -1187,25 +1235,38 @@ footer .contact a {
 	float: left;
 	border-left: 1px solid #ccc;
 	overflow: hidden;
+	/*width: 630px;*/
+	margin: 30px 0 0 0;
+	min-height: 300px;
 }
 
-.daily_menu_page p.dish_name {
-	color: #7d7d7d;
-	font-size: 3em;
+.daily_menu_page .right_column p {
 	font-weight: 700;
-	line-height: 1em;
+	font-size: 1.6em;
 }
 
-.daily_menu_page .special_requests {
-	/*border: 2px solid #84445e;*/
-	text-transform: uppercase;
-	font-size: 2em;
-	margin: 25px auto;
-	padding: 20px 30px 20px 30px;
-	display: block;
-	text-align: left;
-	width: 900px;
-	color: #84445e;
+.daily_menu_page .right_column p.dish_name {
+	color: #7d7d7d;
+	font-size: 2.4em;
+	font-weight: 700;
+}
+
+.daily_menu_page .right_column p.attributes_and_allergens {
+	font-weight: 700;
+	font-size: 1em;
+}
+
+.daily_menu_page p.special_requests {
+	margin: 30px auto;
+	font-weight: 700;
+	color: #A7CD4D;
+	font-size: 1em;
+}
+
+.daily_menu_page p.special_notes {
+	font-weight: 700;
+	color: #A7CD4D;
+	font-size: 1em;
 }
 
 .daily_menu_page .single_order_size {
@@ -1291,6 +1352,7 @@ footer .contact a {
 	padding: 0px 0px 15px 0px;
 	color: #FFFFFF;
 	background-color: #84445e;
+	display: none;
 }
 
 .daily_menu_page .button_container .total_served_for_item_serves,
@@ -1303,7 +1365,6 @@ footer .contact a {
 	margin-bottom: 200px;
 	margin-top: -5px;
 }
-
 
 
 /* -------------------- Print Menu & Placards */
@@ -1435,59 +1496,166 @@ html > .daily_menu_print_menu_page {
 }
 
 
-
 /* -------------------- Yearly Menu Page */
-
-
 
 .yearly_menu_page .outside_container {
 	overflow: auto; /* Scales the container to fit the floats. */
-	border: none;
-	border-bottom: 5px solid #84445e;
-	padding: 90px 0;
+	padding: 0px 0;
 	width: 90%;
 	min-width: 960px;
-	margin: 0 auto;
+	margin: 0 auto 60px auto;
 }
 
 .yearly_menu_page .week_meal_container {
-	/*clear: both;*/
-	border: 4px solid #507DA5;
+	border-bottom: 5px solid #81445E;
 	overflow: auto;
-	margin-top: 10px;
+	padding: 60px 0;
+	margin: 0 auto;
 }
 
-.yearly_menu_page .week_meal_container.list_view  .left_column {
-	width: 200px;
-	padding: 50px;
+.yearly_menu_page .week_meal_container.list_view.breakfast .right_column { background-color: #F39035; }
+.yearly_menu_page .week_meal_container.list_view.lunch .right_column { background-color: #A7CD4D; }
+.yearly_menu_page .week_meal_container.list_view.dinner .right_column { background-color: #9F5D79; }
+.yearly_menu_page .week_meal_container.list_view.snack .right_column { background-color: #85D1EB; }
+.yearly_menu_page .week_meal_container.list_view.bites .right_column { background-color: #4BB0EF; }
+.yearly_menu_page .week_meal_container.list_view.event .right_column { background-color: #009FA3; }
+
+.yearly_menu_page .week_meal_container.list_view.breakfast .left_column .thru_dates,
+.yearly_menu_page .week_meal_container.list_view.breakfast .left_column .meal_name { color: #F39035; }
+.yearly_menu_page .week_meal_container.list_view.lunch .left_column .thru_dates,
+.yearly_menu_page .week_meal_container.list_view.lunch .left_column .meal_name  { color: #A7CD4D; }
+.yearly_menu_page .week_meal_container.list_view.dinner .left_column .thru_dates,
+.yearly_menu_page .week_meal_container.list_view.dinner .left_column .meal_name  { color: #9F5D79; }
+.yearly_menu_page .week_meal_container.list_view.snack .left_column .thru_dates,
+.yearly_menu_page .week_meal_container.list_view.snack .left_column .meal_name  { color: #85D1EB; }
+.yearly_menu_page .week_meal_container.list_view.bites .left_column .thru_dates,
+.yearly_menu_page .week_meal_container.list_view.bites .left_column .meal_name  { color: #4BB0EF; }
+.yearly_menu_page .week_meal_container.list_view.event .left_column .thru_dates,
+.yearly_menu_page .week_meal_container.list_view.event .left_column .meal_name  { color: #009FA3; }
+
+.yearly_menu_page .week_meal_container.grid_view.breakfast .left_column { background-color: #F39035; }
+.yearly_menu_page .week_meal_container.grid_view.lunch .left_column { background-color: #A7CD4D; }
+.yearly_menu_page .week_meal_container.grid_view.dinner .left_column { background-color: #9F5D79; }
+.yearly_menu_page .week_meal_container.grid_view.snack .left_column { background-color: #85D1EB; }
+.yearly_menu_page .week_meal_container.grid_view.bites .left_column { background-color: #4BB0EF; }
+.yearly_menu_page .week_meal_container.grid_view.event .left_column { background-color: #009FA3; }
+
+/* List View */
+
+.yearly_menu_page .week_meal_container .left_and_right_column.list_view {
+	overflow: auto;
+	width: 960px;
+	margin: 0 auto;
+}
+
+.yearly_menu_page .week_meal_container.list_view .left_column {
+	width: 300px;
+	min-height: 630px;
 	float: left;
-	background-color: orange;
+	padding-right: 30px;
+	position: relative;
+}
+
+.yearly_menu_page .week_meal_container.list_view .left_column .thru_dates {
+	color: #7d7d7d;
+	font-size: 3em;
+	margin: -10px 0 0 0;
+	line-height: 1.1em;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.yearly_menu_page .week_meal_container.list_view .left_column .meal_name {
+	color: #A7CD4D;
+	font-size: 1.1em;
+	margin: 30px 0 0 0;
+	line-height: 1.1em;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.yearly_menu_page .week_meal_container.list_view .left_column .hosted_by {
+	color: #A3A6AF;
+	font-size: 1.1em;
+	margin-left: -3px;
+	margin-left: 0px;
+	line-height: 1.1em;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.yearly_menu_page .left_column .view_link {
+	border: none;
+	background-color: #ff7a18;
+	color: #FFFFFF;
+	text-transform: uppercase;
+	font-size: 2em;
+	margin: 0;
+	padding: 20px 0;
+	display: block;
+	text-align: center;
+	width: 300px;
+	display: inline-block;
+	position: absolute;
+	bottom: 0;
 }
 
 .yearly_menu_page .week_meal_container.list_view .right_column {
-	width: 700px;
-	padding: 50px;
+	width: 630px;
+	min-height: 630px;
 	float: left;
-	background-color: #ccc;
+	background-color: #A7CD4D;
 }
 
-.new-week {
-	background-color: #ff0;
+.yearly_menu_page .week_meal_container.list_view .right_column p {
+	color: #000000;
+	padding: 30px 0 0 30px;
+	text-transform: uppercase;
+	opacity: .5;
+	font-weight: 700;
+	font-size: 1.1em;
+}
+
+.yearly_menu_page .week_meal_container.list_view .right_column p.menu_item_name {
+	color: #FFFFFF;
+	padding: 0px 0 0 30px;
+	text-transform: none;
+	opacity: 1;
+	font-size: .8em;
+	width: 260px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+    -moz-binding: url('assets/xml/ellipsis.xml#ellipsis');
+}
+
+.yearly_menu_page .week_meal_container.list_view .right_column p.menu_item_name_bites {
+	color: #FFFFFF;
+	padding: 0px 0 0 30px;
+	text-transform: none;
+	opacity: 1;
+	font-size: .8em;
+	width: 570px;
+}
+
+.new-week { /* what does this do? */
+	background-color: green;
 	margin-top: 10px;
+	overflow: auto;
 }
 
-
-/* Yearly Menu - Grid View */
-
+/* Grid View */
 
 .yearly_menu_page .week_meal_container.grid_view {
-	margin:25px 0 0 25px;
-	border: 15px solid green;
-	overflow: hidden;
-	width: 200px;
+	margin: 30px 30px 0 0;
+	padding: 0;
+	overflow: auto;
+	width: 300px;
 	float: left;
+	border: none;
+	background-color: blue;
 }
-
 
 .yearly_menu_page .week_meal_container.grid_view .right_column,
 .yearly_menu_page .week_meal_container.grid_view .hosted_by,
@@ -1495,22 +1663,25 @@ html > .daily_menu_print_menu_page {
 	display: none;
 }
 
-
-/* Yearly Menu - Footer Navigation */
-
-
-.yearly_menu_page .weekly_menu_footer_navigation {
-	display: block;
-	background-color: #84445e;
-	text-align: center;
-	color: #fff;
-	padding: 30px 0;
-	margin: 0;
-	overflow: auto;
-	font-size: 3em;
-	clear: both;
+.yearly_menu_page .week_meal_container.grid_view .left_column {
+	cursor: pointer;
+	text-transform: uppercase;
+	color: #FFFFFF;
 }
 
+.yearly_menu_page .week_meal_container.grid_view h2 {
+	font-size: 3em;
+	font-weight: 700;
+	line-height: 1.1em;
+	padding: 30px;
+}
+
+.yearly_menu_page .week_meal_container.grid_view h3 {
+	font-size: 1.1em;
+	font-weight: 700;
+	opacity: .5;
+	padding: 0 30px 30px 30px;
+}
 
 /* Edit Bites Page  */
 
