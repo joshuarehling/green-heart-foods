@@ -738,6 +738,7 @@ class Menu {
 		$result_count = count($result);
 		$html .= "<div class='page_header'>";
 
+
 		$html .=    "<ul>";
 		// $html .=        "<li class='left'><a class='print_link' href='weekly-menu-print-menu.php?client-id=$client_id&start-date=$this_week&meal-id=$url_meal_id'>Print Menus</a></li>";
 		$html .=        "<li class='left'><a class='print_link' href='weekly-menu-print-menu.php?client-id=$client_id&start-date=$start_date&meal-id=$url_meal_id'>Print Menus</a></li>";
@@ -752,6 +753,7 @@ class Menu {
 		// $html .=    "<a class='menu' href='weekly-menu-print-menu.php?client-id=$client_id&start-date=$this_week&meal-id=$url_meal_id'>Print Menus</a>";
 		// $html .=    "<a class='placard' href='weekly-menu-print-placards.php?client-id=$client_id&start-date=$this_week&meal-id=$url_meal_id'>Print Placards</a>";
 		// $html .=    "<h2>$this_week_formatted</h2>";
+
 
 		$html .= "</div>";
 		$service_date = null;
