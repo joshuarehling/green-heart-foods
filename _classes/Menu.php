@@ -609,6 +609,7 @@ class Menu {
 						$like_heart_image = "<img src='$web_root/_images/ui/favorite_off.png' />";
 					}
 					$html .= "<div data-increment-id='$i' class='menu_item_container menu-item menu-item-$i'>";
+					$html .= "<div class='left_and_right_column'>";
 					$html .= "<div data-menu-item-id='$menu_item_id' class='like-heart $like_heart_class'></div>";
 					$html .= "<div class='right_column'>";
 					$html .= "<p class='dish_name'>".$result[$i]['menu_item_name'].'</p>';	
@@ -668,6 +669,7 @@ class Menu {
 						$html .= "<div class='fake_hr'></div>";    
 					}*/
 					$html .= "</div>"; // Ends right column
+					$html .= "</div>"; // Ends left_and_right_column
 					$html .= "</div>"; // Ends menu-item
 				}
 			}
@@ -678,12 +680,12 @@ class Menu {
 					$html .= "<input type='submit' class='place_order_button page_button' value='Place Order'>";
 				}
 				if($context == 'green_heart_foods_admin') {
-					$html .= "<a class='page_button' href='".WEB_ROOT."/admin/edit-daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Edit Daily Menu</a>";
+					$html .= "<a class='page_button' href='".WEB_ROOT."/admin/edit-daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Edit</a>";
 				}
 				$html .= "</div>";
 			}
 		} else {
-			$html .= '<p class="no_meal">No results found.</p>';
+			$html .= '<p class="no_menu">No menus found</p>';
 		}
 		$html .= '</form>';
 		return $html;
@@ -734,11 +736,9 @@ class Menu {
 		$result = $this->get_weekly_menu_by_meal($client_id, $start_date, $context, $url_meal_id);
 		$result_count = count($result);
 		$html .= "<div class='page_header'>";
-		$html .=    "<ul>";
-		$html .=        "<li class='left'><a class='print_link' href='weekly-menu-print-menu.php?client-id=$client_id&start-date=$this_week&meal-id=$url_meal_id'>Print Menus</a></li>";
-		$html .=        "<li><a class='$this_week_selected' href='weekly-menu.php?client-id=$client_id&start-date=$this_week'>$this_week_formatted</a></li>";
-		$html .=        "<li class='right'><a class='print_link' href='weekly-menu-print-placards.php?client-id=$client_id&start-date=$this_week&meal-id=$url_meal_id'>Print Placards</a></li>";
-		$html .=    "</ul>"; // three spaces centers the list because of the line break spaces created in the html formatting
+		$html .=    "<a class='menu' href='weekly-menu-print-menu.php?client-id=$client_id&start-date=$this_week&meal-id=$url_meal_id'>Print Menus</a>";
+		$html .=    "<a class='placard' href='weekly-menu-print-placards.php?client-id=$client_id&start-date=$this_week&meal-id=$url_meal_id'>Print Placards</a>";
+		$html .=    "<h2>$this_week_formatted</h2>";
 		$html .= "</div>";
 		$service_date = null;
 		$meal_id = null;
@@ -838,7 +838,7 @@ class Menu {
 			$menus = 1;
 		} else {
 			$formatted_start_date = date('M d', strtotime($start_date))."-".date('d', strtotime($start_date.' + 6 days'));
-			$html .= "<p class='no_menus'>No menus</p>";
+			$html .= "<p class='no_menus'>No menus found</p>";
 			$menus = 0;
 		}
 		if($context == 'green_heart_foods_admin') {
@@ -867,9 +867,7 @@ class Menu {
 		$result = $client->get_client($client_id);
 		$web_root = WEB_ROOT;
 		$html .= "<div class='page_header'>";
-		$html .=    "<ul>";
-		$html .=        "<li>$menu_year</li>";
-		$html .=    "</ul>";
+		$html .=    "$menu_year</li>";
 		$html .= "</div>";
 		$result = $this->get_yearly_menus($client_id, $menu_year);
 		$previous_start_date = NULL;
@@ -878,16 +876,16 @@ class Menu {
 			for($i=0; $i<count($result); $i++) {
 				$service_date = $result[$i]['service_date'];
 				if (date('l', strtotime($service_date)) === 'Monday') {
-					$week_start_date = date('M-d', strtotime($service_date));
+					$week_start_date = date('M d', strtotime($service_date));
 					$week_start_date_with_year = date('Y-m-d', strtotime($service_date));
 				} else {
-					$week_start_date = date('M-d', strtotime('last monday', strtotime($service_date)));
+					$week_start_date = date('M d', strtotime('last monday', strtotime($service_date)));
 					$week_start_date_with_year = date('Y-m-d', strtotime('last monday', strtotime($service_date)));
 				}
-				$week_end_date = date('M-d', strtotime("$week_start_date + 6 days"));
+				$week_end_date = date('M d', strtotime("$week_start_date + 6 days"));
 				$week_end_date_with_year = date('Y-m-d', strtotime("$week_start_date + 6 days"));
 				if($week_start_date != $previous_start_date) {
-					$thru_dates = $week_start_date." Thru ".$week_end_date;
+					$thru_dates = $week_start_date."<br> THRU <br>".$week_end_date;
 					$previous_service_date = NULL;
 					$previous_meal_id = NULL;
 					$previous_week_start_date = "Rubbish";
@@ -917,6 +915,7 @@ class Menu {
 							if (array_search($result[$j]['meal_id'], $meal_types_displayed) === false) {
 								$meal_name_class = strtolower($current_meal_name);
 								$html .= "<div data_view_link='$view_link' class='week_meal_container $view_type $meal_name_class'>";
+								$html .= "<div class='left_and_right_column  $view_type'>";
 								$html .=    "<div class='left_column'>";
 								$html .=        "<h2 class='thru_dates'>".$thru_dates."</h2>";
 								$html .=        "<h3 class='meal_name'>".$result[$j]['meal_name']."</h3>";    
@@ -936,7 +935,7 @@ class Menu {
 										}
 										if($weekly_menu[$k]['meal_id'] == 5) {
 											if($first_bite && $current_meal_service_date != $previous_meal_service_date) {
-												$html .= "<p class='menu_item_name'>Brite Bites delivery service includes Grab &amp; Go, Sandwiches and Beverages.</p>";
+												$html .= "<p class='menu_item_name_bites'>Brite Bites delivery service includes Grab &amp; Go, Sandwiches and Beverages.</p>";
 												$first_bite = false;
 											}
 										} else {
@@ -945,8 +944,9 @@ class Menu {
 										$previous_meal_service_date = $current_meal_service_date;	
 									}								
 								}
-								$html .=    "</div>";
-								$html .= "</div>";
+								$html .=    "</div>"; // end right_column
+								$html .=    "</div>"; // end left_and_right_column
+								$html .= "</div>"; // end week_meal_container
 								array_push($meal_types_displayed, $result[$j]['meal_id']);
 							}
 						}
@@ -957,17 +957,15 @@ class Menu {
 				$previous_start_date = $week_start_date;
 			}
 		} else {
-			$html .= "<div class='no-results-found'>Sorry, there are no menu items for $menu_year </div>";
+			$html .= "<div class='no-results-found no_menus'>No menus for $menu_year </div>";
 		}
 		$html .= "</div>"; // End outside_container
-		$html .= "<div class='weekly_menu_footer_navigation'>";
-		$html .= "<ul>";
-		$html .=    "<li class='previous_year'><a href='yearly-menu.php?client-id=$client_id&menu-year=$previous_year'>Prev Year</a></li>";
+		$html .= "<div class='button_container'>";
+		$html .=    "<a href='yearly-menu.php?client-id=$client_id&menu-year=$previous_year' class='page_button'>Prev Year</a>";
 		if($context === 'green_heart_foods_admin') {
-			$html .=    "<li class='create_menu'><a href='create-menu.php?client-id=$client_id'>Create Menu</a></li>";
+			$html .=    "<a href='create-menu.php?client-id=$client_id' class='page_button'>Create Menu</a>";
 		}
-		$html .=    "<li class='next_year'><a href='yearly-menu.php?client-id=$client_id&menu-year=$next_year'>Next Year</a></li>";
-		$html .= "</ul>";
+		$html .=    "<a href='yearly-menu.php?client-id=$client_id&menu-year=$next_year' class='page_button'>Next Year</a>";
 		$html .= "</div>";
 		return $html;
 	}
@@ -1349,21 +1347,23 @@ class Menu {
 							<li><label class="box_label">Contains Dairy</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_dairy_checked name="contains_dairy[$i]"></span></li>
 						</ul>
 					</div>
-					<h3>Set Price per Order</h3>
-					<input class="price_per_order_input" name="price_per_order[$i]" type="text" value="$price_per_order" placeholder="$0.00" />
-					<input class="servings_per_order_input" name="servings_per_order[$i]" type="hidden" value="15" placeholder="Serves 0" />
-					<p class="order_summary">
-						<span class="total_orders_for_item">$total_orders_for_item</span> Orders
-						<span class="total_served_for_item_serves">Serves </span><span class="total_served_for_item">$total_served_for_item</span><span class="total_served_for_item_serves"> =</span>
-						$<span class="total_cost_for_item">$total_cost_for_item</span>
-					</p>
-					<input type="hidden" name="total_orders_for_item[$i]" class="total_orders_for_item_hidden"  value="$total_orders_for_item" />
-					<input type="hidden" class="meals_per_day" name="meals_per_day" value="$i" />
-					<input type="hidden" name="client_id" value="$client_id" />
-					<input type="hidden" name="item_status_id" value="1" />
-					<input type="hidden" name="menu_image_path_orginal" value="$menu_image_path_orginal" />
-					<a class="page_button quantity_button subtract">Subtract</a>
-					<a class="page_button quantity_button add">Add</a>
+					<div class="price">
+						<h3>Set Price per Order</h3>
+						<input class="price_per_order_input" name="price_per_order[$i]" type="text" value="$price_per_order" placeholder="$0.00" />
+						<input class="servings_per_order_input" name="servings_per_order[$i]" type="hidden" value="15" placeholder="Serves 0" />
+						<p class="order_summary">
+							<span class="total_orders_for_item">$total_orders_for_item</span> Orders
+							<span class="total_served_for_item_serves">Serves </span><span class="total_served_for_item">$total_served_for_item</span><span class="total_served_for_item_serves"> =</span>
+							$<span class="total_cost_for_item">$total_cost_for_item</span>
+						</p>
+						<input type="hidden" name="total_orders_for_item[$i]" class="total_orders_for_item_hidden"  value="$total_orders_for_item" />
+						<input type="hidden" class="meals_per_day" name="meals_per_day" value="$i" />
+						<input type="hidden" name="client_id" value="$client_id" />
+						<input type="hidden" name="item_status_id" value="1" />
+						<input type="hidden" name="menu_image_path_orginal" value="$menu_image_path_orginal" />
+						<a class="page_button quantity_button subtract">Subtract</a>
+						<a class="page_button quantity_button add">Add</a>
+					</div>
 				</div>
 			</fieldset>
 FORM;
@@ -1413,7 +1413,7 @@ FORM;
 		$html .= $menu_item_hidden_ids;
 		$html .= "</form>";
 		if($mode == 'create') {
-			$html .= "<a class='add_dish'>Add Dish</a>";    
+			$html .= "<div class='add_dish_container'><a class='add_dish page_button'>Add Dish</a></div>";    
 		}
 		$html .= "<div class='button_container'>";
 		$html .=    "<p>";
@@ -1665,7 +1665,7 @@ CHECKBOXES;
 				$meal_id = $result[$i]['meal_id'];
 			}
 		} else {
-			$html .= "<p class='no_menus'>Sorry, there are no menus for the selected week.</p>";
+			$html .= "<p class='no_menus'>No menus found</p>";
 		}
 		$html .= 	"<div class'address_bar'><span class='green_heart_foods_logo'></span><span class='green_heart_foods_url'>greenhreatfoods.com</span> 415-272-7307 info@greenheartfoods.com 3321 20th St, San Francisco, CA 94110</div>";
 		$html .= "</div>";			// End outside container
@@ -1722,7 +1722,7 @@ CHECKBOXES;
 				$html .= "</div>"; // End meal container
 			}
 		} else {
-			$html .= "<p class='no_menus'>Sorry, there are no menus for the selected week.</p>";
+			$html .= "<p class='no_menus'>No menus found</p>";
 		}
 		$html .= 	"<div class='meal_container blank unedited'>";
 		$html .= 		"<div class='green_heart_foods_logo'>GHF LOGO</div>";
