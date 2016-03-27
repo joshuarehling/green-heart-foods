@@ -982,10 +982,12 @@ footer .contact a {
 	cursor: pointer;
 }
 
+.edit_menu_page .non_bites_form.bites_mode,
 .create_menu_page .non_bites_form.bites_mode {
 	display: none;
 }
 
+.edit_menu_page .bites_form,
 .create_menu_page .bites_form {
 	display: none;
 	margin: 0 auto;
@@ -1006,6 +1008,7 @@ footer .contact a {
 	background-color: #84445e;
 }
 
+.edit_menu_page .bites_form.bites_mode,
 .create_menu_page .bites_form.bites_mode {
 	display: block;
 }
@@ -1210,6 +1213,7 @@ footer .contact a {
 }
 
 
+.edit_menu_page .bite_group_name,
 .daily_menu_page .bite_group_name,
 .edit_bites_page .bite_group_name,
 .create_menu_page .bite_group_name {
@@ -1220,6 +1224,7 @@ footer .contact a {
 	text-align: center;
 }
 
+.edit_menu_page .bite_group_container,
 .daily_menu_page .bite_group_container,
 .edit_bites_page .bite_group_container,
 .create_menu_page .bite_group_container {
@@ -1229,6 +1234,7 @@ footer .contact a {
 	padding-bottom: 10px;
 }
 
+.edit_menu_page .bite_container,
 .daily_menu_page .bite_container,
 .edit_bites_page .bite_container,
 .create_menu_page .bite_container {
@@ -1239,6 +1245,7 @@ footer .contact a {
 	width: 200px;
 }
 
+.edit_menu_page .add_bite,
 .edit_bites_page .add_bite {
 	clear: both;
 	display: block;

@@ -117,8 +117,18 @@ $(document).ready(function() {
 		var client_id = $(this).attr('data-client-id');
 		var service_date = $(this).attr('data-service-date');
 		var admin_or_client = $(this).attr('data-admin-or-client');
+		//var meal_id = $(this).attr('data-meal-id'); //$(this).val();
 		var meal_id = $(this).val();
 		document.location = '../'+admin_or_client+'/daily-menu.php?client-id='+client_id+'&service-date='+service_date+'&meal-id='+meal_id;
+	});
+
+
+	$('.edit_menu_page .meal-types').change(function(event){
+		var client_id = $(this).attr('data-client-id');
+		var service_date = $(this).attr('data-service-date');
+		var admin_or_client = $(this).attr('data-admin-or-client');
+		var meal_id = $(this).val();
+		document.location = '../'+admin_or_client+'/edit-daily-menu.php?client-id='+client_id+'&service-date='+service_date+'&meal-id='+meal_id;
 	});
 
 	/* Weekly Menu Page */ 

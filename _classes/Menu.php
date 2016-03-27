@@ -248,14 +248,79 @@ class Menu {
 		}
 	}
 
-	public function update_menu() {
+	public function add_bite() {
 		
+		$bite_group_id = $_POST['bite_group_id'];
+		$bite_image_name = $this->image->upload_image($_FILES, "bite_image_name");
+
+		if(!isset($_POST['is_vegetarian'])) 		$_POST['is_vegetarian'] = 0;
+		if(!isset($_POST['is_vegan'])) 				$_POST['is_vegan'] = 0;
+		if(!isset($_POST['is_gluten_free'])) 		$_POST['is_gluten_free'] = 0;
+		if(!isset($_POST['is_whole_grain'])) 		$_POST['is_whole_grain'] = 0;
+		if(!isset($_POST['contains_nuts'])) 		$_POST['contains_nuts']= 0;
+		if(!isset($_POST['contains_soy'])) 			$_POST['contains_soy'] = 0;
+		if(!isset($_POST['contains_shellfish'])) 	$_POST['contains_shellfish'] = 0;
+		if(!isset($_POST['contains_nightshades'])) 	$_POST['contains_nightshades'] = 0;
+		if(!isset($_POST['contains_alcohol'])) 		$_POST['contains_alcohol'] = 0;
+		if(!isset($_POST['contains_eggs'])) 		$_POST['contains_eggs'] = 0;
+		if(!isset($_POST['contains_gluten'])) 		$_POST['contains_gluten'] = 0;
+		if(!isset($_POST['contains_dairy'])) 		$_POST['contains_dairy'] = 0;
+		$arguments = array(
+			$bite_group_id,
+			$_POST['bite_name'],
+			$bite_image_name,
+			$_POST['is_vegetarian'],
+			$_POST['is_vegan'],
+			$_POST['is_gluten_free'],
+			$_POST['is_whole_grain'],
+			$_POST['contains_nuts'],
+			$_POST['contains_soy'],
+			$_POST['contains_shellfish'],
+			$_POST['contains_nightshades'],
+			$_POST['contains_alcohol'],
+			$_POST['contains_eggs'],
+			$_POST['contains_gluten'],
+			$_POST['contains_dairy'],
+			$_POST['default_quantity']
+		);
+		$query = $this->database_connection->prepare("INSERT INTO bites (bite_group_id, bite_name, image_name, is_vegetarian, is_vegan, is_gluten_free, is_whole_grain, contains_nuts, contains_soy, contains_shellfish, contains_nightshades, contains_alcohol, contains_eggs, contains_gluten, contains_dairy, default_quantity) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		$result = $query->execute($arguments);
+		if($query->rowCount() === 1){
+			Messages::add('The bite has been created');
+			header("Location: ../admin/edit-bites.php");
+		} else {
+			echo "Sorry, there was a problem.";
+		}
+	}
+
+	public function delete_bite($bite_id) {
+		$arguments = array(
+			$bite_id
+		);
+		$query = $this->database_connection->prepare("DELETE FROM bites WHERE bite_id = ?");
+		$result = $query->execute($arguments);
+		if($query->rowCount() === 1){
+			Messages::add('The bite has been deleted');
+			header("Location: ../admin/edit-bites.php");
+		} else {
+			echo "Sorry, there was a problem.";
+		}
+	}
+
+	public function update_menu() {
 		$service_date = $_POST['service_year'].'-'.$_POST['service_month'].'-'.$_POST['service_day'];
 		$client_id = $_POST['client_id'];
 		$meal_id = $_POST['meal_id'];
 		$menu_item_id_array = $_POST['menu_item_id_array'];
+
+		// echo "<pre>";
+		// print_r($_POST);
+
 		$number_of_menu_items = count($menu_item_id_array);
 		for ($i=0; $i < $number_of_menu_items; $i++) { 
+			// echo "<br>Loop: ".$i;
+			// echo "<p>".$_POST['bite_quantity'][$i]."</p>";
+
 			$menu_item_id = $menu_item_id_array[$i];
 			if(!isset($_POST['is_vegetarian'][$i])) $_POST['is_vegetarian'][$i] = 0;
 			if(!isset($_POST['is_vegan'][$i])) $_POST['is_vegan'][$i] = 0;
@@ -273,6 +338,11 @@ class Menu {
 				$menu_image_path = $this->image->upload_image($_FILES, 'menu_image');
 			} else {
 				$menu_image_path = $_POST['menu_image_path_orginal'];
+			}
+			if($meal_id == 5) {
+				$total_orders_for_item = $_POST['bite_quantity'][$i];
+			} else {
+				$total_orders_for_item = $_POST['total_orders_for_item'][$i];
 			}
 			$arguments = array(
 				$_POST['meal_id'],
@@ -299,9 +369,12 @@ class Menu {
 				$_POST['contains_dairy'][$i],
 				$_POST['price_per_order'][$i],
 				$_POST['servings_per_order'][$i],
-				$_POST['total_orders_for_item'][$i],
+				$total_orders_for_item,
+				// $_POST['total_orders_for_item'][$i],
 				$menu_item_id
 			);
+			// echo "<pre>";
+			// print_r($arguments);
 			$query = $this->database_connection->prepare("UPDATE menu_items SET 
 				meal_id = ?, 
 				client_id = ?, 
@@ -333,11 +406,9 @@ class Menu {
 			$result = $query->execute($arguments);
 
 			if($i == $number_of_menu_items-1) {
-				Messages::add('The menu has been updated');
+				Messages::add('The menu has been updated.');
 				header("Location: ../admin/daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id");
 				exit();
-				// echo "number_of_menu_items:<pre> ".$number_of_menu_items."<br /><br />";
-				// print_r($_POST);
 			}
 		}
 	}
@@ -403,7 +474,7 @@ class Menu {
 		$result = $query->execute($arguments);
 		if($result) {
 			Messages::add('The bite has been updated');
-			header("Location: ../admin/daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id");
+			header("Location: ../admin/edit-bites.php");
 			exit();
 		}
 	}
@@ -436,7 +507,7 @@ class Menu {
 		$html .= "<h2>".date('M d', strtotime($service_date))."</h2>";
 		$html .= "</div>";
 		$html .= "<div class='date_and_meal'>";
-		$html .= "<select data-client-id='$client_id' data-service-date='$service_date' data-admin-or-client='$admin_or_client' class='meal-types'>";
+		$html .= "<select data-client-id='$client_id' data-meal-id='$meal_id' data-service-date='$service_date' data-admin-or-client='$admin_or_client' class='meal-types'>";
 		for($i=0; $i<count($result); $i++) {
 			$meal_id_option = $result[$i]['meal_id'];
 			if($meal_id === $meal_id_option) {
@@ -1044,17 +1115,14 @@ class Menu {
 		$total_cost_for_menu = 0;
 		$menu_image_style = "";
 		$server_image_style = "";
-		$all_bites = $this->get_all_bites();
+		// $all_bites = $this->get_all_bites();
 		$bites_mode = '';
 		if($meal_id == 5) {
 			$bites_mode = 'bites_mode';
 		}
-
-		// echo "<pre>";
-		// print_r($all_bites);
-		// echo "</pre>";
-
 		if(isset($service_date) && isset($meal_id)) {
+			// $all_bites = $this->get_all_bites();
+			$all_bites = $this->get_daily_menu($client_id, $service_date, $meal_id);
 			$mode = 'edit';
 			$cancel_url = WEB_ROOT."/admin/daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id";
 			$form_action = '../_actions/update-menu.php';
@@ -1065,7 +1133,6 @@ class Menu {
 			);
 			$query = $this->database_connection->prepare("SELECT * FROM menu_items LEFT JOIN servers ON menu_items.server_id = servers.server_id WHERE client_id = ? AND service_date = ? AND meal_id = ?");
 			$query->execute($arguments);
-			// $query->execute($arguments);
 			$menu_items = $query->fetchAll(PDO::FETCH_ASSOC);
 			$number_of_meals = count($menu_items);
 			$menu_image_path_orginal = $menu_items[0]['menu_image_path'];
@@ -1085,6 +1152,7 @@ class Menu {
 				$meal_description = $menu_items[0]['meal_description'];
 			}
 		} else {
+			$all_bites = $this->get_all_bites();
 			$mode = 'create';
 			$cancel_url = WEB_ROOT."/admin/weekly-menu.php?client-id=$client_id";
 			$form_action = '../_actions/create-menu.php';
@@ -1304,7 +1372,8 @@ FORM;
 		$form .= "<div class='bites_form $bites_mode'>";
 		$form .= "<a href='".WEB_ROOT."/admin/edit-bites.php' class='edit_global_bites'>Edit Global</a>";
 		$form .= "<div class='fake_hr'></div>";
-		$form .= $this->build_bites_html($all_bites, 'create');
+		$form .= $this->build_bites_html($all_bites, $mode);
+		// $form .= $this->build_bites_html($all_bites, 'create');
 		$number_of_bites = count($all_bites);
 		// $number_of_bites = count($all_bites);
 		// for ($i=0; $i < count($all_bites); $i++) { 
@@ -1361,7 +1430,7 @@ FORM;
 	public function get_edit_bites_page() {
 		$html = "";
 		$all_bites = $this->get_all_bites();
-		$html .= $this->build_bites_html($all_bites, 'edit');
+		$html .= $this->build_bites_html($all_bites, 'edit-global-bites');
 		return $html;
 	}
 
@@ -1378,7 +1447,18 @@ FORM;
 					if($all_bites[$j]['bite_group_id'] == $all_bites[$i]['bite_group_id']) {
 						$bite_id = $all_bites[$j]['bite_id'];
 						$bite_name = $all_bites[$j]['bite_name'];
-						$bite_quantity = $all_bites[$j]['default_quantity'];
+						switch($mode) {
+							case 'edit-global-bites':
+								$bite_quantity = $all_bites[$j]['default_quantity'];
+								break;
+							case 'edit':
+								$bite_quantity = $all_bites[$j]['total_orders_for_item'];
+								break;
+							case 'create':
+								$bite_quantity = $all_bites[$j]['default_quantity'];
+								break;
+						}
+						// $bite_quantity = $all_bites[$j]['default_quantity'];
 						$bite_image_name = $all_bites[$j]['image_name'];
 						$contains = "";
 						if ($all_bites[$j]['is_vegetarian'] == 1) $contains .= "Vegetarian, ";
@@ -1399,13 +1479,15 @@ FORM;
 						$bites_html .= "<p>$bite_name</p>";
 						$bites_html .= "<p>$contains</p>";
 						switch($mode) {
-							case 'edit':
+							case 'edit-global-bites':
 								$bites_html .= "<a data-bite-id='$bite_id' class='edit_bite'>Edit</a>";
 								break;
+							case 'edit':
 							case 'create':
 								$bites_html .= "<div class='plus_button'>+</div>";
 								$bites_html .= "<div class='minus_button'>-</div>";
-								$bites_html .= "<input type='text' class='bite_quantity' name='bite_quantity[$j]' value='$bite_quantity' />";
+								$bites_html .= "<input type='text' class='bite_quantity' name='bite_quantity[]' value='$bite_quantity' />";
+								// $bites_html .= "<input type='text' class='bite_quantity' name='bite_quantity[$j]' value='$bite_quantity' />";
 								break;
 						}
 						$bites_html .= "<input type='hidden' name='bite_id[$j]' value='$bite_id' />";
@@ -1413,7 +1495,7 @@ FORM;
 					}
 				}
 				switch($mode) {
-					case 'edit':
+					case 'edit-global-bites':
 						$bites_html .= "<a data-bite-group-id='$current_bite_group_id' class='add_bite'>Add Bite</a>";
 						break;
 				}
@@ -1442,7 +1524,7 @@ FORM;
 		$html .= "<div class='add_edit_bite_modal'>";
 		$html .= "<div class='add_edit_bite_modal_content'>";
 		$html .= "<a class='close_button'>Close</a>";
-		$html .= "<a class='delete_button'>Delete</a>";
+		$html .= "<a href='../_actions/delete-bite.php?bite-id=$bite_id' class='delete_button'>Delete</a>";
 		$html .= "<div class='fake_hr'></div>";
 		$html .= "<form class='edit_bite_form' action='../_actions/update-bite.php' method='post' enctype='multipart/form-data'>";
 		$html .= "<img src='".WEB_ROOT."/_uploads/".$bite[0]['image_name']."' />";
@@ -1450,24 +1532,6 @@ FORM;
 		$html .= "<input name='bite_name' type='text' value='".$bite[0]['bite_name']."'/>";
 		$html .= "<input name='default_quantity' type='text' value='".$bite[0]['default_quantity']."'/>";
 		$html .= "<input type='hidden' name='bite_image_name_original' value='".$bite[0]['image_name']."'/>";
-// 		$html .= <<<CHECKBOXES
-// 		<div class="checkbox_container">
-// 			<ul>
-// 				<li><label class="box_label">Vegetarian</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $is_vegetarian_checked name="is_vegetarian[0]"></span></li>
-// 				<li><label class="box_label">Vegan</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $is_vegan_checked name="is_vegan[0]"></span></li>
-// 				<li><label class="box_label">Gluten-Free</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $is_gluten_free_checked name="is_gluten_free[0]"></span></li>
-// 				<li><label class="box_label">Whole Grain</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $is_whole_grain_checked name="is_whole_grain[0]"></span></li>
-// 				<li><label class="box_label">Contains Nuts</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_nuts_checked name="contains_nuts[0]"></span></li>
-// 				<li><label class="box_label">Contains Soy</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_soy_checked name="contains_soy[0]"></span></li>
-// 				<li><label class="box_label">Contains Shellfish</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_shellfish_checked name="contains_shellfish[0]"></span></li>
-// 				<li><label class="box_label">Contains Nightshades</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_nightshades_checked name="contains_nightshades[0]"></span></li>
-// 				<li><label class="box_label">Contains Alcohol</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_alcohol_checked name="contains_alcohol[0]"></span></li>
-// 				<li><label class="box_label">Contains Eggs</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_eggs_checked name="contains_eggs[0]"></span></li>
-// 				<li><label class="box_label">Contains Gluten</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_gluten_checked name="contains_gluten[0]"></span></li>
-// 				<li><label class="box_label">Contains Dairy</label><span class="move_box"><input  class="styled" type="checkbox" value="1" $contains_dairy_checked name="contains_dairy[0]"></span></li>
-// 			</ul>
-// 		</div>
-// CHECKBOXES;
 		$html .= <<<CHECKBOXES
 		<div class="checkbox_container">
 			<ul>
@@ -1494,6 +1558,44 @@ CHECKBOXES;
 		$html .= "</div>";
 		return $html;
 	}
+
+	public function get_add_bite_modal($bite_group_id, $context) {
+		$html = "";
+		$html .= "<div class='add_edit_bite_modal'>";
+		$html .= "<div class='add_edit_bite_modal_content'>";
+		$html .= "<a class='close_button'>Close</a>";
+		$html .= "<form class='add_bite_form' action='../_actions/add-bite.php' method='post' enctype='multipart/form-data'>";
+		$html .= "<img class='bite-image' src='' />";
+		$html .= "<input name='bite_image_name' type='file' />";
+		$html .= "<input name='bite_name' type='text' value='Add Bite Name'/>";
+		$html .= "<input name='default_quantity' type='text' value='Enter Default Quantity'/>";
+		$html .= <<<CHECKBOXES
+		<div class="checkbox_container">
+			<ul>
+				<li><label class="box_label">Vegetarian</label><input type="checkbox" value="1" name="is_vegetarian"></li>
+				<li><label class="box_label">Vegan</label><input type="checkbox" value="1" name="is_vegan"></li>
+				<li><label class="box_label">Gluten-Free</label><input type="checkbox" value="1" name="is_gluten_free"></li>
+				<li><label class="box_label">Whole Grain</label><input type="checkbox" value="1" name="is_whole_grain"></li>
+				<li><label class="box_label">Contains Nuts</label><input type="checkbox" value="1" name="contains_nuts"></li>
+				<li><label class="box_label">Contains Soy</label><input type="checkbox" value="1" name="contains_soy"></li>
+				<li><label class="box_label">Contains Shellfish</label><input type="checkbox" value="1" name="contains_shellfish"></li>
+				<li><label class="box_label">Contains Nightshades</label><input type="checkbox" value="1" name="contains_nightshades"></li>
+				<li><label class="box_label">Contains Alcohol</label><input type="checkbox" value="1" name="contains_alcohol"></li>
+				<li><label class="box_label">Contains Eggs</label><input type="checkbox" value="1" name="contains_eggs"></li>
+				<li><label class="box_label">Contains Gluten</label><input type="checkbox" value="1" name="contains_gluten"></li>
+				<li><label class="box_label">Contains Dairy</label><input type="checkbox" value="1" name="contains_dairy"></li>
+			</ul>
+		</div>
+CHECKBOXES;
+		$html .= "<a class='cancel_button'>Cancel</a>";
+		$html .= "<input type='hidden' name='bite_group_id' value='$bite_group_id'>";
+		$html .= "<input type='submit' class='save_button' value='Save'>";
+		$html .= "</form>";
+		$html .= "</div>";
+		$html .= "</div>";
+		return $html;
+	}
+
 
 	public function get_weekly_menu_print_menu($context){
 		$html = "";
