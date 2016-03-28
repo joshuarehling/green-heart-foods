@@ -78,6 +78,27 @@ class Menu {
 		}
 	}
 
+	public function get_all_bites_and_groups(){
+		$query = $this->database_connection->prepare("SELECT * FROM bite_groups");
+		$query->execute();
+		$result = $query->fetchAll(PDO::FETCH_ASSOC);
+		if(count($result) > 0) {
+			return $result;
+		}
+	}
+
+	public function get_all_bites_by_group_id($bite_group_id) {
+		$arguments = array(
+			$bite_group_id
+		);
+		$query = $this->database_connection->prepare("SELECT * FROM bites WHERE bites.bite_group_id = ?");
+		$query->execute($arguments);
+		$result = $query->fetchAll(PDO::FETCH_ASSOC);
+		if(count($result) > 0) {
+			return $result;
+		}
+	}
+
 	public function get_bite_by_id($bite_id) {
 		$arguments = array(
 			$bite_id
@@ -129,7 +150,7 @@ class Menu {
 		}
 	}
 
-	public function get_yearly_menus($client_id, $menu_year) {
+	public function get_yearly_menus($client_id, $menu_year, $context) {
 		$menu_date_minimum = $menu_year."-01-01";
 		$menu_date_maximum = $menu_year."-12-31";
 		$arguments = array(
@@ -137,15 +158,29 @@ class Menu {
 			$menu_date_minimum,
 			$menu_date_maximum
 		);
-		$query = $this->database_connection->prepare(
-			"SELECT * FROM menu_items 
-			LEFT JOIN meals ON menu_items.meal_id = meals.meal_id
-			LEFT JOIN servers ON menu_items.server_id = servers.server_id
-			WHERE menu_items.client_id = ?
-			AND menu_items.service_date >= ?
-			AND menu_items.service_date <= ?
-			ORDER BY menu_items.service_date DESC, menu_items.meal_id ASC"
-		);
+		if ($context == 'green_heart_foods_admin') {
+			$query = $this->database_connection->prepare(
+				"SELECT * FROM menu_items 
+				LEFT JOIN meals ON menu_items.meal_id = meals.meal_id
+				LEFT JOIN servers ON menu_items.server_id = servers.server_id
+				WHERE menu_items.client_id = ?
+				AND menu_items.service_date >= ?
+				AND menu_items.service_date <= ?
+				ORDER BY menu_items.service_date DESC, menu_items.meal_id ASC"
+			);
+		} else {
+			$query = $this->database_connection->prepare(
+				"SELECT * FROM menu_items 
+				LEFT JOIN meals ON menu_items.meal_id = meals.meal_id
+				LEFT JOIN servers ON menu_items.server_id = servers.server_id
+				LEFT JOIN item_status ON menu_items.item_status_id = item_status.item_status_id
+				WHERE menu_items.client_id = ?
+				AND menu_items.service_date >= ?
+				AND menu_items.service_date <= ?
+				AND (item_status.item_status_id = 2 OR item_status.item_status_id = 3)
+				ORDER BY menu_items.service_date DESC, menu_items.meal_id ASC"
+			);
+		}
 		$query->execute($arguments);
 		$result = $query->fetchAll(PDO::FETCH_ASSOC);
 		if(count($result) > 0) {
@@ -496,10 +531,15 @@ class Menu {
 		} else {
 			$admin_or_client = 'clients';
 		}
+		if($meal_id == 5) {
+			$show_hide = 'hidden';
+		} else {
+			$show_hide = 'show';
+		}
 		$html .= "<div class='page_header'>";
 		if($context == 'green_heart_foods_admin') {
-			$html .= "<a class='menu' href='$web_root/admin/daily-menu-print-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Menu</a>";
-			$html .= "<a class='placard' href='$web_root/admin/daily-menu-print-placards.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Placards</a>";
+			$html .= "<a class='menu $show_hide' href='$web_root/admin/daily-menu-print-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Menu</a>";
+			$html .= "<a class='placard $show_hide' href='$web_root/admin/daily-menu-print-placards.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Placards</a>";
 		} else {
 			$html .= "<a class='menu' href='$web_root/clients/daily-menu-print-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Menu</a>";
 			$html .= "<a class='placard'>&nbsp;</a>";			
@@ -736,17 +776,18 @@ class Menu {
 		}
 		$result = $this->get_weekly_menu_by_meal($client_id, $start_date, $context, $url_meal_id);
 		$result_count = count($result);
+		if($url_meal_id == 5) {
+			$show_hide = 'hidden';
+		} else {
+			$show_hide = 'show';
+		}
 		$html .= "<div class='page_header'>";
 
-
 		$html .=    "<ul>";
-		// $html .=        "<li class='left'><a class='print_link' href='weekly-menu-print-menu.php?client-id=$client_id&start-date=$this_week&meal-id=$url_meal_id'>Print Menus</a></li>";
-		$html .=        "<li class='left'><a class='print_link' href='weekly-menu-print-menu.php?client-id=$client_id&start-date=$start_date&meal-id=$url_meal_id'>Print Menus</a></li>";
-		// $html .=        "<li><a class='$this_week_selected' href='weekly-menu.php?client-id=$client_id&start-date=$this_week'>$this_week_formatted</a></li>";
+		$html .=        "<li class='left'><a class='print_link $show_hide' href='weekly-menu-print-menu.php?client-id=$client_id&start-date=$start_date&meal-id=$url_meal_id'>Print Menus</a></li>";
 		$html .=        "<li><a class='$this_week_selected' href='weekly-menu.php?client-id=$client_id&start-date=$start_date'>$start_date_formatted</a></li>";
-		// $html .=        "<li class='right'><a class='print_link' href='weekly-menu-print-placards.php?client-id=$client_id&start-date=$this_week&meal-id=$url_meal_id'>Print Placards</a></li>";
-		$html .=        "<li class='right'><a class='print_link' href='weekly-menu-print-placards.php?client-id=$client_id&start-date=$start_date&meal-id=$url_meal_id'>Print Placards</a></li>";
-		$html .=    "</ul>"; // three spaces centers the list because of the line break spaces created in the html formatting
+		$html .=        "<li class='right'><a class='print_link $show_hide' href='weekly-menu-print-placards.php?client-id=$client_id&start-date=$start_date&meal-id=$url_meal_id'>Print Placards</a></li>";
+		$html .=    "</ul>";
 
 		// TODO - JR edits to review.
 
@@ -853,6 +894,7 @@ class Menu {
 			}
 			$menus = 1;
 		} else {
+			$html .= $meal_type_select_html;
 			$formatted_start_date = date('M d', strtotime($start_date))."-".date('d', strtotime($start_date.' + 6 days'));
 			$html .= "<p class='no_menus'>No menus found</p>";
 			$menus = 0;
@@ -885,9 +927,10 @@ class Menu {
 		$html .= "<div class='page_header'>";
 		$html .=    "$menu_year</li>";
 		$html .= "</div>";
-		$result = $this->get_yearly_menus($client_id, $menu_year);
+		$result = $this->get_yearly_menus($client_id, $menu_year, $context);
 		$previous_start_date = NULL;
 		$html .= "<div class='outside_container'>";
+		$start_grid_view_container = true;
 		if ($result){
 			for($i=0; $i<count($result); $i++) {
 				$service_date = $result[$i]['service_date'];
@@ -901,7 +944,7 @@ class Menu {
 				$week_end_date = date('M d', strtotime("$week_start_date + 6 days"));
 				$week_end_date_with_year = date('Y-m-d', strtotime("$week_start_date + 6 days"));
 				if($week_start_date != $previous_start_date) {
-					$thru_dates = $week_start_date."<br> THRU <br>".$week_end_date;
+					$thru_dates = $week_start_date."<br> <span class='thru'>THRU</span> <br><span class='thru_end_date'>".$week_end_date."</span>";
 					$previous_service_date = NULL;
 					$previous_meal_id = NULL;
 					$previous_week_start_date = "Rubbish";
@@ -924,14 +967,21 @@ class Menu {
 						}
 						if($week_start_date_with_year >= $last_monday) {
 							$view_type = 'list_view';
+							$grid_view_container = "";
 						} else {
 							$view_type = 'grid_view';
 						}
 						if ($result[$j]['service_date'] <= $week_end_date_with_year && $result[$j]['service_date'] >= $week_start_date_with_year && $current_meal_id != $previous_meal_id) {
 							if (array_search($result[$j]['meal_id'], $meal_types_displayed) === false) {
 								$meal_name_class = strtolower($current_meal_name);
+								$grid_view_container = "";
+								if($start_grid_view_container == true && $view_type == 'grid_view') {
+									$grid_view_container = "<div class='grid_view_container'>";
+									$start_grid_view_container = false;
+								}
+								$html .= $grid_view_container;
 								$html .= "<div data_view_link='$view_link' class='week_meal_container $view_type $meal_name_class'>";
-								$html .= "<div class='left_and_right_column  $view_type'>";
+								$html .= "<div class='left_and_right_column $view_type'>";
 								$html .=    "<div class='left_column'>";
 								$html .=        "<h2 class='thru_dates'>".$thru_dates."</h2>";
 								$html .=        "<h3 class='meal_name'>".$result[$j]['meal_name']."</h3>";    
@@ -963,19 +1013,32 @@ class Menu {
 								$html .=    "</div>"; // end right_column
 								$html .=    "</div>"; // end left_and_right_column
 								$html .= "</div>"; // end week_meal_container
+								
 								array_push($meal_types_displayed, $result[$j]['meal_id']);
 							}
 						}
+
+
 						$previous_service_date = $current_service_date;
 						$previous_meal_id = $current_meal_id;
 					}
+
 				}
+
+
 				$previous_start_date = $week_start_date;
 			}
 		} else {
 			$html .= "<div class='no-results-found no_menus'>No menus for $menu_year </div>";
 		}
+
+		if($start_grid_view_container == false) {
+			$html .= "</div>"; // end grid_view_wrapper	
+		}
+		
+
 		$html .= "</div>"; // End outside_container
+
 		$html .= "<div class='button_container'>";
 		$html .=    "<a href='yearly-menu.php?client-id=$client_id&menu-year=$previous_year' class='page_button'>Prev Year</a>";
 		if($context === 'green_heart_foods_admin') {
@@ -1388,9 +1451,11 @@ FORM;
 		$form .= "<div class='bites_form $bites_mode'>";
 		$form .= "<a href='".WEB_ROOT."/admin/edit-bites.php' class='edit_global_bites'>Edit Global</a>";
 		$form .= "<div class='fake_hr'></div>";
-		$form .= $this->build_bites_html($all_bites, $mode);
-		// $form .= $this->build_bites_html($all_bites, 'create');
+		if($meal_id == 5) {
+			$form .= $this->build_bites_html($all_bites, $mode);
+		}
 		$number_of_bites = count($all_bites);
+		// $form .= $this->build_bites_html($all_bites, 'create');
 		// $number_of_bites = count($all_bites);
 		// for ($i=0; $i < count($all_bites); $i++) { 
 		// 	$bite_id = $all_bites[$i]['bite_id'];
@@ -1444,10 +1509,44 @@ FORM;
 	}
 
 	public function get_edit_bites_page() {
-		$html = "";
-		$all_bites = $this->get_all_bites();
-		$html .= $this->build_bites_html($all_bites, 'edit-global-bites');
-		return $html;
+		$bites_html = "";
+		$bite_groups = $this->get_all_bites_and_groups();
+		for ($i=0; $i<count($bite_groups); $i++) { 
+			$bites_html .= "<div class='bite_group_container'>";
+			$bites_html .= "<h2 class='bite_group_name'>".$bite_groups[$i]['bite_group_name']."</h2>"; 
+			$bite_group_id = $bite_groups[$i]['bite_group_id'];
+			$bites = $this->get_all_bites_by_group_id($bite_group_id);
+			if(count($bites) > 0) {
+				for ($j=0; $j<count($bites); $j++) {
+					$bite_id = $bites[$j]['bite_id'];
+					$bite_name = $bites[$j]['bite_name'];
+					$bite_image_name = $bites[$j]['image_name'];
+					$contains = "";
+					if ($bites[$j]['is_vegetarian'] == 1) 			$contains .= "Vegetarian, ";
+					if ($bites[$j]['is_vegan'] == 1) 				$contains .= "Vegan, ";
+					if ($bites[$j]['is_gluten_free'] == 1) 			$contains .= "Gluten-Free, ";
+					if ($bites[$j]['is_whole_grain'] == 1) 			$contains .= "Whole Grain, ";
+					if ($bites[$j]['contains_nuts'] == 1) 			$contains .= "Nuts, ";
+					if ($bites[$j]['contains_soy'] == 1) 			$contains .= "Soy, ";
+					if ($bites[$j]['contains_shellfish'] == 1) 		$contains .= "Shellfish, ";
+					if ($bites[$j]['contains_nightshades'] == 1) 	$contains .= "Nightshades, ";
+					if ($bites[$j]['contains_alcohol'] == 1) 		$contains .= "Alcohol, ";
+					if ($bites[$j]['contains_eggs'] == 1) 			$contains .= "Eggs, ";
+					if ($bites[$j]['contains_gluten'] == 1) 		$contains .= "Gluten, ";
+					if ($bites[$j]['contains_dairy'] == 1) 			$contains .= "Dairy, ";
+					$contains = trim($contains, ", ");
+					$bites_html .= "<div class='bite_container'>";
+					$bites_html .= "<img src='".WEB_ROOT."/_uploads/".$bite_image_name."' />";
+					$bites_html .= "<p>$bite_name</p>";
+					$bites_html .= "<p>$contains</p>";
+					$bites_html .= "<a data-bite-id='$bite_id' class='edit_bite'>Edit</a>";
+					$bites_html .= "</div>"; // End Bite Container
+				}	
+			}
+			$bites_html .= "<a data-bite-group-id='$bite_group_id' class='add_bite'>Add Bite</a>";
+			$bites_html .= "</div>"; // End Bites Group Container
+		}
+		return $bites_html;
 	}
 
 	public function build_bites_html($all_bites, $mode){
@@ -1611,7 +1710,6 @@ CHECKBOXES;
 		$html .= "</div>";
 		return $html;
 	}
-
 
 	public function get_weekly_menu_print_menu($context){
 		$html = "";
@@ -1790,9 +1888,12 @@ CHECKBOXES;
 		$attributes_and_allergens = str_replace('is_', '', $attributes_and_allergens);
 		$attributes_and_allergens = str_replace('_', ' ', $attributes_and_allergens);
 		$attributes_and_allergens = substr($attributes_and_allergens, 0, -2);
+		$attributes_and_allergens = ucwords($attributes_and_allergens);
 		$html_container .= "<p class='attributes_and_allergens'>".$attributes_and_allergens."</p>";
 		$html_container .= "<p class='special_notes'>".$current_result['special_notes']."</p>";
-		$html_container .= "<p class='special_requests'>".$current_result['special_requests']."</p>";
+		if($current_result['special_requests'] != "") {
+			$html_container .= "<p class='special_requests'>".$current_result['special_requests']."</p>";	
+		}
 		return $html_container;
 	}
 

@@ -511,6 +511,10 @@ footer .contact a {
 	font-size: .6em;
 }
 
+.weekly_menu_page .page_header a.hidden {
+	display: none;
+}
+
 .weekly_menu_page .page_header a.menu,
 .weekly_menu_page .page_header a.placard {
 	float: left;
@@ -1056,6 +1060,10 @@ footer .contact a {
 	font-size: .6em;
 }
 
+.daily_menu_page .page_header a.hidden {
+	display: none;
+}
+
 .daily_menu_page .page_header a.menu,
 .daily_menu_page .page_header a.placard {
 	float: left;
@@ -1539,6 +1547,11 @@ html > .daily_menu_print_menu_page {
 .yearly_menu_page .week_meal_container.grid_view.snack .left_column { background-color: #85D1EB; }
 .yearly_menu_page .week_meal_container.grid_view.bites .left_column { background-color: #4BB0EF; }
 .yearly_menu_page .week_meal_container.grid_view.event .left_column { background-color: #009FA3; }
+
+/* Thru Dates */
+
+.yearly_menu_page .week_meal_container.list_view .left_column .thru_dates .thru  { color: #666; }
+.yearly_menu_page .week_meal_container.list_view .left_column .thru_dates .thru_end_date  { color: #bbb; }
 
 /* List View */
 

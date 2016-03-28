@@ -6,7 +6,8 @@
 		//$login_message = "Hello ".$_SESSION['user_display_name'].", <a href='".WEB_ROOT."/_actions/logout.php'>Sign Out</a>";
 		$login_message = "Hello Food Lover, <a href='".WEB_ROOT."/_actions/logout.php'>Sign Out</a>";
 	} else {
-		$login_message = "<a href='".WEB_ROOT."/login/'>Login</a>";
+		// $login_message = "<a href='".WEB_ROOT."/login/'>Login</a>";
+		$login_message = "";
 	}
 	if(!isset($page_class)) {
 		$page_class = "";
@@ -21,7 +22,7 @@
 		$client = new Client();
 		$client_result = $client->get_client($client_id);	
 	}
-	$client_header_array = array('yearly_menu_page client', 'daily_menu_page', 'weekly_menu_page', 'create_and_edit_menu create_menu_page', 'create_and_edit_menu edit_menu_page', 'daily_menu_page client');
+	$client_header_array = array('yearly_menu_page', 'daily_menu_page', 'weekly_menu_page', 'create_and_edit_menu create_menu_page', 'create_and_edit_menu edit_menu_page', 'daily_menu_page client');
 	$use_client_header = array_search($page_class, $client_header_array);
 	if($use_client_header > -1) {
 		$image_path = WEB_ROOT."/_uploads/".$client_result[0]['company_logo_large'];
@@ -70,17 +71,18 @@
 		<ul>
 			<li>
 				<?php 
-					if(isset($_SESSION['user_type_id'])) {
+					if(isset($_SESSION['user_type_id']) && isset($_GET['client-id'])) {
+						$client_id = $_GET['client-id'];
 						switch ($_SESSION['user_type_id']) {
 							case 1:
 								echo "<a href='".WEB_ROOT."/admin/clients.php'>Clients</a>";
-								echo "<a class='menus' href='".WEB_ROOT."/admin/weekly-menu.php'>Menus</a>";
+								echo "<a class='menus' href='".WEB_ROOT."/admin/yearly-menu.php?client-id=$client_id'>Menus</a>";
 								break;
 							case 2:
-								echo "<a href='".WEB_ROOT."/clients/weekly-menu.php?client-id=$client_id'>Menus</a>";
+								echo "<a href='".WEB_ROOT."/clients/yearly-menu.php?client-id=$client_id'>Menus</a>";
 								break;
 							case 3:
-								echo "<a href='".WEB_ROOT."/clients/weekly-menu.php?client-id=$client_id'>Menus</a>";
+								echo "<a href='".WEB_ROOT."/clients/yearly-menu.php?client-id=$client_id'>Menus</a>";
 								break;
 							default:
 								break;
