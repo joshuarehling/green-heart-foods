@@ -537,15 +537,19 @@ class Menu {
 			$show_hide = 'show';
 		}
 		$html .= "<div class='page_header'>";
+		$html .= "<ul>";
 		if($context == 'green_heart_foods_admin') {
-			$html .= "<a class='menu $show_hide' href='$web_root/admin/daily-menu-print-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Menu</a>";
-			$html .= "<a class='placard $show_hide' href='$web_root/admin/daily-menu-print-placards.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Placards</a>";
+			$html .= "<li class='left'><a class='menu $show_hide' href='$web_root/admin/daily-menu-print-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Menu</a></li>";
+			$html .= "<li><h2>".date('M d', strtotime($service_date))."</h2></li>";
+			$html .= "<li class='right'><a class='placard $show_hide' href='$web_root/admin/daily-menu-print-placards.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Placards</a></li>";
 		} else {
-			$html .= "<a class='menu' href='$web_root/clients/daily-menu-print-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Menu</a>";
-			$html .= "<a class='placard'>&nbsp;</a>";			
+			$html .= "<li class='left'><a class='menu' href='$web_root/clients/daily-menu-print-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Menu</a></li>";
+			$html .= "<li><h2>".date('M d', strtotime($service_date))."</h2></li>";
+			$html .= "<li class='right'><a class='placard'>&nbsp;</a></li>";			
 		}
-		$html .= "<h2>".date('M d', strtotime($service_date))."</h2>";
+		$html .= "</ul>";
 		$html .= "</div>";
+		
 		$html .= "<div class='date_and_meal'>";
 		$html .= "<select data-client-id='$client_id' data-meal-id='$meal_id' data-service-date='$service_date' data-admin-or-client='$admin_or_client' class='meal-types'>";
 		for($i=0; $i<count($result); $i++) {
@@ -650,10 +654,10 @@ class Menu {
 					}
 					$html .= "<div data-increment-id='$i' class='menu_item_container menu-item menu-item-$i'>";
 					$html .= "<div class='left_and_right_column'>";
-					$html .= "<div data-menu-item-id='$menu_item_id' class='like-heart $like_heart_class'></div>";
+					$html .= "<div data-menu-item-id='$menu_item_id' class='like-heart $like_heart_class'><p class='number_of_likes'>LIKE</p></div>";
 					$html .= "<div class='right_column'>";
 					$html .= "<p class='dish_name'>".$result[$i]['menu_item_name'].'</p>';	
-					$html .= "<p>".$result[$i]['ingredients'].'</p>';
+					$html .= "<p class='ingredients'>".$result[$i]['ingredients'].'</p>';
 					// $first_allergy_alert = true;
 					// $this->attributes_and_allergens = "";
 					// $this->html_container = "";
@@ -725,7 +729,7 @@ class Menu {
 				$html .= "</div>";
 			}
 		} else {
-			$html .= '<p class="no_menu">No menus found</p>';
+			$html .= '<p class="no_menus">No menus found</p>';
 		}
 		$html .= '</form>';
 		return $html;
@@ -782,20 +786,11 @@ class Menu {
 			$show_hide = 'show';
 		}
 		$html .= "<div class='page_header'>";
-
 		$html .=    "<ul>";
 		$html .=        "<li class='left'><a class='print_link $show_hide' href='weekly-menu-print-menu.php?client-id=$client_id&start-date=$start_date&meal-id=$url_meal_id'>Print Menus</a></li>";
-		$html .=        "<li><a class='$this_week_selected' href='weekly-menu.php?client-id=$client_id&start-date=$start_date'>$start_date_formatted</a></li>";
+		$html .=        "<li><h2>$start_date_formatted</h2></li>";
 		$html .=        "<li class='right'><a class='print_link $show_hide' href='weekly-menu-print-placards.php?client-id=$client_id&start-date=$start_date&meal-id=$url_meal_id'>Print Placards</a></li>";
 		$html .=    "</ul>";
-
-		// TODO - JR edits to review.
-
-		// $html .=    "<a class='menu' href='weekly-menu-print-menu.php?client-id=$client_id&start-date=$this_week&meal-id=$url_meal_id'>Print Menus</a>";
-		// $html .=    "<a class='placard' href='weekly-menu-print-placards.php?client-id=$client_id&start-date=$this_week&meal-id=$url_meal_id'>Print Placards</a>";
-		// $html .=    "<h2>$this_week_formatted</h2>";
-
-
 		$html .= "</div>";
 		$service_date = null;
 		$meal_id = null;
@@ -845,7 +840,7 @@ class Menu {
 					$html .=            "<p class='month_and_date'>".date('M d', strtotime($result[$i]['service_date'])).'</p>';
 					$html .=            "<p class='meal_name'>".$meal_name.'</p>';
 					$html .=            "<p class='meal_description'>".$result[$i]['meal_description'].'</p>';
-					$html .=            "<a class='page_button' href='daily-menu.php?client-id=$client_id&service-date=".$result[$i]['service_date']."&meal-id=".$result[$i]['meal_id']."'>View Items</a>";
+					$html .=            "<a class='page_button' href='daily-menu.php?client-id=$client_id&service-date=".$result[$i]['service_date']."&meal-id=".$result[$i]['meal_id']."'>View</a>";
 					$html .=        "</div>";
 					$html .= 		"<div class='menu_items_container'>";
 
@@ -925,7 +920,9 @@ class Menu {
 		$result = $client->get_client($client_id);
 		$web_root = WEB_ROOT;
 		$html .= "<div class='page_header'>";
-		$html .=    "$menu_year</li>";
+		$html .= "<ul>";
+		$html .=    "<li><h2>$menu_year</h2><li>";
+		$html .= "</ul>";
 		$html .= "</div>";
 		$result = $this->get_yearly_menus($client_id, $menu_year, $context);
 		$previous_start_date = NULL;

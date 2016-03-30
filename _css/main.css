@@ -1,4 +1,31 @@
-/* Updated 23 Mar 2016 by Josh Rehling*/
+/* Updated 29 Mar 2016 by Josh Rehling */
+
+/*
+COLORS
+#F39035	- light orange (breakfast)	
+#A7CD4D	- light green	(lunch)		
+#9F5D79	- light purple (dinner)	
+#85D1EB	- light blue (snack)
+#4BB0EF	- bright blue (bites)
+#009FA3	- turqoise (event)
+#A3A6AF	- light grey		
+#7D7D7D	- dark grey		
+#81445E	- dark purple
+#2BB27A - light brand
+#026753 - dark brand
+#AC2084 - magenta
+#EA2D4E - hot pink (alert)
+
+FONT SIZES
+.8em
+1em
+1.2em
+1.4em
+1.6em
+2.2em
+3em (page title)
+13em (gigantic title)
+*/
 
 
 /* -------------------- Redefine Global */
@@ -9,8 +36,6 @@ body {
 	border: none;
 	text-transform: none;
 	font-size: 18px;
-	/*font-family: 'Oswald', sans-serif;
-	font-family: 'Roboto Condensed', sans-serif;*/
 	font-family: 'Open Sans Condensed', sans-serif;
 	font-weight: 700;
 	background-color: #34b67d;
@@ -78,6 +103,10 @@ header a {
 	color: #FFFFFF;
 }
 
+header .hello {
+	opacity: .5;
+}
+
 header ul {
 	margin: -70px 30px 0 30px;
 	text-align: right;
@@ -102,19 +131,61 @@ header.background_logo {
 }
 
 .page_header {
-	display: block;
 	background-color: #84445e;
 	text-align: center;
 	color: #fff;
-	padding: 30px 0;
-	margin: 0;
-	overflow: auto;
-	font-size: 3em;
+	padding: 50px 0;
+}
+
+.page_header a {
+	display: inline-block;
+	padding: 0px;
+	margin: 0px 0px;
+	color: #a35d79;
+	font-size: 1.6em;
+	line-height: 1.9em;
+
+}
+
+.page_header a.hidden {
+	visibility: hidden;
+}
+
+.page_header ul {
+	list-style: none;
+	list-style-type: none;
+	width: 90%;
+	min-width: 960px;
+	max-width: 960px;
+	padding: 0;
+	margin: 0 auto;
 	text-transform: uppercase;
 }
 
+.page_header li {
+	display: inline-block;
+}
+
+.page_header li.left {
+	float: left;
+	text-align: left;
+	margin-left: 0px;
+	width: 240px;
+}
+
+.page_header li.right {
+	float: right;
+	text-align: right;
+	width: 240px;
+}
+
 .page_header h2 {
+	font-size: 3em;
+	line-height: 1em;
 	font-weight: 700;
+	color: #FFFFFF;
+	padding: 0px;
+	text-transform: uppercase;
 }
 
 /* Footer */
@@ -129,12 +200,13 @@ footer {
 
 footer ul {
 	display: inline-block;
-	margin: 0 20px 0 20px;
+	margin: 0 20px;
+	padding: 0;
 }
 
 footer li {
 	display: inline-block;
-	margin: 0 20px 0 20px;
+	margin: 0 20px;
 }
 
 footer .hours {
@@ -160,10 +232,6 @@ footer .contact {
 footer .contact a {
 	color: #abd14f;
 	font-weight: 700;
-}
-
-.hidden {
-	display: none;
 }
 
 /* Errors & Messages */
@@ -216,14 +284,30 @@ footer .contact a {
 
 /* Menu Pages */
 .no_menus {
-	width: 750px;
-	margin: 90px auto;
+	max-width: 960px;
+	margin: 0px auto 0px auto;
+	padding: 0px 0 0px 0;
 	font-size: 3em;
 	text-align: center;
 	color: #7d7d7d;
-	line-height: 1.2em;
 	font-weight: 700;
 	text-transform: uppercase;
+	overflow: auto;
+}
+
+.daily_menu_page .no_menus {
+	padding: 0px 0 90px 0;
+	margin: 0px auto 0px auto;
+}
+
+.weekly_menu_page .no_menus {
+	padding: 0px 0 0px 0;
+	margin: 0px auto 90px auto;
+}
+
+.yearly_menu_page .no_menus {
+	padding: 90px 0;
+	margin: 0px auto 0px auto;
 }
 
 .no_menus em {
@@ -309,7 +393,7 @@ footer .contact a {
 }
 
 
-/* -------------------- All Clients Page */
+/* -------------------- Clients Page */
 
 .clients_page .client_list {
 	width: 990px;
@@ -337,14 +421,7 @@ footer .contact a {
 }
 
 
-/* -------------------- Create & Edit Client Pages */ 
-
-.create_client_page .page_header,
-.edit_client_page .page_header {
-	/*background-image: url(../_images/ui/page_header_arrow.jpg);
-	background-repeat: no-repeat;
-	background-position: center bottom;*/
-}
+/* -------------------- Clients Page > Create & Edit */ 
 
 .create_client_page .client_form,
 .edit_client_page .client_form {
@@ -502,34 +579,201 @@ footer .contact a {
 }
 
 
-/* -------------------- Weekly Menu Page */
+/* -------------------- Yearly Menu Page */
 
-.weekly_menu_page .page_header a {
-	display: inline;
-	margin: 0 30px;
-	color: #a35d79;
-	font-size: .6em;
+.yearly_menu_page .outside_container {
+	overflow: auto; /* Scales the container to fit the floats. */
+	padding: 0px 0;
+	width: 90%;
+	min-width: 960px;
+	margin: 0 auto 0px auto;
 }
 
-.weekly_menu_page .page_header a.hidden {
+.yearly_menu_page .week_meal_container {
+	border-bottom: 5px solid #81445E;
+	overflow: auto;
+	padding: 60px 0;
+	margin: 0 auto;
+}
+
+.yearly_menu_page .week_meal_container.list_view.breakfast .right_column { background-color: #F39035; }
+.yearly_menu_page .week_meal_container.list_view.lunch .right_column { background-color: #A7CD4D; }
+.yearly_menu_page .week_meal_container.list_view.dinner .right_column { background-color: #9F5D79; }
+.yearly_menu_page .week_meal_container.list_view.snack .right_column { background-color: #85D1EB; }
+.yearly_menu_page .week_meal_container.list_view.bites .right_column { background-color: #4BB0EF; }
+.yearly_menu_page .week_meal_container.list_view.event .right_column { background-color: #009FA3; }
+
+.yearly_menu_page .week_meal_container.list_view.breakfast .left_column .thru_dates,
+.yearly_menu_page .week_meal_container.list_view.breakfast .left_column .meal_name { color: #F39035; }
+.yearly_menu_page .week_meal_container.list_view.lunch .left_column .thru_dates,
+.yearly_menu_page .week_meal_container.list_view.lunch .left_column .meal_name  { color: #A7CD4D; }
+.yearly_menu_page .week_meal_container.list_view.dinner .left_column .thru_dates,
+.yearly_menu_page .week_meal_container.list_view.dinner .left_column .meal_name  { color: #9F5D79; }
+.yearly_menu_page .week_meal_container.list_view.snack .left_column .thru_dates,
+.yearly_menu_page .week_meal_container.list_view.snack .left_column .meal_name  { color: #85D1EB; }
+.yearly_menu_page .week_meal_container.list_view.bites .left_column .thru_dates,
+.yearly_menu_page .week_meal_container.list_view.bites .left_column .meal_name  { color: #4BB0EF; }
+.yearly_menu_page .week_meal_container.list_view.event .left_column .thru_dates,
+.yearly_menu_page .week_meal_container.list_view.event .left_column .meal_name  { color: #009FA3; }
+
+.yearly_menu_page .week_meal_container.grid_view.breakfast .left_column { background-color: #F39035; }
+.yearly_menu_page .week_meal_container.grid_view.lunch .left_column { background-color: #A7CD4D; }
+.yearly_menu_page .week_meal_container.grid_view.dinner .left_column { background-color: #9F5D79; }
+.yearly_menu_page .week_meal_container.grid_view.snack .left_column { background-color: #85D1EB; }
+.yearly_menu_page .week_meal_container.grid_view.bites .left_column { background-color: #4BB0EF; }
+.yearly_menu_page .week_meal_container.grid_view.event .left_column { background-color: #009FA3; }
+
+/* Thru Dates */
+
+.yearly_menu_page .week_meal_container.list_view .left_column .thru_dates .thru  { color: #7d7d7d; }
+.yearly_menu_page .week_meal_container.list_view .left_column .thru_dates .thru_end_date  { color: #a7a9b5; }
+
+/* List View */
+
+.yearly_menu_page .week_meal_container .left_and_right_column.list_view {
+	overflow: auto;
+	width: 960px;
+	margin: 0 auto;
+}
+
+.yearly_menu_page .week_meal_container.list_view .left_column {
+	width: 300px;
+	min-height: 630px;
+	float: left;
+	padding-right: 30px;
+	position: relative;
+}
+
+.yearly_menu_page .week_meal_container.list_view .left_column .thru_dates {
+	color: #7d7d7d;
+	font-size: 3em;
+	margin: -10px 0 0 0;
+	line-height: 1.1em;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.yearly_menu_page .week_meal_container.list_view .left_column .meal_name {
+	color: #A7CD4D;
+	font-size: 1.1em;
+	margin: 30px 0 0 0;
+	line-height: 1.1em;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.yearly_menu_page .week_meal_container.list_view .left_column .hosted_by {
+	color: #A3A6AF;
+	font-size: 1.1em;
+	margin-left: -3px;
+	margin-left: 0px;
+	line-height: 1.1em;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.yearly_menu_page .left_column .view_link {
+	border: none;
+	background-color: #ff7a18;
+	color: #FFFFFF;
+	text-transform: uppercase;
+	font-size: 2em;
+	margin: 0;
+	padding: 20px 0;
+	display: block;
+	text-align: center;
+	width: 300px;
+	display: inline-block;
+	position: absolute;
+	bottom: 0;
+}
+
+.yearly_menu_page .week_meal_container.list_view .right_column {
+	width: 630px;
+	min-height: 600px;
+	float: left;
+	background-color: #A7CD4D;
+	padding: 0 0 30px 0;
+}
+
+.yearly_menu_page .week_meal_container.list_view .right_column p {
+	color: #000000;
+	padding: 30px 0 0 30px;
+	text-transform: uppercase;
+	opacity: .5;
+	font-weight: 700;
+	font-size: 1.1em;
+}
+
+.yearly_menu_page .week_meal_container.list_view .right_column p.menu_item_name {
+	color: #FFFFFF;
+	padding: 0px 0 0 30px;
+	text-transform: none;
+	opacity: 1;
+	font-size: .8em;
+	width: 260px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+    -moz-binding: url('assets/xml/ellipsis.xml#ellipsis');
+}
+
+.yearly_menu_page .week_meal_container.list_view .right_column p.menu_item_name_bites {
+	color: #FFFFFF;
+	padding: 0px 0 0 30px;
+	text-transform: none;
+	opacity: 1;
+	font-size: .8em;
+	width: 570px;
+}
+
+.new-week { /* what does this do? */
+	background-color: green;
+	margin-top: 10px;
+	overflow: auto;
+}
+
+/* Grid View */
+
+.yearly_menu_page .week_meal_container.grid_view {
+	margin: 30px 30px 0 0;
+	padding: 0;
+	overflow: auto;
+	width: 300px;
+	float: left;
+	border: none;
+	background-color: blue;
+}
+
+.yearly_menu_page .week_meal_container.grid_view .right_column,
+.yearly_menu_page .week_meal_container.grid_view .hosted_by,
+.yearly_menu_page .week_meal_container.grid_view .view_link {
 	display: none;
 }
 
-.weekly_menu_page .page_header a.menu,
-.weekly_menu_page .page_header a.placard {
-	float: left;
-	line-height: 2em;
-	width: 240px;
-	text-align: left;
-	margin-left: 60px;
+.yearly_menu_page .week_meal_container.grid_view .left_column {
+	cursor: pointer;
+	text-transform: uppercase;
+	color: #FFFFFF;
 }
 
-.weekly_menu_page .page_header a.placard {
-	float: right;
-	text-align: right;
-	margin-right: 60px;
-
+.yearly_menu_page .week_meal_container.grid_view h2 {
+	font-size: 3em;
+	font-weight: 700;
+	line-height: 1.1em;
+	padding: 30px;
 }
+
+.yearly_menu_page .week_meal_container.grid_view h3 {
+	font-size: 1.1em;
+	font-weight: 700;
+	opacity: .5;
+	padding: 0 30px 30px 30px;
+}
+
+
+/* -------------------- Weekly Menu Page */
 
 .weekly_menu_page header {
 	background-repeat: repeat-x;
@@ -544,26 +788,26 @@ footer .contact a {
 }
 
 .weekly_menu_page select.meal_type {
-	font-size: 2em;
+	font-size: 1.6em;
 	min-width: 300px;
 	background-color: #81445E;
 	border: none;
 	color: #FFFFFF;
 	text-transform: uppercase;
 	display: block;
-	position: relative;
-	top: 60px;
-	margin: 0px auto 0 auto;
+	/*position: relative;
+	top: 60px;*/
+	margin: 60px auto 60px auto;
 }
 
 .weekly_menu_page .outside_container {
 	overflow: auto; /* Scales the container to fit the floats. */
 	border: none;
 	border-top: 5px solid #84445e;
-	padding: 90px 0;
+	padding: 60px 0;
 	width: 90%;
 	min-width: 960px;
-	margin: 120px auto 0 auto;
+	margin: 0px auto 0 auto;
 }
 
 .weekly_menu_page .meal_container {
@@ -609,7 +853,6 @@ footer .contact a {
 .weekly_menu_page .meal_container.bites .day_of_the_week { color: #4BB0EF; }
 .weekly_menu_page .meal_container.event .day_of_the_week { color: #009FA3; }
 
-
 .weekly_menu_page .meal_details .month_and_date {
 	color: #7d7d7d;
 	font-size: 2.6em;
@@ -635,18 +878,29 @@ footer .contact a {
 
 .weekly_menu_page .menu_items_container {
 	float: left;
-	/*background-color: red;*/
-	width: 500px;
-	border: 1px solid #000;
+	min-height: 600px;
+	width: 600px;
+	border-left: 1px solid #A3A6AF;
+	overflow: hidden;
+	margin: 0px 0 0 0;
+	padding: 30px 0 0px 0;
+	text-align: center;
 }
 
-.weekly_menu_page .meal_details .menu_item_name {
-	width: 300px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	-o-text-overflow: ellipsis;
-    -moz-binding: url('assets/xml/ellipsis.xml#ellipsis');
+.weekly_menu_page .menu_items_container p {
+	color: #A3A6AF;
+	font-weight: 700;
+	font-size: 1em;
+	padding: 0px 30px;
+}
+
+.weekly_menu_page .menu_items_container p.menu_item_name {
+	color: #7D7D7D;
+}
+
+.weekly_menu_page .menu_items_container p.is_and_contains_list {
+	color: #A3A6AF;
+	padding: 5px 0 30px 0;
 }
 
 .weekly_menu_page .meal_details .page_button {
@@ -666,6 +920,7 @@ footer .contact a {
 	background-image: url(../_images/ui/default_meal.jpg);
 	background-repeat: no-repeat;
 	background-position: center center;
+	display: none;
 }
 
 .weekly_menu_page .button_container {
@@ -673,7 +928,7 @@ footer .contact a {
 }
 
 
-/* -------------------- Weekly Menu Print Placards */ 
+/* -------------------- Weekly Menu Page > Print Placards */ 
 
 .weekly_menu_print_placards h1 {
 	margin: 0;
@@ -722,7 +977,293 @@ footer .contact a {
 }
 
 
-/* -------------------- Create & Edit Menu Pages */ 
+/* -------------------- Daily Menu Page */
+
+.daily_menu_page {
+	text-align: center;
+}
+
+.daily_menu_page h3 {
+	text-align: center;
+	color: #84445e;
+	padding: 30px 0 0px 0;
+	margin: 0;
+	overflow: auto;
+	font-size: 3em;
+	font-weight: 700;
+}
+
+.daily_menu_page .meal_description {
+	color: #7D7D7D;
+	text-align: center;
+	padding: 0px 0 0 0;
+	margin: 0 auto 60px auto;
+	font-size: 3em;
+	line-height: 1em;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.daily_menu_page .server_and_meal_container,
+.daily_menu_page .menu-item {
+	border: none;
+	border-bottom: 5px solid #84445e;
+	padding: 60px 0;
+	width: 90%;
+	min-width: 960px;
+	margin: 0 auto;
+}
+
+.daily_menu_page .date_and_meal {
+	border: none;
+	border-bottom: 5px solid #84445e;
+	padding: 0;
+	width: 90%;
+	min-width: 960px;
+	margin: 0 auto;
+}
+
+.daily_menu_page .date_and_meal select.meal-types {
+	font-size: 1.6em;
+	min-width: 300px;
+	background-color: #81445E;
+	border: none;
+	color: #FFFFFF;
+	text-transform: uppercase;
+	display: block;
+	margin: 60px auto 60px auto;
+}
+
+.daily_menu_page .menu_item_container {
+	overflow: hidden;
+	margin: 0 auto;
+}
+
+.daily_menu_page .server_and_meal_container {
+	overflow: auto;
+}
+
+.daily_menu_page .date_and_meal p {
+	width: 800px;
+	margin: 0 auto;
+}
+
+.daily_menu_page .server_and_meal,
+.daily_menu_page .left_and_right_column {
+	width: 960px;
+	margin: 0 auto;
+}
+
+.daily_menu_page .meal_image {
+	float: right;
+	background-color: #a35d79;
+	width: 630px;
+	height: 630px;
+	overflow: hidden;
+	border: 2px solid #84445e;
+	border: none;
+	margin: 0px auto 0 auto;
+	padding: 0px;
+	background-image: url(../_images/ui/default_meal.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.daily_menu_page .server_image {
+	/*float: left;
+	width: 300px;
+	height: 300px;
+	background-image: url(../_images/ui/default_server.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-color: #a35d79;*/
+}
+
+.daily_menu_page .server_information {
+	font-size: 1.5em;
+	color: #7d7d7d;
+}
+
+.daily_menu_page .server_information .name {
+	text-transform: uppercase;
+	margin: 20px 0 0 0;
+	font-size: 1.2em;
+}
+
+.daily_menu_page .server_information .number a {
+	color: #a7a9b5;
+	font-size: 1.5em;
+	padding-bottom: 15px;
+	display: block;
+}
+
+.daily_menu_page .like-heart {
+	margin: 0px 30px 0 0;
+	float: left;
+	width: 300px;
+	height: 300px;
+	background-image: url(../_images/ui/favorite_off.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.daily_menu_page .like-heart.liked {
+	background-image: url(../_images/ui/favorite_on.png);
+}
+
+
+.daily_menu_page .like-heart:hover {
+	cursor: pointer;
+}
+
+.daily_menu_page p.number_of_likes {
+	color: #A7CD4D;
+	font-weight: 700;
+	font-size: 1.6em;
+	margin: 170px auto 0 auto;
+}
+
+.daily_menu_page .right_column {
+	float: left;
+	width: 600px;
+	border-left: 1px solid #A3A6AF;
+	overflow: hidden;
+	margin: 0px 0 0 0;
+	padding: 30px 0 0px 0;
+	min-height: 270px;
+}
+
+.daily_menu_page .right_column p {
+	color: #a7a9b5;
+	font-weight: 700;
+	font-size: 1.6em;
+	padding: 15px 30px;
+}
+
+.daily_menu_page .right_column p.dish_name {
+	color: #7d7d7d;
+	font-size: 1.6em;
+	font-weight: 700;
+}
+
+.daily_menu_page .right_column p.ingredients {
+	font-size: 1.2em;
+	font-weight: 700;
+}
+
+.daily_menu_page .right_column p.attributes_and_allergens {
+	font-weight: 700;
+	font-size: .8em;
+}
+
+.daily_menu_page p.special_requests {
+	margin: 30px auto;
+	font-weight: 700;
+	color: #A7CD4D;
+	font-size: 1em;
+}
+
+.daily_menu_page p.special_notes {
+	font-weight: 700;
+	color: #A7CD4D;
+	font-size: .8em;
+}
+
+.daily_menu_page .single_order_size {
+	display: none;
+}
+
+
+.edit_menu_page .bite_group_name,
+.daily_menu_page .bite_group_name,
+.edit_bites_page .bite_group_name,
+.create_menu_page .bite_group_name {
+	font-size: 24px;
+	color: orange;
+	font-weight: bold;
+	margin: 50px auto;
+	text-align: center;
+}
+
+.edit_menu_page .bite_group_container,
+.daily_menu_page .bite_group_container,
+.edit_bites_page .bite_group_container,
+.create_menu_page .bite_group_container {
+	border: 4px solid #ccc;
+	overflow: hidden;
+	margin-top: 10px;
+	padding-bottom: 10px;
+}
+
+.edit_menu_page .bite_container,
+.daily_menu_page .bite_container,
+.edit_bites_page .bite_container,
+.create_menu_page .bite_container {
+	float: left;
+	padding: 10px;
+	border: solid 3px #345;
+	margin-left: 10px;
+	width: 200px;
+}
+
+.edit_menu_page .add_bite,
+.edit_bites_page .add_bite {
+	clear: both;
+	display: block;
+	background-color: orange;
+	padding: 20px;
+	width: 100px;
+	text-align: center;
+	margin: 0 auto;
+	cursor: pointer;
+}
+
+.daily_menu_page .order_summary {
+	border: 2px solid #84445e;
+	text-transform: uppercase;
+	font-size: 2em;
+	margin: 25px auto;
+	padding: 20px 30px 20px 30px;
+	display: block;
+	text-align: center;
+	width: 572px;
+	color: #84445e;
+	color: #FFFFFF;
+	background-color: #a35d79;
+}
+
+.daily_menu_page .order_summary .total_served_for_item_serves,
+.daily_menu_page .order_summary .total_served_for_item {
+	color: #a7a9b5;
+	color: #84445e;
+}
+
+.daily_menu_page .button_container {
+	margin-top: -10px;
+	margin-top: -5px;
+	width: 100%;
+}
+
+.daily_menu_page .button_container p {
+	font-size: 2em;
+	padding: 0px 0px 15px 0px;
+	color: #FFFFFF;
+	background-color: #84445e;
+	display: none;
+}
+
+.daily_menu_page .button_container .total_served_for_item_serves,
+.daily_menu_page .button_container .total_served_for_menu {
+	color: #a35d79;
+}
+
+.daily_menu_page footer {
+	/*margin-bottom: 200px; /* so it's not covered by the sticky bar */
+	margin-top: -5px;
+}
+
+
+/* -------------------- Daily Menu Page > Create & Edit */ 
 
 .edit_menu_page header,
 .create_menu_page header {
@@ -736,13 +1277,6 @@ footer .contact a {
 	background-position: center bottom;
 	height: 360px;
 	width: 100%;
-}
-
-.edit_menu_page .page_header,
-.create_menu_page .page_header {
-	/*background-image: url(../_images/ui/page_header_arrow.jpg);
-	background-repeat: no-repeat;
-	background-position: center bottom;*/
 }
 
 .edit_menu_page .client_form,
@@ -1046,336 +1580,7 @@ footer .contact a {
 }
 
 
-/* -------------------- Daily Menu Page */
-
-.daily_menu_page {
-	text-align: center;
-}
-
-.daily_menu_page .page_header a {
-	display: inline;
-	margin: 0 90px;
-	line-height: .1em;
-	color: #a35d79;
-	font-size: .6em;
-}
-
-.daily_menu_page .page_header a.hidden {
-	display: none;
-}
-
-.daily_menu_page .page_header a.menu,
-.daily_menu_page .page_header a.placard {
-	float: left;
-	line-height: 2em;
-	width: 270px;
-	text-align: left;
-}
-
-.daily_menu_page .page_header a.placard {
-	float: right;
-	text-align: right;
-}
-
-.daily_menu_page h3 {
-	text-align: center;
-	color: #84445e;
-	padding: 30px 0 0px 0;
-	margin: 0;
-	overflow: auto;
-	font-size: 3em;
-	font-weight: 700;
-}
-
-
-.daily_menu_page .date_and_meal select {
-	font-size: 2em;
-	min-width: 300px;
-	background-color: #81445E;
-	border: none;
-	color: #FFFFFF;
-	text-transform: uppercase;
-	display: block;
-	position: relative;
-	margin: 0px auto 0;
-}
-
-.daily_menu_page .no_meal,
-.daily_menu_page .meal_description {
-	color: #7D7D7D;
-	text-align: center;
-	padding: 0px 0 0 0;
-	margin: 0 auto 60px auto;
-	font-size: 3em;
-	line-height: 1em;
-	font-weight: 700;
-	text-transform: uppercase;
-}
-
-.daily_menu_page p.no_meal {
-	padding: 60px 0 30px 0;
-}
-
-.daily_menu_page .date_and_meal,
-.daily_menu_page .server_and_meal_container,
-.daily_menu_page .menu-item {
-	border: none;
-	border-bottom: 5px solid #84445e;
-	padding: 60px 0;
-	width: 90%;
-	min-width: 960px;
-	margin: 0 auto;
-}
-
-.daily_menu_page .menu_item_container {
-	overflow: hidden;
-	/*width: 971px;*/
-	margin: 0 auto;
-}
-
-.daily_menu_page .server_and_meal_container {
-	overflow: auto;
-}
-
-.daily_menu_page .date_and_meal {
-}
-
-.daily_menu_page .date_and_meal h3 {
-}
-
-.daily_menu_page .date_and_meal p {
-	width: 800px;
-	margin: 0 auto;
-}
-
-.daily_menu_page .server_and_meal,
-.daily_menu_page .left_and_right_column {
-	width: 960px;
-	margin: 0 auto;
-}
-
-.daily_menu_page .meal_image {
-	float: right;
-	background-color: #a35d79;
-	width: 630px;
-	height: 630px;
-	overflow: hidden;
-	border: 2px solid #84445e;
-	border: none;
-	margin: 0px auto 0 auto;
-	padding: 0px;
-	background-image: url(../_images/ui/default_meal.jpg);
-	background-repeat: no-repeat;
-	background-position: center center;
-}
-
-.daily_menu_page .server_image {
-	/*float: left;
-	width: 300px;
-	height: 300px;
-	background-image: url(../_images/ui/default_server.jpg);
-	background-repeat: no-repeat;
-	background-position: center center;
-	background-color: #a35d79;*/
-}
-
-.daily_menu_page .server_information {
-	font-size: 1.5em;
-	/*text-align: left;*/
-	color: #7d7d7d;
-}
-
-.daily_menu_page .server_information .name {
-	/*color: #84445e;
-	font-size: 1.5em;
-	padding-top: 15px;
-	display: block;
-	margin-top: 300px;*/
-	text-transform: uppercase;
-	margin: 20px 0 0 0;
-	font-size: 1.2em;
-}
-
-.daily_menu_page .server_information .number a {
-	color: #a7a9b5;
-	font-size: 1.5em;
-	padding-bottom: 15px;
-	display: block;
-}
-
-.daily_menu_page .menu-item {
-	padding: 30px 0 60px 0;
-}
-
-.daily_menu_page .menu-item p {
-	color: #a7a9b5;
-	font-size: 1.5em;
-	width: 580px;
-	margin: 30px auto;
-}
-
-.daily_menu_page .like-heart {
-	margin: 30px 30px 0 0;
-	float: left;
-	width: 300px;
-	height: 300px;
-	background-color: yellow;
-	background-image: url(../_images/ui/favorite_off.png);
-	background-repeat: no-repeat;
-	background-position: center center;
-}
-
-.daily_menu_page .like-heart.liked {
-	background-image: url(../_images/ui/favorite_on.png);
-}
-
-
-.daily_menu_page .like-heart:hover {
-	cursor: pointer;
-}
-
-.daily_menu_page p.number_of_likes {
-	color: #abd14f;
-	margin: -10px auto 0 auto;
-}
-
-.daily_menu_page .right_column {
-	float: left;
-	border-left: 1px solid #ccc;
-	overflow: hidden;
-	/*width: 630px;*/
-	margin: 30px 0 0 0;
-	min-height: 300px;
-}
-
-.daily_menu_page .right_column p {
-	font-weight: 700;
-	font-size: 1.6em;
-}
-
-.daily_menu_page .right_column p.dish_name {
-	color: #7d7d7d;
-	font-size: 2.4em;
-	font-weight: 700;
-}
-
-.daily_menu_page .right_column p.attributes_and_allergens {
-	font-weight: 700;
-	font-size: 1em;
-}
-
-.daily_menu_page p.special_requests {
-	margin: 30px auto;
-	font-weight: 700;
-	color: #A7CD4D;
-	font-size: 1em;
-}
-
-.daily_menu_page p.special_notes {
-	font-weight: 700;
-	color: #A7CD4D;
-	font-size: 1em;
-}
-
-.daily_menu_page .single_order_size {
-	display: none;
-}
-
-
-.edit_menu_page .bite_group_name,
-.daily_menu_page .bite_group_name,
-.edit_bites_page .bite_group_name,
-.create_menu_page .bite_group_name {
-	font-size: 24px;
-	color: orange;
-	font-weight: bold;
-	margin: 50px auto;
-	text-align: center;
-}
-
-.edit_menu_page .bite_group_container,
-.daily_menu_page .bite_group_container,
-.edit_bites_page .bite_group_container,
-.create_menu_page .bite_group_container {
-	border: 4px solid #ccc;
-	overflow: hidden;
-	margin-top: 10px;
-	padding-bottom: 10px;
-}
-
-.edit_menu_page .bite_container,
-.daily_menu_page .bite_container,
-.edit_bites_page .bite_container,
-.create_menu_page .bite_container {
-	float: left;
-	padding: 10px;
-	border: solid 3px #345;
-	margin-left: 10px;
-	width: 200px;
-}
-
-.edit_menu_page .add_bite,
-.edit_bites_page .add_bite {
-	clear: both;
-	display: block;
-	background-color: orange;
-	padding: 20px;
-	width: 100px;
-	text-align: center;
-	margin: 0 auto;
-	cursor: pointer;
-}
-
-.daily_menu_page .order_summary {
-	border: 2px solid #84445e;
-	text-transform: uppercase;
-	font-size: 2em;
-	margin: 25px auto;
-	padding: 20px 30px 20px 30px;
-	display: block;
-	text-align: center;
-	width: 572px;
-	color: #84445e;
-	color: #FFFFFF;
-	background-color: #a35d79;
-}
-
-.daily_menu_page .order_summary .total_served_for_item_serves,
-.daily_menu_page .order_summary .total_served_for_item {
-	color: #a7a9b5;
-	color: #84445e;
-}
-
-.daily_menu_page .button_container {
-	margin-top: -10px;
-	margin-top: -5px;
-	width: 100%;
-	position: fixed;
-	bottom: 0px;
-	z-index: 4000;
-}
-
-.daily_menu_page .button_container p {
-	font-size: 2em;
-	padding: 0px 0px 15px 0px;
-	color: #FFFFFF;
-	background-color: #84445e;
-	display: none;
-}
-
-.daily_menu_page .button_container .total_served_for_item_serves,
-.daily_menu_page .button_container .total_served_for_menu {
-	color: #a35d79;
-}
-
-.daily_menu_page footer {
-	/* so it's not covered by the sticky bar */
-	margin-bottom: 200px;
-	margin-top: -5px;
-}
-
-
-/* -------------------- Print Menu & Placards */
+/* -------------------- Daily Menu Page > Print Menu & Placards */
 
 /* Menu */
 
@@ -1504,200 +1709,35 @@ html > .daily_menu_print_menu_page {
 }
 
 
-/* -------------------- Yearly Menu Page */
+/* -------------------- Daily Bites Menu Page */
 
-.yearly_menu_page .outside_container {
-	overflow: auto; /* Scales the container to fit the floats. */
-	padding: 0px 0;
-	width: 90%;
-	min-width: 960px;
-	margin: 0 auto 60px auto;
+/* Weekly */
+
+.meal_container.bites .meal_details {
+	height: 570px;
 }
 
-.yearly_menu_page .week_meal_container {
-	border-bottom: 5px solid #81445E;
-	overflow: auto;
-	padding: 60px 0;
+.meal_container.bites .bite_message_container {
+	max-width: 400px;
 	margin: 0 auto;
-}
-
-.yearly_menu_page .week_meal_container.list_view.breakfast .right_column { background-color: #F39035; }
-.yearly_menu_page .week_meal_container.list_view.lunch .right_column { background-color: #A7CD4D; }
-.yearly_menu_page .week_meal_container.list_view.dinner .right_column { background-color: #9F5D79; }
-.yearly_menu_page .week_meal_container.list_view.snack .right_column { background-color: #85D1EB; }
-.yearly_menu_page .week_meal_container.list_view.bites .right_column { background-color: #4BB0EF; }
-.yearly_menu_page .week_meal_container.list_view.event .right_column { background-color: #009FA3; }
-
-.yearly_menu_page .week_meal_container.list_view.breakfast .left_column .thru_dates,
-.yearly_menu_page .week_meal_container.list_view.breakfast .left_column .meal_name { color: #F39035; }
-.yearly_menu_page .week_meal_container.list_view.lunch .left_column .thru_dates,
-.yearly_menu_page .week_meal_container.list_view.lunch .left_column .meal_name  { color: #A7CD4D; }
-.yearly_menu_page .week_meal_container.list_view.dinner .left_column .thru_dates,
-.yearly_menu_page .week_meal_container.list_view.dinner .left_column .meal_name  { color: #9F5D79; }
-.yearly_menu_page .week_meal_container.list_view.snack .left_column .thru_dates,
-.yearly_menu_page .week_meal_container.list_view.snack .left_column .meal_name  { color: #85D1EB; }
-.yearly_menu_page .week_meal_container.list_view.bites .left_column .thru_dates,
-.yearly_menu_page .week_meal_container.list_view.bites .left_column .meal_name  { color: #4BB0EF; }
-.yearly_menu_page .week_meal_container.list_view.event .left_column .thru_dates,
-.yearly_menu_page .week_meal_container.list_view.event .left_column .meal_name  { color: #009FA3; }
-
-.yearly_menu_page .week_meal_container.grid_view.breakfast .left_column { background-color: #F39035; }
-.yearly_menu_page .week_meal_container.grid_view.lunch .left_column { background-color: #A7CD4D; }
-.yearly_menu_page .week_meal_container.grid_view.dinner .left_column { background-color: #9F5D79; }
-.yearly_menu_page .week_meal_container.grid_view.snack .left_column { background-color: #85D1EB; }
-.yearly_menu_page .week_meal_container.grid_view.bites .left_column { background-color: #4BB0EF; }
-.yearly_menu_page .week_meal_container.grid_view.event .left_column { background-color: #009FA3; }
-
-/* Thru Dates */
-
-.yearly_menu_page .week_meal_container.list_view .left_column .thru_dates .thru  { color: #666; }
-.yearly_menu_page .week_meal_container.list_view .left_column .thru_dates .thru_end_date  { color: #bbb; }
-
-/* List View */
-
-.yearly_menu_page .week_meal_container .left_and_right_column.list_view {
 	overflow: auto;
-	width: 960px;
-	margin: 0 auto;
+	min-height: 500px;
+	background-image: url(../_images/ui/bites_cart.png);
+	background-repeat: no-repeat;
+	background-position: center 170px;
 }
 
-.yearly_menu_page .week_meal_container.list_view .left_column {
-	width: 300px;
-	min-height: 630px;
+.meal_container.bites .bite_message_container p {
+	color: #7D7D7D;
+	margin: 290px 0 0 0;
+}
+
+.meal_container.bites .menu_items_container {
 	float: left;
-	padding-right: 30px;
-	position: relative;
+	min-height: 540px;
 }
 
-.yearly_menu_page .week_meal_container.list_view .left_column .thru_dates {
-	color: #7d7d7d;
-	font-size: 3em;
-	margin: -10px 0 0 0;
-	line-height: 1.1em;
-	font-weight: 700;
-	text-transform: uppercase;
-}
-
-.yearly_menu_page .week_meal_container.list_view .left_column .meal_name {
-	color: #A7CD4D;
-	font-size: 1.1em;
-	margin: 30px 0 0 0;
-	line-height: 1.1em;
-	font-weight: 700;
-	text-transform: uppercase;
-}
-
-.yearly_menu_page .week_meal_container.list_view .left_column .hosted_by {
-	color: #A3A6AF;
-	font-size: 1.1em;
-	margin-left: -3px;
-	margin-left: 0px;
-	line-height: 1.1em;
-	font-weight: 700;
-	text-transform: uppercase;
-}
-
-.yearly_menu_page .left_column .view_link {
-	border: none;
-	background-color: #ff7a18;
-	color: #FFFFFF;
-	text-transform: uppercase;
-	font-size: 2em;
-	margin: 0;
-	padding: 20px 0;
-	display: block;
-	text-align: center;
-	width: 300px;
-	display: inline-block;
-	position: absolute;
-	bottom: 0;
-}
-
-.yearly_menu_page .week_meal_container.list_view .right_column {
-	width: 630px;
-	min-height: 630px;
-	float: left;
-	background-color: #A7CD4D;
-}
-
-.yearly_menu_page .week_meal_container.list_view .right_column p {
-	color: #000000;
-	padding: 30px 0 0 30px;
-	text-transform: uppercase;
-	opacity: .5;
-	font-weight: 700;
-	font-size: 1.1em;
-}
-
-.yearly_menu_page .week_meal_container.list_view .right_column p.menu_item_name {
-	color: #FFFFFF;
-	padding: 0px 0 0 30px;
-	text-transform: none;
-	opacity: 1;
-	font-size: .8em;
-	width: 260px;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	-o-text-overflow: ellipsis;
-    -moz-binding: url('assets/xml/ellipsis.xml#ellipsis');
-}
-
-.yearly_menu_page .week_meal_container.list_view .right_column p.menu_item_name_bites {
-	color: #FFFFFF;
-	padding: 0px 0 0 30px;
-	text-transform: none;
-	opacity: 1;
-	font-size: .8em;
-	width: 570px;
-}
-
-.new-week { /* what does this do? */
-	background-color: green;
-	margin-top: 10px;
-	overflow: auto;
-}
-
-/* Grid View */
-
-.yearly_menu_page .week_meal_container.grid_view {
-	margin: 30px 30px 0 0;
-	padding: 0;
-	overflow: auto;
-	width: 300px;
-	float: left;
-	border: none;
-	background-color: blue;
-}
-
-.yearly_menu_page .week_meal_container.grid_view .right_column,
-.yearly_menu_page .week_meal_container.grid_view .hosted_by,
-.yearly_menu_page .week_meal_container.grid_view .view_link {
-	display: none;
-}
-
-.yearly_menu_page .week_meal_container.grid_view .left_column {
-	cursor: pointer;
-	text-transform: uppercase;
-	color: #FFFFFF;
-}
-
-.yearly_menu_page .week_meal_container.grid_view h2 {
-	font-size: 3em;
-	font-weight: 700;
-	line-height: 1.1em;
-	padding: 30px;
-}
-
-.yearly_menu_page .week_meal_container.grid_view h3 {
-	font-size: 1.1em;
-	font-weight: 700;
-	opacity: .5;
-	padding: 0 30px 30px 30px;
-}
-
-/* Edit Bites Page  */
-
+/* -------------------- Daily Bites Menu Page > Edit Global */
 
 .edit_bites_page .add_edit_bite_modal {
     width: 800px;
