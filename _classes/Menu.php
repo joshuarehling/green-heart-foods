@@ -1451,9 +1451,9 @@ FORM;
 		$form .= "<div class='bites_form $bites_mode'>";
 		$form .= "<a href='".WEB_ROOT."/admin/edit-bites.php' class='edit_global_bites'>Edit Global</a>";
 		$form .= "<div class='fake_hr'></div>";
-		if($meal_id == 5) {
+		// if($meal_id == 5) {
 			$form .= $this->build_bites_html($all_bites, $mode);
-		}
+		// }
 		$number_of_bites = count($all_bites);
 		// $form .= $this->build_bites_html($all_bites, 'create');
 		// $number_of_bites = count($all_bites);
