@@ -1,6 +1,6 @@
 <?php 
 	$page_class = 'edit_bites_page';
-	$page_title_detail = 'Edit Bites';
+	$page_title_detail = 'Bites';
 	require_once("../_config/config.php");
     require_once(SERVER_ROOT . "/_includes/restrict-access-green-heart-foods.php");
     require_once(SERVER_ROOT . "/_includes/global-header.php");
@@ -11,7 +11,7 @@
 	$edit_bites_page = $menu->get_edit_bites_page($context);
 ?>
 
-<h1>Edit Bites</h1>
+<h1>Bites</h1>
 
 <?php 
 	Messages::render(); 
