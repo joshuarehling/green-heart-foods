@@ -1,4 +1,4 @@
-/* Updated 29 Mar 2016 by Josh Rehling */
+/* Updated 31 Mar 2016 by Josh Rehling */
 
 /*
 COLORS
@@ -735,6 +735,13 @@ footer .contact a {
 }
 
 /* Grid View */
+
+.grid_view_container {
+	overflow: auto;
+	max-width: 990px;
+	margin: 0 auto;
+	padding: 30px 0 60px 30px;
+}
 
 .yearly_menu_page .week_meal_container.grid_view {
 	margin: 30px 30px 0 0;
