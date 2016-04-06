@@ -1446,7 +1446,7 @@ FORM;
 		}
 		$form .= "</div>"; // End non-bites form
 		$form .= "<div class='bites_form $bites_mode'>";
-		$form .= "<a href='".WEB_ROOT."/admin/edit-bites.php' class='edit_global_bites'>Edit Global</a>";
+		$form .= "<a href='".WEB_ROOT."/admin/edit-bites.php' class='edit_global_bites page_button'>Edit Global</a>";
 		$form .= "<div class='fake_hr'></div>";
 		// if($meal_id == 5) {
 			$form .= $this->build_bites_html($all_bites, $mode);

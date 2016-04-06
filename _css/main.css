@@ -1,4 +1,4 @@
-/* Updated 31 Mar 2016 by Josh Rehling */
+/* Updated 5 Apr 2016 by Josh Rehling */
 
 /*
 COLORS
@@ -934,6 +934,32 @@ footer .contact a {
 	margin-top: -5px;
 }
 
+/* Bites Module */
+
+.meal_container.bites .meal_details {
+	height: 570px;
+}
+
+.meal_container.bites .bite_message_container {
+	max-width: 400px;
+	margin: 0 auto;
+	overflow: auto;
+	min-height: 500px;
+	background-image: url(../_images/ui/bites_cart.png);
+	background-repeat: no-repeat;
+	background-position: center 170px;
+}
+
+.meal_container.bites .bite_message_container p {
+	color: #7D7D7D;
+	margin: 290px 0 0 0;
+}
+
+.meal_container.bites .menu_items_container {
+	float: left;
+	min-height: 540px;
+}
+
 
 /* -------------------- Weekly Menu Page > Print Placards */ 
 
@@ -1178,51 +1204,6 @@ footer .contact a {
 
 .daily_menu_page .single_order_size {
 	display: none;
-}
-
-
-.edit_menu_page .bite_group_name,
-.daily_menu_page .bite_group_name,
-.edit_bites_page .bite_group_name,
-.create_menu_page .bite_group_name {
-	font-size: 24px;
-	color: orange;
-	font-weight: bold;
-	margin: 50px auto;
-	text-align: center;
-}
-
-.edit_menu_page .bite_group_container,
-.daily_menu_page .bite_group_container,
-.edit_bites_page .bite_group_container,
-.create_menu_page .bite_group_container {
-	border: 4px solid #ccc;
-	overflow: hidden;
-	margin-top: 10px;
-	padding-bottom: 10px;
-}
-
-.edit_menu_page .bite_container,
-.daily_menu_page .bite_container,
-.edit_bites_page .bite_container,
-.create_menu_page .bite_container {
-	float: left;
-	padding: 10px;
-	border: solid 3px #345;
-	margin-left: 10px;
-	width: 200px;
-}
-
-.edit_menu_page .add_bite,
-.edit_bites_page .add_bite {
-	clear: both;
-	display: block;
-	background-color: orange;
-	padding: 20px;
-	width: 100px;
-	text-align: center;
-	margin: 0 auto;
-	cursor: pointer;
 }
 
 .daily_menu_page .order_summary {
@@ -1545,7 +1526,6 @@ footer .contact a {
 	margin: 0 15px;
 }
 
-
 .create_menu_page .add_dish_container {
 	text-align: center;
 }
@@ -1553,37 +1533,6 @@ footer .contact a {
 .create_menu_page .add_dish {
 	margin: 90px auto;
 	cursor: pointer;
-}
-
-.edit_menu_page .non_bites_form.bites_mode,
-.create_menu_page .non_bites_form.bites_mode {
-	display: none;
-}
-
-.edit_menu_page .bites_form,
-.create_menu_page .bites_form {
-	display: none;
-	margin: 0 auto;
-	width: 90%;
-	overflow: hidden;
-}
-
-.create_menu_page .bite_container {
-	border: 1px solid #ccc;
-	padding: 10px;
-	width: 200px;
-	float: left;
-}
-
-.create_menu_page .bites_form .fake_hr {
-	height: 5px;
-	width: 100%;
-	background-color: #84445e;
-}
-
-.edit_menu_page .bites_form.bites_mode,
-.create_menu_page .bites_form.bites_mode {
-	display: block;
 }
 
 
@@ -1718,33 +1667,157 @@ html > .daily_menu_print_menu_page {
 
 /* -------------------- Daily Bites Menu Page */
 
-/* Weekly */
-
-.meal_container.bites .meal_details {
-	height: 570px;
+.bites_mode {
+	text-align: center;
 }
 
-.meal_container.bites .bite_message_container {
-	max-width: 400px;
-	margin: 0 auto;
+.bites_mode .edit_global_bites {
+	margin: 60px 0;
+}
+
+.daily_menu_page.bites .server_and_meal_container {
+	display: none;
+}
+
+.daily_menu_page.bites .date_and_meal {
+	border-bottom: none;
+}
+
+.daily_menu_page.bites .bite_group_container {
+	overflow: auto; /* Scales the container to fit the floats. */
+	border-top: 5px solid #84445e;
+	padding: 60px 0;
+	width: 100%;
+	margin: 0px auto 0 auto;
+}
+
+.daily_menu_page.bites .bite_group_name {
+	text-align: center;
+	color: #84445e;
+	padding: 0px 0 0px 0;
+	margin: 0;
 	overflow: auto;
-	min-height: 500px;
-	background-image: url(../_images/ui/bites_cart.png);
-	background-repeat: no-repeat;
-	background-position: center 170px;
+	font-size: 3em;
+	font-weight: 700;
+	text-transform: uppercase;
 }
 
-.meal_container.bites .bite_message_container p {
-	color: #7D7D7D;
-	margin: 290px 0 0 0;
-}
-
-.meal_container.bites .menu_items_container {
+.daily_menu_page.bites .bite_container {
 	float: left;
-	min-height: 540px;
+	width: 135px;
+	min-height: 220px;
+	background-color: yellow;
 }
+
+.daily_menu_page.bites .bite_container img {
+	width: 135px;
+	height: auto;
+	background-color: #9F5D79;
+}
+
+
+/* -------------------- Daily Bites Menu Page > Create & Edit */
+
+.edit_menu_page .bite_group_container,
+.create_menu_page .bite_group_container {
+	overflow: auto; /* Scales the container to fit the floats. */
+	border-top: 5px solid #84445e;
+	padding: 60px 0;
+	width: 100%;
+	margin: 0px auto 0 auto;
+}
+
+.edit_menu_page .bite_group_name,
+.create_menu_page .bite_group_name {
+	text-align: center;
+	color: #84445e;
+	padding: 0px 0 0px 0;
+	margin: 0;
+	overflow: auto;
+	font-size: 3em;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.edit_menu_page .bite_container,
+.create_menu_page .bite_container {
+	float: left;
+	width: 135px;
+	min-height: 220px;
+	background-color: yellow;
+}
+
+.edit_menu_page .bite_container img,
+.create_menu_page .bite_container img {
+	width: 135px;
+	height: auto;
+	background-color: #9F5D79;
+}
+
+.edit_menu_page .add_bite,
+.edit_bites_page .add_bite {
+	clear: both;
+	display: block;
+	background-color: orange;
+	padding: 20px;
+	width: 100px;
+	text-align: center;
+	margin: 0 auto;
+	cursor: pointer;
+}
+
+.edit_menu_page .non_bites_form.bites_mode,
+.create_menu_page .non_bites_form.bites_mode {
+	display: none;
+}
+
+.edit_menu_page .bites_form,
+.create_menu_page .bites_form {
+	display: none;
+	margin: 0 auto;
+	width: 90%;
+	overflow: hidden;
+}
+
+.edit_menu_page .bites_form.bites_mode,
+.create_menu_page .bites_form.bites_mode {
+	display: block;
+}
+
 
 /* -------------------- Daily Bites Menu Page > Edit Global */
+
+.edit_bites_page .bite_group_container {
+	overflow: auto; /* Scales the container to fit the floats. */
+	border-top: 5px solid #84445e;
+	padding: 60px 0;
+	width: 100%;
+	margin: 0px auto 0 auto;
+}
+
+.edit_bites_page .bite_group_name {
+	text-align: center;
+	color: #84445e;
+	padding: 0px 0 0px 0;
+	margin: 0;
+	overflow: auto;
+	font-size: 3em;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.edit_bites_page .bite_container {
+	float: left;
+	width: 135px;
+	min-height: 220px;
+	background-color: yellow;
+}
+
+.edit_bites_page .bite_container img {
+	width: 135px;
+	height: auto;
+	background-color: #9F5D79;
+}
 
 .edit_bites_page .add_edit_bite_modal {
     width: 800px;
