@@ -519,6 +519,9 @@ class Menu {
 		$result = $this->get_meal_types();
 		$message = Messages::render();
 		$meal_id = $_GET['meal-id'];
+		if($meal_id == 5){
+			$html .= '<span class="bites">';	
+		}
 		$selected = "";
 		$client_id = $_GET['client-id'];
 		$service_date = $_GET['service-date'];
@@ -732,6 +735,7 @@ class Menu {
 			$html .= '<p class="no_menus">No menus found</p>';
 		}
 		$html .= '</form>';
+		$html .= '</span>';
 		return $html;
 	}
 
