@@ -519,9 +519,12 @@ class Menu {
 		$result = $this->get_meal_types();
 		$message = Messages::render();
 		$meal_id = $_GET['meal-id'];
+		$bites_mode = "non_bites";
 		if($meal_id == 5){
-			$html .= '<span class="bites">';	
+			$bites_mode = "bites";
 		}
+		$html .= "<span class=$bites_mode>";	
+		
 		$selected = "";
 		$client_id = $_GET['client-id'];
 		$service_date = $_GET['service-date'];
