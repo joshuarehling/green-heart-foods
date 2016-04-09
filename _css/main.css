@@ -15,6 +15,7 @@ COLORS
 #026753 - dark brand
 #AC2084 - magenta
 #EA2D4E - hot pink (alert)
+#FF7A18 - button orange
 
 FONT SIZES
 .8em
@@ -1679,23 +1680,23 @@ html > .daily_menu_print_menu_page {
 	margin: 60px 0;
 }
 
-.daily_menu_page.bites .server_and_meal_container {
+.daily_menu_page .bites .server_and_meal_container {
 	display: none;
 }
 
-.daily_menu_page.bites .date_and_meal {
+.daily_menu_page .bites .date_and_meal {
 	border-bottom: none;
 }
 
-.daily_menu_page.bites .bite_group_container {
+.daily_menu_page .bites .bite_group_container {
 	overflow: auto; /* Scales the container to fit the floats. */
 	border-top: 5px solid #84445e;
 	padding: 60px 0;
-	width: 100%;
+	width: 90%;
 	margin: 0px auto 0 auto;
 }
 
-.daily_menu_page.bites .bite_group_name {
+.daily_menu_page .bites .bite_group_name {
 	text-align: center;
 	color: #84445e;
 	padding: 0px 0 0px 0;
@@ -1706,21 +1707,50 @@ html > .daily_menu_print_menu_page {
 	text-transform: uppercase;
 }
 
-.daily_menu_page.bites .bite_container {
+.daily_menu_page .bites .bite_container {
 	float: left;
 	width: 135px;
 	min-height: 220px;
+	margin: 30px 30px 0 0;
 	background-color: yellow;
 }
 
-.daily_menu_page.bites .bite_container img {
+.daily_menu_page .bites .bite_container img {
 	width: 135px;
 	height: auto;
 	background-color: #9F5D79;
 }
 
+.daily_menu_page .bites .bite_container p {
+	font-weight: 700;
+	font-size: .8em;
+	color: #7D7D7D;
+}
+
+.daily_menu_page .bites .bite_container p.attributes_and_allergens {
+	color: #A3A6AF;
+}
 
 /* -------------------- Daily Bites Menu Page > Create & Edit */
+
+
+.edit_menu_page .non_bites_form.bites_mode,
+.create_menu_page .non_bites_form.bites_mode {
+	display: none;
+}
+
+.edit_menu_page .bites_form,
+.create_menu_page .bites_form {
+	display: none;
+	margin: 0 auto;
+	width: 90%;
+	overflow: hidden;
+}
+
+.edit_menu_page .bites_form.bites_mode,
+.create_menu_page .bites_form.bites_mode {
+	display: block;
+}
 
 .edit_menu_page .bite_group_container,
 .create_menu_page .bite_group_container {
@@ -1758,34 +1788,16 @@ html > .daily_menu_print_menu_page {
 	background-color: #9F5D79;
 }
 
-.edit_menu_page .add_bite,
-.edit_bites_page .add_bite {
-	clear: both;
-	display: block;
-	background-color: orange;
-	padding: 20px;
-	width: 100px;
-	text-align: center;
-	margin: 0 auto;
-	cursor: pointer;
+.edit_menu_page .bite_container p,
+.create_menu_page .bite_container p {
+	font-weight: 700;
+	font-size: .8em;
+	color: #7D7D7D;
 }
 
-.edit_menu_page .non_bites_form.bites_mode,
-.create_menu_page .non_bites_form.bites_mode {
-	display: none;
-}
-
-.edit_menu_page .bites_form,
-.create_menu_page .bites_form {
-	display: none;
-	margin: 0 auto;
-	width: 90%;
-	overflow: hidden;
-}
-
-.edit_menu_page .bites_form.bites_mode,
-.create_menu_page .bites_form.bites_mode {
-	display: block;
+.edit_menu_page .bite_container p.attributes_and_allergens,
+.create_menu_page .bite_container p.attributes_and_allergens {
+	color: #A3A6AF;
 }
 
 
@@ -1795,8 +1807,9 @@ html > .daily_menu_print_menu_page {
 	overflow: auto; /* Scales the container to fit the floats. */
 	border-top: 5px solid #84445e;
 	padding: 60px 0;
-	width: 100%;
+	width: 90%;
 	margin: 0px auto 0 auto;
+	position: relative;
 }
 
 .edit_bites_page .bite_group_name {
@@ -1813,7 +1826,9 @@ html > .daily_menu_print_menu_page {
 .edit_bites_page .bite_container {
 	float: left;
 	width: 135px;
-	min-height: 220px;
+	margin: 30px 30px 0 0;
+	position: relative;
+	overflow: visible;
 	background-color: yellow;
 }
 
@@ -1823,13 +1838,105 @@ html > .daily_menu_print_menu_page {
 	background-color: #9F5D79;
 }
 
+.edit_bites_page p {
+	font-weight: 700;
+	font-size: .8em;
+	color: #7D7D7D;
+	display: block;
+}
+
+.edit_bites_page  p.attributes_and_allergens {
+	color: #A3A6AF;
+	display: block;
+	margin-bottom: 20px;
+}
+
+.edit_bites_page .edit_bite {
+	border: none;
+	background-color: #ff7a18;
+	color: #FFFFFF;
+	text-transform: uppercase;
+	font-size: 1em;
+	margin: 0 px;
+	padding: 10px 0;
+	text-align: center;
+	width: 100%;
+	display: inline-block;
+	position: absolute;
+	bottom: -45px;
+	cursor: pointer;
+}
+
+.edit_bites_page .add_bite {
+	cursor: pointer;
+}
+
 .edit_bites_page .add_edit_bite_modal {
+	opacity: .95;
+    width: 100%;
+    height: 100%;
+    background-color: #7D7D7D;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.edit_bites_page .add_edit_bite_modal_content {
+	opacity: 1;
     width: 800px;
-    height: 800px;
-    background-color: #ccc;
+	overflow: auto;
+    background-color: #FFFFFF;
     position: absolute;
     top: 50%;
     left: 50%;
     margin-left: -400px;
     margin-top: -400px;
+	text-align: center;
+	padding: 0 0 60px 0;
+}
+
+.edit_bites_page .add_edit_bite_modal_content .close_button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 60px;
+	height: 60px;
+	background-image: url(../_images/ui/close_button.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	cursor: pointerl
+}
+
+.edit_bites_page .add_edit_bite_modal_content .delete_button {
+	border: none;
+	background-color: #ff7a18;
+	color: #FFFFFF;
+	text-transform: uppercase;
+	font-size: 2em;
+	margin: 60px auto 60px auto;
+	padding: 20px 0;
+	display: block;
+	text-align: center;
+	width: 300px;
+	display: inline-block;
+}
+
+.edit_bites_page .add_edit_bite_modal_content .cancel_button {
+	margin-top: 60px;
+}
+
+.edit_bites_page .add_edit_bite_modal_content .fake_hr {
+	height: 5px;
+	background-color: #84445e;
+	width: 90%;
+	margin: 0 auto;
+}
+
+.edit_bites_page .add_edit_bite_modal_content .edit_bites_form {
+	text-align: center;
+}
+.edit_bites_page .add_edit_bite_modal_content img {
+	width: 135px;
+	height: auto;
+	margin: 0 auto;
 }

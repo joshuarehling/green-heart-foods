@@ -5,11 +5,11 @@
 			8AM-3PM
 		</p>-->
 		<p class="location">
-			<a href="https://www.google.com/maps/place/3321+20th+St,+San+Francisco,+CA+94110/@37.759612,-122.4168417,17z/data=!4m2!3m1!1s0x808f7e3983f9e7bb:0x8fbd9d2d12018351" target="_blank">1069 Pennsylvania Ave<br />
+			<a href="https://www.google.com/maps/place/1069+Pennsylvania+Ave,+San+Francisco,+CA+94107/@37.752975,-122.394533,17z/data=!3m1!4b1!4m2!3m1!1s0x808f7fb037c51099:0x6ecedf417fca2a51" target="_blank">1069 Pennsylvania Ave<br />
 			San Francisco, CA 94107</a>
 		</p>
 		<p class="contact">
-			<a href="tel:+4158008910">415-728-1089</a><br />
+			<a href="tel:+4157291089">415-729-1089</a><br />
 			<a href="mailto:info@greenheartfoods.com">info@greenheartfoods.com</a>
 		</p>
 		<ul>
