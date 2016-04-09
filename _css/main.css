@@ -1364,6 +1364,10 @@ footer .contact a {
 	text-align: center;
 }
 
+.create_menu_page fieldset.hidden {
+	display: none;
+}
+
 .edit_menu_page fieldset h3,
 .create_menu_page fieldset h3 {
 	text-align: center;

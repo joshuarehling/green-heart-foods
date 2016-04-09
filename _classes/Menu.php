@@ -903,7 +903,7 @@ class Menu {
 		}
 		if($context == 'green_heart_foods_admin') {
 			$html .=    "<div class='button_container'>";
-			$html .=        '<a class="page_button" href="'.WEB_ROOT.'/admin/create-menu.php?client-id='.$client_id.'">Create Menu </a>';
+			$html .=        '<a class="page_button" href="'.WEB_ROOT.'/admin/create-menu.php?client-id='.$client_id.'&meal-id='.$url_meal_id.'">Create Menu </a>';
 			if($menus) {
 				$html .=     "<a class='page_button' href='".WEB_ROOT."/_actions/email-client.php?client-id=$client_id&start-date=$start_date'> Email Client</a><br />";    
 			}
@@ -1198,6 +1198,9 @@ class Menu {
 		$server_image_style = "";
 		// $all_bites = $this->get_all_bites();
 		$bites_mode = '';
+		if (isset($_GET['meal-id'])) {
+			$meal_id = $_GET['meal-id'];
+		}
 		if($meal_id == 5) {
 			$bites_mode = 'bites_mode';
 		}
@@ -1235,7 +1238,7 @@ class Menu {
 		} else {
 			$all_bites = $this->get_all_bites();
 			$mode = 'create';
-			$cancel_url = WEB_ROOT."/admin/weekly-menu.php?client-id=$client_id";
+			$cancel_url = WEB_ROOT."/admin/weekly-menu.php?client-id=$client_id&meal-id=$meal_id";
 			$form_action = '../_actions/create-menu.php';
 			$current_day = date('d', strtotime('+1 day'));
 			$meal_description = "";
