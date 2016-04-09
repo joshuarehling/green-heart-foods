@@ -635,6 +635,7 @@ footer .contact a {
 	overflow: auto;
 	width: 960px;
 	margin: 0 auto;
+	position: relative;
 }
 
 .yearly_menu_page .week_meal_container.list_view .left_column {
@@ -642,7 +643,7 @@ footer .contact a {
 	min-height: 630px;
 	float: left;
 	padding-right: 30px;
-	position: relative;
+	/*position: relative;*/
 }
 
 .yearly_menu_page .week_meal_container.list_view .left_column .thru_dates {
