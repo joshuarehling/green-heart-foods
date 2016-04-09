@@ -1547,7 +1547,7 @@ FORM;
 					$bites_html .= "</div>"; // End Bite Container
 				}	
 			}
-			$bites_html .= "<a data-bite-group-id='$bite_group_id' class='add_bite'>Add Bite</a>";
+			$bites_html .= "<a data-bite-group-id='$bite_group_id' class='add_bite page_button'>Add Bite</a>";
 			$bites_html .= "</div>"; // End Bites Group Container
 		}
 		return $bites_html;
@@ -1596,7 +1596,7 @@ FORM;
 						$bites_html .= "<div class='bite_container'>";
 						$bites_html .= "<img src='".WEB_ROOT."/_uploads/".$bite_image_name."' />";
 						$bites_html .= "<p>$bite_name</p>";
-						$bites_html .= "<p>$contains</p>";
+						$bites_html .= "<p class='attributes_and_allergens'>$contains</p>";
 						switch($mode) {
 							case 'edit-global-bites':
 								$bites_html .= "<a data-bite-id='$bite_id' class='edit_bite'>Edit</a>";
@@ -1642,7 +1642,7 @@ FORM;
 		$bite[0]['contains_dairy'] == 1 ? $contains_dairy_checked = "checked" : $contains_dairy_checked = "";
 		$html .= "<div class='add_edit_bite_modal'>";
 		$html .= "<div class='add_edit_bite_modal_content'>";
-		$html .= "<a class='close_button'>Close</a>";
+		$html .= "<a class='close_button'></a>";
 		$html .= "<a href='../_actions/delete-bite.php?bite-id=$bite_id' class='delete_button'>Delete</a>";
 		$html .= "<div class='fake_hr'></div>";
 		$html .= "<form class='edit_bite_form' action='../_actions/update-bite.php' method='post' enctype='multipart/form-data'>";
@@ -1669,9 +1669,10 @@ FORM;
 			</ul>
 		</div>
 CHECKBOXES;
-		$html .= "<a class='cancel_button'>Cancel</a>";
+		$html .= "<div class='fake_hr'></div>";
+		$html .= "<a class='cancel_button page_button'>Cancel</a>";
 		$html .= "<input type='hidden' name='bite_id' value='$bite_id'>";
-		$html .= "<input type='submit' class='save_button' value='Save'>";
+		$html .= "<input type='submit' class='save_button page_button' value='Save'>";
 		$html .= "</form>";
 		$html .= "</div>";
 		$html .= "</div>";
@@ -1706,6 +1707,7 @@ CHECKBOXES;
 			</ul>
 		</div>
 CHECKBOXES;
+		$html .= "<div class='fake_hr'></div>";
 		$html .= "<a class='cancel_button'>Cancel</a>";
 		$html .= "<input type='hidden' name='bite_group_id' value='$bite_group_id'>";
 		$html .= "<input type='submit' class='save_button' value='Save'>";
