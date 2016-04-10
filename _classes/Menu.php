@@ -611,6 +611,7 @@ class Menu {
 					$current_bite_group_id = $result[$i]['bite_group_id'];
 					
 					if($current_bite_group_id != $previous_bite_group_id){
+						$html .= "<div class='bite_group_container_outer'>";
 						$html .= "<div class='bite_group_container'>";
 						$html .= "<h2 class='bite_group_name'>".$result[$i]['bite_group_name']."</h2>";
 						for($j=0; $j<$result_count; $j++) {
@@ -627,6 +628,7 @@ class Menu {
 							}
 						}
 						$previous_bite_group_id = $current_bite_group_id;
+						$html .= "</div>";
 						$html .= "</div>";
 					}
 				}
@@ -988,8 +990,10 @@ class Menu {
 								$html .= "<div class='left_and_right_column $view_type'>";
 								$html .=    "<div class='left_column'>";
 								$html .=        "<h2 class='thru_dates'>".$thru_dates."</h2>";
-								$html .=        "<h3 class='meal_name'>".$result[$j]['meal_name']."</h3>";    
-								$html .=        "<h4 class='hosted_by'>Hosted By ".$result[$j]['server_first_name']."</h4>";
+								$html .=        "<h3 class='meal_name'>".$result[$j]['meal_name']."</h3>";
+								if($result[$j]['meal_id'] != 5){
+									$html .=        "<h4 class='hosted_by'>Hosted By ".$result[$j]['server_first_name']."</h4>";
+								}
 								$html .=        "<a href='$view_link' class='view_link'>View</a>";
 								$html .=    "</div>";
 								$html .=    "<div class='right_column'>";
@@ -1456,11 +1460,11 @@ FORM;
 		}
 		$form .= "</div>"; // End non-bites form
 		$form .= "<div class='bites_form $bites_mode'>";
-		$form .= "<a href='".WEB_ROOT."/admin/edit-bites.php' class='edit_global_bites page_button'>Edit Global</a>";
+		$form .= "<a href='".WEB_ROOT."/admin/edit-bites.php?client-id=$client_id&service-date=$service_date' class='edit_global_bites page_button'>Edit Global</a>";
 		$form .= "<div class='fake_hr'></div>";
-		// if($meal_id == 5) {
+		//if($meal_id == 5) {
 			$form .= $this->build_bites_html($all_bites, $mode);
-		// }
+		//}
 		$number_of_bites = count($all_bites);
 		// $form .= $this->build_bites_html($all_bites, 'create');
 		// $number_of_bites = count($all_bites);
@@ -1517,8 +1521,11 @@ FORM;
 
 	public function get_edit_bites_page() {
 		$bites_html = "";
+		$client_id = $_GET['client-id'];
+		$service_date = $_GET['service-date'];
 		$bite_groups = $this->get_all_bites_and_groups();
 		for ($i=0; $i<count($bite_groups); $i++) { 
+			$bites_html .= "<div class='bite_group_container_outer'>";
 			$bites_html .= "<div class='bite_group_container'>";
 			$bites_html .= "<h2 class='bite_group_name'>".$bite_groups[$i]['bite_group_name']."</h2>"; 
 			$bite_group_id = $bite_groups[$i]['bite_group_id'];
@@ -1529,30 +1536,39 @@ FORM;
 					$bite_name = $bites[$j]['bite_name'];
 					$bite_image_name = $bites[$j]['image_name'];
 					$contains = "";
+					$allergens = "";
 					if ($bites[$j]['is_vegetarian'] == 1) 			$contains .= "Vegetarian, ";
 					if ($bites[$j]['is_vegan'] == 1) 				$contains .= "Vegan, ";
 					if ($bites[$j]['is_gluten_free'] == 1) 			$contains .= "Gluten-Free, ";
 					if ($bites[$j]['is_whole_grain'] == 1) 			$contains .= "Whole Grain, ";
-					if ($bites[$j]['contains_nuts'] == 1) 			$contains .= "Nuts, ";
-					if ($bites[$j]['contains_soy'] == 1) 			$contains .= "Soy, ";
-					if ($bites[$j]['contains_shellfish'] == 1) 		$contains .= "Shellfish, ";
-					if ($bites[$j]['contains_nightshades'] == 1) 	$contains .= "Nightshades, ";
-					if ($bites[$j]['contains_alcohol'] == 1) 		$contains .= "Alcohol, ";
-					if ($bites[$j]['contains_eggs'] == 1) 			$contains .= "Eggs, ";
-					if ($bites[$j]['contains_gluten'] == 1) 		$contains .= "Gluten, ";
-					if ($bites[$j]['contains_dairy'] == 1) 			$contains .= "Dairy, ";
-					$contains = trim($contains, ", ");
+					if ($bites[$j]['contains_nuts'] == 1) 			$allergens .= "Nuts, ";
+					if ($bites[$j]['contains_soy'] == 1) 			$allergens .= "Soy, ";
+					if ($bites[$j]['contains_shellfish'] == 1) 		$allergens .= "Shellfish, ";
+					if ($bites[$j]['contains_nightshades'] == 1) 	$allergens .= "Nightshades, ";
+					if ($bites[$j]['contains_alcohol'] == 1) 		$allergens .= "Alcohol, ";
+					if ($bites[$j]['contains_eggs'] == 1) 			$allergens .= "Eggs, ";
+					if ($bites[$j]['contains_gluten'] == 1) 		$allergens .= "Gluten, ";
+					if ($bites[$j]['contains_dairy'] == 1) 			$allergens .= "Dairy, ";
+					if($allergens != ""){
+						$allergens = trim($allergens, ", ");	
+					} else {
+						$contains = trim($contains, ", ");	
+					}
 					$bites_html .= "<div class='bite_container'>";
 					$bites_html .= "<img src='".WEB_ROOT."/_uploads/".$bite_image_name."' />";
 					$bites_html .= "<p>$bite_name</p>";
-					$bites_html .= "<p>$contains</p>";
+					$bites_html .= "<p>$contains<span class='allergy-alert'>$allergens</span></p>";
 					$bites_html .= "<a data-bite-id='$bite_id' class='edit_bite'>Edit</a>";
 					$bites_html .= "</div>"; // End Bite Container
 				}	
 			}
-			$bites_html .= "<a data-bite-group-id='$bite_group_id' class='add_bite page_button'>Add Bite</a>";
+			$bites_html .= "<a data-bite-group-id='$bite_group_id' class='add_bite'>Add Bite</a>";
 			$bites_html .= "</div>"; // End Bites Group Container
+			$bites_html .= "</div>"; // End Bites Group Container Outer
 		}
+		$bites_html .= '<div class="button_container">';
+		$bites_html .= '<a href="http://localhost/menu-manager/admin/edit-daily-menu.php?client-id=2&service-date=2016-04-10&meal-id=5" class="cancel_button page_button">Done</a>';
+		$bites_html .= '</div>';
 		return $bites_html;
 	}
 
@@ -1560,9 +1576,15 @@ FORM;
 		$number_of_bites = count($all_bites);
 		$bites_html = "";
 		$previous_bite_group_id = null;
+
+		// echo "<pre>";
+		// print_r($all_bites);
+		// echo "</pre>";
+
 		for ($i=0; $i < $number_of_bites; $i++) {
 			$current_bite_group_id = $all_bites[$i]['bite_group_id'];
 			if($current_bite_group_id != $previous_bite_group_id){
+				$bites_html .= "<div class='bite_group_container_outer'>";
 				$bites_html .= "<div class='bite_group_container'>";
 				$bites_html .= "<h2 class='bite_group_name'>".$all_bites[$i]['bite_group_name']."</h2>"; 
 				for ($j=0; $j < $number_of_bites; $j++) {
@@ -1583,37 +1605,43 @@ FORM;
 						// $bite_quantity = $all_bites[$j]['default_quantity'];
 						$bite_image_name = $all_bites[$j]['image_name'];
 						$contains = "";
+						$allergens = "";
 						if ($all_bites[$j]['is_vegetarian'] == 1) $contains .= "Vegetarian, ";
 						if ($all_bites[$j]['is_vegan'] == 1) $contains .= "Vegan, ";
 						if ($all_bites[$j]['is_gluten_free'] == 1) $contains .= "Gluten-Free, ";
 						if ($all_bites[$j]['is_whole_grain'] == 1) $contains .= "Whole Grain, ";
-						if ($all_bites[$j]['contains_nuts'] == 1) $contains .= "Nuts, ";
-						if ($all_bites[$j]['contains_soy'] == 1) $contains .= "Soy, ";
-						if ($all_bites[$j]['contains_shellfish'] == 1) $contains .= "Shellfish, ";
-						if ($all_bites[$j]['contains_nightshades'] == 1) $contains .= "Nightshades, ";
-						if ($all_bites[$j]['contains_alcohol'] == 1) $contains .= "Alcohol, ";
-						if ($all_bites[$j]['contains_eggs'] == 1) $contains .= "Eggs, ";
-						if ($all_bites[$j]['contains_gluten'] == 1) $contains .= "Gluten, ";
-						if ($all_bites[$j]['contains_dairy'] == 1) $contains .= "Dairy, ";
-						$contains = trim($contains, ", ");
+						if ($all_bites[$j]['contains_nuts'] == 1) $allergens .= "Nuts, ";
+						if ($all_bites[$j]['contains_soy'] == 1) $allergens .= "Soy, ";
+						if ($all_bites[$j]['contains_shellfish'] == 1) $allergens .= "Shellfish, ";
+						if ($all_bites[$j]['contains_nightshades'] == 1) $allergens .= "Nightshades, ";
+						if ($all_bites[$j]['contains_alcohol'] == 1) $allergens .= "Alcohol, ";
+						if ($all_bites[$j]['contains_eggs'] == 1) $allergens .= "Eggs, ";
+						if ($all_bites[$j]['contains_gluten'] == 1) $allergens .= "Gluten, ";
+						if ($all_bites[$j]['contains_dairy'] == 1) $allergens .= "Dairy, ";
+						if($allergens != ""){
+							$allergens = trim($allergens, ", ");	
+						} else {
+							$contains = trim($contains, ", ");	
+						}
 						$bites_html .= "<div class='bite_container'>";
 						$bites_html .= "<img src='".WEB_ROOT."/_uploads/".$bite_image_name."' />";
 						$bites_html .= "<p>$bite_name</p>";
-						$bites_html .= "<p class='attributes_and_allergens'>$contains</p>";
+						$bites_html .= "<p>$contains<span class='allergy-alert'>$allergens</span></p>";
 						switch($mode) {
 							case 'edit-global-bites':
 								$bites_html .= "<a data-bite-id='$bite_id' class='edit_bite'>Edit</a>";
 								break;
 							case 'edit':
 							case 'create':
-								$bites_html .= "<div class='plus_button'>+</div>";
-								$bites_html .= "<div class='minus_button'>-</div>";
+								$bites_html .= "<div class='quantity plus_button'>+</div>";
+								$bites_html .= "<div class='quantity minus_button'>-</div>";
 								$bites_html .= "<input type='text' class='bite_quantity' name='bite_quantity[]' value='$bite_quantity' />";
 								// $bites_html .= "<input type='text' class='bite_quantity' name='bite_quantity[$j]' value='$bite_quantity' />";
 								break;
 						}
 						$bites_html .= "<input type='hidden' name='bite_id[$j]' value='$bite_id' />";
 						$bites_html .= "</div>";
+						
 					}
 				}
 				switch($mode) {
@@ -1621,6 +1649,7 @@ FORM;
 						$bites_html .= "<a data-bite-group-id='$current_bite_group_id' class='add_bite'>Add Bite</a>";
 						break;
 				}
+				$bites_html .= "</div>";
 				$bites_html .= "</div>";
 			}
 			$previous_bite_group_id = $current_bite_group_id;
@@ -1645,7 +1674,7 @@ FORM;
 		$bite[0]['contains_dairy'] == 1 ? $contains_dairy_checked = "checked" : $contains_dairy_checked = "";
 		$html .= "<div class='add_edit_bite_modal'>";
 		$html .= "<div class='add_edit_bite_modal_content'>";
-		$html .= "<a class='close_button'></a>";
+		$html .= "<a class='close_button'>Close</a>";
 		$html .= "<a href='../_actions/delete-bite.php?bite-id=$bite_id' class='delete_button'>Delete</a>";
 		$html .= "<div class='fake_hr'></div>";
 		$html .= "<form class='edit_bite_form' action='../_actions/update-bite.php' method='post' enctype='multipart/form-data'>";
@@ -1672,10 +1701,9 @@ FORM;
 			</ul>
 		</div>
 CHECKBOXES;
-		$html .= "<div class='fake_hr'></div>";
-		$html .= "<a class='cancel_button page_button'>Cancel</a>";
+		$html .= "<a class='cancel_button'>Cancel</a>";
 		$html .= "<input type='hidden' name='bite_id' value='$bite_id'>";
-		$html .= "<input type='submit' class='save_button page_button' value='Save'>";
+		$html .= "<input type='submit' class='save_button' value='Save'>";
 		$html .= "</form>";
 		$html .= "</div>";
 		$html .= "</div>";
@@ -1710,7 +1738,6 @@ CHECKBOXES;
 			</ul>
 		</div>
 CHECKBOXES;
-		$html .= "<div class='fake_hr'></div>";
 		$html .= "<a class='cancel_button'>Cancel</a>";
 		$html .= "<input type='hidden' name='bite_group_id' value='$bite_group_id'>";
 		$html .= "<input type='submit' class='save_button' value='Save'>";

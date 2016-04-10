@@ -80,6 +80,32 @@ $(document).ready(function() {
 		}, 1000);
 	});
 
+
+	$('.create_and_edit_menu .bites_form .bite_container .quantity').click(function(event) {
+		var quantityContainer = $(this).parent().find('.bite_quantity');
+		var currentQuantity = $(this).parent().find('.bite_quantity').val();
+		if ($(this).hasClass('plus_button')) {
+			currentQuantity++;
+		} else if ($(this).hasClass('minus_button')) {
+			currentQuantity--;
+		}
+		if(currentQuantity < 0){
+			currentQuantity = 0;
+		}
+		quantityContainer.val(currentQuantity);
+		// fieldset_id++;
+		// active_fieldset = $('.create_menu_form').find("[data-fieldset-id='"+fieldset_id+"']");
+		// if(fieldset_id <= $('.meals_per_day').length) {
+		// 	active_fieldset.removeClass('hidden');	
+		// }
+		// if (fieldset_id == $('.meals_per_day').length-1) {
+		// 	$('.create_and_edit_menu .add_dish').fadeOut();
+		// }
+		// $('html, body').animate({
+		// 	scrollTop: active_fieldset.offset().top
+		// }, 1000);
+	});
+
 	/* 
 
 	Daily Menu Page 
