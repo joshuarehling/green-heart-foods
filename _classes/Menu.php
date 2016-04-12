@@ -1210,7 +1210,11 @@ class Menu {
 		}
 		if(isset($service_date) && isset($meal_id)) {
 			// $all_bites = $this->get_all_bites();
-			$all_bites = $this->get_daily_menu($client_id, $service_date, $meal_id);
+			if($meal_id == 5) {
+				$all_bites = $this->get_daily_menu($client_id, $service_date, $meal_id);	
+			} else {
+				$all_bites = null;
+			}
 			$mode = 'edit';
 			$cancel_url = WEB_ROOT."/admin/daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id";
 			$form_action = '../_actions/update-menu.php';
@@ -1567,7 +1571,7 @@ FORM;
 			$bites_html .= "</div>"; // End Bites Group Container Outer
 		}
 		$bites_html .= '<div class="button_container">';
-		$bites_html .= '<a href="http://localhost/menu-manager/admin/edit-daily-menu.php?client-id=2&service-date=2016-04-10&meal-id=5" class="cancel_button page_button">Done</a>';
+		$bites_html .= "<a href='".WEB_ROOT."/admin/edit-daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=5' class='cancel_button page_button'>Done</a>";
 		$bites_html .= '</div>';
 		return $bites_html;
 	}
@@ -1576,11 +1580,6 @@ FORM;
 		$number_of_bites = count($all_bites);
 		$bites_html = "";
 		$previous_bite_group_id = null;
-
-		// echo "<pre>";
-		// print_r($all_bites);
-		// echo "</pre>";
-
 		for ($i=0; $i < $number_of_bites; $i++) {
 			$current_bite_group_id = $all_bites[$i]['bite_group_id'];
 			if($current_bite_group_id != $previous_bite_group_id){
