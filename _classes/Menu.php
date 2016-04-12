@@ -866,7 +866,7 @@ class Menu {
 							} else {
 								$html .= '<p class="menu_item_name">'.$result[$j]['menu_item_name']."</p>";
 								$is_list = "";
-								$contains_list_prepend = "<span class='allergy-alert'>Contains ";
+								$contains_list_prepend = "<span class='allergy-alert'>";
 								$contains_list = $contains_list_prepend;
 								$result[$j]['is_vegetarian'] == 1 ? 		$is_list .= "Vegetarian, " : 			$is_list .= "";
 								$result[$j]['is_vegan'] == 1 ? 				$is_list .= "Vegan, " : 				$is_list .= "";
