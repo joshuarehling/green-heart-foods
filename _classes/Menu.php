@@ -284,7 +284,6 @@ class Menu {
 	}
 
 	public function add_bite() {
-		
 		$bite_group_id = $_POST['bite_group_id'];
 		$bite_image_name = $this->image->upload_image($_FILES, "bite_image_name");
 
@@ -745,7 +744,6 @@ class Menu {
 	}
 
 	public function get_weekly_menu_page($context) {
-
 		$last_week = date('Y-m-d', strtotime('Monday last week'));
 		$this_week = date('Y-m-d', strtotime('Monday this week'));
 		$next_week = date('Y-m-d', strtotime('Monday next week'));
@@ -1109,7 +1107,6 @@ class Menu {
 	}
 
 	public function approve_menu_from_client() {
-
 		$service_date = $_POST['service_date'];
 		$client_id = $_POST['client_id'];
 		$meal_id = $_POST['meal_id'];
@@ -1762,9 +1759,9 @@ CHECKBOXES;
 		$start_date_formatted = date('M d', strtotime($start_date));
 		$end_date_formatted = date('M d', strtotime($start_date . '+ 6 days'));
 		$html .= "<div class='print_header'>";
-		$html .= 	"<h1>".$client_name."</h1>";
-		$html .= 	"<h1>".$meal_name."</h1>";
-		$html .= 	"<h1>".$start_date_formatted." - ".$end_date_formatted."</h1>";
+		$html .= 	"<h1 class='client_name'>".$client_name."</h1>";
+		$html .= 	"<h1 class='meal_name'>".$meal_name."</h1>";
+		$html .= 	"<h1 class='date'>".$start_date_formatted." - ".$end_date_formatted."</h1>";
 		$html .= 	"<div class='green_heart_foods_logo'></div>";
 		$html .= "</div>";
 		$result = $this->get_weekly_menu_by_meal($client_id, $start_date, $context, $url_meal_id);
@@ -1818,7 +1815,7 @@ CHECKBOXES;
 		} else {
 			$html .= "<p class='no_menus'>No menus found</p>";
 		}
-		$html .= 	"<div class'address_bar'><span class='green_heart_foods_logo'></span><span class='green_heart_foods_url'>greenhreatfoods.com</span> 415-272-7307 info@greenheartfoods.com 3321 20th St, San Francisco, CA 94110</div>";
+		$html .= 	"<div class='address_bar'><span class='green_heart_foods_url'><img src='../_images/ui/ghf_print_footer.png'> greenheartfoods.com</span> 415-729-1089 &nbsp; info@greenheartfoods.com &nbsp; 1069 Pennsylvania Ave San Francisco, CA 94107</div>";
 		$html .= "</div>";			// End outside container
 		return $html;
 	}
