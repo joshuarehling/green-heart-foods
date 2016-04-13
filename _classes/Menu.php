@@ -1561,12 +1561,12 @@ FORM;
 					$bites_html .= "<div class='bite_container'>";
 					$bites_html .= "<img src='".WEB_ROOT."/_uploads/".$bite_image_name."' />";
 					$bites_html .= "<p>$bite_name</p>";
-					$bites_html .= "<p>$contains<span class='allergy-alert'>$allergens</span></p>";
+					$bites_html .= "<p class='attributes_and_allergens'>$contains<span class='allergy-alert'>$allergens</span></p>";
 					$bites_html .= "<a data-bite-id='$bite_id' class='edit_bite'>Edit</a>";
 					$bites_html .= "</div>"; // End Bite Container
 				}	
 			}
-			$bites_html .= "<a data-bite-group-id='$bite_group_id' class='add_bite'>Add Bite</a>";
+			$bites_html .= "<a data-bite-group-id='$bite_group_id' class='add_bite page_button'>Add Bite</a>";
 			$bites_html .= "</div>"; // End Bites Group Container
 			$bites_html .= "</div>"; // End Bites Group Container Outer
 		}
@@ -1625,13 +1625,14 @@ FORM;
 						$bites_html .= "<div class='bite_container'>";
 						$bites_html .= "<img src='".WEB_ROOT."/_uploads/".$bite_image_name."' />";
 						$bites_html .= "<p>$bite_name</p>";
-						$bites_html .= "<p>$contains<span class='allergy-alert'>$allergens</span></p>";
+						$bites_html .= "<p class='attributes_and_allergens'>$contains<span class='allergy-alert'>$allergens</span></p>";
 						switch($mode) {
 							case 'edit-global-bites':
 								$bites_html .= "<a data-bite-id='$bite_id' class='edit_bite'>Edit</a>";
 								break;
 							case 'edit':
 							case 'create':
+								$bites_html .= "<div class='quantity_group'>";
 								$bites_html .= "<div class='quantity plus_button'>+</div>";
 								$bites_html .= "<div class='quantity minus_button'>-</div>";
 								$bites_html .= "<input type='text' class='bite_quantity' name='bite_quantity[]' value='$bite_quantity' />";
@@ -1640,12 +1641,13 @@ FORM;
 						}
 						$bites_html .= "<input type='hidden' name='bite_id[$j]' value='$bite_id' />";
 						$bites_html .= "</div>";
+						$bites_html .= "</div>";
 						
 					}
 				}
 				switch($mode) {
 					case 'edit-global-bites':
-						$bites_html .= "<a data-bite-group-id='$current_bite_group_id' class='add_bite'>Add Bite</a>";
+						$bites_html .= "<a data-bite-group-id='$current_bite_group_id' class='add_bite page_button'>Add Bite</a>";
 						break;
 				}
 				$bites_html .= "</div>";
@@ -1673,14 +1675,14 @@ FORM;
 		$bite[0]['contains_dairy'] == 1 ? $contains_dairy_checked = "checked" : $contains_dairy_checked = "";
 		$html .= "<div class='add_edit_bite_modal'>";
 		$html .= "<div class='add_edit_bite_modal_content'>";
-		$html .= "<a class='close_button'>Close</a>";
+		$html .= "<a class='close_button'></a>";
 		$html .= "<a href='../_actions/delete-bite.php?bite-id=$bite_id' class='delete_button'>Delete</a>";
 		$html .= "<div class='fake_hr'></div>";
 		$html .= "<form class='edit_bite_form' action='../_actions/update-bite.php' method='post' enctype='multipart/form-data'>";
 		$html .= "<img src='".WEB_ROOT."/_uploads/".$bite[0]['image_name']."' />";
-		$html .= "<input name='bite_image_name' type='file' />";
-		$html .= "<input name='bite_name' type='text' value='".$bite[0]['bite_name']."'/>";
-		$html .= "<input name='default_quantity' type='text' value='".$bite[0]['default_quantity']."'/>";
+		$html .= "<input class='bite_image_name' name='bite_image_name' type='file' />";
+		$html .= "<input class='bite_name' name='bite_name' type='text' value='".$bite[0]['bite_name']."'/>";
+		$html .= "<input class='default_quantity' name='default_quantity' type='text' value='".$bite[0]['default_quantity']."'/>";
 		$html .= "<input type='hidden' name='bite_image_name_original' value='".$bite[0]['image_name']."'/>";
 		$html .= <<<CHECKBOXES
 		<div class="checkbox_container">
@@ -1700,9 +1702,9 @@ FORM;
 			</ul>
 		</div>
 CHECKBOXES;
-		$html .= "<a class='cancel_button'>Cancel</a>";
+		$html .= "<a class='cancel_button page_button'>Cancel</a>";
 		$html .= "<input type='hidden' name='bite_id' value='$bite_id'>";
-		$html .= "<input type='submit' class='save_button' value='Save'>";
+		$html .= "<input type='submit' class='save_button page_button' value='Save'>";
 		$html .= "</form>";
 		$html .= "</div>";
 		$html .= "</div>";
@@ -1713,12 +1715,12 @@ CHECKBOXES;
 		$html = "";
 		$html .= "<div class='add_edit_bite_modal'>";
 		$html .= "<div class='add_edit_bite_modal_content'>";
-		$html .= "<a class='close_button'>Close</a>";
+		$html .= "<a class='close_button'></a>";
 		$html .= "<form class='add_bite_form' action='../_actions/add-bite.php' method='post' enctype='multipart/form-data'>";
 		$html .= "<img class='bite-image' src='' />";
-		$html .= "<input name='bite_image_name' type='file' />";
-		$html .= "<input name='bite_name' type='text' value='Add Bite Name'/>";
-		$html .= "<input name='default_quantity' type='text' value='Enter Default Quantity'/>";
+		$html .= "<input class='bite_image_name' name='bite_image_name' type='file' />";
+		$html .= "<input class='bite_name' name='bite_name' type='text' value='Add Bite Name'/>";
+		$html .= "<input class='default_quantity' name='default_quantity' type='text' value='Enter Default Quantity'/>";
 		$html .= <<<CHECKBOXES
 		<div class="checkbox_container">
 			<ul>
@@ -1737,9 +1739,9 @@ CHECKBOXES;
 			</ul>
 		</div>
 CHECKBOXES;
-		$html .= "<a class='cancel_button'>Cancel</a>";
+		$html .= "<a class='cancel_button page_button'>Cancel</a>";
 		$html .= "<input type='hidden' name='bite_group_id' value='$bite_group_id'>";
-		$html .= "<input type='submit' class='save_button' value='Save'>";
+		$html .= "<input type='submit' class='save_button page_button' value='Save'>";
 		$html .= "</form>";
 		$html .= "</div>";
 		$html .= "</div>";

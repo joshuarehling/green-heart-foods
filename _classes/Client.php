@@ -330,12 +330,12 @@ class Client {
                 <input name='general_password' type='text' value='$general_password' placeholder=""/>
             </fieldset>
 
-            <fieldset>
+            <fieldset class='number_of_meals'>
                 <label>Number of Items Per Meal</label>
                 <input name='meals_per_day' type='text' value='$meals_per_day' placeholder="Enter Number"/>
             </fieldset>
 
-            <fieldset class="checkbox_container">
+            <fieldset class="checkbox_container meal_types">
 				<label>Meals</label>
 				<ul>
 					<li><span class="move_box"><input class="styled" name='has_breakfast' type='checkbox' $has_breakfast_checked value="1" /></span><label class="box_label">Breakfast</label></li>
@@ -345,7 +345,7 @@ class Client {
 				</ul>
 			</fieldset>
 
-            <fieldset class="checkbox_container no_rule">
+            <fieldset class="checkbox_container no_rule active_client">
                 <ul>
 					<li class='active_client'><span class="move_box"><input class="styled" name='is_active' type='checkbox' $is_active_checked value="1" /></span><label class="box_label">Active Client</label></li>
 				</ul>

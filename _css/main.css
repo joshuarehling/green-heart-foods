@@ -1,4 +1,4 @@
-/* Updated 5 Apr 2016 by Josh Rehling */
+/* Updated 12 Apr 2016 by Josh Rehling */
 
 /*
 COLORS
@@ -467,6 +467,7 @@ footer .contact a {
 	overflow: auto;
 	font-size: 3em;
 	font-weight: 700;
+	text-transform: uppercase;
 }
 
 .create_client_page .secondary_label,
@@ -477,7 +478,8 @@ footer .contact a {
 	padding: 0 0 0 30px;
 	margin: 60px auto 0 auto;
 	font-size: 2.2em;
-	font-weight: 400;
+	font-weight: 700;
+	text-transform: capitalize;
 }
 
 .create_client_page .header_logo label,
@@ -577,6 +579,28 @@ footer .contact a {
 .create_client_page li.active_client,
 .edit_client_page li.active_client {
 	width: 300px;
+}
+
+.create_client_page .button_container,
+.edit_client_page .button_container {
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+}
+
+.create_client_page footer,
+.edit_client_page footer {
+	margin-top: -5px;
+	padding-bottom: 200px;
+}
+
+.create_client_page fieldset.number_of_meals,
+.edit_client_page fieldset.number_of_meals,
+.create_client_page fieldset.meal_types,
+.edit_client_page fieldset.meal_types,
+.create_client_page fieldset.active_client,
+.edit_client_page fieldset.active_client {
+	display: none;
 }
 
 
@@ -885,6 +909,13 @@ footer .contact a {
 	color: #A7CD4D;
 }
 
+.weekly_menu_page .meal_container.breakfast .meal_description { color: #F39035; }
+.weekly_menu_page .meal_container.lunch .meal_description { color: #A7CD4D; }
+.weekly_menu_page .meal_container.dinner .meal_description { color: #9F5D79; }
+.weekly_menu_page .meal_container.snack .meal_description { color: #85D1EB; }
+.weekly_menu_page .meal_container.bites .meal_description { color: #4BB0EF; }
+.weekly_menu_page .meal_container.event .meal_description { color: #009FA3; }
+
 .weekly_menu_page .menu_items_container {
 	float: left;
 	min-height: 600px;
@@ -965,6 +996,37 @@ footer .contact a {
 
 /* -------------------- Weekly Menu Page > Print Placards */ 
 
+/* Menus */
+.weekly_menu_print_menu_page {
+	background-color: #ebebeb;
+	width: 612px;
+	height: 792px;
+	border: 1px solid #CCC;
+	padding: 0 60px;
+}
+
+.print_header .green_heart_foods_logo {
+	background-image: url(../_images/ui/email_logo.jpg);
+	background-position: 20px 20px;
+	background-repeat: no-repeat;
+	background-size: 2.6em;
+	width: 100%;
+	height: 100%;
+}
+
+.print_header h1 {
+	font-size: 3em;
+	background-color: #FFFFFF;
+	color: #a7a9b5;
+	color: #29b77a;
+	margin: 0;
+	padding: 0px 0 0px 0;
+	line-height: 1em;
+	text-align: left;
+	border-bottom: 5px solid green;
+}
+
+/* Placards */
 .weekly_menu_print_placards h1 {
 	margin: 0;
 	padding: 0;
@@ -1577,7 +1639,6 @@ html > .daily_menu_print_menu_page {
 	width: 100%;
 	font-size: 1.5em;
 	color: #29b77a;
-	background-color: #FFFFFF;
 }
 
 .daily_menu_print_menu_page .item_container {
@@ -1689,18 +1750,25 @@ html > .daily_menu_print_menu_page {
 	border-bottom: none;
 }
 
-.daily_menu_page .bites .bite_group_container {
+.daily_menu_page .bites .bite_group_container_outer {
 	overflow: auto; /* Scales the container to fit the floats. */
 	border-top: 5px solid #84445e;
 	padding: 60px 0;
 	width: 90%;
+	margin: 0px auto 0 auto;}
+
+.daily_menu_page .bites .bite_group_container {
+	overflow: auto;
+	width: 990px;
+	text-align: center;
+	padding-left: 30px;
 	margin: 0px auto 0 auto;
 }
 
 .daily_menu_page .bites .bite_group_name {
 	text-align: center;
 	color: #84445e;
-	padding: 0px 0 0px 0;
+	padding: 0px 30px 30px 0;
 	margin: 0;
 	overflow: auto;
 	font-size: 3em;
@@ -1713,7 +1781,7 @@ html > .daily_menu_print_menu_page {
 	width: 135px;
 	min-height: 220px;
 	margin: 30px 30px 0 0;
-	background-color: yellow;
+	text-align: left;
 }
 
 .daily_menu_page .bites .bite_container img {
@@ -1726,14 +1794,15 @@ html > .daily_menu_print_menu_page {
 	font-weight: 700;
 	font-size: .8em;
 	color: #7D7D7D;
+	padding-top: 5px;
 }
 
 .daily_menu_page .bites .bite_container p.attributes_and_allergens {
 	color: #A3A6AF;
+	padding-top: 5px;
 }
 
 /* -------------------- Daily Bites Menu Page > Create & Edit */
-
 
 .edit_menu_page .non_bites_form.bites_mode,
 .create_menu_page .non_bites_form.bites_mode {
@@ -1744,7 +1813,7 @@ html > .daily_menu_print_menu_page {
 .create_menu_page .bites_form {
 	display: none;
 	margin: 0 auto;
-	width: 90%;
+	width: 100%;
 	overflow: hidden;
 }
 
@@ -1753,12 +1822,21 @@ html > .daily_menu_print_menu_page {
 	display: block;
 }
 
-.edit_menu_page .bite_group_container,
-.create_menu_page .bite_group_container {
-	overflow: auto; /* Scales the container to fit the floats. */
+.edit_menu_page .bite_group_container_outer,
+.create_menu_page .bite_group_container_outer {
+	overflow: auto;
 	border-top: 5px solid #84445e;
 	padding: 60px 0;
-	width: 100%;
+	width: 90%;
+	margin: 0px auto 0 auto;
+}
+
+.edit_menu_page .bite_group_container,
+.create_menu_page .bite_group_container {
+	overflow: auto;
+	width: 990px;
+	text-align: center;
+	padding-left: 30px;
 	margin: 0px auto 0 auto;
 }
 
@@ -1766,7 +1844,7 @@ html > .daily_menu_print_menu_page {
 .create_menu_page .bite_group_name {
 	text-align: center;
 	color: #84445e;
-	padding: 0px 0 0px 0;
+	padding: 0px 30px 30px 0px;
 	margin: 0;
 	overflow: auto;
 	font-size: 3em;
@@ -1779,7 +1857,8 @@ html > .daily_menu_print_menu_page {
 	float: left;
 	width: 135px;
 	min-height: 220px;
-	background-color: yellow;
+	margin: 30px 30px 0 0;
+	text-align: left;
 }
 
 .edit_menu_page .bite_container img,
@@ -1794,29 +1873,76 @@ html > .daily_menu_print_menu_page {
 	font-weight: 700;
 	font-size: .8em;
 	color: #7D7D7D;
+	padding-top: 5px;
 }
 
 .edit_menu_page .bite_container p.attributes_and_allergens,
 .create_menu_page .bite_container p.attributes_and_allergens {
 	color: #A3A6AF;
+	padding-top: 5px;
+}
+
+.edit_menu_page .bite_container .quantity_group,
+.create_menu_page .bite_container .quantity_group {
+	margin-top: 20px;
+	border: 1px solid #81445E;
+}
+
+.edit_menu_page .bite_container .plus_button,
+.create_menu_page .bite_container .plus_button {
+	background-color: #FF7A18;
+	color: #FFFFFF;
+	line-height: 32px;
+	width: 30px;
+	text-align: center;
+	cursor: pointer;	
+	float: left;
+}
+
+.edit_menu_page .bite_container .minus_button,
+.create_menu_page .bite_container .minus_button {
+	background-color: #FF7A18;
+	color: #FFFFFF;
+	line-height: 32px;
+	width: 30px;
+	text-align: center;
+	cursor: pointer;	
+	float: right;
+}
+
+.edit_menu_page .bite_container .bite_quantity,
+.create_menu_page .bite_container .bite_quantity {
+	color: #7D7D7D;
+	line-height: 30px;
+	width: 70px;
+	text-align: center;
+	border: none;
 }
 
 
 /* -------------------- Daily Bites Menu Page > Edit Global */
 
-.edit_bites_page .bite_group_container {
-	overflow: auto; /* Scales the container to fit the floats. */
+.edit_bites_page .bite_group_container_outer {
+	overflow: auto;
 	border-top: 5px solid #84445e;
 	padding: 60px 0;
 	width: 90%;
+	margin: -5px auto 0 auto;
+}
+
+.edit_bites_page .bite_group_container {
+	overflow: auto;
+	width: 990px;
+	text-align: center;
+	padding-left: 30px;
 	margin: 0px auto 0 auto;
-	position: relative;
+	background-color: yellow;
 }
 
 .edit_bites_page .bite_group_name {
 	text-align: center;
 	color: #84445e;
-	padding: 0px 0 0px 0;
+	padding: 0px 30px 30px 0;
 	margin: 0;
 	overflow: auto;
 	font-size: 3em;
@@ -1827,10 +1953,9 @@ html > .daily_menu_print_menu_page {
 .edit_bites_page .bite_container {
 	float: left;
 	width: 135px;
+	min-height: 220px;
 	margin: 30px 30px 0 0;
-	position: relative;
-	overflow: visible;
-	background-color: yellow;
+	text-align: left;
 }
 
 .edit_bites_page .bite_container img {
@@ -1844,12 +1969,13 @@ html > .daily_menu_print_menu_page {
 	font-size: .8em;
 	color: #7D7D7D;
 	display: block;
+	padding-top: 5px;
 }
 
 .edit_bites_page  p.attributes_and_allergens {
 	color: #A3A6AF;
 	display: block;
-	margin-bottom: 20px;
+	padding-top: 5px;
 }
 
 .edit_bites_page .edit_bite {
@@ -1858,18 +1984,18 @@ html > .daily_menu_print_menu_page {
 	color: #FFFFFF;
 	text-transform: uppercase;
 	font-size: 1em;
-	margin: 0 px;
+	margin: 20px 0px 0 0;
 	padding: 10px 0;
 	text-align: center;
 	width: 100%;
 	display: inline-block;
-	position: absolute;
-	bottom: -45px;
 	cursor: pointer;
 }
 
 .edit_bites_page .add_bite {
 	cursor: pointer;
+	width: 300px;
+	margin: 0 auto;
 }
 
 .edit_bites_page .add_edit_bite_modal {
@@ -1884,14 +2010,14 @@ html > .daily_menu_print_menu_page {
 
 .edit_bites_page .add_edit_bite_modal_content {
 	opacity: 1;
-    width: 800px;
+    width: 960px;
 	overflow: auto;
     background-color: #FFFFFF;
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-left: -400px;
-    margin-top: -400px;
+    margin-left: -480px;
+    margin-top: -550px;
 	text-align: center;
 	padding: 0 0 60px 0;
 }
@@ -1936,8 +2062,56 @@ html > .daily_menu_print_menu_page {
 .edit_bites_page .add_edit_bite_modal_content .edit_bites_form {
 	text-align: center;
 }
+
 .edit_bites_page .add_edit_bite_modal_content img {
-	width: 135px;
+	width: 344px;
+	background-color: #9F5D79;
 	height: auto;
-	margin: 0 auto;
+	margin: 60px auto 0 auto;
+	border: none;
 }
+
+.edit_bites_page .bite_image_name {
+	display: block;
+	margin: 0 auto 60px auto;
+	padding: 30px;
+	color: #9F5D79;
+	background-color: #81445E;
+}
+
+.edit_bites_page .bite_name {
+	border: 2px solid #84445e;
+	text-transform: uppercase;
+	font-size: 2em;
+	margin: 25px auto;
+	padding: 20px 30px 20px 30px;
+	display: block;
+	text-align: left;
+	width: 840px;
+	color: #84445e;
+}
+
+.edit_bites_page .default_quantity {
+	display: none;
+}
+
+.edit_bites_page .checkbox_container ul {
+	list-style: none;
+	overflow: auto;
+	margin:  40px 0 0 -10px;
+	color: #7D7D7D;
+}
+
+.edit_bites_page .checkbox_container li {
+	list-style: none;
+	float: left;
+	display: block;
+	width: 300px;
+	padding: 15px 0;
+}
+
+.edit_bites_page .checkbox_container label {
+	margin: 0 0 10px 0px;
+}
+
+
