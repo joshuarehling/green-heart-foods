@@ -80,6 +80,11 @@ $(document).ready(function() {
 		}, 1000);
 	});
 
+	$('.create_and_edit_menu .add_blank_dish').click(function(event) {
+		event.preventDefault();
+		$('form.add_blank_dish').submit();
+	});
+
 
 	$('.create_and_edit_menu .bites_form .bite_container .quantity').click(function(event) {
 		var quantityContainer = $(this).parent().find('.bite_quantity');

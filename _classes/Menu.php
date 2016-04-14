@@ -188,6 +188,27 @@ class Menu {
 		}
 	}
 
+	public function add_blank_item_to_menu() {
+		$service_date = $_POST['service_date'];
+		$meal_id = $_POST['meal_id'];
+		$client_id = $_POST['client_id'];
+		$arguments = array(
+			$service_date,
+			$meal_id,
+			$client_id,
+			$_POST['server_id'],
+			$_POST['item_status_id']
+		);
+		$query = $this->database_connection->prepare("INSERT INTO menu_items (service_date, meal_id, client_id, server_id, item_status_id) VALUES (?, ?, ?, ?, ?)");
+		$result = $query->execute($arguments);
+		if($query->rowCount() === 1){
+			Messages::add('The menu item has been added');
+			header("Location: ../admin/edit-daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id");
+		} else {
+			echo "Sorry, there was a problem.";
+		}
+	}
+
 	public function create_menu() {
 		$service_date = $_POST['service_year'].'-'.$_POST['service_month'].'-'.$_POST['service_day'];
 		$client_id = $_POST['client_id'];
@@ -438,6 +459,15 @@ class Menu {
 				WHERE 
 				menu_item_id = ?");
 			$result = $query->execute($arguments);
+
+
+			if($_POST['menu_item_name'][$i] == "") {
+				$arguments = array(
+					$menu_item_id
+				);
+				$query = $this->database_connection->prepare("DELETE FROM menu_items WHERE menu_item_id = ?"); 
+				$result = $query->execute($arguments);
+			}
 
 			if($i == $number_of_menu_items-1) {
 				Messages::add('The menu has been updated.');
@@ -1360,6 +1390,8 @@ class Menu {
 		
 		for ($i=0; $i < $number_of_meals; $i++) {
 			if($mode == 'edit') {
+				$server_id = $menu_items[$i]['server_id'];
+				$item_status_id = $menu_items[$i]['item_status_id'];
 				$item_name = $menu_items[$i]['menu_item_name'];
 				$ingredients = $menu_items[$i]['ingredients'];
 				$special_notes = $menu_items[$i]['special_notes'];
@@ -1506,7 +1538,17 @@ FORM;
 		$html .= $menu_item_hidden_ids;
 		$html .= "</form>";
 		if($mode == 'create') {
-			$html .= "<div class='add_dish_container'><a class='add_dish page_button'>Add Dish</a></div>";    
+			$html .= "<div class='add_dish_container'><a class='add_dish page_button'>Add Dish</a></div>";
+		} 
+		if($mode == 'edit') {
+			$html .= "<form class='add_blank_dish' action='../_actions/add-blank-item-to-menu.php' method='post'>";
+			$html .= "<input type='hidden' name='service_date' value='$service_date'>";
+			$html .= "<input type='hidden' name='meal_id' value='$meal_id'>";
+			$html .= "<input type='hidden' name='client_id' value='$client_id'>";
+			$html .= "<input type='hidden' name='server_id' value='$server_id'>";
+			$html .= "<input type='hidden' name='item_status_id' value='$item_status_id'>";
+			$html .= "</form>";
+			$html .= "<div class='add_dish_container'><a class='add_blank_dish page_button'>Add Dish</a></div>";
 		}
 		$html .= "<div class='button_container'>";
 		$html .=    "<p>";
@@ -1569,10 +1611,6 @@ FORM;
 		}
 		$bites_html .= '<div class="button_container">';
 		$bites_html .= "<a href='".WEB_ROOT."/admin/edit-daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=5' class='cancel_button page_button'>Done</a>";
-// <<<<<<< HEAD
-
-// =======
-// >>>>>>> origin/master
 		$bites_html .= '</div>';
 		return $bites_html;
 	}
