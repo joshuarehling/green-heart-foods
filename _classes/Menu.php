@@ -1567,7 +1567,8 @@ FORM;
 			$bites_html .= "</div>"; // End Bites Group Container Outer
 		}
 		$bites_html .= '<div class="button_container">';
-		$bites_html .= '<a href="http://localhost/menu-manager/admin/edit-daily-menu.php?client-id=2&service-date=2016-04-10&meal-id=5" class="cancel_button page_button">Done</a>';
+		$bites_html .= "<a href='".WEB_ROOT."/admin/edit-daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=5' class='cancel_button page_button'>Done</a>";
+
 		$bites_html .= '</div>';
 		return $bites_html;
 	}

@@ -8,23 +8,24 @@ class Database {
 
     	switch ($_SERVER['HTTP_HOST']) {
     		case 'localhost':
+                $host = "localhost";
+                $user = "root";
+                $password = "";
+                $database_name = 'green_heart_foods';
+                break;
+            case 'localhost:8888':
     			$host = "localhost";
 				$user = "root";
-				$password = "";
+				$password = "root";
                 $database_name = 'green_heart_foods';
     			break;
     		case 'greenheartfoods.com':
+            case 'www.greenheartfoods.com':
     			$host = "ghfAdmin.db.3683991.hostedresource.com";
 				$user = "ghfAdmin";
 				$password = "Green1980!";
                 $database_name = 'ghfAdmin';
     			break;
-            case 'www.greenheartfoods.com':
-                $host = "ghfAdmin.db.3683991.hostedresource.com";
-                $user = "ghfAdmin";
-                $password = "Green1980!";
-                $database_name = 'ghfAdmin';
-                break;
     		default:
     			die("Error connecting to database.");
     			break;
