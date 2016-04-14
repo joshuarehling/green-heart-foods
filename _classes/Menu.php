@@ -284,7 +284,6 @@ class Menu {
 	}
 
 	public function add_bite() {
-		
 		$bite_group_id = $_POST['bite_group_id'];
 		$bite_image_name = $this->image->upload_image($_FILES, "bite_image_name");
 
@@ -745,7 +744,6 @@ class Menu {
 	}
 
 	public function get_weekly_menu_page($context) {
-
 		$last_week = date('Y-m-d', strtotime('Monday last week'));
 		$this_week = date('Y-m-d', strtotime('Monday this week'));
 		$next_week = date('Y-m-d', strtotime('Monday next week'));
@@ -866,7 +864,7 @@ class Menu {
 							} else {
 								$html .= '<p class="menu_item_name">'.$result[$j]['menu_item_name']."</p>";
 								$is_list = "";
-								$contains_list_prepend = "<span class='allergy-alert'>Contains ";
+								$contains_list_prepend = "<span class='allergy-alert'>";
 								$contains_list = $contains_list_prepend;
 								$result[$j]['is_vegetarian'] == 1 ? 		$is_list .= "Vegetarian, " : 			$is_list .= "";
 								$result[$j]['is_vegan'] == 1 ? 				$is_list .= "Vegan, " : 				$is_list .= "";
@@ -1109,7 +1107,6 @@ class Menu {
 	}
 
 	public function approve_menu_from_client() {
-
 		$service_date = $_POST['service_date'];
 		$client_id = $_POST['client_id'];
 		$meal_id = $_POST['meal_id'];
@@ -1210,7 +1207,11 @@ class Menu {
 		}
 		if(isset($service_date) && isset($meal_id)) {
 			// $all_bites = $this->get_all_bites();
-			$all_bites = $this->get_daily_menu($client_id, $service_date, $meal_id);
+			if($meal_id == 5) {
+				$all_bites = $this->get_daily_menu($client_id, $service_date, $meal_id);	
+			} else {
+				$all_bites = null;
+			}
 			$mode = 'edit';
 			$cancel_url = WEB_ROOT."/admin/daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id";
 			$form_action = '../_actions/update-menu.php';
@@ -1557,18 +1558,21 @@ FORM;
 					$bites_html .= "<div class='bite_container'>";
 					$bites_html .= "<img src='".WEB_ROOT."/_uploads/".$bite_image_name."' />";
 					$bites_html .= "<p>$bite_name</p>";
-					$bites_html .= "<p>$contains<span class='allergy-alert'>$allergens</span></p>";
+					$bites_html .= "<p class='attributes_and_allergens'>$contains<span class='allergy-alert'>$allergens</span></p>";
 					$bites_html .= "<a data-bite-id='$bite_id' class='edit_bite'>Edit</a>";
 					$bites_html .= "</div>"; // End Bite Container
 				}	
 			}
-			$bites_html .= "<a data-bite-group-id='$bite_group_id' class='add_bite'>Add Bite</a>";
+			$bites_html .= "<a data-bite-group-id='$bite_group_id' class='add_bite page_button'>Add Bite</a>";
 			$bites_html .= "</div>"; // End Bites Group Container
 			$bites_html .= "</div>"; // End Bites Group Container Outer
 		}
 		$bites_html .= '<div class="button_container">';
 		$bites_html .= "<a href='".WEB_ROOT."/admin/edit-daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=5' class='cancel_button page_button'>Done</a>";
+// <<<<<<< HEAD
 
+// =======
+// >>>>>>> origin/master
 		$bites_html .= '</div>';
 		return $bites_html;
 	}
@@ -1577,11 +1581,6 @@ FORM;
 		$number_of_bites = count($all_bites);
 		$bites_html = "";
 		$previous_bite_group_id = null;
-
-		// echo "<pre>";
-		// print_r($all_bites);
-		// echo "</pre>";
-
 		for ($i=0; $i < $number_of_bites; $i++) {
 			$current_bite_group_id = $all_bites[$i]['bite_group_id'];
 			if($current_bite_group_id != $previous_bite_group_id){
@@ -1627,13 +1626,14 @@ FORM;
 						$bites_html .= "<div class='bite_container'>";
 						$bites_html .= "<img src='".WEB_ROOT."/_uploads/".$bite_image_name."' />";
 						$bites_html .= "<p>$bite_name</p>";
-						$bites_html .= "<p>$contains<span class='allergy-alert'>$allergens</span></p>";
+						$bites_html .= "<p class='attributes_and_allergens'>$contains<span class='allergy-alert'>$allergens</span></p>";
 						switch($mode) {
 							case 'edit-global-bites':
 								$bites_html .= "<a data-bite-id='$bite_id' class='edit_bite'>Edit</a>";
 								break;
 							case 'edit':
 							case 'create':
+								$bites_html .= "<div class='quantity_group'>";
 								$bites_html .= "<div class='quantity plus_button'>+</div>";
 								$bites_html .= "<div class='quantity minus_button'>-</div>";
 								$bites_html .= "<input type='text' class='bite_quantity' name='bite_quantity[]' value='$bite_quantity' />";
@@ -1642,12 +1642,13 @@ FORM;
 						}
 						$bites_html .= "<input type='hidden' name='bite_id[$j]' value='$bite_id' />";
 						$bites_html .= "</div>";
+						$bites_html .= "</div>";
 						
 					}
 				}
 				switch($mode) {
 					case 'edit-global-bites':
-						$bites_html .= "<a data-bite-group-id='$current_bite_group_id' class='add_bite'>Add Bite</a>";
+						$bites_html .= "<a data-bite-group-id='$current_bite_group_id' class='add_bite page_button'>Add Bite</a>";
 						break;
 				}
 				$bites_html .= "</div>";
@@ -1675,14 +1676,14 @@ FORM;
 		$bite[0]['contains_dairy'] == 1 ? $contains_dairy_checked = "checked" : $contains_dairy_checked = "";
 		$html .= "<div class='add_edit_bite_modal'>";
 		$html .= "<div class='add_edit_bite_modal_content'>";
-		$html .= "<a class='close_button'>Close</a>";
+		$html .= "<a class='close_button'></a>";
 		$html .= "<a href='../_actions/delete-bite.php?bite-id=$bite_id' class='delete_button'>Delete</a>";
 		$html .= "<div class='fake_hr'></div>";
 		$html .= "<form class='edit_bite_form' action='../_actions/update-bite.php' method='post' enctype='multipart/form-data'>";
 		$html .= "<img src='".WEB_ROOT."/_uploads/".$bite[0]['image_name']."' />";
-		$html .= "<input name='bite_image_name' type='file' />";
-		$html .= "<input name='bite_name' type='text' value='".$bite[0]['bite_name']."'/>";
-		$html .= "<input name='default_quantity' type='text' value='".$bite[0]['default_quantity']."'/>";
+		$html .= "<input class='bite_image_name' name='bite_image_name' type='file' />";
+		$html .= "<input class='bite_name' name='bite_name' type='text' value='".$bite[0]['bite_name']."'/>";
+		$html .= "<input class='default_quantity' name='default_quantity' type='text' value='".$bite[0]['default_quantity']."'/>";
 		$html .= "<input type='hidden' name='bite_image_name_original' value='".$bite[0]['image_name']."'/>";
 		$html .= <<<CHECKBOXES
 		<div class="checkbox_container">
@@ -1702,9 +1703,9 @@ FORM;
 			</ul>
 		</div>
 CHECKBOXES;
-		$html .= "<a class='cancel_button'>Cancel</a>";
+		$html .= "<a class='cancel_button page_button'>Cancel</a>";
 		$html .= "<input type='hidden' name='bite_id' value='$bite_id'>";
-		$html .= "<input type='submit' class='save_button' value='Save'>";
+		$html .= "<input type='submit' class='save_button page_button' value='Save'>";
 		$html .= "</form>";
 		$html .= "</div>";
 		$html .= "</div>";
@@ -1715,12 +1716,12 @@ CHECKBOXES;
 		$html = "";
 		$html .= "<div class='add_edit_bite_modal'>";
 		$html .= "<div class='add_edit_bite_modal_content'>";
-		$html .= "<a class='close_button'>Close</a>";
+		$html .= "<a class='close_button'></a>";
 		$html .= "<form class='add_bite_form' action='../_actions/add-bite.php' method='post' enctype='multipart/form-data'>";
 		$html .= "<img class='bite-image' src='' />";
-		$html .= "<input name='bite_image_name' type='file' />";
-		$html .= "<input name='bite_name' type='text' value='Add Bite Name'/>";
-		$html .= "<input name='default_quantity' type='text' value='Enter Default Quantity'/>";
+		$html .= "<input class='bite_image_name' name='bite_image_name' type='file' />";
+		$html .= "<input class='bite_name' name='bite_name' type='text' value='Add Bite Name'/>";
+		$html .= "<input class='default_quantity' name='default_quantity' type='text' value='Enter Default Quantity'/>";
 		$html .= <<<CHECKBOXES
 		<div class="checkbox_container">
 			<ul>
@@ -1739,9 +1740,9 @@ CHECKBOXES;
 			</ul>
 		</div>
 CHECKBOXES;
-		$html .= "<a class='cancel_button'>Cancel</a>";
+		$html .= "<a class='cancel_button page_button'>Cancel</a>";
 		$html .= "<input type='hidden' name='bite_group_id' value='$bite_group_id'>";
-		$html .= "<input type='submit' class='save_button' value='Save'>";
+		$html .= "<input type='submit' class='save_button page_button' value='Save'>";
 		$html .= "</form>";
 		$html .= "</div>";
 		$html .= "</div>";
@@ -1761,10 +1762,10 @@ CHECKBOXES;
 		$meal_name = $meal_type_query[0]['meal_name'];
 		$start_date_formatted = date('M d', strtotime($start_date));
 		$end_date_formatted = date('M d', strtotime($start_date . '+ 6 days'));
-		$html .= "<div class='print_header'>";
-		$html .= 	"<h1>".$client_name."</h1>";
-		$html .= 	"<h1>".$meal_name."</h1>";
-		$html .= 	"<h1>".$start_date_formatted." - ".$end_date_formatted."</h1>";
+		$html .= "<div class='print_header $meal_name'>";
+		$html .= 	"<h1 class='client_name'>".$client_name."</h1>";
+		$html .= 	"<h1 class='meal_name'>".$meal_name."</h1>";
+		$html .= 	"<h1 class='date'>".$start_date_formatted." - ".$end_date_formatted."</h1>";
 		$html .= 	"<div class='green_heart_foods_logo'></div>";
 		$html .= "</div>";
 		$result = $this->get_weekly_menu_by_meal($client_id, $start_date, $context, $url_meal_id);
@@ -1818,7 +1819,7 @@ CHECKBOXES;
 		} else {
 			$html .= "<p class='no_menus'>No menus found</p>";
 		}
-		$html .= 	"<div class'address_bar'><span class='green_heart_foods_logo'></span><span class='green_heart_foods_url'>greenhreatfoods.com</span> 415-272-7307 info@greenheartfoods.com 3321 20th St, San Francisco, CA 94110</div>";
+		$html .= 	"<div class='address_bar'><span class='green_heart_foods_url'><img src='../_images/ui/ghf_print_footer.png'> greenheartfoods.com</span> 415-729-1089 &nbsp; info@greenheartfoods.com &nbsp; 1069 Pennsylvania Ave San Francisco, CA 94107</div>";
 		$html .= "</div>";			// End outside container
 		return $html;
 	}
