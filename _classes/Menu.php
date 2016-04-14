@@ -1758,7 +1758,7 @@ CHECKBOXES;
 		$meal_name = $meal_type_query[0]['meal_name'];
 		$start_date_formatted = date('M d', strtotime($start_date));
 		$end_date_formatted = date('M d', strtotime($start_date . '+ 6 days'));
-		$html .= "<div class='print_header'>";
+		$html .= "<div class='print_header $meal_name'>";
 		$html .= 	"<h1 class='client_name'>".$client_name."</h1>";
 		$html .= 	"<h1 class='meal_name'>".$meal_name."</h1>";
 		$html .= 	"<h1 class='date'>".$start_date_formatted." - ".$end_date_formatted."</h1>";

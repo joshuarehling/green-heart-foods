@@ -998,13 +998,6 @@ footer .contact a {
 
 /* Menus */
 
-html { /* just inuse while styling */
-	/*background-image: url(../_images/weekly_print_menu_fpo.png);
-	background-position: center top;
-	background-repeat: no-repeat;
-	background-size: 792px 1025px;*/
-}
-
 .weekly_menu_print_menu_page {
 	background-color: #FFFFFF;
 	width: 632px;
@@ -1038,6 +1031,13 @@ html { /* just inuse while styling */
 	text-align: left;
 }
 
+.print_header.Breakfast h1 { color: #F39035; }
+.print_header.Lunch h1 { color: #A7CD4D; }
+.print_header.Dinner h1 { color: #9F5D79; }
+.print_header.Snack h1 { color: #85D1EB; }
+.print_header.Bite h1 { color: #4BB0EF; }
+.print_header.Event h1 { color: #009FA3; }
+
 .print_header h1.meal_name {
 	color: #7D7D7D;
 }
@@ -1048,6 +1048,13 @@ html { /* just inuse while styling */
 	border-bottom: 3px solid #A7CD4D;
 	margin-bottom: 25px;
 }
+
+.print_header.Breakfast h1.date { border-bottom: 3px solid #F39035; }
+.print_header.Lunch h1.date { border-bottom: 3px solid #A7CD4D; }
+.print_header.Dinner h1.date { border-bottom: 3px solid #9F5D79; }
+.print_header.Snack h1.date { border-bottom: 3px solid #85D1EB; }
+.print_header.Bite h1.date { border-bottom: 3px solid #4BB0EF; }
+.print_header.Event h1.date { border-bottom: 3px solid #009FA3; }
 
 .weekly_menu_print_menu_page .meal_container {
 	font-size: .8em;
@@ -1060,6 +1067,13 @@ html { /* just inuse while styling */
 	color: #A7CD4D;
 	margin-top: 5px;
 }
+
+.weekly_menu_print_menu_page .meal_container.breakfast .day_of_the_week { color: #F39035; }
+.weekly_menu_print_menu_page .meal_container.lunch .day_of_the_week { color: #A7CD4D; }
+.weekly_menu_print_menu_page .meal_container.dinner .day_of_the_week { color: #9F5D79; }
+.weekly_menu_print_menu_page .meal_container.snack .day_of_the_week { color: #85D1EB; }
+.weekly_menu_print_menu_page .meal_container.bite .day_of_the_week { color: #4BB0EF; }
+.weekly_menu_print_menu_page .meal_container.event .day_of_the_week { color: #009FA3; }
 
 .weekly_menu_print_menu_page .meal_container .menu_item_name {
 	/*display: inline-block;
