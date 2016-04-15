@@ -1966,7 +1966,10 @@ CHECKBOXES;
 		$attributes_and_allergens = substr($attributes_and_allergens, 0, -2);
 		$attributes_and_allergens = ucwords($attributes_and_allergens);
 		$html_container .= "<p class='attributes_and_allergens'>".$attributes_and_allergens."</p>";
-		$html_container .= "<p class='special_notes'>".$current_result['special_notes']."</p>";
+		
+		if($current_result['special_notes'] != "") {
+			$html_container .= "<p class='special_notes'>".$current_result['special_notes']."</p>";
+		}
 		if($current_result['special_requests'] != "") {
 			$html_container .= "<p class='special_requests'>".$current_result['special_requests']."</p>";	
 		}
