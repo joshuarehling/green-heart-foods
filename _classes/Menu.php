@@ -826,7 +826,7 @@ class Menu {
 		$html .=    "<ul>";
 		$html .=        "<li class='left'><a class='print_link $show_hide' href='weekly-menu-print-menu.php?client-id=$client_id&start-date=$start_date&meal-id=$url_meal_id'>Print Menus</a></li>";
 		$html .=        "<li><h2>$start_date_formatted</h2></li>";
-		$html .=        "<li class='right'><a class='print_link $show_hide' href='weekly-menu-print-placards.php?client-id=$client_id&start-date=$start_date&meal-id=$url_meal_id'>Print Placards</a></li>";
+		$html .=        "<li class='right'><a class='print_link $show_hide placard_link' href='weekly-menu-print-placards.php?client-id=$client_id&start-date=$start_date&meal-id=$url_meal_id'>Print Placards</a></li>";
 		$html .=    "</ul>";
 		$html .= "</div>";
 		$service_date = null;

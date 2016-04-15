@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	$page_class = 'weekly_menu_page';
+	$page_class = 'weekly_menu_page client';
 	$page_title_detail = 'Weekly Menu';
 	require_once("../_config/config.php");
     require_once(SERVER_ROOT . "/_includes/restrict-access-client.php");
