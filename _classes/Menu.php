@@ -1883,11 +1883,11 @@ CHECKBOXES;
 				if($result[$i]['meal_id'] != 5) {
 					$meal_name = strtolower($result[$i]['meal_name']);
 					$html .= "<div class='meal_container $meal_name'>";
-					$html .= 	"<div class='green_heart_foods_logo'>GHF LOGO</div>";
+					$html .= 	"<div class='green_heart_foods_logo'></div>";
 					$html .= 	"<h1 class='menu_item_name'>".$result[$i]['menu_item_name']." </h1>";
 					$html .= 	"<h2 class='menu_item_ingredients'>".$result[$i]['ingredients']." </h2>";
 					$is_list = "";
-					$contains_list_prepend = "<span class='allergy-alert'>Contains ";
+					$contains_list_prepend = "<span class='allergy-alert'>";
 					$contains_list = $contains_list_prepend;
 					$result[$i]['is_vegetarian'] == 1 ? 		$is_list .= "Vegetarian, " : 			$is_list .= "";
 					$result[$i]['is_vegan'] == 1 ? 				$is_list .= "Vegan, " : 				$is_list .= "";
@@ -1917,7 +1917,7 @@ CHECKBOXES;
 			$html .= "<p class='no_menus'>No menus found</p>";
 		}
 		$html .= 	"<div class='meal_container blank unedited'>";
-		$html .= 		"<div class='green_heart_foods_logo'>GHF LOGO</div>";
+		$html .= 		"<div class='green_heart_foods_logo'></div>";
 		$html .= 		"<h1 contenteditable='true' class='menu_item_name editable'>[Custom Menu Item]</h1>";
 		$html .= 		"<h2 contenteditable='true' class='menu_item_ingredients editable'>[Custom Ingredients]</h2>";
 		$html .= 		"<p contenteditable='true' class='is_and_contains_list editable'>[Custom Contains List] <span class='allergy-alert editable'>[Custom Allergens List]</span></p>";

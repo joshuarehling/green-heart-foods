@@ -1,4 +1,4 @@
-/* Updated 14 Apr 2016 by Josh Rehling */
+/* Updated 15 Apr 2016 by Josh Rehling */
 
 /*
 COLORS
@@ -27,7 +27,6 @@ FONT SIZES
 3em (page title)
 13em (gigantic title)
 */
-
 
 /* -------------------- Redefine Global */
 
@@ -1116,50 +1115,123 @@ footer .contact a {
 }
 
 /* Placards */
-.weekly_menu_print_placards h1 {
-	margin: 0;
-	padding: 0;
-	font-size: 1.2em;
-	text-align: left;
-	color: #000;
-	padding-bottom: 0;
-	background-color: #fff;
-	margin-top: 10px;
-	font-weight:bold;
+
+html { /* only for FPO */
+	/*background-image: url(../_images/weekly_print_placards_fpo.png);
+	background-position: center top;
+	background-repeat: no-repeat;
+	background-size: 792px 1025px;*/
+}
+
+.weekly_menu_print_placards_page {
+	background-color: transparent;
+	width: 792px;
+	margin: 0 auto;
+}
+
+.weekly_menu_print_placards_page .main_container {
+	background-color: transparent;
+	width: 792px;
+	margin: 0 auto;
 }
 
 .weekly_menu_print_placards .outside_container {
-	overflow: auto;
+	width: 712px;
+	height: 980px;
+	padding: 45px 40px 0 40px;
+	position: relative;
+	margin: 0 auto;
+	background-color: #ebebeb;
 }
 
 .weekly_menu_print_placards .meal_container {
-	border:10px solid #ccc;
+	width: 355px;
+	height: 220px;
+	margin-right: 1px;
+	border-top: 7px solid #A7CD4D;
+	background-color: #FFFFFF;
+	position: relative;
 	float: left;
-	width: 600px;
-	height: 550px;
-	margin: 10px;
 }
+
+.weekly_menu_print_placards .meal_container.breakfast { border-top: 7px solid #F39035; }
+.weekly_menu_print_placards .meal_container.lunch { border-top: 7px solid #A7CD4D; }
+.weekly_menu_print_placards .meal_container.dinner { border-top: 7px solid #9F5D79; }
+.weekly_menu_print_placards .meal_container.snack { border-top: 7px solid #85D1EB; }
+.weekly_menu_print_placards .meal_container.bite { border-top: 7px solid #4BB0EF; }
+.weekly_menu_print_placards .meal_container.event { border-top: 7px solid #009FA3; }
 
 .weekly_menu_print_placards .meal_container.blank {
-	border:10px solid #ccc;
+	width: 355px;
+	height: 220px;
+	margin-right: 1px;
+	border-top: 7px solid #A7CD4D;
+	background-color: #FFFFFF;
+	position: relative;
 	float: left;
-	width: 600px;
-	height: 550px;
-	margin: 10px;
 }
 
-.weekly_menu_print_placards .address_bar {
-	clear: 
+.weekly_menu_print_placards .green_heart_foods_logo {
+	position: absolute;
+	top: 15px;
+	right: 10px;
+	background-image: url(../_images/ui/ghf_print_logo.png);
+	background-position: center top;
+	background-repeat: no-repeat;
+	background-size: 65px auto;
+	width: 65px;
+	height: 122px;
+}
+
+.weekly_menu_print_placards h1.menu_item_name {
+	font-size: 1.1em;
+	line-height: 1.2em;
+	text-align: left;
+	color: #7D7D7D;
+	padding: 0 30px 0 30px;
+	margin-top: 70px;
+	background-color: #FFFFFF;
+	text-transform: capitalize;
+}
+
+.weekly_menu_print_placards h2.menu_item_ingredients {
+	font-size: .6em;
+	text-align: left;
+	color: #A3A6AF;
+	padding: 0 30px 0 30px;
+	margin-top: 5px;
+	background-color: #FFFFFF;
+	text-transform: capitalize;
+}
+
+.weekly_menu_print_placards .is_and_contains_list {
+	font-size: .6em;
+	text-align: left;
+	color: #A3A6AF;
+	padding: 0 30px 0 30px;
+	margin-top: 5px;
+	background-color: #FFFFFF;
+}
+
+.weekly_menu_print_placards .plus_minus_container {
+	position: absolute;
+	top: 1px;
+	left: 1px;
 }
 
 .weekly_menu_print_placards .plus_minus_container a {
-	display: inline-block;
-	width: 50px;
-	height: 50px;
-	padding: 25px 0 0 40px;
-	cursor: pointer;
-	background-color: orange;
-	margin-left: 5px;
+	background-color: #FF7A18;
+	color: #FFFFFF;
+	line-height: 32px;
+	width: 30px;
+	text-align: center;
+	cursor: pointer;	
+	float: left;
+	margin-right: 1px;
+}
+
+.weekly_menu_print_placards .ninth {
+	page-break-before: always;
 }
 
 
@@ -1730,6 +1802,10 @@ html { /* only for FPO */
 	margin-top: 105px;
 }
 
+.daily_menu_print_menu_page h1.date {
+	margin-bottom: 30px;
+}
+
 .daily_menu_print_menu_page h2 {
 	padding: 0 0 15px 0;
 	width: 100%;
@@ -1909,6 +1985,7 @@ html { /* only for FPO */
 	color: #A3A6AF;
 	padding-top: 5px;
 }
+
 
 /* -------------------- Daily Bites Menu Page > Create & Edit */
 
