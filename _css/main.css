@@ -994,7 +994,7 @@ footer .contact a {
 }
 
 
-/* -------------------- Weekly Menu Page > Print Placards */ 
+/* -------------------- Weekly Menu Page > Print Menu & Placards */ 
 
 /* Menus */
 
@@ -1005,7 +1005,6 @@ footer .contact a {
 	border: 1px solid #CCC;
 	padding: 45px 80px 0 80px;
 	position: relative;
-	opacity: .7;
 	margin: 0 auto;
 }
 
@@ -1689,30 +1688,56 @@ footer .contact a {
 
 /* Menu */
 
+html {
+	/*background-color: #FFFFFF;
+	width: 632px;
+	height: 980px;
+	border: 1px solid #CCC;
+	padding: 45px 80px 0 80px;
+	position: relative;
+	opacity: .7;
+	margin: 0 auto;*/
+	background-image: url(../_images/daily_print_menu_fpo.png);
+	background-position: center top;
+	background-repeat: no-repeat;
+}
+
 html > .daily_menu_print_placards_page,
 html > .daily_menu_print_menu_page {
-	background-color: #FFFFFF;
-	text-transform: uppercase;
+	/*background-color: #FFFFFF;*/
 }
 
 .daily_menu_print_menu_page {
-	text-align: center;
-	font-size: .4em;
+	background-color: #FFFFFF;
+	width: 632px;
+	height: 980px;
+	border: 1px solid #CCC;
+	padding: 45px 80px 0 80px;
+	position: relative;
+	opacity: .7;
+	margin: 0 auto;
+}
+
+.daily_menu_print_menu_page .green-heart-foods-logo {
+	position: absolute;
+	top: 50px;
+	right: 80px;
+	background-image: url(../_images/ui/ghf_print_logo.png);
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: 175px auto;
+	width: 175px;
+	height: 122px;
 }
 
 .daily_menu_print_menu_page h1 {
-	font-size: 7em;
+	font-size: 3em;
 	background-color: #FFFFFF;
-	color: #a7a9b5;
-	color: #29b77a;
+	color: #A7CD4D;
 	margin: 0;
-	padding: 60px 0 0px 0;
+	padding: 0px 0 0px 0;
 	line-height: 1em;
-	background-image: url(../_images/ui/email_logo.jpg);
-	background-position: 20px 20px;
-	background-repeat: no-repeat;
-	background-size: 1.6em;
-	background-size: 2.6em;
+	text-align: left;
 }
 
 .daily_menu_print_menu_page h2 {

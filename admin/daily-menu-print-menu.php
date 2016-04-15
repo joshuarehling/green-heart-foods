@@ -38,7 +38,8 @@
             'contains_gluten',
             'contains_dairy'
         );
-		$html .= "<h2>Menu for ".date('F d, Y', strtotime($menu_items[0]['service_date']))."</h2>";
+		$html .= "<h1>Menu</h1>";
+		$html .= "<h1>".date('F d, Y', strtotime($menu_items[0]['service_date']))."</h1>";
 		for ($i=0; $i < count($menu_items); $i++) { 
 			$checkboxes = "";
 			if($menu_items[$i]['menu_item_name'] == "") {
