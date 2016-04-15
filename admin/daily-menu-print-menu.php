@@ -16,14 +16,12 @@
 ?>
 
 <div class="menu">
-	<div class="green-heart-foods-logo"></div>
-
-
 
 	<?php 
-
-		echo "<h1>".$menu_items[0]['company_name']."</h1>";
-		$html = "";
+	
+		$html = "<div class='print_header'>";
+		$html .= "<h1 class='client_name'>".$menu_items[0]['company_name']."</h1>";
+		$html .= "";
 		$item_attributes_array = array(
             'is_vegetarian', 
             'is_vegan', 
@@ -38,8 +36,12 @@
             'contains_gluten',
             'contains_dairy'
         );
-		$html .= "<h1>Menu</h1>";
-		$html .= "<h1>".date('F d, Y', strtotime($menu_items[0]['service_date']))."</h1>";
+		
+		$html .= "<h1 class='meal_name'>Menu</h1>";
+		$html .= "<h1 class='date'>".date('F d, Y', strtotime($menu_items[0]['service_date']))."</h1>";
+		$html .= "<div class='green_heart_foods_logo'></div>";
+		$html .= "</div>";
+
 		for ($i=0; $i < count($menu_items); $i++) { 
 			$checkboxes = "";
 			if($menu_items[$i]['menu_item_name'] == "") {
@@ -48,9 +50,9 @@
 				$class = "";
 			}
 			$html .= "<div class='item_container $class'>";
-			if(count($menu_items) < 7) {
+			/*if(count($menu_items) < 7) {
 				$html .= "<div class='like-heart'><img src='../_images/ui/favorite_off.png' /></div>";	
-			}
+			}*/
 			$html .= "<h3>".$menu_items[$i]['menu_item_name']."</h3>";
 			$html .= "<p>".$menu_items[$i]['ingredients']."</p>";
 			$first_allergy_alert = true;
@@ -58,7 +60,8 @@
                 if($menu_items[$i][$item_attributes_array[$j]] == 1) {
                     if(strrpos(ALLERGY_ALERT_ARRAY, $item_attributes_array[$j]) > -1) {
                     	if($first_allergy_alert) {
-                    	    $prepend_allery_list = "Contains";
+                    	   // $prepend_allery_list = "Contains";
+                    	    $prepend_allery_list = "";
                     	    $first_allergy_alert = false;
                     	} else {
                     	    $prepend_allery_list = "";
@@ -76,6 +79,9 @@
             $html .= "<p class='labels'>".ucwords($checkboxes)."</p>";
 			$html .= "</div>";
 		}
+
+		$html .= 	"<div class='address_bar'><span class='green_heart_foods_url'><img src='../_images/ui/ghf_print_footer.png'> greenheartfoods.com</span> 415-729-1089 &nbsp; info@greenheartfoods.com &nbsp; 1069 Pennsylvania Ave San Francisco, CA 94107</div>";
+
 		echo $html;
 	?>
 </div>

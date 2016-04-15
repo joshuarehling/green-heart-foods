@@ -1,4 +1,4 @@
-/* Updated 12 Apr 2016 by Josh Rehling */
+/* Updated 14 Apr 2016 by Josh Rehling */
 
 /*
 COLORS
@@ -30,6 +30,10 @@ FONT SIZES
 
 
 /* -------------------- Redefine Global */
+
+html {
+	background-color: #ebebeb; /* used for print margins */
+}
 
 body {
 	margin: 0;
@@ -318,6 +322,11 @@ footer .contact a {
 
 .allergy-alert {
 	color: #ed274e;
+}
+
+.client .placard_link {
+	visibility: hidden;
+	pointer-events: none;
 }
 
 /* Checkboxes & Radio */
@@ -1002,7 +1011,7 @@ footer .contact a {
 	background-color: #FFFFFF;
 	width: 632px;
 	height: 980px;
-	border: 1px solid #CCC;
+	/*border: 1px solid #CCC;*/
 	padding: 45px 80px 0 80px;
 	position: relative;
 	margin: 0 auto;
@@ -1688,37 +1697,24 @@ footer .contact a {
 
 /* Menu */
 
-html {
-	/*background-color: #FFFFFF;
-	width: 632px;
-	height: 980px;
-	border: 1px solid #CCC;
-	padding: 45px 80px 0 80px;
-	position: relative;
-	opacity: .7;
-	margin: 0 auto;*/
-	background-image: url(../_images/daily_print_menu_fpo.png);
+html { /* only for FPO */
+	/*background-image: url(../_images/daily_print_menu_fpo.png);
 	background-position: center top;
 	background-repeat: no-repeat;
-}
-
-html > .daily_menu_print_placards_page,
-html > .daily_menu_print_menu_page {
-	/*background-color: #FFFFFF;*/
+	background-size: 792px 1025px;*/
 }
 
 .daily_menu_print_menu_page {
 	background-color: #FFFFFF;
 	width: 632px;
 	height: 980px;
-	border: 1px solid #CCC;
+	/*border: 1px solid #CCC;*/
 	padding: 45px 80px 0 80px;
 	position: relative;
-	opacity: .7;
 	margin: 0 auto;
 }
 
-.daily_menu_print_menu_page .green-heart-foods-logo {
+.daily_menu_print_menu_page .green_heart_foods_logo {
 	position: absolute;
 	top: 50px;
 	right: 80px;
@@ -1730,14 +1726,8 @@ html > .daily_menu_print_menu_page {
 	height: 122px;
 }
 
-.daily_menu_print_menu_page h1 {
-	font-size: 3em;
-	background-color: #FFFFFF;
-	color: #A7CD4D;
-	margin: 0;
-	padding: 0px 0 0px 0;
-	line-height: 1em;
-	text-align: left;
+.daily_menu_print_menu_page h1.client_name {
+	margin-top: 105px;
 }
 
 .daily_menu_print_menu_page h2 {
@@ -1748,35 +1738,47 @@ html > .daily_menu_print_menu_page {
 }
 
 .daily_menu_print_menu_page .item_container {
-	border-bottom: 1px solid #ebebeb;
-	border: none;
-	padding: 30px 0 0 0;
-	width: 70%;
-	margin: 0 auto;
+	font-size: 1em;
+	color: #7D7D7D;
 }
 
 .daily_menu_print_menu_page h3 {
-	color: #7d7d7d;
-	font-size: 1.5em;
-	font-weight: 700;
-	line-height: 1em;
 }
 
 .daily_menu_print_menu_page p {
 	color: #a7a9b5;
-	font-size: 1em;
-	padding-top: 5px;
+	font-size: .7em;
+	margin: -15px 0 16px 0;
 	display: block;
 }
 
 .daily_menu_print_menu_page .labels {
-	color: #aad04e;
+	color: #A3A6AF;
 }
 
 .daily_menu_print_menu_page .like-heart img {
-	width: 4em;
+	/*width: 4em;
 	height: auto;
-	margin-bottom: 10px;
+	margin-bottom: 10px;*/
+}
+
+.daily_menu_print_menu_page .address_bar {
+	position: absolute;
+	bottom: 67px;
+	font-size: .5em;
+	color: #A7CD4D;
+}
+
+.daily_menu_print_menu_page .address_bar .green_heart_foods_url {
+	color: #026753;
+	margin-right: 10px;
+}
+
+.daily_menu_print_menu_page .address_bar .green_heart_foods_url img {
+	height: 1.4em;
+	width: auto;
+	position: relative;
+	top: 4px;
 }
 
 /* Placards */
