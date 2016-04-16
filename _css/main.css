@@ -2183,28 +2183,35 @@ html { /* only for FPO */
 	margin: 0 auto;
 }
 
+.edit_bites_page.no_scroll {
+	overflow-y: hidden;
+}
+
 .edit_bites_page .add_edit_bite_modal {
-	opacity: .95;
+	/*opacity: .95;*/
     width: 100%;
     height: 100%;
-    background-color: #7D7D7D;
+    /*background-color: #7D7D7D;*/
+    background-color: rgba(0, 0, 0, .6);
     position: fixed;
     top: 0;
     left: 0;
+    overflow-y: scroll;
 }
 
 .edit_bites_page .add_edit_bite_modal_content {
-	opacity: 1;
+	/*opacity: 1;*/
     width: 960px;
 	overflow: auto;
     background-color: #FFFFFF;
     position: absolute;
-    top: 50%;
+    top: 20%;
     left: 50%;
     margin-left: -480px;
-    margin-top: -550px;
+    /*margin-top: -550px;*/
 	text-align: center;
 	padding: 0 0 60px 0;
+	margin-bottom: 80px;
 }
 
 .edit_bites_page .add_edit_bite_modal_content .close_button {

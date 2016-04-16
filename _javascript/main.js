@@ -245,8 +245,10 @@ $(document).ready(function() {
 
 function load_modal(html){
 	$('.edit_bites_page').append(html);
+	$('.edit_bites_page').addClass('no_scroll');
 	$('.edit_bites_page .add_edit_bite_modal_content .close_button, .edit_bites_page .add_edit_bite_modal_content .cancel_button').click(function(event){
 		$('.add_edit_bite_modal').remove();
+		$('.edit_bites_page').removeClass('no_scroll');
 	});
 	// $('.edit_bite_form').submit(function(event){
 		// event.preventDefault();
