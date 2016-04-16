@@ -111,6 +111,11 @@ $(document).ready(function() {
 		// }, 1000);
 	});
 
+	$('.create_menu_page .cancel_button').click(function(event){
+		event.preventDefault();
+		window.history.back();
+	});
+
 	/* 
 
 	Daily Menu Page 
@@ -173,7 +178,8 @@ $(document).ready(function() {
 
 	/* Weekly Menu - Print Placards Page */ 
 
-	$('.weekly_menu_print_placards_page').on('click','.plus_minus_container a', {} ,function(e){
+	// $('.weekly_menu_print_placards_page').on('click','.plus_minus_container a', {} ,function(e){
+	$('.print_placards_page').on('click','.plus_minus_container a', {} ,function(e){
 		if($(event.target).hasClass('plus')) {
 			var meal_container_clone = $(this).closest('.meal_container').clone();
 			$(this).closest('.meal_container').after(meal_container_clone);

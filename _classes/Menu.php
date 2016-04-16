@@ -1862,6 +1862,13 @@ CHECKBOXES;
 		return $html;
 	}
 
+	/* 
+
+	This function can/should be updated to use the get_print_placards_page function 
+	It should be very easy - less than 5 minutes. 
+
+	*/
+
 	public function get_weekly_menu_print_placrds($context){
 		$html = "";
 		$start_date = $_GET['start-date'];
@@ -1928,6 +1935,82 @@ CHECKBOXES;
 		$html .= 	"</div>";
 		$html .= "</div>"; // End outside container
 		return $html;
+	}
+
+	public function get_print_placards_page() {
+		$html = "";
+		$client_id = $_GET['client-id'];
+		$client = new Client();
+		$result = $client->get_client($client_id);
+		$client_name = $result[0]['company_name'];
+		$web_root = WEB_ROOT;
+		if (isset($_GET['start-date'])) {
+			$start_date = $_GET['start-date'];
+			$start_date_formatted = date('M d', strtotime($start_date));
+			$end_date_formatted = date('M d', strtotime($start_date . '+ 6 days'));
+			$result = $this->get_weekly_menu($client_id, $start_date, $context);
+		} else if (isset($_GET['service-date'])) {
+			$service_date = $_GET['service-date'];
+			$meal_id = $_GET['meal-id'];
+			$result = $this->get_daily_menu($client_id, $service_date, $meal_id);
+		} else {
+			echo "Sorry, there was an error. Either the start-date or service-date are not set.";
+		}
+		$result_count = count($result);
+		$service_date = null;
+		$meal_id = null;
+		$additional_menu_items = array();
+		$html .= "<div class='outside_container'>";
+		if($result_count > 0) {
+			for ($i=0; $i < count($result); $i++) { 
+				if($result[$i]['meal_id'] != 5) {
+					$meal_name = strtolower($result[$i]['meal_name']);
+					$html .= "<div class='meal_container $meal_name'>";
+					$html .= 	"<div class='green_heart_foods_logo'></div>";
+					$html .= 	"<h1 class='menu_item_name'>".$result[$i]['menu_item_name']." </h1>";
+					$html .= 	"<h2 class='menu_item_ingredients'>".$result[$i]['ingredients']." </h2>";
+					$is_list = "";
+					$contains_list_prepend = "<span class='allergy-alert'>";
+					$contains_list = $contains_list_prepend;
+					$result[$i]['is_vegetarian'] == 1 ? 		$is_list .= "Vegetarian, " : 			$is_list .= "";
+					$result[$i]['is_vegan'] == 1 ? 				$is_list .= "Vegan, " : 				$is_list .= "";
+					$result[$i]['is_gluten_free'] == 1 ? 		$is_list .= "Gluten-Free, " : 			$is_list .= "";
+					$result[$i]['is_whole_grain'] == 1 ? 		$is_list .= "Whole Grain, " : 			$is_list .= "";
+					$result[$i]['contains_nuts'] == 1 ? 		$contains_list .= "Nuts, " : 			$contains_list .= "";
+					$result[$i]['contains_soy'] == 1 ? 			$contains_list .= "Soy, " : 			$contains_list .= "";
+					$result[$i]['contains_shellfish'] == 1 ? 	$contains_list .= "Shellfish, " : 		$contains_list .= "";
+					$result[$i]['contains_nightshades'] == 1 ? 	$contains_list .= "Nightshades, " : 	$contains_list .= "";
+					$result[$i]['contains_alcohol'] == 1 ? 		$contains_list .= "Alcohol, " : 		$contains_list .= "";
+					$result[$i]['contains_eggs'] == 1 ? 		$contains_list .= "Eggs, " : 			$contains_list .= "";
+					$result[$i]['contains_gluten'] == 1 ? 		$contains_list .= "Gluten, "  :	 		$contains_list .= "";
+					$result[$i]['contains_dairy'] == 1 ? 		$contains_list .= "Dairy, " : 			$contains_list .= "";
+					if($contains_list === $contains_list_prepend) {
+						$is_list = trim($is_list, ", ");
+						$contains_list = "";
+					}
+					$contains_list = trim($contains_list, " ,")."</span>";
+					$html .= "<p class='is_and_contains_list'>".$is_list." ".$contains_list."</p>";
+					$html .= "<div class='plus_minus_container'>";
+					$html .= 	"<a class='plus'>+</a><a class='minus'>-</a>";
+					$html .= "</div>";
+					$html .= "</div>"; // End meal container
+				}
+			}
+		} else {
+			$html .= "<p class='no_menus'>No menus found</p>";
+		}
+		$html .= 	"<div class='meal_container blank unedited'>";
+		$html .= 		"<div class='green_heart_foods_logo'></div>";
+		$html .= 		"<h1 contenteditable='true' class='menu_item_name editable'>[Custom Menu Item]</h1>";
+		$html .= 		"<h2 contenteditable='true' class='menu_item_ingredients editable'>[Custom Ingredients]</h2>";
+		$html .= 		"<p contenteditable='true' class='is_and_contains_list editable'>[Custom Contains List] <span class='allergy-alert editable'>[Custom Allergens List]</span></p>";
+		$html .= 		"<div class='plus_minus_container'>";
+		$html .= 			"<a class='plus'>+</a>";
+		$html .= 			"<a class='minus'>-</a>";
+		$html .= 		"</div>";
+		$html .= 	"</div>";
+		$html .= "</div>"; // End outside container
+		return $html;	
 	}
 
 	public function get_attributes_and_allergens($current_result) {
