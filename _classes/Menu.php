@@ -982,7 +982,7 @@ class Menu {
 					$previous_service_date = NULL;
 					$previous_meal_id = NULL;
 					$previous_week_start_date = "Rubbish";
-					$meal_types_displayed = [];
+					$meal_types_displayed = array();
 					for($j=0; $j<count($result); $j++) {
 						$current_service_date = $result[$j]['service_date'];
 						$current_meal_name = $result[$j]['meal_name'];
