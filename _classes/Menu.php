@@ -1884,9 +1884,16 @@ CHECKBOXES;
 		$html .= "<div class='outside_container'>";
 		if($result_count > 0) {
 			for ($i=0; $i < count($result); $i++) { 
+
+				if($i%9 == 8) {
+				    $ninth = 'ninth';
+				} else {
+				    $ninth = '';
+				}
+
 				if($result[$i]['meal_id'] != 5) {
 					$meal_name = strtolower($result[$i]['meal_name']);
-					$html .= "<div class='meal_container $meal_name'>";
+					$html .= "<div class='meal_container $meal_name $ninth'>";
 					$html .= 	"<div class='green_heart_foods_logo'></div>";
 					$html .= 	"<h1 class='menu_item_name'>".$result[$i]['menu_item_name']." </h1>";
 					$html .= 	"<h2 class='menu_item_ingredients'>".$result[$i]['ingredients']." </h2>";
