@@ -478,9 +478,6 @@ class Menu {
 	}
 
 	public function update_bite() {
-		echo "<pre>";
-		print_r($_FILES);
-		echo "</pre>";
 		$bite_id = $_POST['bite_id'];
 		if(!isset($_POST['is_vegetarian'])) 		$_POST['is_vegetarian'] = 0;
 		if(!isset($_POST['is_vegan'])) 				$_POST['is_vegan'] = 0;

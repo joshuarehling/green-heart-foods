@@ -330,6 +330,8 @@ class Client {
                 <input name='general_password' type='text' value='$general_password' placeholder=""/>
             </fieldset>
 
+            <!--
+
             <fieldset class='number_of_meals'>
                 <label>Number of Items Per Meal</label>
                 <input name='meals_per_day' type='text' value='$meals_per_day' placeholder="Enter Number"/>
@@ -350,6 +352,8 @@ class Client {
 					<li class='active_client'><span class="move_box"><input class="styled" name='is_active' type='checkbox' $is_active_checked value="1" /></span><label class="box_label">Active Client</label></li>
 				</ul>
             </fieldset>
+
+            -->
 
 			<div class="button_container">
             <input type="hidden" name="company_logo_large_original" value="$company_logo_large" />
