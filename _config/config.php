@@ -24,10 +24,8 @@ switch ($_SERVER['HTTP_HOST']) {
         define('SERVER_ROOT', $_SERVER['DOCUMENT_ROOT'].'/menu-manager');
         define('WEB_ROOT', '/menu-manager');
         break;
-    // case 'greenheartfoods.com':
-    // case 'www.greenheartfoods.com':
     case 'clients.greenheartfoods.com':
-        define('SERVER_ROOT', $_SERVER['DOCUMENT_ROOT']);
+        define('SERVER_ROOT', $_SERVER['DOCUMENT_ROOT']."/clients");
         define('WEB_ROOT', '');
         break;
     default:

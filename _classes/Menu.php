@@ -138,9 +138,9 @@ class Menu {
 			$meal_id
 		);
 		if($meal_id == 5){
-			$query = $this->database_connection->prepare("SELECT * FROM menu_items LEFT JOIN servers ON menu_items.server_id = servers.server_id  LEFT JOIN clients ON menu_items.client_id = clients.client_id LEFT JOIN bites on menu_items.bite_id = bites.bite_id LEFT JOIN bite_groups on bites.bite_group_id = bite_groups.bite_group_id WHERE menu_items.client_id = ? AND menu_items.service_date = ? AND menu_items.meal_id = ? ORDER BY bites.bite_group_id");
+			$query = $this->database_connection->prepare("SELECT * FROM menu_items LEFT JOIN servers ON menu_items.server_id = servers.server_id LEFT JOIN meals ON menu_items.meal_id = meals.meal_id LEFT JOIN clients ON menu_items.client_id = clients.client_id LEFT JOIN bites on menu_items.bite_id = bites.bite_id LEFT JOIN bite_groups on bites.bite_group_id = bite_groups.bite_group_id WHERE menu_items.client_id = ? AND menu_items.service_date = ? AND menu_items.meal_id = ? ORDER BY bites.bite_group_id");
 		} else {
-			$query = $this->database_connection->prepare("SELECT * FROM menu_items LEFT JOIN servers ON menu_items.server_id = servers.server_id  LEFT JOIN clients ON menu_items.client_id = clients.client_id WHERE menu_items.client_id = ? AND menu_items.service_date = ? AND menu_items.meal_id = ?");	
+			$query = $this->database_connection->prepare("SELECT * FROM menu_items LEFT JOIN servers ON menu_items.server_id = servers.server_id LEFT JOIN meals ON menu_items.meal_id = meals.meal_id LEFT JOIN clients ON menu_items.client_id = clients.client_id WHERE menu_items.client_id = ? AND menu_items.service_date = ? AND menu_items.meal_id = ?");	
 		}
 		
 		$query->execute($arguments);
@@ -1963,9 +1963,16 @@ CHECKBOXES;
 		$html .= "<div class='outside_container'>";
 		if($result_count > 0) {
 			for ($i=0; $i < count($result); $i++) { 
+
+				if($i%9 == 8) {
+				    $class = 'ninth';
+				} else {
+				    $class = '';
+				}
+
 				if($result[$i]['meal_id'] != 5) {
 					$meal_name = strtolower($result[$i]['meal_name']);
-					$html .= "<div class='meal_container $meal_name'>";
+					$html .= "<div class='meal_container $meal_name $class'>";
 					$html .= 	"<div class='green_heart_foods_logo'></div>";
 					$html .= 	"<h1 class='menu_item_name'>".$result[$i]['menu_item_name']." </h1>";
 					$html .= 	"<h2 class='menu_item_ingredients'>".$result[$i]['ingredients']." </h2>";

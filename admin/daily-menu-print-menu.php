@@ -37,7 +37,7 @@
             'contains_dairy'
         );
 		
-		$html .= "<h1 class='meal_name'>Menu</h1>";
+		$html .= "<h1 class='meal_name'>".$menu_items[0]['meal_name']." Menu</h1>";
 		$html .= "<h1 class='date'>".date('F d, Y', strtotime($menu_items[0]['service_date']))."</h1>";
 		$html .= "<div class='green_heart_foods_logo'></div>";
 		$html .= "</div>";
@@ -49,7 +49,8 @@
 			} else {
 				$class = "";
 			}
-			$html .= "<div class='item_container $class'>";
+			$meal_name = strtolower($menu_items[$i]['meal_name']);
+			$html .= "<div class='item_container $class $meal_name'>";
 			/*if(count($menu_items) < 7) {
 				$html .= "<div class='like-heart'><img src='../_images/ui/favorite_off.png' /></div>";	
 			}*/
@@ -64,12 +65,12 @@
                     	    $prepend_allery_list = "";
                     	    $first_allergy_alert = false;
                     	} else {
-                    	    $prepend_allery_list = "";
+                    	    $first_allergy_alert = "";
                     	}
-                    	$checkboxes .= "<span class='allergy-alert'>".$prepend_allery_list.str_replace("contains", "", $item_attributes_array[$j]). ",</span> ";
-                        //$checkboxes .= "<span class='allergy-alert'>".$item_attributes_array[$j]. "</span>, ";
+                    	$checkboxes .= "<span class='allergy-alert'>".$first_allergy_alert.str_replace("contains", "", $item_attributes_array[$j]). "</span>, ";
+                        // $checkboxes .= "<span class='allergy-alert'>".$item_attributes_array[$j]. "</span>, ";
                     } else {
-                        $checkboxes .= $item_attributes_array[$j]. ", ";
+                        $checkboxes .= $item_attributes_array[$j]. ", ";	
                     }
                 }
             }

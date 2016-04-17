@@ -19,8 +19,7 @@ class Database {
 				$password = "root";
                 $database_name = 'green_heart_foods';
     			break;
-    		case 'greenheartfoods.com':
-            case 'www.greenheartfoods.com':
+            case 'clients.greenheartfoods.com':
     			$host = "ghfAdmin.db.3683991.hostedresource.com";
 				$user = "ghfAdmin";
 				$password = "Green1980!";
