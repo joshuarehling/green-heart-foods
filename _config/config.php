@@ -18,8 +18,23 @@ if (get_magic_quotes_gpc()) {
     unset($process);
 }
 
-define('SERVER_ROOT', $_SERVER['DOCUMENT_ROOT'].'/menu-manager');
-define('WEB_ROOT', '/menu-manager');
+switch ($_SERVER['HTTP_HOST']) {
+    case 'localhost':
+    case 'localhost:8888':
+        define('SERVER_ROOT', $_SERVER['DOCUMENT_ROOT'].'/menu-manager');
+        define('WEB_ROOT', '/menu-manager');
+        break;
+    // case 'greenheartfoods.com':
+    // case 'www.greenheartfoods.com':
+    case 'clients.greenheartfoods.com':
+        define('SERVER_ROOT', $_SERVER['DOCUMENT_ROOT']);
+        define('WEB_ROOT', '');
+        break;
+    default:
+        die("Server path error.");
+        break;
+}
+
 define('GREEN_HEART_FOODS_ADMIN_EMAIL', 'admin@greenheartfoods.com');
 // define('GREEN_HEART_FOODS_ADMIN_EMAIL', 'josh@seven-seventeen.com');
 define('ALLERGY_ALERT_ARRAY', 'contains_nuts, contains_soy, contains_shellfish, contains_nightshades, contains_alcohol, contains_eggs, contains_gluten, contains_dairy');
