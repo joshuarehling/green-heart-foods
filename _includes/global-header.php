@@ -57,8 +57,8 @@
 	<!-- custom checkboxes -->
 	<script type="text/javascript" src="<?php echo WEB_ROOT; ?>/_javascript/checkboxes/checkboxes.js"></script>
 	<!-- retina images -->
-	<script type="text/javascript" src="<?php echo WEB_ROOT; ?>/_javascript/retina/retina.min.js"></script>
-	<script type="text/javascript" src="<?php echo WEB_ROOT; ?>/_javascript/retina/retina.js"></script>
+	<!-- <script type="text/javascript" src="<?php echo WEB_ROOT; ?>/_javascript/retina/retina.min.js"></script> -->
+	<!-- <script type="text/javascript" src="<?php echo WEB_ROOT; ?>/_javascript/retina/retina.js"></script> -->
 
 </head>
 
