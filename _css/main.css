@@ -1152,8 +1152,10 @@ html { /* only for FPO */
 .daily_menu_print_placards .outside_container,
 .weekly_menu_print_placards .outside_container {
 	width: 712px;
-	height: 1025px;
-	padding: 0px 40px 0 40px;
+	width: 822px;
+	/*height: 1025px;*/
+	overflow: auto;
+	padding: 60px 40px 60px 40px;
 	position: relative;
 	margin: 0 auto;
 	background-color: #ebebeb;
@@ -1163,7 +1165,7 @@ html { /* only for FPO */
 .weekly_menu_print_placards .meal_container {
 	width: 355px;
 	height: 220px;
-	margin: 25px 1px 0px 0;
+	margin: 15px 15px 15px 15px;
 	border-top: 7px solid #A7CD4D;
 	background-color: #FFFFFF;
 	position: relative;
@@ -1188,7 +1190,7 @@ html { /* only for FPO */
 .weekly_menu_print_placards .meal_container.blank {
 	width: 355px;
 	height: 220px;
-	margin: 25px 1px 0px 0;
+	margin: 0px 1px 0px 0;
 	border-top: 7px solid #A7CD4D;
 	background-color: #FFFFFF;
 	position: relative;
@@ -1902,7 +1904,7 @@ html { /* only for FPO */
 	top: 4px;
 }
 
-/* Placards */
+/* Placards - not in use any more */
 
 /*
 .daily_menu_print_placards_page {
