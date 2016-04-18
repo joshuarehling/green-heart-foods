@@ -55,7 +55,7 @@
 				$html .= "<div class='like-heart'><img src='../_images/ui/favorite_off.png' /></div>";	
 			}*/
 			$html .= "<h3>".$menu_items[$i]['menu_item_name']."</h3>";
-			$html .= "<p>".$menu_items[$i]['ingredients']."</p>";
+			//$html .= "<p>".$menu_items[$i]['ingredients']."</p>";
 			$first_allergy_alert = true;
 			for($j=0; $j<count($item_attributes_array); $j++) {
                 if($menu_items[$i][$item_attributes_array[$j]] == 1) {

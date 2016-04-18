@@ -242,11 +242,11 @@ footer .contact a {
 .message {
 	background-color: #ef284f;
 	text-align: center;
-	padding: 20px 0;
 	color: #FFFFFF;
 	font-size: 1.6em;
 	padding: 45px 0 45px 0;
 	text-transform: uppercase;
+	z-index: 3000;
 }
 
 /* Button Bar */
@@ -745,12 +745,12 @@ footer .contact a {
 	text-transform: none;
 	opacity: 1;
 	font-size: .8em;
-	width: 260px;
+	/*width: 260px;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	-o-text-overflow: ellipsis;
-    -moz-binding: url('assets/xml/ellipsis.xml#ellipsis');
+    -moz-binding: url('assets/xml/ellipsis.xml#ellipsis');*/
 }
 
 .yearly_menu_page .week_meal_container.list_view .right_column p.menu_item_name_bites {
@@ -784,7 +784,6 @@ footer .contact a {
 	width: 300px;
 	float: left;
 	border: none;
-	background-color: blue;
 }
 
 .yearly_menu_page .week_meal_container.grid_view .right_column,
@@ -855,6 +854,7 @@ footer .contact a {
 	width: 960px;
 	margin: 0px auto;
 	overflow: auto;
+	position: relative;
 }
 
 .weekly_menu_page .meal_details {
@@ -864,7 +864,6 @@ footer .contact a {
 	margin: 0 30px 0 0;
 	font-size: 1.2em;
 	line-height: 1.5em;
-	position: relative;
 	color: #a7a9b5;
 	text-transform: uppercase;
 }
@@ -1002,7 +1001,7 @@ footer .contact a {
 }
 
 
-/* -------------------- Weekly Menu Page > Print Menu & Placards */ 
+/* -------------------- Weekly Menu Page > Print Menu & Placards // Daily Placards Also */ 
 
 /* Menus */
 
@@ -1093,6 +1092,7 @@ footer .contact a {
 
 .weekly_menu_print_menu_page .meal_container .is_and_contains_list {
 	font-size: .65em;
+	color: #A3A6AF;
 }
 
 .weekly_menu_print_menu_page .address_bar {
@@ -1123,36 +1123,47 @@ html { /* only for FPO */
 	background-size: 792px 1025px;*/
 }
 
+.daily_menu_print_placards_page,
 .weekly_menu_print_placards_page {
 	background-color: transparent;
 	width: 792px;
 	margin: 0 auto;
 }
 
+.daily_menu_print_placards_page .main_container,
 .weekly_menu_print_placards_page .main_container {
 	background-color: transparent;
 	width: 792px;
 	margin: 0 auto;
 }
 
+.daily_menu_print_placards .outside_container,
 .weekly_menu_print_placards .outside_container {
 	width: 712px;
-	height: 980px;
-	padding: 45px 40px 0 40px;
+	height: 1025px;
+	padding: 0px 40px 0 40px;
 	position: relative;
 	margin: 0 auto;
 	background-color: #ebebeb;
 }
 
+.daily_menu_print_placards .meal_container,
 .weekly_menu_print_placards .meal_container {
 	width: 355px;
 	height: 220px;
-	margin-right: 1px;
+	margin: 25px 1px 0px 0;
 	border-top: 7px solid #A7CD4D;
 	background-color: #FFFFFF;
 	position: relative;
 	float: left;
 }
+
+.daily_menu_print_placards .meal_container.breakfast { border-top: 7px solid #F39035; }
+.daily_menu_print_placards .meal_container.lunch { border-top: 7px solid #A7CD4D; }
+.daily_menu_print_placards .meal_container.dinner { border-top: 7px solid #9F5D79; }
+.daily_menu_print_placards .meal_container.snack { border-top: 7px solid #85D1EB; }
+.daily_menu_print_placards .meal_container.bite { border-top: 7px solid #4BB0EF; }
+.daily_menu_print_placards .meal_container.event { border-top: 7px solid #009FA3; }
 
 .weekly_menu_print_placards .meal_container.breakfast { border-top: 7px solid #F39035; }
 .weekly_menu_print_placards .meal_container.lunch { border-top: 7px solid #A7CD4D; }
@@ -1161,16 +1172,18 @@ html { /* only for FPO */
 .weekly_menu_print_placards .meal_container.bite { border-top: 7px solid #4BB0EF; }
 .weekly_menu_print_placards .meal_container.event { border-top: 7px solid #009FA3; }
 
+.daily_menu_print_placards .meal_container.blank,
 .weekly_menu_print_placards .meal_container.blank {
 	width: 355px;
 	height: 220px;
-	margin-right: 1px;
+	margin: 25px 1px 0px 0;
 	border-top: 7px solid #A7CD4D;
 	background-color: #FFFFFF;
 	position: relative;
 	float: left;
 }
 
+.daily_menu_print_placards .green_heart_foods_logo,
 .weekly_menu_print_placards .green_heart_foods_logo {
 	position: absolute;
 	top: 15px;
@@ -1183,6 +1196,7 @@ html { /* only for FPO */
 	height: 122px;
 }
 
+.daily_menu_print_placards h1.menu_item_name,
 .weekly_menu_print_placards h1.menu_item_name {
 	font-size: 1.1em;
 	line-height: 1.2em;
@@ -1194,6 +1208,7 @@ html { /* only for FPO */
 	text-transform: capitalize;
 }
 
+.daily_menu_print_placards h2.menu_item_ingredients,
 .weekly_menu_print_placards h2.menu_item_ingredients {
 	font-size: .6em;
 	text-align: left;
@@ -1204,6 +1219,7 @@ html { /* only for FPO */
 	text-transform: capitalize;
 }
 
+.daily_menu_print_placards .is_and_contains_list,
 .weekly_menu_print_placards .is_and_contains_list {
 	font-size: .6em;
 	text-align: left;
@@ -1213,12 +1229,14 @@ html { /* only for FPO */
 	background-color: #FFFFFF;
 }
 
+.daily_menu_print_placards .plus_minus_container,
 .weekly_menu_print_placards .plus_minus_container {
 	position: absolute;
 	top: 1px;
 	left: 1px;
 }
 
+.daily_menu_print_placards .plus_minus_container a,
 .weekly_menu_print_placards .plus_minus_container a {
 	background-color: #FF7A18;
 	color: #FFFFFF;
@@ -1230,8 +1248,9 @@ html { /* only for FPO */
 	margin-right: 1px;
 }
 
+.daily_menu_print_placards .ninth,
 .weekly_menu_print_placards .ninth {
-	page-break-before: always;
+	/*page-break-before: always;*/
 }
 
 
@@ -1721,7 +1740,7 @@ html { /* only for FPO */
 .edit_menu_page footer,
 .create_menu_page footer {
 	/* so it's not covered by the sticky bar */
-	margin-bottom: 200px;
+	margin-bottom: 149px;
 	margin-top: -5px;
 }
 
@@ -1755,17 +1774,23 @@ html { /* only for FPO */
 	margin: 0 15px;
 }
 
+.edit_menu_page .add_dish_container,
 .create_menu_page .add_dish_container {
 	text-align: center;
 }
 
+.edit_menu_page .add_blank_dish {
+	margin: 0px auto 90px auto;
+	cursor: pointer;
+}
+
 .create_menu_page .add_dish {
-	margin: 90px auto;
+	margin: 90px auto 90px auto;
 	cursor: pointer;
 }
 
 
-/* -------------------- Daily Menu Page > Print Menu & Placards */
+/* -------------------- Daily Menu Page > Print Menu */
 
 /* Menu */
 
@@ -1824,7 +1849,7 @@ html { /* only for FPO */
 .daily_menu_print_menu_page p {
 	color: #a7a9b5;
 	font-size: .7em;
-	margin: -15px 0 16px 0;
+	margin: 0px 0 16px 0;
 	display: block;
 }
 
@@ -1859,6 +1884,7 @@ html { /* only for FPO */
 
 /* Placards */
 
+/*
 .daily_menu_print_placards_page {
 	text-align: center;
 	font-size: .4em;
@@ -1914,7 +1940,7 @@ html { /* only for FPO */
 .daily_menu_print_placards_page .ninth {
 	page-break-before: always;
 }
-
+*/
 
 /* -------------------- Daily Bites Menu Page */
 
@@ -1939,7 +1965,9 @@ html { /* only for FPO */
 	border-top: 5px solid #84445e;
 	padding: 60px 0;
 	width: 90%;
-	margin: 0px auto 0 auto;}
+	margin: 0px auto 0 auto;
+	z-index: -2000;
+}
 
 .daily_menu_page .bites .bite_group_container {
 	overflow: auto;
@@ -2113,15 +2141,16 @@ html { /* only for FPO */
 	padding: 60px 0;
 	width: 90%;
 	margin: -5px auto 0 auto;
+	z-index: -1;
 }
 
 .edit_bites_page .bite_group_container {
 	overflow: auto;
 	width: 990px;
 	text-align: center;
-	padding-left: 30px;
+	padding: 0 0 150px 30px;
 	margin: 0px auto 0 auto;
-	background-color: yellow;
+	position: relative;
 }
 
 .edit_bites_page .bite_group_name {
@@ -2139,6 +2168,7 @@ html { /* only for FPO */
 	float: left;
 	width: 135px;
 	min-height: 220px;
+	min-height: 320px;
 	margin: 30px 30px 0 0;
 	text-align: left;
 }
@@ -2180,7 +2210,10 @@ html { /* only for FPO */
 .edit_bites_page .add_bite {
 	cursor: pointer;
 	width: 300px;
-	margin: 0 auto;
+	margin: 0 0 0 -150px;
+	position: absolute;
+	bottom: 0px;
+	left: 50%;
 }
 
 .edit_bites_page.no_scroll {
@@ -2257,15 +2290,15 @@ html { /* only for FPO */
 
 .edit_bites_page .add_edit_bite_modal_content img {
 	width: 344px;
+	min-height: 200px;
 	background-color: #9F5D79;
-	height: auto;
 	margin: 60px auto 0 auto;
 	border: none;
 }
 
 .edit_bites_page .bite_image_name {
 	display: block;
-	margin: 0 auto 60px auto;
+	margin: -5px auto 60px auto;
 	padding: 30px;
 	color: #9F5D79;
 	background-color: #81445E;
