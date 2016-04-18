@@ -461,7 +461,7 @@ class Menu {
 			$result = $query->execute($arguments);
 
 
-			if($_POST['menu_item_name'][$i] == "") {
+			if($_POST['menu_item_name'][$i] == "" && $meal_id != 5) {
 				$arguments = array(
 					$menu_item_id
 				);
@@ -1545,7 +1545,9 @@ FORM;
 			$html .= "<input type='hidden' name='server_id' value='$server_id'>";
 			$html .= "<input type='hidden' name='item_status_id' value='$item_status_id'>";
 			$html .= "</form>";
-			$html .= "<div class='add_dish_container'><a class='add_blank_dish page_button'>Add Dish</a></div>";
+			if($meal_id != 5) {
+				$html .= "<div class='add_dish_container'><a class='add_blank_dish page_button'>Add Dish</a></div>";
+			}
 		}
 		$html .= "<div class='button_container'>";
 		$html .=    "<p>";
