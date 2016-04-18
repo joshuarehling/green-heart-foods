@@ -1607,7 +1607,7 @@ FORM;
 			$bites_html .= "</div>"; // End Bites Group Container Outer
 		}
 		$bites_html .= '<div class="button_container">';
-		$bites_html .= "<a href='".WEB_ROOT."/admin/edit-daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=5' class='cancel_button page_button'>Done</a>";
+		$bites_html .= "<a href='' class='cancel_button page_button edit_bites_done'>Done</a>";
 		$bites_html .= '</div>';
 		return $bites_html;
 	}
@@ -1884,13 +1884,11 @@ CHECKBOXES;
 		$html .= "<div class='outside_container'>";
 		if($result_count > 0) {
 			for ($i=0; $i < count($result); $i++) { 
-
 				if($i%9 == 8) {
 				    $ninth = 'ninth';
 				} else {
 				    $ninth = '';
 				}
-
 				if($result[$i]['meal_id'] != 5) {
 					$meal_name = strtolower($result[$i]['meal_name']);
 					$html .= "<div class='meal_container $meal_name $ninth'>";

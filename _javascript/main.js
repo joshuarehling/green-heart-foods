@@ -238,6 +238,10 @@ $(document).ready(function() {
 		});
 	});
 
+	$('.edit_bites_page .edit_bites_done').click(function(event){
+		window.history.back();
+	});	
+
 
 
 });
