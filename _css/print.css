@@ -5,4 +5,11 @@
    .weekly_menu_print_placards  .plus_minus_container {
    		display: none
    	}
+	
+	.daily_menu_print_placards .ninth,
+	.weekly_menu_print_placards .ninth {
+		/*page-break-before: always;*/
+		page-break-after: always;
+		background-color: red;
+	}
 }

@@ -884,7 +884,7 @@ class Menu {
 								if($first_bite) {
 									$html .= "<div class='bite_message_container'>";
 									$html .= "<div class='bite_message_icon'></div>";
-									$html .= "<p>Brite Bites delivery service includes Grab & Go, Sandwiches and Beverages.</p>";
+									$html .= "<p>Brite Bites delivery service includes Snack Packs, Sandwiches and Beverages.</p>";
 									$html .= "</div>";
 									$first_bite = false;
 								}
@@ -1347,19 +1347,23 @@ class Menu {
 		$html .= "<form class='create_menu_form' action='$form_action' method='post' enctype='multipart/form-data'>";
 		$html .=    "<fieldset>";
 		$html .=        "<h3>Date</h3>";
-		$html .=       "<select name='service_month' class='month cs-select cs-skin-border'>";
+		//$html .=       "<select name='service_month' class='month cs-select cs-skin-border'>";
+		$html .=       "<select name='service_month' class='month'>";
 		$html .=            $month_options;
 		$html .=        "</select>";
-		$html .=        "<select name='service_day' class='day cs-select cs-skin-border'>";
+		//$html .=        "<select name='service_day' class='day cs-select cs-skin-border'>";
+		$html .=        "<select name='service_day' class='day'>";
 		$html .=            $day_options;
 		$html .=        "</select>";
-		$html .=        "<select name='service_year' class='year cs-select cs-skin-border'>";
+		//$html .=        "<select name='service_year' class='year cs-select cs-skin-border'>";
+		$html .=        "<select name='service_year' class='year'>";
 		$html .=            $year_options;
 		$html .=        "</select>";
 		$html .=    "</fieldset>";
 		$html .=    "<fieldset>";
 		$html .=        "<h3>Meal Type</h3>";
-		$html .=        "<select class='meal_type cs-select cs-skin-border' name='meal_id'>";
+		//$html .=        "<select class='meal_type cs-select cs-skin-border' name='meal_id'>";
+		$html .=        "<select class='meal_type' name='meal_id'>";
 		$html .=            $meal_type_options;
 		$html .=        "</select>";
 		$html .=    "</fieldset>";
@@ -1372,7 +1376,8 @@ class Menu {
 		$html .=    "<div class='server_and_meal'>";
 		$html .=        "<div class='server_container'>";		
 		$html .=            "<div class='server_image' $server_image_style></div>";;
-		$html .=            "<select class='server cs-select cs-skin-border' name='server_id'>";
+		//$html .=            "<select class='server cs-select cs-skin-border' name='server_id'>";
+		$html .=            "<select class='server' name='server_id'>";
 		$html .=                "<option value='none'>Select Host</option>";
 		$html .=                     $server_list_options;
 		$html .=            "</select>";
