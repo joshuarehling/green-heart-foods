@@ -326,7 +326,7 @@ class Client {
                 <label class="secondary_label">Login Name</label>
                 <input name='general_username' type='text' value='$general_username' placeholder=""/>
                 
-                <label class="secondary_label">Log In Password</label>
+                <label class="secondary_label">Password</label>
                 <input name='general_password' type='text' value='$general_password' placeholder=""/>
             </fieldset>
 
@@ -360,7 +360,7 @@ class Client {
             <input type="hidden" name="company_logo_small_original" value="$company_logo_small" />
             <input type="hidden" name="client_id" value="$client_id" />
             <a href="$web_root/admin/clients.php" class="page_button">Cancel</a>
-            <input  class="page_button" type='submit' value='Submit'>
+            <input  class="page_button" type='submit' value='Save'>
 			</div>
 
         </form>

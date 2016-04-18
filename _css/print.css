@@ -18,7 +18,7 @@
 		margin: 0px 1px 0px 0;
 	}
 
-.daily_menu_print_placards .ninth,
+	.daily_menu_print_placards .ninth,
 	.weekly_menu_print_placards .ninth {
 		/*page-break-before: always;*/
 		page-break-before: always;

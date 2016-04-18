@@ -2328,7 +2328,7 @@ html { /* only for FPO */
 
 .edit_bites_page .bite_name {
 	border: 2px solid #84445e;
-	text-transform: uppercase;
+	text-transform: capitalize;
 	font-size: 2em;
 	margin: 25px auto;
 	padding: 20px 30px 20px 30px;
