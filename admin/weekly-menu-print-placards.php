@@ -1,5 +1,5 @@
 <?php
-	$page_class = 'weekly_menu_print_placards_page';
+	$page_class = 'weekly_menu_print_placards_page print_placards_page';
 	$page_title_detail = 'Weekly Menu - Placards';
 	require_once("../_config/config.php");
     require_once(SERVER_ROOT . "/_includes/restrict-access-green-heart-foods.php");
