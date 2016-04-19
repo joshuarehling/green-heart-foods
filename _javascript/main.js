@@ -51,18 +51,31 @@ $(document).ready(function() {
 		}
 	});
 
-	$('.create_and_edit_menu .meal_type').click(function(event) {
-		var currentSelection = $('option:selected', this)[0].text;
-		if (currentSelection == 'Bites') {
+
+	$('.create_and_edit_menu .meal_type').change(function(event){
+		if ($(this).val() == 5) {
 			$('.bites_form').addClass('bites_mode');
 			$('.non_bites_form').addClass('bites_mode');
-			$('.add_dish').hide();
+			$('.add_dish').hide();		
 		} else {
 			$('.bites_form').removeClass('bites_mode');
 			$('.non_bites_form').removeClass('bites_mode');
 			$('.add_dish').show();
 		}
 	});
+
+	// $('.create_and_edit_menu .meal_type').click(function(event) {
+	// 	var currentSelection = $('option:selected', this)[0].text;
+	// 	if (currentSelection == 'Bites') {
+	// 		$('.bites_form').addClass('bites_mode');
+	// 		$('.non_bites_form').addClass('bites_mode');
+	// 		$('.add_dish').hide();
+	// 	} else {
+	// 		$('.bites_form').removeClass('bites_mode');
+	// 		$('.non_bites_form').removeClass('bites_mode');
+	// 		$('.add_dish').show();
+	// 	}
+	// });
 
 	var fieldset_id = 0;
 	var active_fieldset;
