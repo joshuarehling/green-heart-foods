@@ -1,4 +1,4 @@
-/* Updated 15 Apr 2016 by Josh Rehling */
+/* Updated 18 Apr 2016 by Josh Rehling */
 
 /*
 COLORS
@@ -328,7 +328,7 @@ footer .contact a {
 	pointer-events: none;
 }
 
-/* Checkboxes & Radio */
+/* Checkboxes & Radio & Dropdowns */
 .checkbox, .radio {
 	width: 60px;
 	height: 60px;
@@ -340,6 +340,19 @@ footer .contact a {
 
 .radio {
 	background: url(../_images/ui/radio.png) no-repeat;
+}
+
+select {
+	font-size: 1.6em;
+	min-width: 300px;
+	background-color: #81445E;
+	border: none;
+	color: #FFFFFF;
+	text-transform: uppercase;
+	display: inline-block;
+	/*position: relative;
+	top: 60px;*/
+	/*margin: 60px auto 60px auto;*/
 }
 
 
@@ -365,14 +378,13 @@ footer .contact a {
 	border: none;
 	background-color: #FFFFFF;
 	color: #34b67d;
-	text-transform: uppercase;
+	text-transform: none;
 	font-size: 2em;
 	margin: 25px auto;
 	padding: 20px 30px 20px 30px;
 	display: block;
 	text-align: left;
 	width: 390px;
-	font-weight: 400;
 }
 
 .login_page .login_button {
@@ -456,7 +468,7 @@ footer .contact a {
 .create_client_page input,
 .edit_client_page input {
 	border: 2px solid #84445e;
-	text-transform: uppercase;
+	text-transform: none;
 	font-size: 2em;
 	margin: 25px auto;
 	padding: 20px 30px 20px 30px;
@@ -487,7 +499,7 @@ footer .contact a {
 	margin: 60px auto 0 auto;
 	font-size: 2.2em;
 	font-weight: 700;
-	text-transform: capitalize;
+	text-transform: uppercase;
 }
 
 .create_client_page .header_logo label,
@@ -1140,8 +1152,10 @@ html { /* only for FPO */
 .daily_menu_print_placards .outside_container,
 .weekly_menu_print_placards .outside_container {
 	width: 712px;
-	height: 1025px;
-	padding: 0px 40px 0 40px;
+	width: 822px;
+	/*height: 1025px;*/
+	overflow: auto;
+	padding: 60px 40px 60px 40px;
 	position: relative;
 	margin: 0 auto;
 	background-color: #ebebeb;
@@ -1151,7 +1165,7 @@ html { /* only for FPO */
 .weekly_menu_print_placards .meal_container {
 	width: 355px;
 	height: 220px;
-	margin: 25px 1px 0px 0;
+	margin: 15px 15px 15px 15px;
 	border-top: 7px solid #A7CD4D;
 	background-color: #FFFFFF;
 	position: relative;
@@ -1176,7 +1190,7 @@ html { /* only for FPO */
 .weekly_menu_print_placards .meal_container.blank {
 	width: 355px;
 	height: 220px;
-	margin: 25px 1px 0px 0;
+	margin: 0px 1px 0px 0;
 	border-top: 7px solid #A7CD4D;
 	background-color: #FFFFFF;
 	position: relative;
@@ -1246,11 +1260,6 @@ html { /* only for FPO */
 	cursor: pointer;	
 	float: left;
 	margin-right: 1px;
-}
-
-.daily_menu_print_placards .ninth,
-.weekly_menu_print_placards .ninth {
-	/*page-break-before: always;*/
 }
 
 
@@ -1579,6 +1588,7 @@ html { /* only for FPO */
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-color: #a35d79;
+	background-color: #81445E;
 }
 
 .edit_menu_page .server_image,
@@ -1591,10 +1601,22 @@ html { /* only for FPO */
 	background-color: #a35d79;
 }
 
-.edit_menu_page .server_image select,
+/*.edit_menu_page .server_image select,
 .create_menu_page .server_image select {
 	width: 300px;
 	display: block;
+}*/
+
+.edit_menu_page .server_image select,
+.create_menu_page .server_image select {
+	font-size: 1.6em;
+	min-width: 300px;
+	background-color: #81445E;
+	border: none;
+	color: #FFFFFF;
+	text-transform: uppercase;
+	display: block;
+	margin: 60px auto 60px auto;
 }
 
 .edit_menu_page fieldset,
@@ -1890,7 +1912,7 @@ html { /* only for FPO */
 	top: 4px;
 }
 
-/* Placards */
+/* Placards - not in use any more */
 
 /*
 .daily_menu_print_placards_page {
@@ -2314,7 +2336,7 @@ html { /* only for FPO */
 
 .edit_bites_page .bite_name {
 	border: 2px solid #84445e;
-	text-transform: uppercase;
+	text-transform: capitalize;
 	font-size: 2em;
 	margin: 25px auto;
 	padding: 20px 30px 20px 30px;
