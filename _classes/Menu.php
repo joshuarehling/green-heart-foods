@@ -690,8 +690,11 @@ class Menu {
 					$html .= "<div class='left_and_right_column'>";
 					$html .= "<div data-menu-item-id='$menu_item_id' class='like-heart $like_heart_class'><p class='number_of_likes'>LIKE</p></div>";
 					$html .= "<div class='right_column'>";
-					$html .= "<p class='dish_name'>".$result[$i]['menu_item_name'].'</p>';	
-					$html .= "<p class='ingredients'>".$result[$i]['ingredients'].'</p>';
+					$html .= "<p class='dish_name'>".$result[$i]['menu_item_name'].'</p>';
+					if($result[$i]['ingredients'] != "") {
+						$html .= "<p class='ingredients'>".$result[$i]['ingredients'].'</p>';	
+					}	
+					
 					// $first_allergy_alert = true;
 					// $this->attributes_and_allergens = "";
 					// $this->html_container = "";
@@ -1886,14 +1889,14 @@ CHECKBOXES;
 		$html .= "<div class='outside_container'>";
 		if($result_count > 0) {
 			for ($i=0; $i < count($result); $i++) { 
-				if($i%9 == 8) {
-				    $ninth = 'ninth';
-				} else {
-				    $ninth = '';
-				}
+				// if($i%9 == 8) {
+				//     $ninth = 'ninth';
+				// } else {
+				//     $ninth = '';
+				// }
 				if($result[$i]['meal_id'] != 5) {
 					$meal_name = strtolower($result[$i]['meal_name']);
-					$html .= "<div class='meal_container $meal_name $ninth'>";
+					$html .= "<div class='meal_container $meal_name'>";
 					$html .= 	"<div class='green_heart_foods_logo'></div>";
 					$html .= 	"<h1 class='menu_item_name'>".$result[$i]['menu_item_name']." </h1>";
 					$html .= 	"<h2 class='menu_item_ingredients'>".$result[$i]['ingredients']." </h2>";
@@ -1968,15 +1971,15 @@ CHECKBOXES;
 		if($result_count > 0) {
 			for ($i=0; $i < count($result); $i++) { 
 
-				if($i%9 == 8) {
-				    $class = 'ninth';
-				} else {
-				    $class = '';
-				}
+				// if($i%9 == 8) {
+				//     $class = 'ninth';
+				// } else {
+				//     $class = '';
+				// }
 
 				if($result[$i]['meal_id'] != 5) {
 					$meal_name = strtolower($result[$i]['meal_name']);
-					$html .= "<div class='meal_container $meal_name $class'>";
+					$html .= "<div class='meal_container $meal_name'>";
 					$html .= 	"<div class='green_heart_foods_logo'></div>";
 					$html .= 	"<h1 class='menu_item_name'>".$result[$i]['menu_item_name']." </h1>";
 					$html .= 	"<h2 class='menu_item_ingredients'>".$result[$i]['ingredients']." </h2>";
@@ -2059,8 +2062,9 @@ CHECKBOXES;
 		$attributes_and_allergens = str_replace('_', ' ', $attributes_and_allergens);
 		$attributes_and_allergens = substr($attributes_and_allergens, 0, -2);
 		$attributes_and_allergens = ucwords($attributes_and_allergens);
-		$html_container .= "<p class='attributes_and_allergens'>".$attributes_and_allergens."</p>";
-		
+		if($attributes_and_allergens != "") {
+			$html_container .= "<p class='attributes_and_allergens'>".$attributes_and_allergens."</p>";	
+		}
 		if($current_result['special_notes'] != "") {
 			$html_container .= "<p class='special_notes'>".$current_result['special_notes']."</p>";
 		}

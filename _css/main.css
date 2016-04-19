@@ -1789,6 +1789,14 @@ html { /* only for FPO */
 	cursor: pointer;
 }
 
+/* Overriding cs-select defaults because visibility:hidden was making the page too tall on the day select field */
+
+.edit_menu_page .cs-select .cs-options {
+    overflow: scroll;
+    visibility: hidden;
+    height: 456px;
+}
+
 
 /* -------------------- Daily Menu Page > Print Menu */
 
@@ -2338,5 +2346,7 @@ html { /* only for FPO */
 .edit_bites_page .checkbox_container label {
 	margin: 0 0 10px 0px;
 }
+
+
 
 

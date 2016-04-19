@@ -179,6 +179,7 @@ $(document).ready(function() {
 	/* Weekly Menu - Print Placards Page */ 
 
 	// $('.weekly_menu_print_placards_page').on('click','.plus_minus_container a', {} ,function(e){
+	addNinthClass();
 	$('.print_placards_page').on('click','.plus_minus_container a', {} ,function(e){
 		if($(event.target).hasClass('plus')) {
 			var meal_container_clone = $(this).closest('.meal_container').clone();
@@ -186,7 +187,17 @@ $(document).ready(function() {
 		} else {
 			$(this).closest('.meal_container').remove();
 		}
+		addNinthClass();		
 	});
+
+	function addNinthClass(){
+		$('.print_placards_page .meal_container').removeClass('ninth');
+		$('.print_placards_page .meal_container').each(function(i){
+			if(i%9 == 8) {
+				$($('.print_placards_page .meal_container').get(i)).addClass('ninth');
+			}
+		});
+	}
 
 	$('.weekly_menu_print_placards_page').on('click','.meal_container .editable', {} ,function(e){
 		$('.weekly_menu_print_placards_page .meal_container.blank').removeClass('unedited');
