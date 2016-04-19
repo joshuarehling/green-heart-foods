@@ -1103,11 +1103,11 @@ class Menu {
 		$query = $this->database_connection->prepare("UPDATE menu_items SET item_status_id = ? WHERE client_id = ? AND (service_date BETWEEN ? AND ?)");
 		$result = $query->execute($arguments);
 		if ($result){
-			$link = "http://www.greenheartfoods.com" . WEB_ROOT . "/clients/weekly-menu.php?client-id=$client_id&start-date=$start_date";
+			$link = "http://clients.greenheartfoods.com" . WEB_ROOT . "/clients/weekly-menu.php?client-id=$client_id&start-date=$start_date";
 			$link_with_forward = $link."&forward-url=$link";
 			$to_email  = $client_admin_email; 
 			$subject = 'Your Weekly Menu is Ready';
-			$image_path = "http://www.greenheartfoods.com/" . WEB_ROOT . "/_images/ui/email_logo.jpg";
+			$image_path = "http://clients.greenheartfoods.com/" . WEB_ROOT . "/_images/ui/email_logo.jpg";
 			$message = "
 				<html>
 					<body>
@@ -1165,7 +1165,7 @@ class Menu {
 				menu_item_id = ?");
 			$result = $query->execute($arguments);
 			if($i == $number_of_menu_items-1) {
-				$link = "http://www.greenheartfoods.com/". WEB_ROOT . "/admin/weekly-menu.php?client-id=$client_id&start-date=$service_date";
+				$link = "http://clients.greenheartfoods.com/". WEB_ROOT . "/admin/weekly-menu.php?client-id=$client_id&start-date=$service_date";
 				$to_email  = GREEN_HEART_FOODS_ADMIN_EMAIL;
 				$subject = "A Menu Has Been Approved by $client_name";
 				$message = "
