@@ -11,6 +11,8 @@
 	$menu = $menu->get_yearly_menu_page($context);
 ?>
 
+<?php Messages::render(); ?>
+
 <div class="menu">
 	<?php echo $menu; ?>
 </div>

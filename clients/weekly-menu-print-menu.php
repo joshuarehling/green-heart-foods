@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	$page_class = 'weekly_menu_print_menu_page';
 	$page_title_detail = 'Weekly Menu - Print';
 	require_once("../_config/config.php");
