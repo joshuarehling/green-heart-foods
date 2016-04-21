@@ -1037,7 +1037,7 @@ class Menu {
 										}
 										if($weekly_menu[$k]['meal_id'] == 5) {
 											if($first_bite && $current_meal_service_date != $previous_meal_service_date) {
-												$html .= "<p class='menu_item_name_bites'>Brite Bites delivery service includes Grab &amp; Go, Sandwiches and Beverages.</p>";
+												$html .= "<p class='menu_item_name_bites'>Brite Bites delivery service includes Snack Packs, Sandwiches and Beverages.</p>";
 												$first_bite = false;
 											}
 										} else {

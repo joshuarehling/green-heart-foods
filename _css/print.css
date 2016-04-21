@@ -1,6 +1,12 @@
 /* Weekly Menu - Print Placards */
 
 @media print {
+	
+	body {
+		font-family: 'Open Sans Condensed', sans-serif;
+		font-weight: 300italic;
+	}
+	
    .daily_menu_print_placards  .plus_minus_container,
    .weekly_menu_print_placards  .plus_minus_container {
    		display: none
@@ -14,7 +20,9 @@
 	}
 
 	.daily_menu_print_placards .meal_container,
-	.weekly_menu_print_placards .meal_container {
+	.weekly_menu_print_placards .meal_container,
+	.daily_menu_print_placards .meal_container.blank,
+	.weekly_menu_print_placards .meal_container.blank {
 		margin: 0px 1px 0px 0;
 	}
 

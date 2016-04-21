@@ -17,6 +17,8 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Green Heart Foods<?php echo $page_title_detail; ?></title>
+	<!-- google fonts -->
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700,300italic' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>/_css/normalize.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>/_css/main.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>/_css/print.css">

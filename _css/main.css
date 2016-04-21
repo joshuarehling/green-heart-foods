@@ -1077,12 +1077,14 @@ select {
 .weekly_menu_print_menu_page .meal_container {
 	font-size: .8em;
 	color: #7D7D7D;
+
 }
 
 .weekly_menu_print_menu_page .meal_container .day_of_the_week {
 	text-transform: uppercase;
 	font-size: 1.2em;
 	color: #A7CD4D;
+	font-weight: 700;
 	margin-top: 5px;
 }
 
@@ -1100,11 +1102,13 @@ select {
 	text-overflow: ellipsis;
 	-o-text-overflow: ellipsis;
 	width: 400px;*/
+	font-weight: 700;
 }
 
 .weekly_menu_print_menu_page .meal_container .is_and_contains_list {
 	font-size: .65em;
 	color: #A3A6AF;
+	font-weight: 700;
 }
 
 .weekly_menu_print_menu_page .address_bar {
@@ -1162,7 +1166,9 @@ html { /* only for FPO */
 }
 
 .daily_menu_print_placards .meal_container,
-.weekly_menu_print_placards .meal_container {
+.weekly_menu_print_placards .meal_container,
+.daily_menu_print_placards .meal_container.blank,
+.weekly_menu_print_placards .meal_container.blank {
 	width: 355px;
 	height: 220px;
 	margin: 15px 15px 15px 15px;
@@ -1185,17 +1191,6 @@ html { /* only for FPO */
 .weekly_menu_print_placards .meal_container.snack { border-top: 7px solid #85D1EB; }
 .weekly_menu_print_placards .meal_container.bite { border-top: 7px solid #4BB0EF; }
 .weekly_menu_print_placards .meal_container.event { border-top: 7px solid #009FA3; }
-
-.daily_menu_print_placards .meal_container.blank,
-.weekly_menu_print_placards .meal_container.blank {
-	width: 355px;
-	height: 220px;
-	margin: 0px 1px 0px 0;
-	border-top: 7px solid #A7CD4D;
-	background-color: #FFFFFF;
-	position: relative;
-	float: left;
-}
 
 .daily_menu_print_placards .green_heart_foods_logo,
 .weekly_menu_print_placards .green_heart_foods_logo {
@@ -1231,6 +1226,7 @@ html { /* only for FPO */
 	margin-top: 5px;
 	background-color: #FFFFFF;
 	text-transform: capitalize;
+	font-weight: 700;
 }
 
 .daily_menu_print_placards .is_and_contains_list,
@@ -1241,6 +1237,7 @@ html { /* only for FPO */
 	padding: 0 30px 0 30px;
 	margin-top: 5px;
 	background-color: #FFFFFF;
+	font-weight: 700;
 }
 
 .daily_menu_print_placards .plus_minus_container,
@@ -1874,6 +1871,7 @@ html { /* only for FPO */
 }
 
 .daily_menu_print_menu_page h3 {
+	font-weight: 700;
 }
 
 .daily_menu_print_menu_page p {
@@ -1885,6 +1883,7 @@ html { /* only for FPO */
 
 .daily_menu_print_menu_page .labels {
 	color: #A3A6AF;
+	font-weight: 700;
 }
 
 .daily_menu_print_menu_page .like-heart img {
