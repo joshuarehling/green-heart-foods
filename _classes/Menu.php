@@ -644,7 +644,7 @@ class Menu {
 							if($result[$j]['bite_group_id'] == $result[$i]['bite_group_id']) {
 								$bite_quantity = $result[$j]['total_orders_for_item'];
 								$html .= "<div class='bite_container'>";
-								$html .= "<img src='".WEB_ROOT."/_uploads/".$result[$i]['image_name']."'/>";
+								$html .= "<img src='".WEB_ROOT."/_uploads/".$result[$j]['image_name']."'/>";
 								$html .= "<p>".$result[$j]['bite_name']."</p>";
 								$html .= $this->get_attributes_and_allergens($result[$i]);
 								// $html .= "<div class='plus_button'>+</div>";
@@ -868,14 +868,18 @@ class Menu {
 					} else {
 						$item_status = "";
 					}
-					$meal_name = strtolower($result[$i]['meal_name']) ;
+					$meal_name = strtolower($result[$i]['meal_name']);
 					$html .= "<div class='outside_container'>";
 					$html .=    "<div class='meal_container $meal_name'>";
 					$html .=        "<div class='meal_details'>";
 					$html .=                $item_status;
 					$html .=            "<p class='day_of_the_week'>".date('l', strtotime($result[$i]['service_date'])).'</p>';
 					$html .=            "<p class='month_and_date'>".date('M d', strtotime($result[$i]['service_date'])).'</p>';
-					$html .=            "<p class='meal_name'>".$meal_name.'</p>';
+					if($meal_name == "bites") {
+						$html .=            "<p class='meal_name'>Brite ".$meal_name.'</p>';
+					} else {
+						$html .=            "<p class='meal_name'>".$meal_name.'</p>';	
+					}
 					$html .=            "<p class='meal_description'>".$result[$i]['meal_description'].'</p>';
 					$html .=            "<a class='page_button' href='daily-menu.php?client-id=$client_id&service-date=".$result[$i]['service_date']."&meal-id=".$result[$i]['meal_id']."'>View</a>";
 					$html .=        "</div>";
@@ -935,7 +939,7 @@ class Menu {
 			$html .=    "<div class='button_container'>";
 			$html .=        '<a class="page_button" href="'.WEB_ROOT.'/admin/create-menu.php?client-id='.$client_id.'&meal-id='.$url_meal_id.'">Create Menu </a>';
 			if($menus) {
-				$html .=     "<a class='page_button' href='".WEB_ROOT."/_actions/email-client.php?client-id=$client_id&start-date=$start_date'> Email Client</a><br />";    
+				$html .=     "<a class='page_button' href='".WEB_ROOT."/_actions/email-client.php?client-id=$client_id&start-date=$start_date&meal-id=$url_meal_id'> Email Client</a><br />";    
 			}
 			$html .=    "</div>";
 		}
@@ -1018,7 +1022,12 @@ class Menu {
 								$html .= "<div class='left_and_right_column $view_type'>";
 								$html .=    "<div class='left_column'>";
 								$html .=        "<h2 class='thru_dates'>".$thru_dates."</h2>";
-								$html .=        "<h3 class='meal_name'>".$result[$j]['meal_name']."</h3>";
+								if($current_meal_name == "Bites") {
+									$html .=        "<h3 class='meal_name'>Brite ".$current_meal_name."</h3>";	
+								} else {
+									$html .=        "<h3 class='meal_name'>".$current_meal_name."</h3>";
+								}
+								if($result[$j]['meal_name'])
 								if($result[$j]['meal_id'] != 5){
 									$html .=        "<h4 class='hosted_by'>Hosted By ".$result[$j]['server_first_name']."</h4>";
 								}
@@ -1085,7 +1094,7 @@ class Menu {
 		return $html;
 	}
 
-	public function send_menu_for_client_review ($client_id, $start_date) {
+	public function send_menu_for_client_review ($client_id, $start_date, $meal_id) {
 		$user = new User();
 		$result = $user->get_client_users($client_id);
 		for ($i=0; $i < count($result); $i++) { 
@@ -1124,11 +1133,11 @@ class Menu {
 			$sent = mail($to_email, $subject, $message, $headers);
 			if($sent) {
 				Messages::add('Your email has been sent.');
-				header("Location: ". WEB_ROOT . "/admin/weekly-menu.php?client-id=$client_id");
+				header("Location: ". WEB_ROOT . "/admin/weekly-menu.php?client-id=$client_id&start-date=$start_date&meal-id=$meal_id");
 				exit();
 			} else {
 				Messages::add('Sorry, the was an error. Your email has not been sent.');
-				header("Location: ". WEB_ROOT . "/admin/weekly-menu.php?client-id=$client_id");
+				header("Location: ". WEB_ROOT . "/admin/weekly-menu.php?client-id=$client_id&start-date=$start_date&meal-id=$meal_id");
 				exit();
 			}
 		} else {
@@ -1831,10 +1840,14 @@ CHECKBOXES;
 				$html .= "<div class='like-heart'><img src='../_images/ui/favorite_off.png' /></div>";	
 			}*/
 			$html .= "<h3>".$menu_items[$i]['menu_item_name']."</h3>";
+			if($menu_items[$i]['special_notes'] != "") {
+				$html .= 		"<span class='special_notes'>".$menu_items[$i]['special_notes']." </span>";
+			}
 			//$html .= "<p>".$menu_items[$i]['ingredients']."</p>";
 			$first_allergy_alert = true;
 			for($j=0; $j<count($item_attributes_array); $j++) {
 				if($menu_items[$i][$item_attributes_array[$j]] == 1) {
+					$item_attribute = $item_attributes_array[$j];
 					if(strrpos(ALLERGY_ALERT_ARRAY, $item_attributes_array[$j]) > -1) {
 						if($first_allergy_alert) {
 						   // $prepend_allery_list = "Contains";
@@ -1843,15 +1856,16 @@ CHECKBOXES;
 						} else {
 							$first_allergy_alert = "";
 						}
-						$checkboxes .= "<span class='allergy-alert'>".$first_allergy_alert.str_replace("contains", "", $item_attributes_array[$j]). "</span>, ";
+						$checkboxes .= "<span class='allergy-alert'>".$first_allergy_alert.str_replace("contains", "", $item_attribute). "</span>, ";
 						// $checkboxes .= "<span class='allergy-alert'>".$item_attributes_array[$j]. "</span>, ";
 					} else {
-						$checkboxes .= $item_attributes_array[$j]. ", ";	
+						$checkboxes .= $item_attribute. ", ";	
 					}
 				}
 			}
 			$checkboxes = str_replace('is_', '', $checkboxes);
 			$checkboxes = str_replace('_', ' ', $checkboxes);
+			$checkboxes = str_replace('gluten free', 'gluten-Free', $checkboxes);
 			$checkboxes = substr($checkboxes, 0, -2);
 			$html .= "<p class='labels'>".ucwords($checkboxes)."</p>";
 			$html .= "</div>";
@@ -1897,6 +1911,9 @@ CHECKBOXES;
 						if($result[$i]['service_date'] == $result[$j]['service_date']) {
 							$html .= 		"<p>";
 							$html .= 		"<span class='menu_item_name'>".$result[$j]['menu_item_name']." </span>";
+							if($result[$j]['special_notes'] != "") {
+								$html .= 		"<span class='special_notes'>".$result[$j]['special_notes']." </span>";
+							}
 							$is_list = "";
 							$contains_list_prepend = "<span class='allergy-alert'>Contains ";
 							$contains_list = $contains_list_prepend;
