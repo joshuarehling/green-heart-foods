@@ -1111,6 +1111,10 @@ select {
 	font-weight: 700;
 }
 
+.weekly_menu_print_menu_page .meal_container .special_notes {
+	display: none;
+}
+
 .weekly_menu_print_menu_page .address_bar {
 	position: absolute;
 	bottom: 67px;
@@ -1879,6 +1883,14 @@ html { /* only for FPO */
 	font-size: .7em;
 	margin: 0px 0 16px 0;
 	display: block;
+}
+
+.daily_menu_print_menu_page .special_notes {
+	font-weight: 700;
+	color: #A7CD4D;
+	font-size: .8em;
+	display: block;
+	margin: -2px 0 0 0;
 }
 
 .daily_menu_print_menu_page .labels {
