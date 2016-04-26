@@ -1175,6 +1175,7 @@ html { /* only for FPO */
 .weekly_menu_print_placards .meal_container.blank {
 	width: 355px;
 	height: 220px;
+	height: 240px;
 	margin: 15px 15px 15px 15px;
 	border-top: 7px solid #A7CD4D;
 	background-color: #FFFFFF;
