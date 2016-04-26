@@ -313,7 +313,7 @@ class Client {
                 <label class="secondary_label">Admin Name</label>
                 <input name='admin_name' type='text' value='$admin_name' placeholder=""/>
                 
-                <label class="secondary_label">Admin Email</label>
+                <label class="secondary_label">Username (Must be an email)</label>
                 <input name='admin_email' type='text' value='$admin_email' placeholder=""/>
                 
                 <label class="secondary_label">Password</label>
@@ -323,7 +323,7 @@ class Client {
             <fieldset>
                 <label>General Info</label>
                 
-                <label class="secondary_label">Login Name</label>
+                <label class="secondary_label">Username</label>
                 <input name='general_username' type='text' value='$general_username' placeholder=""/>
                 
                 <label class="secondary_label">Password</label>
