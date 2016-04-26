@@ -2141,7 +2141,7 @@ CHECKBOXES;
 				} else {
 					$attribute = $item_attributes_array[$j];
 					if($attribute === 'is_gluten_free') {
-						$attribute = 'is_gluten-free';
+						$attribute = 'is_gluten-Free';
 					}
 					$attributes_and_allergens .= $attribute. ", ";
 				}
