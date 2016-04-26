@@ -23,7 +23,10 @@
 	.weekly_menu_print_placards .meal_container,
 	.daily_menu_print_placards .meal_container.blank,
 	.weekly_menu_print_placards .meal_container.blank {
+		float: none;
+		overflow: auto;
 		margin: 0px 1px 0px 0;
+		display: inline-block;
 	}
 
 	.daily_menu_print_placards .ninth,
