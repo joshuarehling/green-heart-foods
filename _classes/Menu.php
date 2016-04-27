@@ -120,9 +120,9 @@ class Menu {
 			$meal_id
 		);
 		if ($context == 'green_heart_foods_admin') {
-			$query = $this->database_connection->prepare("SELECT * FROM menu_items LEFT JOIN meals ON menu_items.meal_id = meals.meal_id LEFT JOIN item_status ON menu_items.item_status_id = item_status.item_status_id WHERE client_id = ? AND (service_date BETWEEN ? AND ?) AND meals.meal_id = ? ORDER BY service_date ASC, meals.meal_id ASC, menu_item_id ASC");
+			$query = $this->database_connection->prepare("SELECT * FROM menu_items LEFT JOIN meals ON menu_items.meal_id = meals.meal_id LEFT JOIN item_status ON menu_items.item_status_id = item_status.item_status_id LEFT JOIN servers ON menu_items.server_id = servers.server_id WHERE client_id = ? AND (service_date BETWEEN ? AND ?) AND meals.meal_id = ? ORDER BY service_date ASC, meals.meal_id ASC, menu_item_id ASC");
 		} else {
-			$query = $this->database_connection->prepare("SELECT * FROM menu_items LEFT JOIN meals ON menu_items.meal_id = meals.meal_id LEFT JOIN item_status ON menu_items.item_status_id = item_status.item_status_id WHERE client_id = ? AND (service_date BETWEEN ? AND ?) AND (item_status.item_status_id = 2 OR item_status.item_status_id = 3) AND meals.meal_id = ? ORDER BY service_date ASC, meals.meal_id ASC, menu_item_id ASC");
+			$query = $this->database_connection->prepare("SELECT * FROM menu_items LEFT JOIN meals ON menu_items.meal_id = meals.meal_id LEFT JOIN item_status ON menu_items.item_status_id = item_status.item_status_id LEFT JOIN servers ON menu_items.server_id = servers.server_id WHERE client_id = ? AND (service_date BETWEEN ? AND ?) AND (item_status.item_status_id = 2 OR item_status.item_status_id = 3) AND meals.meal_id = ? ORDER BY service_date ASC, meals.meal_id ASC, menu_item_id ASC");
 		}
 		$query->execute($arguments);
 		$result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -804,12 +804,15 @@ class Menu {
 					$html .=                $item_status;
 					$html .=            "<p class='day_of_the_week'>".date('l', strtotime($result[$i]['service_date'])).'</p>';
 					$html .=            "<p class='month_and_date'>".date('M d', strtotime($result[$i]['service_date'])).'</p>';
-					if($meal_name == "bites") {
-						$html .=            "<p class='meal_name'>Brite ".$meal_name.'</p>';
-					} else {
+					// if($meal_name == "bites") {
+						// $html .=            "<p class='meal_name'>Brite ".$meal_name.'</p>';
+					// } else {
 						$html .=            "<p class='meal_name'>".$meal_name.'</p>';	
-					}
+					// }
 					$html .=            "<p class='meal_description'>".$result[$i]['meal_description'].'</p>';
+					if($result[$i]['meal_id'] != 5){
+						$html .=        	"<h4 class='hosted_by'>Hosted By ".$result[$i]['server_first_name']."</h4>";		
+					}
 					$html .=            "<a class='page_button' href='daily-menu.php?client-id=$client_id&service-date=".$result[$i]['service_date']."&meal-id=".$result[$i]['meal_id']."'>View</a>";
 					$html .=        "</div>";
 					$html .= 		"<div class='menu_items_container'>";
