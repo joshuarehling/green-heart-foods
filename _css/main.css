@@ -928,6 +928,10 @@ select {
 	color: #A7CD4D;
 }
 
+.weekly_menu_page .meal_details .hosted_by {
+	font-weight: 700;
+}
+
 .weekly_menu_page .meal_container.breakfast .meal_description { color: #F39035; }
 .weekly_menu_page .meal_container.lunch .meal_description { color: #A7CD4D; }
 .weekly_menu_page .meal_container.dinner .meal_description { color: #9F5D79; }
