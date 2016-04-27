@@ -599,20 +599,10 @@ class Menu {
 
 		$result = $this->get_daily_menu($client_id, $service_date, $meal_id);
 		$result_count = count($result);
-		// $item_attributes_array = array(
-		// 	'is_vegetarian', 
-		// 	'is_vegan', 
-		// 	'is_gluten_free', 
-		// 	'is_whole_grain', 
-		// 	'contains_nuts', 
-		// 	'contains_soy', 
-		// 	'contains_shellfish',
-		// 	'contains_nightshades',
-		// 	'contains_alcohol',
-		// 	'contains_eggs',
-		// 	'contains_gluten',
-		// 	'contains_dairy'
-		// );
+		$menu_item_id_array = array();
+		for($i=0; $i<$result_count; $i++) {
+			array_push($menu_item_id_array, $result[$i]['menu_item_id']);
+		}
 		if($result_count > 0) {
 			$server_image_path = WEB_ROOT.'/'.$result[0]['server_image_path'];
 			$menu_image_path = WEB_ROOT.'/_uploads/'.$result[0]['menu_image_path'];
@@ -630,12 +620,10 @@ class Menu {
 			$html .=    "</div>";
 			$html .= "</div>";
 			$html .= "<form action='".WEB_ROOT."/_actions/approve-menu-from-client.php' method='post' enctype='application/x-www-form-urlencoded'>";
-
 			if($meal_id == 5) {
 				$previous_bite_group_id = NULL;
 				for($i=0; $i<$result_count; $i++) {
 					$current_bite_group_id = $result[$i]['bite_group_id'];
-					
 					if($current_bite_group_id != $previous_bite_group_id){
 						$html .= "<div class='bite_group_container_outer'>";
 						$html .= "<div class='bite_group_container'>";
@@ -647,9 +635,6 @@ class Menu {
 								$html .= "<img src='".WEB_ROOT."/_uploads/".$result[$j]['image_name']."'/>";
 								$html .= "<p>".$result[$j]['bite_name']."</p>";
 								$html .= $this->get_attributes_and_allergens($result[$i]);
-								// $html .= "<div class='plus_button'>+</div>";
-								// $html .= "<div class='minus_button'>-</div>";
-								// $html .= "<input type='text' class='bite_quantity' name='' value='$bite_quantity' />";
 								$html .= "</div>";
 							}
 						}
@@ -658,16 +643,8 @@ class Menu {
 						$html .= "</div>";
 					}
 				}
-				// echo "<pre>";
-				// print_r($result);
-				// echo "</pre>";
-				// $html .= "Bites";
 			} else {
-				// echo "<pre>";
-				// print_r($result);
-				// echo "</pre>";
 				for($i=0; $i<$result_count; $i++) {
-					// $checkboxes = "";
 					$menu_item_id = $result[$i]['menu_item_id'];
 					$like_count = $result[$i]['like_count'];
 					$order_quantity = $result[$i]['total_orders_for_item'];
@@ -694,61 +671,7 @@ class Menu {
 					if($result[$i]['ingredients'] != "") {
 						$html .= "<p class='ingredients'>".$result[$i]['ingredients'].'</p>';	
 					}	
-					
-					// $first_allergy_alert = true;
-					// $this->attributes_and_allergens = "";
-					// $this->html_container = "";
-
 					$html .= $this->get_attributes_and_allergens($result[$i]);
-
-					// for($j=0; $j<count($item_attributes_array); $j++) {
-					// 	if($result[$i][$item_attributes_array[$j]] == 1) {
-					// 		if(strrpos(ALLERGY_ALERT_ARRAY, $item_attributes_array[$j]) > -1) {
-					// 			if($first_allergy_alert) {
-					// 				$prepend_allergy_list = "Contains";
-					// 				$first_allergy_alert = false;
-					// 			} else {
-					// 				$prepend_allergy_list = "";
-					// 			}
-					// 			$checkboxes .= "<span class='allergy-alert'>".$prepend_allergy_list.str_replace("contains", "", $item_attributes_array[$j])."</span>, ";
-					// 		} else {
-					// 			$attribute = $item_attributes_array[$j];
-					// 			if($attribute === 'is_gluten_free') {
-					// 				$attribute = 'is_gluten-free';
-					// 			}
-					// 			$checkboxes .= $attribute. ", ";
-					// 		}
-					// 	}
-					// }
-					// $checkboxes = str_replace('is_', '', $checkboxes);
-					// $checkboxes = str_replace('_', ' ', $checkboxes);
-					// $checkboxes = substr($checkboxes, 0, -2);
-					// $html .= "<p class='attributes_and_allergens'>".$checkboxes."</p>";
-					// $html .= "<p class='special_notes'>".$result[$i]['special_notes']."</p>";
-					// $html .= "<p class='special_requests'>".$result[$i]['special_requests']."</p>";
-
-					if($context != 'client_general') {
-						// $html .= "<p class='single_order_size'>1 Order Serves $servings_per_order People / $$price_per_order Per Order</p>";
-						// $html .= "<div class='order_summary'>";
-						// $html .=    "<span class='total_orders_for_item'>$order_quantity</span> Orders <span class='total_served_for_item_serves'>Serves</span> <span class='total_served_for_item'>$calculated_number_of_item_servings</span> <span class='total_served_for_item_serves'>=</span> $<span class='total_cost_for_item'>$total_item_price</span>";
-						// $html .= "</div>";
-					}
-					if($context == 'client_admin') {
-						// $html .= "<a class='page_button quantity_button subtract'>Subtract</a>";
-						// $html .= "<a class='page_button quantity_button add'>Add</a>";
-						// $html .= "<input class='price_per_order_input' type='hidden' value='$price_per_order'>";
-						// $html .= "<input class='servings_per_order_input' type='hidden' value='$servings_per_order'>";
-						// $html .= "<input class='total_orders_for_item_hidden' type='hidden' name='total_orders_for_item[$i]' value='$order_quantity'>";
-						// $html .= "<input class='special_requests' name='special_requests[$i]' type='text' placeholder='Add Special Instructions' value='$special_requests' />";
-						// $html .= "<input class='special_requests' name='special_requests[$i]' type='text' placeholder='Add Special Instructions' value='I\'m special' />";
-						// $html .= "<input type='hidden' name='menu_item_id_array[]' value='$menu_item_id' />";
-						// $html .= "<input type='hidden' name='service_date' value='$service_date' />";
-						// $html .= "<input type='hidden' name='client_id' value='$client_id' />";
-						// $html .= "<input type='hidden' name='meal_id' value='$meal_id' />";
-					}
-					/*if($i < $result_count-1) {
-						$html .= "<div class='fake_hr'></div>";    
-					}*/
 					$html .= "</div>"; // Ends right column
 					$html .= "</div>"; // Ends left_and_right_column
 					$html .= "</div>"; // Ends menu-item
@@ -758,6 +681,12 @@ class Menu {
 				$html .= "<div class='button_container'>";
 				$html .=    "<p><span class='total_orders_for_menu'>$total_orders</span> Orders <span class='total_served_for_item_serves'>Serves</span> <span class='total_served_for_menu'>$total_servings</span> <span class='total_served_for_item_serves'>=</span> <span class='total_cost_for_menu'>$$total_price</span></p>";
 				if($context == 'client_admin') {
+					$html .= "<input type='hidden' name='service_date' value='$service_date' >";
+					$html .= "<input type='hidden' name='client_id' value='$client_id' >";
+					$html .= "<input type='hidden' name='meal_id' value='$meal_id' >";
+					for($i=0; $i<count($menu_item_id_array); $i++) {
+						$html .= "<input type='hidden' name='menu_item_id_array[$i]' value='$menu_item_id_array[$i]' >";
+					}
 					$html .= "<input type='submit' class='place_order_button page_button' value='Place Order'>";
 				}
 				if($context == 'green_heart_foods_admin') {
@@ -1190,15 +1119,12 @@ class Menu {
 				$sent = mail($to_email, $subject, $message, $headers);
 				if($sent) {
 					Messages::add('Thanks! Your order has been updated.');
-					// header("Location: ". WEB_ROOT . "/admin/weekly-menu.php?client-id=$client_id");
-					header("Location: ". WEB_ROOT . "/clients/weekly-menu.php?client-id=$client_id");
-					exit();
 				} else {
 					Messages::add('Sorry, there was an error. Your order has not been updated.');
-					// header("Location: ". WEB_ROOT . "/admin/weekly-menu.php?client-id=$client_id");
-					header("Location: ". WEB_ROOT . "/clients/weekly-menu.php?client-id=$client_id");
-					exit();
 				}
+				$location = "Location: ". WEB_ROOT . "/clients/weekly-menu.php?client-id=$client_id&start-date=$service_date&meal-id=$meal_id";
+				header($location);
+				exit();
 			}
 		}
 	}
