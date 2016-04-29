@@ -1081,8 +1081,13 @@ select {
 .weekly_menu_print_menu_page .meal_container {
 	font-size: .8em;
 	color: #7D7D7D;
-
 }
+
+.weekly_menu_print_menu_page .meal_container .menu_items_container {
+	background-color: #FFFFFF;
+	z-index: 8000;
+}
+
 
 .weekly_menu_print_menu_page .meal_container .day_of_the_week {
 	text-transform: uppercase;
@@ -1124,6 +1129,7 @@ select {
 	bottom: 67px;
 	font-size: .5em;
 	color: #A7CD4D;
+	z-index: 0;
 }
 
 .weekly_menu_print_menu_page .address_bar .green_heart_foods_url {

@@ -2,6 +2,10 @@
 
 @media print {
 	
+	html {
+		background-color: #FFFFFF;
+	}
+	
 	body {
 		font-family: 'Open Sans Condensed', sans-serif;
 		font-weight: 300italic;
@@ -15,7 +19,7 @@
 	.daily_menu_print_placards .outside_container,
 	.weekly_menu_print_placards .outside_container {
 		width: 712px;
-		padding: 0;
+		padding: 0 10px;
 		background-color: #ebebeb;
 	}
 
