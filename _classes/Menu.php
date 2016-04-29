@@ -1733,7 +1733,8 @@ CHECKBOXES;
 	}
 
 	public function get_daily_print_menu($menu_items) {
-		$html = "<div class='print_header'>";
+		$meal_name = strtolower($menu_items[0]['meal_name']);
+		$html = "<div class='print_header $meal_name'>";
 		$html .= "<h1 class='client_name'>".$menu_items[0]['company_name']."</h1>";
 		$html .= "";
 		$item_attributes_array = array(
@@ -2031,7 +2032,7 @@ CHECKBOXES;
 		} else {
 			$html .= "<p class='no_menus'>No menus found</p>";
 		}
-		$html .= 	"<div class='meal_container blank unedited'>";
+		$html .= 	"<div class='meal_container $meal_name blank unedited'>";
 		$html .= 		"<div class='green_heart_foods_logo'></div>";
 		$html .= 		"<h1 contenteditable='true' class='menu_item_name editable'>[Custom Menu Item]</h1>";
 		$html .= 		"<h2 contenteditable='true' class='menu_item_ingredients editable'>[Custom Ingredients]</h2>";
