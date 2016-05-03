@@ -1053,12 +1053,12 @@ select {
 	text-align: left;
 }
 
-.print_header.Breakfast h1 { color: #F39035; }
-.print_header.Lunch h1 { color: #A7CD4D; }
-.print_header.Dinner h1 { color: #9F5D79; }
-.print_header.Snack h1 { color: #85D1EB; }
-.print_header.Bite h1 { color: #4BB0EF; }
-.print_header.Event h1 { color: #009FA3; }
+.print_header.breakfast h1 { color: #F39035; }
+.print_header.lunch h1 { color: #A7CD4D; }
+.print_header.dinner h1 { color: #9F5D79; }
+.print_header.snack h1 { color: #85D1EB; }
+.print_header.bite h1 { color: #4BB0EF; }
+.print_header.event h1 { color: #009FA3; }
 
 .print_header h1.meal_name {
 	color: #7D7D7D;
@@ -1071,12 +1071,12 @@ select {
 	margin-bottom: 25px;
 }
 
-.print_header.Breakfast h1.date { border-bottom: 3px solid #F39035; }
-.print_header.Lunch h1.date { border-bottom: 3px solid #A7CD4D; }
-.print_header.Dinner h1.date { border-bottom: 3px solid #9F5D79; }
-.print_header.Snack h1.date { border-bottom: 3px solid #85D1EB; }
-.print_header.Bite h1.date { border-bottom: 3px solid #4BB0EF; }
-.print_header.Event h1.date { border-bottom: 3px solid #009FA3; }
+.print_header.breakfast h1.date { border-bottom: 3px solid #F39035; }
+.print_header.lunch h1.date { border-bottom: 3px solid #A7CD4D; }
+.print_header.dinner h1.date { border-bottom: 3px solid #9F5D79; }
+.print_header.snack h1.date { border-bottom: 3px solid #85D1EB; }
+.print_header.bite h1.date { border-bottom: 3px solid #4BB0EF; }
+.print_header.event h1.date { border-bottom: 3px solid #009FA3; }
 
 .weekly_menu_print_menu_page .meal_container {
 	font-size: .8em;

@@ -1054,7 +1054,8 @@ class Menu {
 					<body>
 						<h1><img src='$image_path' /></h1>
 						<p>Hello, Food Lover!</p>
-						<p>Your weekly menus are ready to review. Please click the link below to review, edit and confirm.</p>
+						<p>Your weekly menus are ready to review. Please click the link below to review and confirm.</p>
+						<p>Please call or email (orders@greenheartfoods.com) to change an order.</p>
 						<p><a class='page_button' href=$link_with_forward>$link_with_forward</a></p>
 						<p>Green Heart Foods</p>
 					</body>
@@ -1815,7 +1816,8 @@ CHECKBOXES;
 		$client_name = $result[0]['company_name'];
 		$web_root = WEB_ROOT;
 		$meal_type_query = $this->get_meal_types_by_id($url_meal_id);
-		$meal_name = $meal_type_query[0]['meal_name'];
+		//$meal_name = $meal_type_query[0]['meal_name'];
+		$meal_name = strtolower($meal_type_query[0]['meal_name']);
 		$start_date_formatted = date('M d', strtotime($start_date));
 		$end_date_formatted = date('M d', strtotime($start_date . '+ 6 days'));
 		$html .= "<div class='print_header $meal_name'>";
