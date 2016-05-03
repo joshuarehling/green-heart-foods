@@ -1054,8 +1054,8 @@ class Menu {
 					<body>
 						<h1><img src='$image_path' /></h1>
 						<p>Hello, Food Lover!</p>
-						<p>Your weekly menus are ready to review. Please click the link below to review and confirm.</p>
-						<p>Please call or email (orders@greenheartfoods.com) to change an order.</p>
+						<p>Your weekly menus are ready! Please click the link below to review and approve.</p>
+						<p>If you would like to request a menu edit, please email <a href='mailto:orders@greenheartfoods.com'>orders@greenheartfoods.com</a>.</p>
 						<p><a class='page_button' href=$link_with_forward>$link_with_forward</a></p>
 						<p>Green Heart Foods</p>
 					</body>
