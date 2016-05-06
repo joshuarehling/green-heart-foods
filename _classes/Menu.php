@@ -941,7 +941,8 @@ class Menu {
 						} else {
 							$view_type = 'grid_view';
 						}
-						if ($result[$j]['service_date'] <= $week_end_date_with_year && $result[$j]['service_date'] >= $week_start_date_with_year && $current_meal_id != $previous_meal_id) {
+						// if ($result[$j]['service_date'] <= $week_end_date_with_year && $result[$j]['service_date'] >= $week_start_date_with_year && $current_meal_id != $previous_meal_id) {
+						if ($result[$j]['service_date'] <= $week_end_date_with_year && $result[$j]['service_date'] >= $week_start_date_with_year) {
 							if (array_search($result[$j]['meal_id'], $meal_types_displayed) === false) {
 								$meal_name_class = strtolower($current_meal_name);
 								$grid_view_container = "";
