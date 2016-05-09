@@ -1848,7 +1848,8 @@ CHECKBOXES;
 								$html .= 		"<span class='special_notes'>".$result[$j]['special_notes']." </span>";
 							}
 							$is_list = "";
-							$contains_list_prepend = "<span class='allergy-alert'>Contains ";
+							//$contains_list_prepend = "<span class='allergy-alert'>Contains ";
+							$contains_list_prepend = "<span class='allergy-alert'>";
 							$contains_list = $contains_list_prepend;
 							$result[$j]['is_vegetarian'] == 1 ? 		$is_list .= "Vegetarian, " : 			$is_list .= "";
 							$result[$j]['is_vegan'] == 1 ? 				$is_list .= "Vegan, " : 				$is_list .= "";
