@@ -28,6 +28,10 @@ switch ($_SERVER['HTTP_HOST']) {
         define('SERVER_ROOT', $_SERVER['DOCUMENT_ROOT']."/clients");
         define('WEB_ROOT', '');
         break;
+    case 'http://www.previewmywebsitenow.com/':
+        define('SERVER_ROOT', $_SERVER['DOCUMENT_ROOT']."/clients");
+        define('WEB_ROOT', '');
+        break;
     default:
         die("Server path error.");
         break;
