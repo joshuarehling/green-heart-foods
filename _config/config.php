@@ -28,7 +28,8 @@ switch ($_SERVER['HTTP_HOST']) {
         define('SERVER_ROOT', $_SERVER['DOCUMENT_ROOT']."/clients");
         define('WEB_ROOT', '');
         break;
-    case 'http://www.previewmywebsitenow.com/':
+    case 'www.previewmywebsitenow.com':
+    case 'previewmywebsitenow.com':
         define('SERVER_ROOT', $_SERVER['DOCUMENT_ROOT']."/clients");
         define('WEB_ROOT', '');
         break;
