@@ -25,7 +25,8 @@ switch ($_SERVER['HTTP_HOST']) {
         define('WEB_ROOT', '/menu-manager');
         break;
     case 'clients.greenheartfoods.com':
-        define('SERVER_ROOT', $_SERVER['DOCUMENT_ROOT']."/clients");
+        // define('SERVER_ROOT', $_SERVER['DOCUMENT_ROOT']."/clients");
+        define('SERVER_ROOT', $_SERVER['DOCUMENT_ROOT']);
         define('WEB_ROOT', '');
         break;
     case 'www.previewmywebsitenow.com':
