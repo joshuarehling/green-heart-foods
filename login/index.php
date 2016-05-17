@@ -4,8 +4,8 @@
 
     $page_class = 'login_page';
     require_once("../_config/config.php");
-    echo "Test";
-    echo SERVER_ROOT;
+    // echo "Test";
+    // echo SERVER_ROOT;
     require_once(SERVER_ROOT . "/_includes/global-header.php");
     require_once(SERVER_ROOT . '/_classes/Messages.php');
     require_once(SERVER_ROOT . '/_classes/User.php');
