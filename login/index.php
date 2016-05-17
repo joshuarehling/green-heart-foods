@@ -1,5 +1,7 @@
 <?php 
     session_start();
+    echo "Test";
+    echo SERVER_ROOT;
     $page_class = 'login_page';
     require_once("../_config/config.php");
     require_once(SERVER_ROOT . "/_includes/global-header.php");
