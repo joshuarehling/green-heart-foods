@@ -19,11 +19,19 @@ class Database {
 				$password = "root";
                 $database_name = 'green_heart_foods';
     			break;
+			/*
+	        case 'clients.greenheartfoods.com':
+			$host = "ghfAdmin.db.3683991.hostedresource.com";
+			$user = "ghfAdmin";
+			$password = "Green1980!";
+			$database_name = 'ghfAdmin';
+			break;
+			*/
             case 'clients.greenheartfoods.com':
-    			$host = "ghfAdmin.db.3683991.hostedresource.com";
-				$user = "ghfAdmin";
+    			$host = "localhost";
+				$user = "ghf_admin";
 				$password = "Green1980!";
-                $database_name = 'ghfAdmin';
+                $database_name = 'green_heart_foods';
     			break;
     		default:
     			die("Error connecting to database.");
