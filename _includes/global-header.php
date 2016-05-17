@@ -39,6 +39,7 @@
 <html>
 
 <head>
+	<!-- JOSH K GITHUB TEST -->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Green Heart Foods<?php echo $page_title_detail; ?></title>
 	<link rel="stylesheet" type="text/css" href="<?php echo WEB_ROOT; ?>/_css/normalize.css">
