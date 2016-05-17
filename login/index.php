@@ -1,12 +1,16 @@
 <?php 
     session_start();
-    echo "Test";
-    echo SERVER_ROOT;
+    
+
     $page_class = 'login_page';
     require_once("../_config/config.php");
+
     require_once(SERVER_ROOT . "/_includes/global-header.php");
     require_once(SERVER_ROOT . '/_classes/Messages.php');
     require_once(SERVER_ROOT . '/_classes/User.php');
+    echo "Test";
+    echo SERVER_ROOT;
+    
     if (isset($_GET['forward-url'])) {
         $forward_url = $_GET['forward-url'];
     } else {
