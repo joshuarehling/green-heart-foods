@@ -1,5 +1,7 @@
 <?php 
 
+date_default_timezone_set('America/Los_Angeles');
+
 // Turns off Magic Quotes on older version of PHP.
 
 if (get_magic_quotes_gpc()) {

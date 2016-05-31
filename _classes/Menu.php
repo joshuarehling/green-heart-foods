@@ -1151,8 +1151,11 @@ class Menu {
 		$day_options = "";
 		$start_month = date('F');
 		$start_month_number = date('m');
-		$end_month = date('F', strtotime('+1 month'));
-		$end_month_number = date('m', strtotime('+1 month'));
+		// $end_month = date('F', strtotime('+1 month'));
+		// $end_month = date('F', strtotime('next month'));
+		$end_month = date('F', strtotime('first day of next month'));
+		// $end_month_number = date('m', strtotime('+1 month'));
+		$end_month_number = date('m', strtotime('first day of next month'));
 		$start_year = date('Y');
 		$end_year = date('Y', strtotime('+1 year'));
 		$month_options_array = array(
