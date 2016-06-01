@@ -403,7 +403,7 @@ class Menu {
 				$_POST['meal_id'],
 				$_POST['client_id'],
 				$_POST['server_id'],
-				$_POST['item_status_id'],
+				// $_POST['item_status_id'],
 				$menu_image_path,
 				$_POST['meal_description'],
 				$_POST['menu_item_name'][$i],
@@ -430,11 +430,13 @@ class Menu {
 			);
 			// echo "<pre>";
 			// print_r($arguments);
+
+			// item_status_id = ?, 
 			$query = $this->database_connection->prepare("UPDATE menu_items SET 
 				meal_id = ?, 
 				client_id = ?, 
 				server_id = ?, 
-				item_status_id = ?, 
+				
 				menu_image_path = ?,
 				meal_description = ?, 
 				menu_item_name = ?, 
