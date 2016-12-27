@@ -914,7 +914,7 @@ class Menu {
 					$week_start_date_with_year = date('Y-m-d', strtotime('last monday', strtotime($service_date)));
 				}
 				$week_end_date = date('M d', strtotime("$week_start_date + 6 days"));
-				$week_end_date_with_year = date('Y-m-d', strtotime("$week_start_date + 6 days"));
+				$week_end_date_with_year = date('Y-m-d', strtotime("$week_start_date_with_year + 6 days"));
 				if($week_start_date != $previous_start_date) {
 					$thru_dates = $week_start_date."<br> <span class='thru'>THRU</span> <br><span class='thru_end_date'>".$week_end_date."</span>";
 					$previous_service_date = NULL;
