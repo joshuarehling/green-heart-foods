@@ -209,6 +209,23 @@ class Menu {
 		}
 	}
 
+	/* Check for duplicate meal/day combination */
+
+	public function check_for_duplicate_meal_day_combination() {
+		$service_date = $_POST['service_year'].'-'.$_POST['service_month'].'-'.$_POST['service_day'];
+		$client_id = $_POST['client_id'];
+		$meal_id = $_POST['meal_id'];
+		$arguments = array($client_id, $service_date, $meal_id);
+		$query = $this->database_connection->prepare("SELECT * FROM menu_items WHERE client_id = ? AND service_date = ? AND meal_id = ?");
+		$query->execute($arguments);
+		$result = $query->fetchAll(PDO::FETCH_ASSOC);
+		if(count($result) > 0) {
+			echo "duplicate-exists";
+		} else {
+			echo "no-duplicate-exists";
+		}
+	}
+
 	public function create_menu() {
 		$service_date = $_POST['service_year'].'-'.$_POST['service_month'].'-'.$_POST['service_day'];
 		$client_id = $_POST['client_id'];
@@ -1029,7 +1046,7 @@ class Menu {
 		return $html;
 	}
 
-	public function send_menu_for_client_review ($client_id, $start_date, $meal_id) {
+	public function send_menu_for_client_review($client_id, $start_date, $meal_id) {
 		$user = new User();
 		$result = $user->get_client_users($client_id);
 		for ($i=0; $i < count($result); $i++) { 
@@ -1296,15 +1313,15 @@ class Menu {
 		$html .=    "<fieldset>";
 		$html .=        "<h3>Date</h3>";
 		//$html .=       "<select name='service_month' class='month cs-select cs-skin-border'>";
-		$html .=       "<select name='service_month' class='month'>";
+		$html .=       "<select class='service_month' name='service_month' class='month'>";
 		$html .=            $month_options;
 		$html .=        "</select>";
 		//$html .=        "<select name='service_day' class='day cs-select cs-skin-border'>";
-		$html .=        "<select name='service_day' class='day'>";
+		$html .=        "<select class='service_day' name='service_day' class='day'>";
 		$html .=            $day_options;
 		$html .=        "</select>";
 		//$html .=        "<select name='service_year' class='year cs-select cs-skin-border'>";
-		$html .=        "<select name='service_year' class='year'>";
+		$html .=        "<select class='service_year' name='service_year' class='year'>";
 		$html .=            $year_options;
 		$html .=        "</select>";
 		$html .=    "</fieldset>";
@@ -1431,7 +1448,7 @@ class Menu {
 						</p>
 						<input type="hidden" name="total_orders_for_item[$i]" class="total_orders_for_item_hidden"  value="$total_orders_for_item" />
 						<input type="hidden" class="meals_per_day" name="meals_per_day" value="$i" />
-						<input type="hidden" name="client_id" value="$client_id" />
+						<input type="hidden" class="client_id" name="client_id" value="$client_id" />
 						<input type="hidden" name="item_status_id" value="1" />
 						<input type="hidden" name="menu_image_path_orginal" value="$menu_image_path_orginal" />
 						<a class="page_button quantity_button subtract">Subtract</a>
@@ -1509,7 +1526,7 @@ FORM;
 		$html .=        "<span class='total_cost_for_menu'>$$total_cost_for_menu</span>";
 		$html .=    "</p>";
 		$html .=    "<a href='$cancel_url' class='cancel_button page_button'>Cancel</a>";
-		$html .=    "<button class='preview_menu_button page_button'>Save</button>";
+		$html .=    "<button class='$mode preview_menu_button page_button'>Save</button>";
 		$html .= "</div>";
 		return $html;
 	}

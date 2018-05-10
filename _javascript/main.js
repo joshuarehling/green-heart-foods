@@ -37,7 +37,32 @@ $(document).ready(function() {
 		handle_quantity_button_click(target);
 	});
 
-	$('.create_and_edit_menu .preview_menu_button').click(function(event){
+	$('.create_and_edit_menu .create.preview_menu_button').click(function(event){
+		var service_year = $('.service_year').val()
+		var service_month = $('.service_month').val()
+		var service_day = $('.service_day').val()
+		var client_id = $('.client_id').val()
+		var meal_id = $('.meal_type').val()
+		$.post('../_actions/check-for-duplicate-meal-day-combination.php', { 
+			service_year:service_year,
+			service_month:service_month,
+			service_day:service_day,
+			client_id:client_id,
+			meal_id:meal_id
+		}).done(function(data){
+			console.log("data: ",data);
+			if(data === "no-duplicate-exists") {
+				$('.create_menu_form').submit();
+				$('.meals_per_day').val(0);
+			} else {
+				alert("Sorry, a menu already exists for that meal and day.")
+			}
+		}).fail(function() {
+	    	alert("Sorry, there was an error checking for duplicate meal/day combination.");
+	  	})
+	});
+
+	$('.create_and_edit_menu .edit.preview_menu_button').click(function(event){
 		$('.create_menu_form').submit();
 		$('.meals_per_day').val(0);
 	});
