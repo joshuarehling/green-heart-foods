@@ -1144,6 +1144,12 @@ select {
 	top: 4px;
 }
 
+.weekly_menu_print_menu_page .print_menu_meal_description {
+	color: #A3A6AF;
+	font-weight: 700;
+}
+
+
 /* Placards */
 
 html { /* only for FPO */
@@ -1932,6 +1938,17 @@ html { /* only for FPO */
 	width: auto;
 	position: relative;
 	top: 4px;
+}
+
+.daily_menu_print_menu_page .print_menu_meal_description.breakfast {
+	text-transform: uppercase;
+	color: #F39035;
+	font-weight: 700;
+	margin-top: -20px;
+}
+
+.daily_menu_print_menu_page .print_menu_meal_description.lunch {
+	color: #A7CD4D
 }
 
 /* Placards - not in use any more */

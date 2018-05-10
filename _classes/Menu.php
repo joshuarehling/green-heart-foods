@@ -1763,6 +1763,7 @@ CHECKBOXES;
 		$html .= "<h1 class='date'>".date('l M d', strtotime($menu_items[0]['service_date']))."</h1>";
 		$html .= "<div class='green_heart_foods_logo'></div>";
 		$html .= "</div>";
+		$html .= "<p class='print_menu_meal_description $meal_name'>".$menu_items[0]['meal_description']."</p>";
 
 		for ($i=0; $i < count($menu_items); $i++) { 
 			$checkboxes = "";
@@ -1843,7 +1844,7 @@ CHECKBOXES;
 				if($service_date != $result[$i]['service_date']) {
 					$meal_name = strtolower($result[$i]['meal_name']) ;
 					$html .=    "<div class='meal_container $meal_name'>";
-					$html .=    	"<p class='day_of_the_week'>".date('l', strtotime($result[$i]['service_date'])).'</p>';
+					$html .=    	"<p class='day_of_the_week'>".date('l', strtotime($result[$i]['service_date']))." <span class='print_menu_meal_description'>".$result[$i]['meal_description'].'</span></p>';
 					$html .= 			"<div class='menu_items_container'>";
 					for ($j=0; $j < count($result); $j++) {
 						if($result[$i]['service_date'] == $result[$j]['service_date']) {
