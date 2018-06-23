@@ -23,6 +23,19 @@ class Menu {
 		echo $query->rowCount();
 	}
 
+	public function delete_preset_menu($preset_group_id) {
+		$arguments = array(
+			$preset_group_id
+		);
+		$query = $this->database_connection->prepare("DELETE FROM menu_items WHERE preset_group_id = ?");
+		$result = $query->execute($arguments);
+		if($query->rowCount() === 1){
+			echo "Success";
+		} else {
+			echo "Error";
+		}
+	}
+
 	public function get_meal_types() {
 		$query = $this->database_connection->prepare("SELECT * FROM meals");
 		$query->execute();
@@ -45,7 +58,7 @@ class Menu {
 		if(count($result) > 0) {
 			return $result;
 		} else {
-			echo "Sorry, there was an error. Could not find any meal tyoes."; // TODO - Send as error.
+			echo "Sorry, there was an error. Could not find any meal types."; // TODO - Send as error.
 			exit();
 		}
 	}
@@ -227,98 +240,114 @@ class Menu {
 	}
 
 	public function create_menu() {
-		$service_date = $_POST['service_year'].'-'.$_POST['service_month'].'-'.$_POST['service_day'];
-		$client_id = $_POST['client_id'];
-		$meal_id = $_POST['meal_id'];
+
 		$menu_image_path = $this->image->upload_image($_FILES, "menu_image");
+		
+		$is_preset_menu = FALSE;
+		$is_single_client = FALSE;
+		$success_count = 0;
+		$client_names_with_error = "";
+		if(count($_POST['clients']) === 1) { $is_single_client = TRUE; }
+		if($is_single_client && $_POST['clients'][0] === '1') { $is_preset_menu = TRUE; }
 
-		/* Check for duplicate meal/day combination */
+		/* If there's only one client, and it's the Presets client, set the service date to 2000-01-01 */
 
-		$arguments = array(
-			$client_id,
-			$service_date,
-			$meal_id,
-		);
-		$query = $this->database_connection->prepare("SELECT * FROM menu_items WHERE client_id = ? AND service_date = ? AND meal_id = ?");
-		$query->execute($arguments);
-		$result = $query->fetchAll(PDO::FETCH_ASSOC);
-		if(count($result) > 0) {
-			Messages::add('Sorry, it looks like there is already a meal created for this day.');
-			header("Location: ../admin/create-menu.php?client-id=$client_id");
-			exit();
-		}
-
-		/* End check for duplicate meal/day combination */
-
-		if($_POST['meal_id'] == 5) {
-			for ($i=0; $i < $_POST['number_of_bites']; $i++) {
-				$arguments = array(
-					$service_date,
-					$_POST['meal_id'],
-					$_POST['client_id'],
-					$_POST['server_id'],
-					1,
-					$_POST['bite_id'][$i],
-					$_POST['bite_quantity'][$i]
-				);
-				$query = $this->database_connection->prepare("INSERT INTO menu_items (service_date, meal_id, client_id, server_id, item_status_id, bite_id, total_orders_for_item) VALUES (?, ?, ?, ?, ?, ?, ?)");
-				$result = $query->execute($arguments);
-			}
+		if($is_preset_menu) {
+			$service_date = '2000-01-01';
+			$preset_group_id = uniqid();
 		} else {
-			for ($i=0; $i <= $_POST['meals_per_day']; $i++) {
-				if($_POST['menu_item_name'][$i] != "" ) {
-					if(!isset($_POST['is_vegetarian'][$i]))         $_POST['is_vegetarian'][$i] = 0;
-					if(!isset($_POST['is_vegan'][$i]))              $_POST['is_vegan'][$i] = 0;
-					if(!isset($_POST['is_gluten_free'][$i]))        $_POST['is_gluten_free'][$i] = 0;
-					if(!isset($_POST['is_whole_grain'][$i]))        $_POST['is_whole_grain'][$i] = 0;
-					if(!isset($_POST['contains_nuts'][$i]))         $_POST['contains_nuts'][$i]= 0;
-					if(!isset($_POST['contains_soy'][$i])) 			$_POST['contains_soy'][$i] = 0;
-					if(!isset($_POST['contains_shellfish'][$i])) 	$_POST['contains_shellfish'][$i] = 0;
-					if(!isset($_POST['contains_nightshades'][$i])) 	$_POST['contains_nightshades'][$i] = 0;
-					if(!isset($_POST['contains_alcohol'][$i])) 		$_POST['contains_alcohol'][$i] = 0;
-					if(!isset($_POST['contains_eggs'][$i])) 		$_POST['contains_eggs'][$i] = 0;
-					if(!isset($_POST['contains_gluten'][$i])) 		$_POST['contains_gluten'][$i] = 0;
-					if(!isset($_POST['contains_dairy'][$i])) 		$_POST['contains_dairy'][$i] = 0;
+			$service_date = $_POST['service_year'].'-'.$_POST['service_month'].'-'.$_POST['service_day'];
+			$preset_group_id = NULL;
+		}
+		for($outer_increment=0; $outer_increment < count($_POST['clients']); $outer_increment++) {
+			$client_id = $_POST['clients'][$outer_increment]; 
+			$meal_id = $_POST['meal_id'];
+			if($_POST['meal_id'] == 5) {
+				for ($i=0; $i < $_POST['number_of_bites']; $i++) {
 					$arguments = array(
 						$service_date,
 						$_POST['meal_id'],
 						$_POST['client_id'],
+						$preset_group_id,
 						$_POST['server_id'],
-						$_POST['item_status_id'],
-						$menu_image_path,
-						$_POST['meal_description'],
-						$_POST['menu_item_name'][$i],
-						$_POST['ingredients'][$i],
-						$_POST['special_notes'][$i],
-						$_POST['is_vegetarian'][$i],
-						$_POST['is_vegan'][$i],
-						$_POST['is_gluten_free'][$i],
-						$_POST['is_whole_grain'][$i],
-						$_POST['contains_nuts'][$i],
-						$_POST['contains_soy'][$i],
-						$_POST['contains_shellfish'][$i],
-						$_POST['contains_nightshades'][$i],
-						$_POST['contains_alcohol'][$i],
-						$_POST['contains_eggs'][$i],
-						$_POST['contains_gluten'][$i],
-						$_POST['contains_dairy'][$i],
-						$_POST['price_per_order'][$i],
-						$_POST['servings_per_order'][$i],
-						$_POST['total_orders_for_item'][$i],
+						1,
+						$_POST['bite_id'][$i],
+						$_POST['bite_quantity'][$i]
 					);
-					$query = $this->database_connection->prepare("INSERT INTO menu_items (service_date, meal_id, client_id, server_id, item_status_id, menu_image_path, meal_description, menu_item_name, ingredients, special_notes, is_vegetarian, is_vegan, is_gluten_free, is_whole_grain, contains_nuts, contains_soy, contains_shellfish, contains_nightshades, contains_alcohol, contains_eggs, contains_gluten, contains_dairy, price_per_order, servings_per_order, total_orders_for_item) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+					$query = $this->database_connection->prepare("INSERT INTO menu_items (service_date, meal_id, client_id, preset_group_id, server_id, item_status_id, bite_id, total_orders_for_item) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 					$result = $query->execute($arguments);
 				}
+			} else {
+				for ($i=0; $i <= $_POST['meals_per_day']; $i++) {
+					if($_POST['menu_item_name'][$i] != "" ) {
+						if(!isset($_POST['is_vegetarian'][$i]))         $_POST['is_vegetarian'][$i] = 0;
+						if(!isset($_POST['is_vegan'][$i]))              $_POST['is_vegan'][$i] = 0;
+						if(!isset($_POST['is_gluten_free'][$i]))        $_POST['is_gluten_free'][$i] = 0;
+						if(!isset($_POST['is_whole_grain'][$i]))        $_POST['is_whole_grain'][$i] = 0;
+						if(!isset($_POST['contains_nuts'][$i]))         $_POST['contains_nuts'][$i]= 0;
+						if(!isset($_POST['contains_soy'][$i])) 			$_POST['contains_soy'][$i] = 0;
+						if(!isset($_POST['contains_shellfish'][$i])) 	$_POST['contains_shellfish'][$i] = 0;
+						if(!isset($_POST['contains_nightshades'][$i])) 	$_POST['contains_nightshades'][$i] = 0;
+						if(!isset($_POST['contains_alcohol'][$i])) 		$_POST['contains_alcohol'][$i] = 0;
+						if(!isset($_POST['contains_eggs'][$i])) 		$_POST['contains_eggs'][$i] = 0;
+						if(!isset($_POST['contains_gluten'][$i])) 		$_POST['contains_gluten'][$i] = 0;
+						if(!isset($_POST['contains_dairy'][$i])) 		$_POST['contains_dairy'][$i] = 0;
+						$arguments = array(
+							$service_date,
+							$_POST['meal_id'],
+							$client_id,
+							$preset_group_id,
+							$_POST['server_id'],
+							$_POST['item_status_id'],
+							$menu_image_path,
+							$_POST['meal_description'],
+							$_POST['menu_item_name'][$i],
+							$_POST['ingredients'][$i],
+							$_POST['special_notes'][$i],
+							$_POST['is_vegetarian'][$i],
+							$_POST['is_vegan'][$i],
+							$_POST['is_gluten_free'][$i],
+							$_POST['is_whole_grain'][$i],
+							$_POST['contains_nuts'][$i],
+							$_POST['contains_soy'][$i],
+							$_POST['contains_shellfish'][$i],
+							$_POST['contains_nightshades'][$i],
+							$_POST['contains_alcohol'][$i],
+							$_POST['contains_eggs'][$i],
+							$_POST['contains_gluten'][$i],
+							$_POST['contains_dairy'][$i],
+							$_POST['price_per_order'][$i],
+							$_POST['servings_per_order'][$i],
+							$_POST['total_orders_for_item'][$i]
+						);
+						$query = $this->database_connection->prepare("INSERT INTO menu_items (service_date, meal_id, client_id, preset_group_id, server_id, item_status_id, menu_image_path, meal_description, menu_item_name, ingredients, special_notes, is_vegetarian, is_vegan, is_gluten_free, is_whole_grain, contains_nuts, contains_soy, contains_shellfish, contains_nightshades, contains_alcohol, contains_eggs, contains_gluten, contains_dairy, price_per_order, servings_per_order, total_orders_for_item) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+						$result = $query->execute($arguments);
+					}
+				}
+			}
+			if($query->rowCount() === 1){
+				$success_count++;
+			} else {
+				$client_names_with_error .= $_POST['client_names'][$client_id].", ";
 			}
 		}
-
+		$client_names_with_error = substr(trim($client_names_with_error), 0, -1);
+		$client_names_with_error = $client_names_with_error ." not added.";
 		
-		if($query->rowCount() === 1){
-			Messages::add('The menu has been created');
-			header("Location: ../admin/daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id");
-		} else {
-			echo "Sorry, there was a problem.";
+		
+		if($is_preset_menu) { 
+			Messages::add("Preset Created");
+			header("Location: ../admin/clients.php"); 
+			exit();
 		}
+		
+		if($is_single_client) { 
+			header("Location: ../admin/daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id"); 
+			exit();
+		}
+		
+		Messages::add("Added $success_count menus. ".$client_names_with_error);
+		header("Location: ../admin/clients.php");
 	}
 
 	public function add_bite() {
@@ -381,18 +410,15 @@ class Menu {
 
 	public function update_menu() {
 		$service_date = $_POST['service_year'].'-'.$_POST['service_month'].'-'.$_POST['service_day'];
+		if($service_date == '--') {
+			$service_date = $_POST['service_date'];
+			$is_preset_menu = true;
+		}
 		$client_id = $_POST['client_id'];
 		$meal_id = $_POST['meal_id'];
 		$menu_item_id_array = $_POST['menu_item_id_array'];
-
-		// echo "<pre>";
-		// print_r($_POST);
-
 		$number_of_menu_items = count($menu_item_id_array);
 		for ($i=0; $i < $number_of_menu_items; $i++) { 
-			// echo "<br>Loop: ".$i;
-			// echo "<p>".$_POST['bite_quantity'][$i]."</p>";
-
 			$menu_item_id = $menu_item_id_array[$i];
 			if(!isset($_POST['is_vegetarian'][$i])) $_POST['is_vegetarian'][$i] = 0;
 			if(!isset($_POST['is_vegan'][$i])) $_POST['is_vegan'][$i] = 0;
@@ -420,7 +446,6 @@ class Menu {
 				$_POST['meal_id'],
 				$_POST['client_id'],
 				$_POST['server_id'],
-				// $_POST['item_status_id'],
 				$menu_image_path,
 				$_POST['meal_description'],
 				$_POST['menu_item_name'][$i],
@@ -442,18 +467,12 @@ class Menu {
 				$_POST['price_per_order'][$i],
 				$_POST['servings_per_order'][$i],
 				$total_orders_for_item,
-				// $_POST['total_orders_for_item'][$i],
 				$menu_item_id
 			);
-			// echo "<pre>";
-			// print_r($arguments);
-
-			// item_status_id = ?, 
 			$query = $this->database_connection->prepare("UPDATE menu_items SET 
 				meal_id = ?, 
 				client_id = ?, 
 				server_id = ?, 
-				
 				menu_image_path = ?,
 				meal_description = ?, 
 				menu_item_name = ?, 
@@ -478,8 +497,6 @@ class Menu {
 				WHERE 
 				menu_item_id = ?");
 			$result = $query->execute($arguments);
-
-
 			if($_POST['menu_item_name'][$i] == "" && $meal_id != 5) {
 				$arguments = array(
 					$menu_item_id
@@ -489,8 +506,13 @@ class Menu {
 			}
 
 			if($i == $number_of_menu_items-1) {
-				Messages::add('The menu has been updated.');
-				header("Location: ../admin/daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id");
+				if($is_preset_menu) {
+					Messages::add('The preset menu has been updated.');
+					header("Location: ../admin/clients.php");
+				} else {
+					Messages::add('The menu has been updated.');
+					header("Location: ../admin/daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id");
+				}
 				exit();
 			}
 		}
@@ -590,9 +612,13 @@ class Menu {
 		$html .= "<div class='page_header'>";
 		$html .= "<ul>";
 		if($context == 'green_heart_foods_admin') {
-			$html .= "<li class='left'><a class='menu $show_hide' href='$web_root/admin/daily-menu-print-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Menu</a></li>";
-			$html .= "<li><h2>".date('M d', strtotime($service_date))."</h2></li>";
-			$html .= "<li class='right'><a class='placard $show_hide' href='$web_root/admin/daily-menu-print-placards.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Placards</a></li>";
+			if($client_id !== '1') {
+				$html .= "<li class='left'><a class='menu $show_hide' href='$web_root/admin/daily-menu-print-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Menu</a></li>";
+				$html .= "<li><h2>".date('M d', strtotime($service_date))."</h2></li>";
+				$html .= "<li class='right'><a class='placard $show_hide' href='$web_root/admin/daily-menu-print-placards.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Placards</a></li>";	
+			} else {
+				$html .= "<li><h2>Presets Menu Items</h2></li>";
+			}
 		} else {
 			$html .= "<li class='left'><a class='menu' href='$web_root/clients/daily-menu-print-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id'>Print Menu</a></li>";
 			$html .= "<li><h2>".date('M d', strtotime($service_date))."</h2></li>";
@@ -1153,14 +1179,20 @@ class Menu {
 		}
 	}
 
-	public function get_menu_form($client_id, $service_date = null, $meal_id = null) {
+	public function get_menu_form($client_id, $service_date=null, $meal_id=null, $is_batch_menu="false", $start_with_preset="false", $preset_group_id=null) {
 		$menu = new Menu();
 		$servers = new Servers();
 		$client = new Client();
+		$all_clients = $client->get_all_clients();
 		$meal_types = $menu->get_meal_types();
 		$server_list = $servers->get_all_servers();
-		$meals_result = $client->get_meals_per_day($client_id);
-		$meals_per_day = $meals_result[0]['meals_per_day'];
+		$is_preset_client = ($client_id == 1 ? true : false);
+		if($is_batch_menu === "false") {
+			$meals_result = $client->get_meals_per_day($client_id);
+			$meals_per_day = $meals_result[0]['meals_per_day'];
+		} else {
+			$meals_per_day = 20;
+		}
 		$form = "";
 		$html = "";
 		$meal_type_options = "";
@@ -1170,10 +1202,7 @@ class Menu {
 		$day_options = "";
 		$start_month = date('F');
 		$start_month_number = date('m');
-		// $end_month = date('F', strtotime('+1 month'));
-		// $end_month = date('F', strtotime('next month'));
 		$end_month = date('F', strtotime('first day of next month'));
-		// $end_month_number = date('m', strtotime('+1 month'));
 		$end_month_number = date('m', strtotime('first day of next month'));
 		$start_year = date('Y');
 		$end_year = date('Y', strtotime('+1 year'));
@@ -1189,7 +1218,6 @@ class Menu {
 		$total_cost_for_menu = 0;
 		$menu_image_style = "";
 		$server_image_style = "";
-		// $all_bites = $this->get_all_bites();
 		$bites_mode = '';
 		if (isset($_GET['meal-id'])) {
 			$meal_id = $_GET['meal-id'];
@@ -1197,8 +1225,45 @@ class Menu {
 		if($meal_id == 5) {
 			$bites_mode = 'bites_mode';
 		}
-		if(isset($service_date) && isset($meal_id)) {
-			// $all_bites = $this->get_all_bites();
+		if($start_with_preset === "true") {
+			if(!$service_date) {
+				$current_year = date('Y');
+				$current_month = date('m');
+				$current_day = date('d');
+				$service_date = "$current_year-$current_month-$current_day";
+			};
+			if($meal_id == 5) {
+				$all_bites = $this->get_daily_menu($client_id, $service_date, $meal_id);	
+			} else {
+				$all_bites = null;
+			}
+			$mode = 'edit';
+			$cancel_url = WEB_ROOT."/admin/daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id";
+			$form_action = '../_actions/create-menu.php?is_batch_menu='.$is_batch_menu;	
+			$arguments = array(
+				$preset_group_id,
+			);
+			$query = $this->database_connection->prepare("SELECT * FROM menu_items WHERE preset_group_id = ?");
+			$query->execute($arguments);
+			$menu_items = $query->fetchAll(PDO::FETCH_ASSOC);
+			$number_of_meals = count($menu_items);
+			$menu_image_path_orginal = $menu_items[0]['menu_image_path'];
+			if($menu_image_path_orginal != ""){
+				$menu_image_style = "style='background-image: url(".WEB_ROOT."/_uploads/".$menu_image_path_orginal.")'";
+			}
+			if($menu_items[0]['server_image_path'] != ""){
+				$server_image_style = "style='background-image: url(".WEB_ROOT."/".$menu_items[0]['server_image_path'].")'";
+			}
+			// $menu_image_html = "";//"<img src='".WEB_ROOT."/_uploads/".$menu_image_path_orginal."' />";
+			for ($i=0; $i < count($menu_items); $i++) { 
+				$current_month = date('m', strtotime($service_date));
+				$current_year = date('Y', strtotime($service_date));
+				$current_day = date('d', strtotime($service_date));
+				$current_server_id = $menu_items[0]['server_id'];
+				$current_meal_id = $menu_items[0]['meal_id'];
+				$meal_description = $menu_items[0]['meal_description'];
+			}
+		} elseif (isset($service_date) && isset($meal_id)) {
 			if($meal_id == 5) {
 				$all_bites = $this->get_daily_menu($client_id, $service_date, $meal_id);	
 			} else {
@@ -1232,11 +1297,52 @@ class Menu {
 				$current_meal_id = $menu_items[0]['meal_id'];
 				$meal_description = $menu_items[0]['meal_description'];
 			}
+		
+		/* 
+
+		If preset_group_id is set, then this is an edit preset flow. 
+
+		*/
+
+		} elseif (isset($preset_group_id)) {
+			echo "<h1>Edit Preset</h1>";
+
+			$service_date = '0000-00-00';
+			if($meal_id == 5) {
+				$all_bites = $this->get_daily_menu($client_id, $service_date, $meal_id);	
+			} else {
+				$all_bites = null;
+			}
+			$mode = 'edit';
+			$cancel_url = WEB_ROOT."/admin/daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id";
+			$form_action = '../_actions/update-menu.php';
+			$arguments = array(
+				$preset_group_id,
+			);
+			$query = $this->database_connection->prepare("SELECT * FROM menu_items LEFT JOIN servers ON menu_items.server_id = servers.server_id WHERE preset_group_id = ?");
+			$query->execute($arguments);
+			$menu_items = $query->fetchAll(PDO::FETCH_ASSOC);
+			$number_of_meals = count($menu_items);
+			$menu_image_path_orginal = $menu_items[0]['menu_image_path'];
+			if($menu_image_path_orginal != ""){
+				$menu_image_style = "style='background-image: url(".WEB_ROOT."/_uploads/".$menu_image_path_orginal.")'";
+			}
+			if($menu_items[0]['server_image_path'] != ""){
+				$server_image_style = "style='background-image: url(".WEB_ROOT."/".$menu_items[0]['server_image_path'].")'";
+			}
+			for ($i=0; $i < count($menu_items); $i++) { 
+				$current_month = date('m', strtotime($service_date));
+				$current_year = date('Y', strtotime($service_date));
+				$current_day = date('d', strtotime($service_date));
+				$current_server_id = $menu_items[0]['server_id'];
+				$current_meal_id = $menu_items[0]['meal_id'];
+				$meal_description = $menu_items[0]['meal_description'];
+			}
 		} else {
 			$all_bites = $this->get_all_bites();
 			$mode = 'create';
 			$cancel_url = WEB_ROOT."/admin/weekly-menu.php?client-id=$client_id&meal-id=$meal_id";
-			$form_action = '../_actions/create-menu.php';
+			$form_action = '../_actions/create-menu.php?is_batch_menu='.$is_batch_menu;
 			$current_day = date('d', strtotime('+1 day'));
 			$meal_description = "";
 			$number_of_meals = $meals_per_day;
@@ -1310,24 +1416,22 @@ class Menu {
 		}
 
 		$html .= "<form class='create_menu_form' action='$form_action' method='post' enctype='multipart/form-data'>";
-		$html .=    "<fieldset>";
-		$html .=        "<h3>Date</h3>";
-		//$html .=       "<select name='service_month' class='month cs-select cs-skin-border'>";
-		$html .=       "<select class='service_month' name='service_month' class='month'>";
-		$html .=            $month_options;
-		$html .=        "</select>";
-		//$html .=        "<select name='service_day' class='day cs-select cs-skin-border'>";
-		$html .=        "<select class='service_day' name='service_day' class='day'>";
-		$html .=            $day_options;
-		$html .=        "</select>";
-		//$html .=        "<select name='service_year' class='year cs-select cs-skin-border'>";
-		$html .=        "<select class='service_year' name='service_year' class='year'>";
-		$html .=            $year_options;
-		$html .=        "</select>";
-		$html .=    "</fieldset>";
+		if(!$is_preset_client) {
+			$html .=    "<fieldset>";
+			$html .=        "<h3>Date</h3>";
+			$html .=       "<select class='service_month' name='service_month' class='month'>";
+			$html .=            $month_options;
+			$html .=        "</select>";
+			$html .=        "<select class='service_day' name='service_day' class='day'>";
+			$html .=            $day_options;
+			$html .=        "</select>";
+			$html .=        "<select class='service_year' name='service_year' class='year'>";
+			$html .=            $year_options;
+			$html .=        "</select>";
+			$html .=    "</fieldset>";
+		}
 		$html .=    "<fieldset>";
 		$html .=        "<h3>Meal Type</h3>";
-		//$html .=        "<select class='meal_type cs-select cs-skin-border' name='meal_id'>";
 		$html .=        "<select class='meal_type' name='meal_id'>";
 		$html .=            $meal_type_options;
 		$html .=        "</select>";
@@ -1337,24 +1441,24 @@ class Menu {
 		$html .=        "<h3>Meal Description</h3>";
 		$html .=        "<input spellcheck='true' name='meal_description' type='text' placeholder='Add Description Here' value='$meal_description' spellcheck='true' />";
 		$html .=    "</fieldset>";
-		$html .=    "<fieldset>";
-		$html .=    "<div class='server_and_meal'>";
-		$html .=        "<div class='server_container'>";		
-		$html .=            "<div class='server_image' $server_image_style></div>";;
-		//$html .=            "<select class='server cs-select cs-skin-border' name='server_id'>";
-		$html .=            "<select class='server' name='server_id'>";
-		$html .=                "<option value='none'>Select Host</option>";
-		$html .=                     $server_list_options;
-		$html .=            "</select>";
-		$html .=        "</div>";
-		$html .=        "<div class='meal_container'>";
-		$html .=            "<div class='menu-image meal_image' $menu_image_style></div>";
-		$html .=            "<input name='menu_image' type='file' />";
-		$html .=        "</div>";
-		$html .=    "</div>";
-		$html .=    "</fieldset>";
-		
-		
+		if($is_batch_menu === "false") {
+			$html .=    "<fieldset>";
+			$html .=    "<div class='server_and_meal'>";
+			$html .=        "<div class='server_container'>";		
+			$html .=            "<div class='server_image' $server_image_style></div>";;
+			$html .=            "<select class='server' name='server_id'>";
+			$html .=                "<option value='none'>Select Host</option>";
+			$html .=                     $server_list_options;
+			$html .=            "</select>";
+			$html .=        "</div>";
+			$html .=        "<div class='meal_container'>";
+			$html .=            "<div class='menu-image meal_image' $menu_image_style></div>";
+			$html .=            "<input name='menu_image' type='file' />";
+			$html .=        "</div>";
+			$html .=    "</div>";
+			$html .=    "</fieldset>";
+		}
+
 		for ($i=0; $i < $number_of_meals; $i++) {
 			if($mode == 'edit') {
 				$server_id = $menu_items[$i]['server_id'];
@@ -1462,6 +1566,8 @@ FORM;
 		$form .= "<div class='bites_form $bites_mode'>";
 		$form .= "<a href='".WEB_ROOT."/admin/edit-bites.php?client-id=$client_id&service-date=$service_date' class='edit_global_bites page_button'>Edit Global</a>";
 		$form .= "<div class='fake_hr'></div>";
+
+
 		//if($meal_id == 5) {
 			$form .= $this->build_bites_html($all_bites, $mode);
 		//}
@@ -1500,13 +1606,47 @@ FORM;
 		$form .= "<input type='hidden' name='number_of_bites' value='$number_of_bites' />";
 		$form .= "</div>";
 
+		if($mode == 'create') {
+			$form .= "<div class='add_dish_container'><a class='add_dish page_button'>Add Dish</a></div>";
+		} 
+
+		if ($is_batch_menu === 'true') {
+			$form .= "<ul>";
+			for($i=0; $i<count($all_clients); $i++) {
+				// $html .= '<input type="checkbox" name="clients[]" value='.$all_clients[$i]['client_id'].'>'.$all_clients[$i]['company_name'].'<br />';
+				$client_name = $all_clients[$i]['company_name'];
+				$client_id = $all_clients[$i]['client_id'];
+				$form .= "<li>";
+				$form .= 	"<label class='box_label'>$client_name</label>";
+				$form .= 	"<span class='move_box'>";
+				$form .= 		"<input class='styled' type='checkbox' value='$client_id' name='clients[]'>";
+				$form .= 	"</span>";
+				$form .= "</li>";
+				$form .= "<input type='hidden' value='$client_name' name='client_names[]'>";
+			}
+			$form .= "</ul>";
+		} else {
+			$form .= "<input type='hidden' value='$client_id' name='clients[]'>";
+			$form .= "<input type='hidden' value='$client_name' name='client_names[]'>";
+		}
+
+		$form .= "<input type='hidden' name='service_date' value='$service_date'>";
+		$form .= "<input type='hidden' name='service_date' value='$service_date'>";
+		$form .= "<input type='hidden' name='service_date' value='$service_date'>";
+
 		$html .= $form;
 		$html .= "<input type='hidden' class='current_day_edit_mode' name='current_day' value='$current_day' />";
+		
+
+
 		$html .= $menu_item_hidden_ids;
 		$html .= "</form>";
-		if($mode == 'create') {
-			$html .= "<div class='add_dish_container'><a class='add_dish page_button'>Add Dish</a></div>";
-		} 
+		
+		// if($mode == 'create') {
+		// 	$html .= "<div class='add_dish_container'><a class='add_dish page_button'>Add Dish</a></div>";
+		// } 
+		
+
 		if($mode == 'edit') {
 			$html .= "<form class='add_blank_dish' action='../_actions/add-blank-item-to-menu.php' method='post'>";
 			$html .= "<input type='hidden' name='service_date' value='$service_date'>";
@@ -1519,6 +1659,7 @@ FORM;
 				$html .= "<div class='add_dish_container'><a class='add_blank_dish page_button'>Add Dish</a></div>";
 			}
 		}
+
 		$html .= "<div class='button_container'>";
 		$html .=    "<p>";
 		$html .=        "<span class='total_orders_for_menu'>$total_orders_for_menu</span> Orders ";
@@ -1751,6 +1892,38 @@ CHECKBOXES;
 		$html .= "<input type='hidden' name='bite_group_id' value='$bite_group_id'>";
 		$html .= "<input type='submit' class='save_button page_button' value='Save'>";
 		$html .= "</form>";
+		$html .= "</div>";
+		$html .= "</div>";
+		return $html;
+	}
+
+	public function get_presets_modal($client_id) {
+		$arguments = array(1);
+		$query = $this->database_connection->prepare("SELECT * FROM menu_items LEFT JOIN meals ON menu_items.meal_id = meals.meal_id WHERE client_id = ? GROUP BY menu_items.meal_description");
+		$query->execute($arguments);
+		$result = $query->fetchAll(PDO::FETCH_ASSOC);
+		$html = "";
+		$html .= "<div class='modal presets_modal'>";
+		$html .= "<div class='modal_content presets_modal'>";
+		$html .= "<div class='preset_modal_header'>";
+		$html .= 	"<a class='close_preset_modal presets_modal_close_x' href='#'>X</a>";
+		$html .= 	"<h3>Preset Menus</h3>";
+		$html .= 	"<a href='../admin/create-menu.php?client-id=1'>Add a Preset</a>";
+		$html .= "</div>";
+		$html .= "<ul class='presets_list'>";
+		for($i=0; $i<count($result); $i++) {
+			$meal_id = $result[$i]['meal_id'];
+			$meal_description = $result[$i]['meal_description'];
+			$preset_group_id = $result[$i]['preset_group_id'];
+			$html .= "<li>";
+			$html .= "<input class='presets_radio_button' type='radio' name='presets' data-preset-group-id='$preset_group_id' data-client-id='$client_id' value='$meal_id'>$meal_description";
+			$html .= "<a href='../admin/edit-daily-menu.php?client-id=1&meal-id=$meal_id&preset-group-id=$preset_group_id' class='edit_preset'>Edit</a>";
+			$html .= "<a href='#' data-preset-group-id='$preset_group_id' class='delete_preset'>Delete</a>";
+			$html .= "</li>";
+		}
+		$html .= "</ul>";
+		$html .= "<a class='start_with_preset_link' href='../admin/edit-daily-menu.php?client-id=$client_id&meal-id=$meal_id&start-with-preset=true'>Start</a>";
+		$html .= "<a class='close_preset_modal preset_modal_cancel_button' href='#'>Cancel</a>";
 		$html .= "</div>";
 		$html .= "</div>";
 		return $html;

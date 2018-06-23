@@ -29,7 +29,10 @@
 </div>
 
 <div class="button_container">
+
+	<a class="page_button" href="create-menu.php?client-id=1">Create Preset</a>
 	<a class="page_button" href="create-client.php">Add</a>
+	<a class="page_button" href="create-batch-menu.php">Create Batch</a>
 </div>
 
 <?php require_once(SERVER_ROOT . "/_includes/global-footer.php"); ?>

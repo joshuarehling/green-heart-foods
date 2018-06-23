@@ -30,6 +30,25 @@ FONT SIZES
 
 /* -------------------- Redefine Global */
 
+.modal.presets_modal {
+    z-index: 61;
+    position: fixed;
+    background-color: azure;
+    border: 10px solid orange;
+    display: block;
+    top: 0;
+    padding: 100px;
+}
+
+.modal.presets_modal .edit_preset,
+.modal.presets_modal .delete_preset {
+	margin-left: 20px;
+}
+
+.modal.presets_modal ul {
+	list-style-type: none;
+}
+
 html {
 	background-color: #ebebeb; /* used for print margins */
 }

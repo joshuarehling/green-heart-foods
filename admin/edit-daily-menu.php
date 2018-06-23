@@ -10,8 +10,10 @@
 	$client_id = $_GET['client-id'];
 	$service_date = $_GET['service-date'];
 	$meal_id = $_GET['meal-id'];
+	$start_with_preset = $_GET['start-with-preset'];
+	$preset_group_id = $_GET['preset-group-id'];
 	$menu = new Menu();
-	$menu_form = $menu->get_menu_form($client_id, $service_date, $meal_id);
+	$menu_form = $menu->get_menu_form($client_id, $service_date, $meal_id, "false", $start_with_preset, $preset_group_id);
 ?>
 
 <div class='page_header'>

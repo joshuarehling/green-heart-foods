@@ -269,6 +269,38 @@ $(document).ready(function() {
 		});
 	});
 
+	
+	/*
+
+	Add Preset Modal 
+
+	*/
+
+	
+	$('.start_with_preset_button').click(function(event){
+		var client_id = $(this).attr('data-client-id');
+		$.ajax({
+			url: '../admin/presets-modal.php?client-id='+client_id,
+			method: 'GET'
+		}).done(function(html) {
+			load_presets_modal(html);
+			$('.start_with_preset_link').hide();
+			$('.presets_radio_button').click(function(event){
+				var target = event.target;
+				var client_id = $(target).attr('data-client-id');
+				var preset_group_id = $(target).attr('data-preset-group-id');
+				var meal_id = target.value;
+				$('.start_with_preset_link').fadeIn();
+				$('.start_with_preset_link').attr('href', '../admin/edit-daily-menu.php?client-id='+client_id+'&meal-id='+meal_id+'&preset-group-id='+preset_group_id+'&start-with-preset=true')
+			});
+			$('.close_preset_modal').off().click(function(event){
+				$('.presets_modal').remove();
+			});
+		}).error(function(error){
+			console.log("error: ",error);
+		})
+	});
+
 
 	/* 
 
@@ -289,11 +321,27 @@ $(document).ready(function() {
 
 	$('.edit_bites_page .edit_bites_done').click(function(event){
 		window.history.back();
-	});	
-
-
+	});
 
 });
+
+function load_presets_modal(html){
+	$('.main_container').append(html);
+	$('.delete_preset').off();
+	$('.delete_preset').click(function(event){
+		var okToProceed = confirm("Are you sure you want to delete this preset? This can't be undone.");
+		if(okToProceed) {
+			var current_preset = $(this).parent();
+			var preset_group_id = $(this).attr('data-preset-group-id');	
+			$.ajax({
+				url: '../_actions/delete-preset-menu.php?preset-group-id='+preset_group_id, 
+				method: 'GET'
+			}).done(function(html) {
+				current_preset.remove();
+			});
+		}
+	});	
+}
 
 
 function load_modal(html){
@@ -303,12 +351,6 @@ function load_modal(html){
 		$('.add_edit_bite_modal').remove();
 		$('.edit_bites_page').removeClass('no_scroll');
 	});
-	// $('.edit_bite_form').submit(function(event){
-		// event.preventDefault();
-		// console.log("Form Submit");
-		// var bite_name = $('.bite_name').val();
-		// console.log(bite_name);
-	// });
 }
 
 

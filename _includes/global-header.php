@@ -70,11 +70,13 @@
 		<ul>
 			<li>
 				<?php 
+					if(isset($_SESSION['user_type_id'])) {
+						echo "<a href='".WEB_ROOT."/admin/clients.php'>Clients</a>";	
+					}
 					if(isset($_SESSION['user_type_id']) && isset($_GET['client-id'])) {
 						$client_id = $_GET['client-id'];
 						switch ($_SESSION['user_type_id']) {
 							case 1:
-								echo "<a href='".WEB_ROOT."/admin/clients.php'>Clients</a>";
 								echo "<a class='menus' href='".WEB_ROOT."/admin/yearly-menu.php?client-id=$client_id'>Menus</a>";
 								break;
 							case 2:
