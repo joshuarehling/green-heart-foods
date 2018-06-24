@@ -21,7 +21,9 @@
 		</ul>
 	<?php } else { ?>
 		<ul>
-			<li class="left start_with_preset_button" data-client-id="<?php echo $client_id; ?>"><a>Start with Preset</a></li>
+			<li class="left start_with_preset_button" data-client-id="<?php echo $client_id; ?>">
+				<a class='launch_preset_modal'>Start with Preset</a>
+			</li>
 			<li><h2>Menu</h2></li>
 			<li class="right"><a class="" href="#">&nbsp;</a></li>
 		</ul>

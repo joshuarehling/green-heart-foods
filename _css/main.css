@@ -30,24 +30,6 @@ FONT SIZES
 
 /* -------------------- Redefine Global */
 
-.modal.presets_modal {
-    z-index: 61;
-    position: fixed;
-    background-color: azure;
-    border: 10px solid orange;
-    display: block;
-    top: 0;
-    padding: 100px;
-}
-
-.modal.presets_modal .edit_preset,
-.modal.presets_modal .delete_preset {
-	margin-left: 20px;
-}
-
-.modal.presets_modal ul {
-	list-style-type: none;
-}
 
 html {
 	background-color: #ebebeb; /* used for print margins */
@@ -469,6 +451,7 @@ select {
 	background-color: #FFFFFF;
 }
 
+
 .create_client_page fieldset,
 .edit_client_page fieldset {
 	border: none;
@@ -477,6 +460,11 @@ select {
 	width: 90%;
 	min-width: 960px;
 	margin: 0 auto;
+}
+
+.create_menu_page fieldset.choose_companies {
+	border: none;
+	border-top: 5px solid #84445e;
 }
 
 .create_client_page fieldset.no_rule,
@@ -2308,7 +2296,8 @@ html { /* only for FPO */
 	overflow-y: hidden;
 }
 
-.edit_bites_page .add_edit_bite_modal {
+.edit_bites_page .add_edit_bite_modal,
+.create_menu_page .presets_modal {
 	/*opacity: .95;*/
     width: 100%;
     height: 100%;
@@ -2320,8 +2309,8 @@ html { /* only for FPO */
     overflow-y: scroll;
 }
 
-.edit_bites_page .add_edit_bite_modal_content {
-	/*opacity: 1;*/
+.edit_bites_page .add_edit_bite_modal_content,
+.create_menu_page .modal_content {
     width: 960px;
 	overflow: auto;
     background-color: #FFFFFF;
@@ -2329,11 +2318,148 @@ html { /* only for FPO */
     top: 20%;
     left: 50%;
     margin-left: -480px;
-    /*margin-top: -550px;*/
 	text-align: center;
 	padding: 0 0 60px 0;
 	margin-bottom: 80px;
 }
+
+
+/* 
+
+Presets Modal 
+
+*/
+
+.create_menu_page .modal_content.presets_modal {
+	height: initial;
+	padding:20px;
+}
+
+.preset_modal_header {
+	border-bottom: 5px solid #84445e;
+}
+
+.preset_modal_header h3 {
+	color: #84445e;
+	font-size: 3em;
+	font-weight: 700;
+	text-transform: uppercase;	
+}
+
+.preset_modal_header .presets_modal_close_x {
+	position: absolute;
+    right: 5px;
+    top: -10px;
+    color: #ff7a18;
+    font-family: 'Helvetica';
+    font-size: 40px;
+}
+
+.preset_modal_header a.add_a_preset {
+	position: absolute;
+	text-transform: uppercase;
+	color: #84445e;
+	top: 45px;
+	right: 140px;
+}
+
+.start_with_preset_link.disabled {
+	pointer-events: none;
+}
+
+.presets_modal ul.presets_list {
+	text-align: left;
+	padding: 0;
+	margin-top: 40px;
+	margin-bottom: 40px;
+}
+
+.presets_modal li.presets_list_item {
+    list-style-type: none;
+    margin-top: 20px;
+    position: relative;
+    background-color: rgba(0,0,0,0.01);
+    transition: background-color .4s ease-in-out;
+}
+
+.presets_modal li.presets_list_item:hover {
+	background-color: rgba(0,0,0,.05);
+}
+
+
+.presets_modal .edit_preset,
+.presets_modal .delete_preset {
+	position: absolute;
+	text-transform: uppercase;
+	color: #ef284f;
+	top: 15px;
+}
+
+.presets_modal .edit_preset {
+	right: 140px;
+}
+
+.presets_modal .delete_preset {
+	right: 40px;
+}
+
+.presets_modal .edit_preset:hover,
+.presets_modal .delete_preset:hover {
+	text-decoration: underline;
+}
+
+.fake-radio-button-container {
+	position: absolute;
+	top: 12px;
+	left: 40px;
+}
+
+.presets_radio_button_label {
+	margin: -10px 230px 0 0;
+	padding: 15px 0 15px 90px;
+	cursor: pointer;
+}
+
+.presets_modal .outer-circle {
+	position: absolute;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	background-color: #fff;
+	border: 2px solid #84445e;
+	cursor: pointer;
+}
+
+.presets_modal .inner-circle.checked {
+	position: absolute;
+	top: 4px;
+	left: 4px;
+	width: 22px;
+	height: 22px;
+	border-radius: 50%;
+	background-color: green;
+}
+
+.launch_preset_modal {
+	cursor: pointer;
+}
+
+.presets_radio_button {
+	position: absolute;
+	left: -100px;
+}
+
+
+/*
+
+.modal.presets_modal .edit_preset,
+.modal.presets_modal .delete_preset {
+	margin-left: 20px;
+}
+
+.modal.presets_modal ul {
+	list-style-type: none;
+}*/
 
 .edit_bites_page .add_edit_bite_modal_content .close_button {
 	position: absolute;

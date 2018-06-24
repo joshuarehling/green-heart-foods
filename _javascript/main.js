@@ -270,38 +270,6 @@ $(document).ready(function() {
 	});
 
 	
-	/*
-
-	Add Preset Modal 
-
-	*/
-
-	
-	$('.start_with_preset_button').click(function(event){
-		var client_id = $(this).attr('data-client-id');
-		$.ajax({
-			url: '../admin/presets-modal.php?client-id='+client_id,
-			method: 'GET'
-		}).done(function(html) {
-			load_presets_modal(html);
-			$('.start_with_preset_link').hide();
-			$('.presets_radio_button').click(function(event){
-				var target = event.target;
-				var client_id = $(target).attr('data-client-id');
-				var preset_group_id = $(target).attr('data-preset-group-id');
-				var meal_id = target.value;
-				$('.start_with_preset_link').fadeIn();
-				$('.start_with_preset_link').attr('href', '../admin/edit-daily-menu.php?client-id='+client_id+'&meal-id='+meal_id+'&preset-group-id='+preset_group_id+'&start-with-preset=true')
-			});
-			$('.close_preset_modal').off().click(function(event){
-				$('.presets_modal').remove();
-			});
-		}).error(function(error){
-			console.log("error: ",error);
-		})
-	});
-
-
 	/* 
 
 	Edit Bites Page 
@@ -323,7 +291,46 @@ $(document).ready(function() {
 		window.history.back();
 	});
 
+	/*
+
+	Add Preset Modal 
+
+	*/
+
+	$('.start_with_preset_button').click(function(event){
+		var client_id = $(this).attr('data-client-id');
+		$.ajax({
+			url: '../admin/presets-modal.php?client-id='+client_id,
+			method: 'GET'
+		}).done(function(html) {
+			load_presets_modal(html);
+			$('.presets_radio_button, .outer-circle').on("click", function(event) {
+				radio_button_clicked(event);
+			});
+			$('.close_preset_modal').off().click(function(event){
+				$('.presets_modal').remove();
+			});
+		}).error(function(error){
+			console.log("error: ",error);
+		})
+	});
+
 });
+
+function radio_button_clicked(event) {
+	var target = event.target;
+	var parent_list_item = $(target).closest('.presets_list_item');
+	var current_radio_button = parent_list_item.find('.presets_radio_button')
+	var client_id = current_radio_button.attr('data-client-id');
+	var preset_group_id = current_radio_button.attr('data-preset-group-id');
+	var meal_id = current_radio_button.value;
+	$('.inner-circle').removeClass('checked');
+	$('.presets_radio_button').attr("checked", null);
+	parent_list_item.find('.inner-circle').addClass('checked');
+	parent_list_item.find('.presets_radio_button').attr("checked", true);
+	$('.start_with_preset_link').attr('href', '../admin/edit-daily-menu.php?client-id='+client_id+'&meal-id='+meal_id+'&preset-group-id='+preset_group_id+'&start-with-preset=true')
+	$('.start_with_preset_link').removeClass('disabled');
+}
 
 function load_presets_modal(html){
 	$('.main_container').append(html);

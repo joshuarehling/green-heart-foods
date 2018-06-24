@@ -253,7 +253,7 @@ class Menu {
 		/* If there's only one client, and it's the Presets client, set the service date to 2000-01-01 */
 
 		if($is_preset_menu) {
-			$service_date = '2000-01-01';
+			$service_date = '0000-00-00';
 			$preset_group_id = uniqid();
 		} else {
 			$service_date = $_POST['service_year'].'-'.$_POST['service_month'].'-'.$_POST['service_day'];
@@ -1611,6 +1611,10 @@ FORM;
 		} 
 
 		if ($is_batch_menu === 'true') {
+
+			$form .= "<fieldset class='choose_companies'>";
+			$form .= "<h3>Choose Companies</h3>";
+			$form .= "<div class='checkbox_container'>";
 			$form .= "<ul>";
 			for($i=0; $i<count($all_clients); $i++) {
 				// $html .= '<input type="checkbox" name="clients[]" value='.$all_clients[$i]['client_id'].'>'.$all_clients[$i]['company_name'].'<br />';
@@ -1625,6 +1629,8 @@ FORM;
 				$form .= "<input type='hidden' value='$client_name' name='client_names[]'>";
 			}
 			$form .= "</ul>";
+			$form .= "</div>";
+			$form .= "</fieldset>";
 		} else {
 			$form .= "<input type='hidden' value='$client_id' name='clients[]'>";
 			$form .= "<input type='hidden' value='$client_name' name='client_names[]'>";
@@ -1906,24 +1912,33 @@ CHECKBOXES;
 		$html .= "<div class='modal presets_modal'>";
 		$html .= "<div class='modal_content presets_modal'>";
 		$html .= "<div class='preset_modal_header'>";
-		$html .= 	"<a class='close_preset_modal presets_modal_close_x' href='#'>X</a>";
+		$html .= 	"<a class='close_preset_modal presets_modal_close_x' href='#'>&times;</a>";
 		$html .= 	"<h3>Preset Menus</h3>";
-		$html .= 	"<a href='../admin/create-menu.php?client-id=1'>Add a Preset</a>";
+		$html .= 	"<a class='add_a_preset' href='../admin/create-menu.php?client-id=1'>Add a Preset</a>";
 		$html .= "</div>";
 		$html .= "<ul class='presets_list'>";
 		for($i=0; $i<count($result); $i++) {
 			$meal_id = $result[$i]['meal_id'];
 			$meal_description = $result[$i]['meal_description'];
 			$preset_group_id = $result[$i]['preset_group_id'];
-			$html .= "<li>";
-			$html .= "<input class='presets_radio_button' type='radio' name='presets' data-preset-group-id='$preset_group_id' data-client-id='$client_id' value='$meal_id'>$meal_description";
-			$html .= "<a href='../admin/edit-daily-menu.php?client-id=1&meal-id=$meal_id&preset-group-id=$preset_group_id' class='edit_preset'>Edit</a>";
+			$html .= "<li class='presets_list_item'>";
+			$html .= "<label class='presets_radio_button_label' for='presets_list_item_$i'>$meal_description</label>";
+			$html .= "<input id='presets_list_item_$i' class='presets_radio_button' type='radio' name='presets' data-preset-group-id='$preset_group_id' data-client-id='$client_id' value='$meal_id'>";
+
+			$html .= "<div class='fake-radio-button-container'>";
+			$html .= "<div class='outer-circle'>";
+			$html .= "<div class='inner-circle'>";
+			$html .= "</div>";
+			$html .= "</div>";
+			$html .= "</div>";
+
 			$html .= "<a href='#' data-preset-group-id='$preset_group_id' class='delete_preset'>Delete</a>";
+			$html .= "<a href='../admin/edit-daily-menu.php?client-id=1&meal-id=$meal_id&preset-group-id=$preset_group_id' class='edit_preset'>Edit</a>";
 			$html .= "</li>";
 		}
 		$html .= "</ul>";
-		$html .= "<a class='start_with_preset_link' href='../admin/edit-daily-menu.php?client-id=$client_id&meal-id=$meal_id&start-with-preset=true'>Start</a>";
-		$html .= "<a class='close_preset_modal preset_modal_cancel_button' href='#'>Cancel</a>";
+		$html .= "<a class='page_button close_preset_modal preset_modal_cancel_button' href='#'>Cancel</a>";
+		$html .= "<a class='page_button disabled start_with_preset_link' href='../admin/edit-daily-menu.php?client-id=$client_id&meal-id=$meal_id&start-with-preset=true'>Start</a>";
 		$html .= "</div>";
 		$html .= "</div>";
 		return $html;
