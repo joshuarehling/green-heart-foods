@@ -1782,6 +1782,7 @@ html { /* only for FPO */
 	position: fixed;
 	bottom: 0px;
 	z-index: 4000;
+	z-index: 1;
 }
 
 .edit_menu_page footer,
@@ -2306,7 +2307,8 @@ html { /* only for FPO */
     position: fixed;
     top: 0;
     left: 0;
-    overflow-y: scroll;
+    overflow-y: scroll;    
+    z-index: 2;
 }
 
 .edit_bites_page .add_edit_bite_modal_content,
@@ -2372,6 +2374,8 @@ Presets Modal
 	padding: 0;
 	margin-top: 40px;
 	margin-bottom: 40px;
+	max-height: 200px;
+	overflow-y: scroll;
 }
 
 .presets_modal li.presets_list_item {

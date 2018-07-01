@@ -215,7 +215,7 @@ class Menu {
 		$query = $this->database_connection->prepare("INSERT INTO menu_items (service_date, meal_id, client_id, server_id, item_status_id) VALUES (?, ?, ?, ?, ?)");
 		$result = $query->execute($arguments);
 		if($query->rowCount() === 1){
-			Messages::add('The menu item has been added');
+			Messages::add('The new dish has been added');
 			header("Location: ../admin/edit-daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id");
 		} else {
 			echo "Sorry, there was a problem.";
@@ -246,6 +246,7 @@ class Menu {
 		$is_preset_menu = FALSE;
 		$is_single_client = FALSE;
 		$success_count = 0;
+		$error_count = 0;
 		$client_names_with_error = "";
 		if(count($_POST['clients']) === 1) { $is_single_client = TRUE; }
 		if($is_single_client && $_POST['clients'][0] === '1') { $is_preset_menu = TRUE; }
@@ -328,12 +329,15 @@ class Menu {
 			if($query->rowCount() === 1){
 				$success_count++;
 			} else {
+				$error_count++;
 				$client_names_with_error .= $_POST['client_names'][$client_id].", ";
 			}
 		}
 		$client_names_with_error = substr(trim($client_names_with_error), 0, -1);
 		$client_names_with_error = $client_names_with_error ." not added.";
-		
+		if ($error_count === 0) {
+			$client_names_with_error = "";
+		}
 		
 		if($is_preset_menu) { 
 			Messages::add("Preset Created");
