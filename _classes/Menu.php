@@ -205,18 +205,39 @@ class Menu {
 		$service_date = $_POST['service_date'];
 		$meal_id = $_POST['meal_id'];
 		$client_id = $_POST['client_id'];
-		$arguments = array(
-			$service_date,
-			$meal_id,
-			$client_id,
-			$_POST['server_id'],
-			$_POST['item_status_id']
-		);
-		$query = $this->database_connection->prepare("INSERT INTO menu_items (service_date, meal_id, client_id, server_id, item_status_id) VALUES (?, ?, ?, ?, ?)");
+		$preset_group_id = $_POST['preset_group_id'];
+		$is_preset_menu = false;
+		if ($service_date === '0000-00-00') $is_preset_menu = true;
+		if ($is_preset_menu) {
+			$arguments = array(
+				$service_date,
+				$meal_id,
+				$preset_group_id,
+				$client_id,
+				$_POST['meal_description'],
+				$_POST['server_id'],
+				$_POST['item_status_id']
+			);
+			$query = $this->database_connection->prepare("INSERT INTO menu_items (service_date, meal_id, preset_group_id, client_id, meal_description, server_id, item_status_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
+		} else {
+			$arguments = array(
+				$service_date,
+				$meal_id,
+				$client_id,
+				$_POST['server_id'],
+				$_POST['item_status_id']
+			);
+			$query = $this->database_connection->prepare("INSERT INTO menu_items (service_date, meal_id, client_id, server_id, item_status_id) VALUES (?, ?, ?, ?, ?)");
+		}
+		
 		$result = $query->execute($arguments);
 		if($query->rowCount() === 1){
 			Messages::add('The new dish has been added');
-			header("Location: ../admin/edit-daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id");
+			if($service_date === '0000-00-00') {
+				header("Location: ../admin/edit-daily-menu.php?client-id=1&meal-id=$meal_id&preset-group-id=$preset_group_id");
+			} else {
+				header("Location: ../admin/edit-daily-menu.php?client-id=$client_id&service-date=$service_date&meal-id=$meal_id");
+			}
 		} else {
 			echo "Sorry, there was a problem.";
 		}
@@ -1311,6 +1332,7 @@ class Menu {
 		} elseif (isset($preset_group_id)) {
 			echo "<h1>Edit Preset</h1>";
 
+			$meal_description = $menu_items[0]['meal_description'];
 			$service_date = '0000-00-00';
 			if($meal_id == 5) {
 				$all_bites = $this->get_daily_menu($client_id, $service_date, $meal_id);	
@@ -1641,8 +1663,8 @@ FORM;
 		}
 
 		$form .= "<input type='hidden' name='service_date' value='$service_date'>";
-		$form .= "<input type='hidden' name='service_date' value='$service_date'>";
-		$form .= "<input type='hidden' name='service_date' value='$service_date'>";
+		// $form .= "<input type='hidden' name='service_date' value='$service_date'>";
+		// $form .= "<input type='hidden' name='service_date' value='$service_date'>";
 
 		$html .= $form;
 		$html .= "<input type='hidden' class='current_day_edit_mode' name='current_day' value='$current_day' />";
@@ -1664,8 +1686,11 @@ FORM;
 			$html .= "<input type='hidden' name='client_id' value='$client_id'>";
 			$html .= "<input type='hidden' name='server_id' value='$server_id'>";
 			$html .= "<input type='hidden' name='item_status_id' value='$item_status_id'>";
+			$html .= "<input type='hidden' name='preset_group_id' value='$preset_group_id' />";
+			$html .= "<input type='hidden' name='meal_description' value='$$meal_description' />";
 			$html .= "</form>";
-			if($meal_id != 5) {
+
+			if($meal_id != 5 && $start_with_preset != 'true') {
 				$html .= "<div class='add_dish_container'><a class='add_blank_dish page_button'>Add Dish</a></div>";
 			}
 		}

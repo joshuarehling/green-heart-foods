@@ -303,6 +303,7 @@ $(document).ready(function() {
 			url: '../admin/presets-modal.php?client-id='+client_id,
 			method: 'GET'
 		}).done(function(html) {
+			console.log("DONE");
 			load_presets_modal(html);
 			$('.presets_radio_button, .outer-circle').on("click", function(event) {
 				radio_button_clicked(event);
@@ -323,7 +324,9 @@ function radio_button_clicked(event) {
 	var current_radio_button = parent_list_item.find('.presets_radio_button')
 	var client_id = current_radio_button.attr('data-client-id');
 	var preset_group_id = current_radio_button.attr('data-preset-group-id');
-	var meal_id = current_radio_button.value;
+	console.log("current_radio_button: ",current_radio_button);
+	var meal_id = current_radio_button[0].value;
+	console.log("meal_id: ",meal_id);
 	$('.inner-circle').removeClass('checked');
 	$('.presets_radio_button').attr("checked", null);
 	parent_list_item.find('.inner-circle').addClass('checked');
