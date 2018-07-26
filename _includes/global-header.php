@@ -22,10 +22,14 @@
 		$client = new Client();
 		$client_result = $client->get_client($client_id);	
 	}
-	$client_header_array = array('yearly_menu_page client', 'weekly_menu_page client', 'daily_menu_page client', 'yearly_menu_page', 'daily_menu_page', 'weekly_menu_page', 'create_and_edit_menu create_menu_page', 'create_and_edit_menu edit_menu_page', 'daily_menu_page client', 'edit_bites_page');
+	$client_header_array = array('yearly_menu_page client', 'weekly_menu_page client', 'daily_menu_page client', 'yearly_menu_page', 'daily_menu_page', 'weekly_menu_page', 'create_and_edit_menu create_menu_page', 'create_and_edit_menu edit_menu_page', 'daily_menu_page client', 'edit_bites_page', 'create_and_edit_menu create_menu_page batch_menu');
 	$use_client_header = array_search($page_class, $client_header_array);
 	if($use_client_header > -1) {
-		$image_path = WEB_ROOT."/_uploads/".$client_result[0]['company_logo_large'];
+		if($page_class === 'create_and_edit_menu create_menu_page batch_menu') {
+			$image_path = WEB_ROOT."/_uploads/batch.png";
+		} else {
+			$image_path = WEB_ROOT."/_uploads/".$client_result[0]['company_logo_large'];
+		}
 		$header_style = "background-image:url($image_path)";
 		$header_class = "background_logo";
 	} else {

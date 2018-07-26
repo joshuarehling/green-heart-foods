@@ -28,7 +28,7 @@ class Client {
     }
 
     public function get_all_clients(){
-        $query = $this->database_connection->prepare("SELECT * FROM clients WHERE NOT client_id=1");
+        $query = $this->database_connection->prepare("SELECT * FROM clients WHERE NOT client_id=1 ORDER BY company_name ASC");
         $query->execute();
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
         if(count($result) > 0) {

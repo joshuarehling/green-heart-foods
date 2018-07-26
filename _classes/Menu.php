@@ -1330,7 +1330,7 @@ class Menu {
 		*/
 
 		} elseif (isset($preset_group_id)) {
-			echo "<h1>Edit Preset</h1>";
+			// echo "<h1>Edit Preset</h1>";
 
 			$meal_description = $menu_items[0]['meal_description'];
 			$service_date = '0000-00-00';

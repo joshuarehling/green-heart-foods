@@ -939,13 +939,6 @@ select {
 	font-weight: 700;
 }
 
-.weekly_menu_page .meal_container.breakfast .meal_description { color: #F39035; }
-.weekly_menu_page .meal_container.lunch .meal_description { color: #A7CD4D; }
-.weekly_menu_page .meal_container.dinner .meal_description { color: #9F5D79; }
-.weekly_menu_page .meal_container.snack .meal_description { color: #85D1EB; }
-.weekly_menu_page .meal_container.bites .meal_description { color: #4BB0EF; }
-.weekly_menu_page .meal_container.event .meal_description { color: #009FA3; }
-
 .weekly_menu_page .menu_items_container {
 	float: left;
 	min-height: 600px;
@@ -1110,6 +1103,14 @@ select {
 .weekly_menu_print_menu_page .meal_container.snack .day_of_the_week { color: #85D1EB; }
 .weekly_menu_print_menu_page .meal_container.bite .day_of_the_week { color: #4BB0EF; }
 .weekly_menu_print_menu_page .meal_container.event .day_of_the_week { color: #009FA3; }
+
+.weekly_menu_page .meal_container.breakfast .meal_description { color: #F39035; }
+.weekly_menu_page .meal_container.lunch .meal_description { color: #A7CD4D; }
+.weekly_menu_page .meal_container.dinner .meal_description { color: #9F5D79; }
+.weekly_menu_page .meal_container.snack .meal_description { color: #85D1EB; }
+.weekly_menu_page .meal_container.bites .meal_description { color: #4BB0EF; }
+.weekly_menu_page .meal_container.event .meal_description { color: #009FA3; }
+
 
 .weekly_menu_print_menu_page .meal_container .menu_item_name {
 	/*display: inline-block;
@@ -1948,16 +1949,20 @@ html { /* only for FPO */
 	top: 4px;
 }
 
-.daily_menu_print_menu_page .print_menu_meal_description.breakfast {
+.daily_menu_print_menu_page .print_menu_meal_description {
 	text-transform: uppercase;
-	color: #F39035;
 	font-weight: 700;
 	margin-top: -20px;
+	font-size: 1.2em;
 }
 
-.daily_menu_print_menu_page .print_menu_meal_description.lunch {
-	color: #A7CD4D
-}
+.daily_menu_print_menu_page .print_menu_meal_description.breakfast { color: #F39035; }
+.daily_menu_print_menu_page .print_menu_meal_description.lunch { color: #A7CD4D;}
+.daily_menu_print_menu_page .print_menu_meal_description.dinner { color: #9F5D79;}
+.daily_menu_print_menu_page .print_menu_meal_description.snack { color: #85D1EB;}
+.daily_menu_print_menu_page .print_menu_meal_description.bites { color: #4BB0EF;}
+.daily_menu_print_menu_page .print_menu_meal_description.event { color: #009FA3;}
+
 
 /* Placards - not in use any more */
 
